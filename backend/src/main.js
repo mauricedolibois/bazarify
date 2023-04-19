@@ -7,7 +7,7 @@ app.get("/api", (req, res) => {
     res.json({"backendData": [  "Das", "Kommt", "ausm", "Backend!"] })
 })
 
-dbConnection.connectToDB().then(r => { console.log("Connected to DB") })
+dbConnection.connectToDB().then(r => { console.log("Fertig!") })
 
 //console.log(db)
 app.listen(8085, () => { console.log("Server started on port 8085") })
