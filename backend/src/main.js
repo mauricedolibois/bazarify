@@ -3,12 +3,13 @@ const app = express()
 import { ProductManager } from './manager/ProductManager.js'
 
 ProductManager.connectToDB()
-//ProductManager.addProduct("Test", 123)
+//Insert into DB
+//ProductManager.addProduct(2,"Tom", 187)
 
-// Hier muss ich noch die Daten aus der DB holen
+//Get from DB
 app.get("/api", (req, res) => {
-    ProductManager.getProductById("1").then(product => {
-    console.log(product)
+    ProductManager.getProductById(2).then(product => {
+    console.log("produkt:"+product)
     res.json({"backendData": [product.name, product.price] })
 })
 })

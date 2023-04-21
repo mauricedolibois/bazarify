@@ -7,14 +7,14 @@ export class ProductManager {
         this.dbConnection.connectToDB()
     }
 
-    static async addProduct(name, price) {
-        const doc = {"name": name, "price": price }
+    static async addProduct(id, name, price) {
+        const doc = {"id": id, "name": name, "price": price }
         this.dbConnection.insertOne("articles", doc).then(
-            r => { console.log("("+doc.name +", "+ doc.price +") was inserted!") })
+            r => { console.log("("+doc.id+", "+doc.name +", "+ doc.price +") was inserted!") })
     }
 
     static async getProductById(id) {
-        return await this.dbConnection.findOne("articles", {"_id": id})
+        return await this.dbConnection.findOne("articles", {"id": id})
     }
 
 }
