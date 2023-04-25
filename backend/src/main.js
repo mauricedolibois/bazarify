@@ -1,13 +1,18 @@
 import express from 'express'
 const app = express()
-import { dbConnection } from './dbConnection.js'
+import { ProductManager } from './manager/ProductManager.js'
 
+ProductManager.connectToDB()
+//Insert into DB
+ProductManager.addProduct(5,"Samu", 420)
 
+//Get from DB
 app.get("/api", (req, res) => {
-    res.json({"backendData": [  "Das", "Kommt", "ausm", "Backend!"] })
+    ProductManager.getProductById(5).then(product => {
+    res.json({"backendData": [product.name, product.price] })
+})
 })
 
-dbConnection.connectToDB().then(r => { console.log("Connected to DB") })
-
-//console.log(db)
 app.listen(8085, () => { console.log("Server started on port 8085") })
+
+
