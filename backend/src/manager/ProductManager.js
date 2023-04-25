@@ -1,4 +1,4 @@
-import { dbConnection } from '../database/dbConnection.js';
+import { dbConnection } from '../database/DbConnection.js';
 export class ProductManager {
    
     static dbConnection = new dbConnection()
