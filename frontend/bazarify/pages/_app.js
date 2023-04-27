@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TextInput from '../components/inputField'
 import BtnSubmit from '../components/btnSubmit';
 
@@ -7,6 +7,8 @@ export default function App({ Component, pageProps }) {
   const [inputID, setInputID] = useState("");
   const [inputName, setInputName] = useState("");
   const [inputPrice, setInputPrice] = useState("");
+  const [text, setText] = useState("");
+
   
   
 
@@ -28,13 +30,24 @@ export default function App({ Component, pageProps }) {
     };
     console.log(requestOptions)
     try{
+      console.log("try ausgeführt")
       await fetch('http://localhost:8085/api/add-product', requestOptions)
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => console.log("data"))
     } catch (error){
       console.log("Catch Error: " + error.response)
     }
     };
+
+    useEffect(() => {
+      fetch('http://localhost:8085/api')
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          setText(JSON.stringify(data))
+        })
+        .catch(error => console.log(error))
+    }, [])
 
     /*const handleFormSubmit = (event) => {
       event.preventDefault();
@@ -56,7 +69,8 @@ export default function App({ Component, pageProps }) {
           <TextInput label="ID des Artikels:" name="id" value={inputID} onChange={e => setInputID(e.target.value)} />
           <TextInput label="Name des Artikels:" name="name" value={inputName} onChange={e => setInputName(e.target.value)} />
           <TextInput label="Preis des Artikels:" name="price" value={inputPrice} onChange={e => setInputPrice(e.target.value)} />
-          <button type='submit'>Submit2</button>
+          <button type='submit'>Submit</button>
+          <p>{text}</p>
       </form>
     </>
   )
