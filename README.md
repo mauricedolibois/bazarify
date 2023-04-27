@@ -25,3 +25,10 @@ Zum frontend folder navigieren
 
 npm start
 
+# Icons hinzufügen
+(Unicons installieren, wissen nicht ob das notwendig ist)
+1. Hier das Icon aussuchen: https://iconscout.com/unicons/explore/line
+2. Draufklicken, auf der rechten Sidebar auf React klicken
+3. Dann auf Copy
+4. In der Datei importieren
+5. Wie ein HTML-Tag nutzen

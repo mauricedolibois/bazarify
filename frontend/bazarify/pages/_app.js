@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import TextInput from '../components/inputField'
 import BtnSubmit from '../components/btnSubmit';
+import { UilBell } from '@iconscout/react-unicons'
 
 export default function App({ Component, pageProps }) {
   const [backendData, setBackendData] = useState(undefined);
@@ -61,6 +62,7 @@ export default function App({ Component, pageProps }) {
     <>
       <Component {...pageProps} />
       <h1>Hallo Maurice!</h1>
+      <UilBell size="24" />
       <div>
         {(backendData && typeof backendData.backendData === 'undefined') ? (<p>loading...</p>) : (backendData?.backendData?.map((data, i) => <p key={i}>{data}</p>))}
       </div>
