@@ -1,42 +1,45 @@
 import React, { useState } from 'react'
 import TextInput from '../components/inputField'
-import SubmitButton from '../components/btnSubmit'
+import BtnSubmit from '../components/btnSubmit';
 
 export default function App({ Component, pageProps }) {
-  const [inputValues, setInputValues] = useState({ id: '', name: '', price: '' });
   const [backendData, setBackendData] = useState(undefined);
-
-  const handleTextChange = (event) => {
-    const { name, value } = event.target;
-    console.log(name, value)
-    setInputValues((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  const [inputID, setInputID] = useState("");
+  const [inputName, setInputName] = useState("");
+  const [inputPrice, setInputPrice] = useState("");
   
   
 
-  /*const handleFormSubmit = (event) => {
+    const handleFormSubmit = async (event) => {
     console.log("LOG: handeFormSubmit triggert")
     event.preventDefault();
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(inputValues)
+      body: 
+            JSON.stringify(
+              {
+                "id" : inputID,
+                "name" : inputName,
+                "price" : inputPrice
+              }
+            )
+      
     };
-    fetch('/api/add-product', requestOptions)
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error(error));
-      console.log("LOG: Form sent!")
+    console.log(requestOptions)
+    try{
+      await fetch('http://localhost:8085/api/add-product', requestOptions)
+            .then(response => response.json())
+            .then(data => console.log(data))
+    } catch (error){
+      console.log("Catch Error: " + error.response)
+    }
     };
-  */
 
-    const handleFormSubmit = (event) => {
+    /*const handleFormSubmit = (event) => {
       event.preventDefault();
-      console.log(inputValues);
-    };
+      console.log("ID: " + inputID + "Name: " + inputName + "Price: "+ inputPrice);
+    }; */
 
     //TODO: fix submit 
 
@@ -50,12 +53,10 @@ export default function App({ Component, pageProps }) {
       </div>
 
       <form onSubmit={handleFormSubmit}>
-        <div>
-          <TextInput label="ID des Artikels:" name="id" value={inputValues.id} onChange={handleTextChange} />
-          <TextInput label="Name des Artikels:" name="name" value={inputValues.name} onChange={handleTextChange} />
-          <TextInput label="Preis des Artikels:" name="price" value={inputValues.price} onChange={handleTextChange} />
-        </div>
-        <SubmitButton />
+          <TextInput label="ID des Artikels:" name="id" value={inputID} onChange={e => setInputID(e.target.value)} />
+          <TextInput label="Name des Artikels:" name="name" value={inputName} onChange={e => setInputName(e.target.value)} />
+          <TextInput label="Preis des Artikels:" name="price" value={inputPrice} onChange={e => setInputPrice(e.target.value)} />
+          <button type='submit'>Submit2</button>
       </form>
     </>
   )

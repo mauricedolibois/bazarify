@@ -1,11 +1,9 @@
 import React from 'react'
 
-function Button(props) {
-  const { label, onClick } = props
-
+function BtnSubmit({label, type}) {
   return (
-    <button onClick={onClick}>{label}</button>
+    <button type={type}>{label}</button>
   )
 }
 
-export default Button
+export default BtnSubmit

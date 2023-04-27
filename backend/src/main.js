@@ -1,10 +1,17 @@
-import express from 'express'
+import express, { urlencoded } from 'express'
 const app = express()
 import { ProductManager } from './manager/ProductManager.js'
 
 ProductManager.connectToDB()
 //Insert into DB
 //ProductManager.addProduct(5,"Samu", 420)
+
+app.use(express.json())
+app.use(urlencoded({extended: true}))
+app.use((req, res, next) => {
+    res.header("Access-Allow-Origin", "http://localhost") //allow localhost for api
+})
+
 
 //Get from DB
 app.get("/api", (req, res) => {
@@ -15,6 +22,7 @@ app.get("/api", (req, res) => {
 
 // Add new product to DB
 app.post("/api/add-product", (req, res) => {
+    console.log(req.body)
     const { id, name, price } = req.body;
     ProductManager.addProduct(id, name, price)
       .then(() => res.status(200).json({ message: 'Product added successfully' }))
