@@ -44,7 +44,19 @@ export class dbConnection {
         return await this.db.collection(collectionName).updateOne(filter, update);
     }
 
+    async updateMany(collectionName, filter, update) {
+        return await this.db.collection(collectionName).updateMany(filter, update);
+    }
+
     async deleteOne(collectionName, filter) {
         return await this.db.collection(collectionName).deleteOne(filter);
+    }
+
+    async deleteMany(collectionName, filter) {
+        return await this.db.collection(collectionName).deleteMany(filter);
+    }
+
+    async exists(collectionName, filter) {
+        return await this.db.collection(collectionName).findOne(filter) != null
     }
 }

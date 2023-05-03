@@ -11,14 +11,21 @@ export class ProductManager {
         this.dbConnection.close()
     }
 
-    async addProduct(id, name, price) {
-        const doc = {"id": id, "name": name, "price": price }
+
+    async addProduct(id, name, price, customername, customerprename, customeraddress, customeremail, customerphone) {
+
+        if( await this.dbConnection.exists("articles", {"id": id}) == false ){
+        const doc = {"id": id, "name": name, "price": price, "customername": customername, "customerprename": customerprename, "customeraddress": customeraddress, "customeremail": customeremail, "customerphone": customerphone}
         this.dbConnection.insertOne("articles", doc).then(
-            r => { console.log("("+doc.id+", "+doc.name +", "+ doc.price +") was inserted!") })
+            r => { console.log("("+id+", "+name +", "+ price +") was inserted!")})
+        }
+        else{
+            console.log("Product already exists!")
+        }
     }
 
     async getProductById(id) {
-        return await this.dbConnection.findOne("articles", {"id": id})
+            return await this.dbConnection.findOne("articles", {"id": id})
     }
 
     async getProductByName(name) {
@@ -29,17 +36,29 @@ export class ProductManager {
         return await this.dbConnection.findAll("articles")
     }
 
-    async updateProduct(id, name, price) {
+    async updateProduct(id, name, price, customername, customerprename, customeraddress, customeremail, customerphone) {
         const filter = {"id": id}
-        const update = {$set: {"name": name, "price": price}}
+        const update = {$set: {"name": name, "price": price, "customername": customername, "customerprename": customerprename, "customeraddress": customeraddress, "customeremail": customeremail, "customerphone": customerphone}}
         this.dbConnection.updateOne("articles", filter, update).then(
             r => { console.log("("+id+", "+name +", "+ price +") was updated!") })
+    }
+
+    async updateAllProducts(name, price, customername, customerprename, customeraddress, customeremail, customerphone) {
+        const filter = {}
+        const update = {$set: {"name": name, "price": price, "customername": customername, "customerprename": customerprename, "customeraddress": customeraddress, "customeremail": customeremail, "customerphone": customerphone}}
+        this.dbConnection.updateMany("articles", filter, update).then(
+            r => { console.log("All products were updated!") })
     }
 
     async deleteProduct(id) {
         const filter = {"id": id}
         this.dbConnection.deleteOne("articles", filter).then(
             r => { console.log("("+id+") was deleted!") })
+    }
+
+    async deleteAllProducts() {
+        this.dbConnection.deleteMany("articles", {}).then(
+            r => { console.log("All products were deleted!") })
     }
 
 }
