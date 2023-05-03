@@ -36,6 +36,10 @@ export class dbConnection {
         return await this.db.collection(collectionName).findOne(filter);
     }
 
+    async findAll(collectionName) {
+        return await this.db.collection(collectionName).find().toArray();
+    }
+
     async updateOne(collectionName, filter, update) {
         return await this.db.collection(collectionName).updateOne(filter, update);
     }
