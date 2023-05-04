@@ -1,6 +1,12 @@
-import express from 'express'
+import express, { urlencoded } from 'express'
 const app = express()
 import { ProductManager } from './manager/ProductManager.js'
+
+app.use(express.json())
+app.use(urlencoded({extended:true}))
+app.use((req, res, next) => {
+    res.header("Access-Allow-Origin", "http://localhost") //allow localhost for api
+})
 
 let pmanager= new ProductManager();
 
