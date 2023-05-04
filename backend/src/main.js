@@ -1,12 +1,16 @@
 import express, { urlencoded } from 'express'
+import cors from'cors'
 const app = express()
 import { ProductManager } from './manager/ProductManager.js'
 
+
+
 app.use(express.json())
 app.use(urlencoded({extended:true}))
-app.use((req, res, next) => {
-    res.header("Access-Allow-Origin", "http://localhost") //allow localhost for api
-})
+
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://localhost:3001']
+}));
 
 let pmanager= new ProductManager();
 
@@ -17,7 +21,7 @@ pmanager.connectToDB()
 app.post("/api/add-product", (req, res) => {
     console.log(req.body)
     pmanager.addProduct(req.body.id, req.body.name, req.body.price, "Müller", "Max", "Musterweg 1" , "12345 Musterstadt", "max.müller@gmail.com", "01752 86753 37869")
-    res.json({"backendData":req.body})
+    
 })
 
 //Get all from DB
@@ -40,7 +44,7 @@ app.post("/api/add-product", (req, res) => {
 
 //Get from DB
 app.get("/api", (req, res) => {
-    pmanager.getProductById(1).then(product => {
+    pmanager.getProductById("211").then(product => {
         console.log(product)
     res.json({"backendData":[product.name, product.price] })
 })
