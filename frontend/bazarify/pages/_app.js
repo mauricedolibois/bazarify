@@ -29,14 +29,14 @@ export default function App({ Component, pageProps }) {
       
     };
     console.log(requestOptions)
-    /*try{
+    try{
       console.log("try ausgeführt")
       await fetch('http://localhost:8085/api/add-product', requestOptions)
             .then(response => response.json())
             .then(data => console.log("data"))
     } catch (error){
       console.log("Catch Error: " + error.response)
-    }*/
+    }
     };
 
     useEffect(() => {
