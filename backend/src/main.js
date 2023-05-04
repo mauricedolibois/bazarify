@@ -2,14 +2,37 @@ import express from 'express'
 const app = express()
 import { ProductManager } from './manager/ProductManager.js'
 
-ProductManager.connectToDB()
+let pmanager= new ProductManager();
+
+//Connect to DB
+pmanager.connectToDB()
+
 //Insert into DB
-ProductManager.addProduct(5,"Samu", 420)
+pmanager.addProduct(1,"Ski", 69, "Müller", "Max", "Musterweg 1, 12345 Musterstadt", "max.müller@gmail.com", "01752 86753 37869" )
+
+//Get all from DB
+/* pmanager.getAllProducts().then(product => {
+    console.log(product)
+}) */
+
+//Update DB
+//pmanager.updateProduct(1,"Samu", 69)
+
+//Update all from DB
+//pmanager.updateAllProducts("Samu", 69)
+
+//Delete from DB
+//pmanager.deleteProduct(1)
+
+
+//Delete all from DB
+//pmanager.deleteAllProducts()
 
 //Get from DB
 app.get("/api", (req, res) => {
-    ProductManager.getProductById(5).then(product => {
-    res.json({"backendData": [product.name, product.price] })
+    pmanager.getProductById(1).then(product => {
+        console.log(product)
+    res.json({"backendData":[product.name, product.price] })
 })
 })
 

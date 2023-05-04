@@ -10,6 +10,7 @@ class ProductModel {
         this.categoryId = 0;
     }
 
+
     get id() {
         return this.id;
     }
