@@ -30,7 +30,7 @@ pmanager.addProduct(1,"Ski", 69, "Müller", "Max", "Musterweg 1, 12345 Mustersta
 
 //Get from DB
 app.get("/api", (req, res) => {
-    pmanager.getProductByName("Samu").then(product => {
+    pmanager.getProductById(1).then(product => {
         console.log(product)
     res.json({"backendData":[product.name, product.price] })
 })
