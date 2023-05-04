@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 export default function App({ Component, pageProps }) {
   const [backendData, setBackendData] = useState([{}])
 
-  useEffect(() => {
+ useEffect(() => {
     fetch("/api").then(
       response =>  response.json()
     ).then(
