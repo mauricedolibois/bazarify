@@ -14,7 +14,11 @@ let pmanager= new ProductManager();
 pmanager.connectToDB()
 
 //Insert into DB
-pmanager.addProduct(1,"Ski", 69, "Müller", "Max", "Musterweg 1, 12345 Musterstadt", "max.müller@gmail.com", "01752 86753 37869" )
+app.post("/api/add-product", (req, res) => {
+    console.log(req.body)
+    pmanager.addProduct(req.body.id, req.body.name, req.body.price, "Müller", "Max", "Musterweg 1" , "12345 Musterstadt", "max.müller@gmail.com", "01752 86753 37869")
+    res.json({"backendData":req.body})
+})
 
 //Get all from DB
 /* pmanager.getAllProducts().then(product => {
