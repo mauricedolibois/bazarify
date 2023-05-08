@@ -64,17 +64,20 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Component {...pageProps} />
-      <h1>Hallo Maurice!</h1>
+      <h1>Bazarify MVP</h1>
 
       <form onSubmit={handleFormSubmit}>
+      <h2>Input</h2>
           <TextInput label="ID des Artikels:" name="id" value={inputID} onChange={e => setInputID(e.target.value)} />
           <TextInput label="Name des Artikels:" name="name" value={inputName} onChange={e => setInputName(e.target.value)} />
           <TextInput label="Preis des Artikels:" name="price" value={inputPrice} onChange={e => setInputPrice(e.target.value)} />
           <button type='submit'>Submit</button>
           <p>{text}</p>
       </form>
+
+      <h2>Products</h2>
       <div>
-        {(backendData && typeof backendData.backendData === 'undefined') ? (<p>loading...</p>) : (backendData && backendData.backendData.map((item, index) => ( <p key={index}>{item.name} {item.price}</p>)))}
+        {(backendData && typeof backendData.backendData === 'undefined') ? (<p>loading...</p>) : (backendData && backendData.backendData.map((item, index) => ( <p key={index}>{item.id} {item.name} {item.price} </p>)))}
       </div>
     </>
   )
