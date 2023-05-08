@@ -2,7 +2,8 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #2e2e2e;
+    background: rgb(59,59,59);
+    background: linear-gradient(90deg, rgba(59,59,59,1) 0%, rgba(54,46,37,1) 45%, rgba(43,59,62,1) 100%);
     color: #fff;
   }
   
@@ -13,19 +14,23 @@ body {
   justify-content: space-around;
   align-items: center;
   margin: 0 auto;
+
   width: 100%;
   max-width: 1200px;
   padding: 20px;
   box-sizing: border-box;
-  background-color: #131313;
+  background-color: rgb(19, 19, 19, 0.6);
   border-radius: 20px;
  }
 
   h1 {
     text-align: center;
     margin-top: 20px;
-    color: #cfa10b;
+    color: #eebd1e;
     text-transform: uppercase;
+    padding: 10px;
+    border-radius: 10px;
+  
   }
   
   /* Form styles */
@@ -34,7 +39,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    margin-bottom: 20px;
   }
   
   form input[type="text"] {
@@ -48,7 +53,7 @@ body {
   
   form button[type="submit"] {
     padding: 10px 20px;
-    background-color: #dbb434;
+    background-color: #eebd1e;
     color: #2e2e2e;
     border: none;
     border-radius: 5px;
@@ -70,7 +75,7 @@ body {
   
   h2 {
     text-align: center;
-    margin-top: 20px;
+
   }
   
   #barcode {
@@ -100,7 +105,7 @@ body {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #cfa10b;
+    background-color: #eebd1e;
   }
   
   div p button:hover {

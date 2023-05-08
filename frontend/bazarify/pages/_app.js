@@ -116,10 +116,11 @@ export default function App({ Component, pageProps }) {
       {/* <h2>SearchProduct</h2>
       <TextInput label="ID des Artikels:" name="id" value={inputID} onChange={e => setInputID(e.target.value)} />
       <button onClick={() => getItem(inputID)}>Search</button> */}
+     
       <form onSubmit={handleFormSubmit}>
       <h2>Input</h2>
-          <TextInput label="Name des Artikels:" name="name" value={inputName} onChange={e => setInputName(e.target.value)} />
-          <TextInput label="Preis des Artikels:" name="price" value={inputPrice} onChange={e => setInputPrice(e.target.value)} />
+          <TextInput label="Name of Product:" name="name" value={inputName} onChange={e => setInputName(e.target.value)} />
+          <TextInput label="Price of Product:" name="price" value={inputPrice} onChange={e => setInputPrice(e.target.value)} />
           <button type='submit' onClick={() => {
             setInputID(Math.floor(10000000000 + Math.random() * 90000000000).toString())
             window.location.reload()}}>Submit</button>
