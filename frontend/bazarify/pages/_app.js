@@ -2,6 +2,7 @@ import React, { useState, useEffect, use } from 'react'
 import TextInput from '../components/textField'
 import BtnSubmit from '../components/button';
 import JsBarcode from 'jsbarcode';
+import "./app.css";
 
 
 export default function App({ Component, pageProps }) {
@@ -111,11 +112,10 @@ export default function App({ Component, pageProps }) {
     <>
       <Component {...pageProps}/>
       <h1>Bazarify MVP</h1>
-      
+
       {/* <h2>SearchProduct</h2>
       <TextInput label="ID des Artikels:" name="id" value={inputID} onChange={e => setInputID(e.target.value)} />
       <button onClick={() => getItem(inputID)}>Search</button> */}
-
       <form onSubmit={handleFormSubmit}>
       <h2>Input</h2>
           <TextInput label="Name des Artikels:" name="name" value={inputName} onChange={e => setInputName(e.target.value)} />
@@ -126,6 +126,7 @@ export default function App({ Component, pageProps }) {
           <p>{text}</p>
       </form>
 
+      <div id="products">
       <h2>Products</h2>
       <svg id="barcode"></svg>
       <div>
@@ -145,6 +146,7 @@ export default function App({ Component, pageProps }) {
           }}>Delete</button>
 
         </p>)))}
+      </div>
       </div>
     </>
   )
