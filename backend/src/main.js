@@ -44,9 +44,17 @@ app.post("/api/add-product", (req, res) => {
 
 //Get from DB
 app.get("/api", (req, res) => {
-    pmanager.getProductById("211").then(product => {
+    pmanager.getProductById("2").then(product => {
         console.log(product)
-    res.json({"backendData":[product.name, product.price] })
+    res.json({"backendData":[product.id, product.name, product.price] })
+})
+})
+
+//Get all from DB
+app.get("/api/all", (req, res) => {
+    pmanager.getAllProducts().then(product => {
+        console.log(product)
+    res.json({"backendData":product })
 })
 })
 

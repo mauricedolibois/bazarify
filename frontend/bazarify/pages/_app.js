@@ -40,7 +40,17 @@ export default function App({ Component, pageProps }) {
     }
     };
 
-    useEffect(() => {
+      useEffect(() => {
+      fetch('http://localhost:8085/api/all')
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          setBackendData(data)
+        })
+        .catch(error => console.log(error))
+    }, [])
+
+    /* useEffect(() => {
       fetch('http://localhost:8085/api')
         .then(res => res.json())
         .then(data => {
@@ -49,15 +59,12 @@ export default function App({ Component, pageProps }) {
         })
         .catch(error => console.log(error))
     }, [])
-
+ */
 
   return (
     <>
       <Component {...pageProps} />
       <h1>Hallo Maurice!</h1>
-      <div>
-        {(backendData && typeof backendData.backendData === 'undefined') ? (<p>loading...</p>) : (backendData?.backendData?.map((data, i) => <p key={i}>{data}</p>))}
-      </div>
 
       <form onSubmit={handleFormSubmit}>
           <TextInput label="ID des Artikels:" name="id" value={inputID} onChange={e => setInputID(e.target.value)} />
@@ -66,6 +73,9 @@ export default function App({ Component, pageProps }) {
           <button type='submit'>Submit</button>
           <p>{text}</p>
       </form>
+      <div>
+        {(backendData && typeof backendData.backendData === 'undefined') ? (<p>loading...</p>) : (backendData && backendData.backendData.map((item, index) => ( <p key={index}>{item.name} {item.price}</p>)))}
+      </div>
     </>
   )
-}
+} 
