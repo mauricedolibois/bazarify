@@ -1,23 +1,11 @@
 import '@/styles/globals.css'
-import { useState, useEffect } from 'react'
 
 export default function App({ Component, pageProps }) {
-  const [backendData, setBackendData] = useState([{}])
-
-  useEffect(() => {
-    fetch("/api").then(
-      response =>  response.json()
-    ).then(
-      data => { setBackendData(data) }
-    )
-  }, [])
-
   return <>
+    {
+      // Hier wird am Anfang der Index reingerendet. Hier können wir Komponenten darstellen, die auf jeder Seite gleich sind, typischerweise Dinge wie ein Footer.
+      // The Component prop is the active page, so whenever you navigate between routes, Component will change to the new page. Therefore, any props you send to Component will be received by the page. Source: https://nextjs.org/docs/pages/building-your-application/routing/custom-app
+    }
     <Component {...pageProps} />
-    <h1>Hallo Maurice!</h1>
-    <div>
-      {(typeof backendData.backendData === 'undefined') ? (<p>loading...</p>) : (backendData.backendData.map((data, i) => <p key={i}>{data}</p>))}
-    </div>
-
   </>
 }
