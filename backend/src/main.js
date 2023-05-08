@@ -43,19 +43,22 @@ app.post("/api/add-product", (req, res) => {
 //pmanager.deleteAllProducts()
 
 //Get from DB
-app.get("/api", (req, res) => {
-    pmanager.getProductById("2").then(product => {
-        console.log(product)
-    res.json({"backendData":[product.id, product.name, product.price] })
+app.get("/api/getproduct", (req, res) => {
+    pmanager.getProductById(req.body.id).then(product => {
+    res.json({"backendData":product })
 })
 })
 
 //Get all from DB
 app.get("/api/all", (req, res) => {
     pmanager.getAllProducts().then(product => {
-        console.log(product)
     res.json({"backendData":product })
 })
+})
+
+app.delete("/api/deleteproduct", (req, res) => {
+    pmanager.deleteProduct(req.body.id)
+    res.json({"backendData":"Product deleted" })
 })
 
 app.listen(8085, () => { console.log("Server started on port 8085") })

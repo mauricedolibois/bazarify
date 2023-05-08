@@ -14,7 +14,7 @@ export class ProductManager {
 
     async addProduct(id, name, price, customername, customerprename, customeraddress, customeremail, customerphone) {
 
-        if( await this.dbConnection.exists("articles", {"id": id}) == false ){
+        if( await this.dbConnection.exists("articles", {"id": id}) == false && id.length >=1 && name.length >=1 && price.length >=1){
         const doc = {"id": id, "name": name, "price": price, "customername": customername, "customerprename": customerprename, "customeraddress": customeraddress, "customeremail": customeremail, "customerphone": customerphone}
         this.dbConnection.insertOne("articles", doc).then(
             r => { console.log("("+id+", "+name +", "+ price +") was inserted!")})
