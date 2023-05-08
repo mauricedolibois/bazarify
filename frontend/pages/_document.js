@@ -10,7 +10,7 @@ export default function Document() {
         <Head>
           <title>Bazarify - Dein einfachster Bazar bisher!</title>
         </Head>
-        <body className="bg-ourBackgroundColor">
+        <body className="bg-ourBackgroundColor font-inter">
           <Main />
           <NextScript />
         </body>

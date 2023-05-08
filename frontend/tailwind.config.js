@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
+        serif: ['Pacifico', 'serif'],
       },
       colors: {
         ourPrimaryColor: "#DEAE31",
