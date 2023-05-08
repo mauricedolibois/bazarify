@@ -1,6 +1,6 @@
 # Bazarify
 
-# Vor dem ersten Start ohne Docker
+## Vor dem ersten Start ohne Docker
 
 Vor dem ersten Start sollte man folgende Schritte ausführen:
 
@@ -25,3 +25,10 @@ Zum frontend folder navigieren
 
 npm start
 
+## Unicons installieren
+1. Unicons ins Frontend installieren: Im Frontend/bazarify Ordner folgenden Befehl ausführen: npm install --save @iconscout/react-unicons
+2. Hier das Icon aussuchen: https://iconscout.com/unicons/explore/line
+3. Draufklicken, auf der rechten Sidebar auf React klicken
+4. Dann auf Copy
+5. In der Datei importieren
+6. Wie ein HTML-Tag nutzen
