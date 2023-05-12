@@ -1,0 +1,28 @@
+version: '3'
+services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: maik
+      MONGO_INITDB_ROOT_PASSWORD: abc123
+    ports:
+      - '27017:27017'
+  frontend:
+    build: ./frontend/bazarify
+    ports:
+     - "3001:3000"
+    command: npm run dev
+    depends_on:
+      - backend
+    links:
+      - backend
+    
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8085"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017

@@ -21,7 +21,6 @@ pmanager.connectToDB()
 app.post("/api/add-product", (req, res) => {
     console.log(req.body)
     pmanager.addProduct(req.body.id, req.body.name, req.body.price, "Müller", "Max", "Musterweg 1" , "12345 Musterstadt", "max.müller@gmail.com", "01752 86753 37869")
-    
 })
 
 //Get all from DB

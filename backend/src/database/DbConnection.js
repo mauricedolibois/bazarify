@@ -8,7 +8,7 @@ export class dbConnection {
             try {
                 const username = encodeURIComponent("maik");
                 const password = encodeURIComponent("abc123");
-                const clusterUrl = "127.0.0.1:27017";
+                const clusterUrl = "mongo:27017";
                 const uri = `mongodb://${username}:${password}@${clusterUrl}/?authMechanism=DEFAULT`;
                 this.client = new MongoClient(uri);
                 this.db = this.client.db('Bazarify')
