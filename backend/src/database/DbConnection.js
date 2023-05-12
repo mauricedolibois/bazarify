@@ -1,18 +1,22 @@
 import { MongoClient } from 'mongodb'
+import { createRequire } from "module"
+const require = createRequire(import.meta.url)
 import express from 'express'
 import mongoose from 'mongoose'
+const Product = require('./schemas/ProductSchema.cjs')
+const Customer = require('./schemas/CustomerSchema.cjs')
+const Sale = require('./schemas/SaleSchema.cjs')
 
 export class dbConnection {
 
     async connectToDB() {
         if(this.db == null){
             try {
-
                 const username = encodeURIComponent("maik");
                 const password = encodeURIComponent("abc123");
                 const clusterUrl = "localhost:27017";
                 const uri = `mongodb://${username}:${password}@${clusterUrl}/?authMechanism=DEFAULT`;
-                await mongoose.connect(uri).then(console.log("Connected to DB"))
+                await mongoose.connect(uri).then(console.log("Connected to DB")).then(this.db = mongoose.connection).then(this.insertOne())
             } catch (error) {
                 console.log(error)
             }
@@ -27,8 +31,12 @@ export class dbConnection {
         return this.client.close();
     }
 
-    async insertOne(collectionName, document) {
-        return await this.db.collection(String(collectionName)).insertOne(document)
+    async insertOne() {
+        const product = await Product.create({product_price: 12, product_name : "Ski"})
+        await product.save().then(console.log(product))
+        
+       // return await this.db.collection(String(collectionName)).insertOne(document)
+        
     }
 
     async findOne(collectionName, filter) {
