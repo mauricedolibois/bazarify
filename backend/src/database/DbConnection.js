@@ -1,19 +1,18 @@
 import { MongoClient } from 'mongodb'
 import express from 'express'
+import mongoose from 'mongoose'
 
 export class dbConnection {
 
     async connectToDB() {
         if(this.db == null){
             try {
+
                 const username = encodeURIComponent("maik");
                 const password = encodeURIComponent("abc123");
-                const clusterUrl = "127.0.0.1:27017";
+                const clusterUrl = "localhost:27017";
                 const uri = `mongodb://${username}:${password}@${clusterUrl}/?authMechanism=DEFAULT`;
-                this.client = new MongoClient(uri);
-                this.db = this.client.db('Bazarify')
-                await this.client.connect()
-                console.log("Connected to DB")
+                await mongoose.connect(uri).then(console.log("Connected to DB"))
             } catch (error) {
                 console.log(error)
             }
