@@ -65,6 +65,14 @@ const Sale = require('./schemas/SaleSchema.cjs')
         const filter = {[operator]: parameter}
         Product.updateOne(filter, update).then(console.log("product updated"))
     },
+    async updateCustomer(operator, parameter, update) {
+        const filter = {[operator]: parameter}
+        Customer.updateOne(filter, update).then(console.log("customer updated"))
+    },
+    async updateSale(operator, parameter, update) {
+        const filter = {[operator]: parameter}
+        Sale.updateOne(filter, update).then(console.log("sale updated"))
+    },
     async deleteAllProducts() {
         await Product.deleteMany().then(console.log("All products deleted"))
     },

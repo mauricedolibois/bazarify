@@ -19,9 +19,9 @@ dbConnection.connectToDB()
 //dbConnection.deleteAllSales()
 //dbConnection.close()
 
-dbConnection.insertProduct(1,"test", 69)
-dbConnection.insertCustomer("bucher", "maik", "maik@bucher.de", 12345)
-dbConnection.insertSale(1,1,1)
+// dbConnection.insertProduct(1,"test", 69)
+// dbConnection.insertCustomer("bucher", "maik", "maik@bucher.de", 12345)
+// dbConnection.insertSale(1,1,1)
 
 //dbConnection.findProduct("product_id", 1).then(product => {console.log(product)})
 //dbConnection.updateProduct("product_id", 1, {product_name: "test2"})
@@ -63,6 +63,14 @@ app.get("/api/getAllCustomers", (req, res) => {
     res.send(customer)
   })
 })
+
+app.get("/api/getAllSales", (req, res) => {
+  dbConnection.findAllSales().then(sale => {
+    res.send(sale)
+  })
+})
+
+
 
 app.listen(8085, () => { console.log("Server started on port 8085") })
 

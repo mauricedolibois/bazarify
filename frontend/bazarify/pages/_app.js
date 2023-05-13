@@ -6,7 +6,8 @@ export default function App({ Component, pageProps }) {
   const [inputID, setInputID] = useState("");
   const [inputName, setInputName] = useState("");
   const [inputPrice, setInputPrice] = useState("");
-  const [text, setText] = useState("");
+  const [product, setProduct] = useState("");
+  const [allCustomers, setAllCustomers] = useState("");
 
   
   
@@ -24,7 +25,18 @@ export default function App({ Component, pageProps }) {
         .then(res => res.json())
         .then(data => {
           console.log(data)
-          setText(JSON.stringify(data))
+          setProduct(JSON.stringify(data))
+        })
+        .catch(error => console.log(error))
+    }, [])
+
+    //GetAllCustomers
+    useEffect(() => {
+      fetch('http://localhost:8085/api/getAllCustomers')
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          setAllCustomers(JSON.stringify(data))
         })
         .catch(error => console.log(error))
     }, [])
@@ -40,7 +52,10 @@ export default function App({ Component, pageProps }) {
           <TextInput label="Name des Artikels:" name="name" value={inputName} onChange={e => setInputName(e.target.value)} />
           <TextInput label="Preis des Artikels:" name="price" value={inputPrice} onChange={e => setInputPrice(e.target.value)} />
           <button type='submit'>Submit</button>
-          <p>{text}</p>
+          Product:
+          <p>{product}</p>
+          AllCustomers:
+          <p>{allCustomers}</p>
       </form>
     </>
   )
