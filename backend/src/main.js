@@ -29,12 +29,48 @@ dbConnection.insertSale(1,1,1)
 
 
 //Get from DB
-// app.get("/api", (req, res) => {
-//     pmanager.getProductById("211").then(product => {
-//         console.log(product)
-//     res.json({"backendData":[product.name, product.price] })
-// })
-// })
+app.get("/api/getProduct", (req, res) => {
+  const filter = {[req.query.operator]: req.query.parameter}
+  dbConnection.findProduct(filter).then(product => {
+    res.send(product)
+    console.log(product)
+  })
+})
+
+app.get("/api/getCustomer", (req, res) => {
+  const filter = {[req.query.operator]: req.query.parameter}
+  dbConnection.findCustomer(filter).then(customer => {
+    res.send(customer)
+  })
+})
+
+app.get("/api/getSale", (req, res) => {
+  const filter = {[req.query.operator]: req.query.parameter}
+  dbConnection.findSale(filter).then(sale => {
+    res.send(sale)
+  })
+})
+
+app.get("/api/getAllProducts", (req, res) => {
+  dbConnection.findAllProducts().then(product => {
+    res.send(product)
+
+  })
+})
+
+app.get("/api/getAllCustomers", (req, res) => {
+  dbConnection.findAllCustomers().then(customer => {
+    res.send(customer)
+  })
+})
+
+app.get("/api/getAllSales", (req, res) => {
+  dbConnection.findAllSales().then(sale => {
+    res.send(sale)
+  })
+})
+
+
 
 app.listen(8085, () => { console.log("Server started on port 8085") })
 

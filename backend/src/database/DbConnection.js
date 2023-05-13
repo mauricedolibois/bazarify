@@ -30,7 +30,7 @@ const DbIdHandler = require('./DbIdHandler.cjs')
         }
         catch{console.log("product already exists")}
     },
-    async insertCustomer(name, firstname, email, phone) {
+    async insertCustomer(id, name, firstname, email, phone) {
         try{
             var id = DbIdHandler.generateCustomerId()
             while((await this.findProduct('customer_id', id)).length != 0){
@@ -54,15 +54,15 @@ const DbIdHandler = require('./DbIdHandler.cjs')
     },
     async findProduct(operator, parameter) {
         const filter = {[operator]: parameter}
-        return await Product.find(filter);
+        return await Product.findOne(filter);
     },
     async findCustomer(operator, parameter) {
         const filter = {[operator]: parameter}
-        return await Customer.find(filter);
+        return await Customer.findOne(filter);
     },
     async findSale(operator, parameter) {
         const filter = {[operator]: parameter}
-        return await Sale.find(filter);
+        return await Sale.findOne(filter);
     },
     async findAllProducts() {
         return await Product.find();
@@ -76,6 +76,14 @@ const DbIdHandler = require('./DbIdHandler.cjs')
     async updateProduct(operator, parameter, update) {
         const filter = {[operator]: parameter}
         Product.updateOne(filter, update).then(console.log("product updated"))
+    },
+    async updateCustomer(operator, parameter, update) {
+        const filter = {[operator]: parameter}
+        Customer.updateOne(filter, update).then(console.log("customer updated"))
+    },
+    async updateSale(operator, parameter, update) {
+        const filter = {[operator]: parameter}
+        Sale.updateOne(filter, update).then(console.log("sale updated"))
     },
     async deleteAllProducts() {
         await Product.deleteMany().then(console.log("All products deleted"))
