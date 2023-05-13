@@ -7,4 +7,4 @@ const ProductSchema = new Schema({
     product_name: {type: String, require: true},
     product_price: { type: Number, required: true }
 })
-module.exports = mongoose.model('product', ProductSchema)
+module.exports = mongoose.connection.model('product', ProductSchema)
