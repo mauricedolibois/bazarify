@@ -54,7 +54,7 @@ app.get("/api/getSale", (req, res) => {
 app.get("/api/getAllProducts", (req, res) => {
   dbConnection.findAllProducts().then(product => {
     res.send(product)
-    console.log(product)
+
   })
 })
 

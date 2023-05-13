@@ -42,15 +42,15 @@ const Sale = require('./schemas/SaleSchema.cjs')
     },
     async findProduct(operator, parameter) {
         const filter = {[operator]: parameter}
-        return await Product.find(filter);
+        return await Product.findOne(filter);
     },
     async findCustomer(operator, parameter) {
         const filter = {[operator]: parameter}
-        return await Customer.find(filter);
+        return await Customer.findOne(filter);
     },
     async findSale(operator, parameter) {
         const filter = {[operator]: parameter}
-        return await Sale.find(filter);
+        return await Sale.findOne(filter);
     },
     async findAllProducts() {
         return await Product.find();
