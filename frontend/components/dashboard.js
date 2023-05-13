@@ -2,6 +2,15 @@ import { UilPlay } from '@iconscout/react-unicons'
 import { UilPlus } from '@iconscout/react-unicons'
 import { UilAngleRight } from '@iconscout/react-unicons'
 
+function BazarCard({name}) {
+    return (
+        <div class="border bg-white border-ourLightGray px-4 py-2 rounded-lg flex justify-between">
+            {name}
+            <UilAngleRight class="inline-block -mr-2 text-ourGray" />
+        </div>
+    )
+}
+
 export default function () {
     return (
         <>
@@ -20,26 +29,11 @@ export default function () {
                 </div>
                 <h2 className="mt-16">Deine Basare</h2>
                 <div class="grid grid-cols-3 gap-4">
-                    <div class="rounded border bg-white border-gray-300 px-4 py-2 flex justify-between">
-                        Skibasar 2023
-                        <UilAngleRight class="inline-block -mr-2 text-ourGray" />
-                    </div>
-                    <div class="rounded border bg-white border-gray-300 px-4 py-2 flex justify-between">
-                        Skibasar 2022
-                        <UilAngleRight class="inline-block -mr-2 text-ourGray" />
-                    </div>
-                    <div class="rounded border bg-white border-gray-300 px-4 py-2 flex justify-between">
-                        Skibasar 2021
-                        <UilAngleRight class="inline-block -mr-2 text-ourGray" />
-                    </div>
-                    <div class="rounded border bg-white border-gray-300 px-4 py-2 flex justify-between">
-                        Skibasar 2020
-                        <UilAngleRight class="inline-block -mr-2 text-ourGray" />
-                    </div>
-                    <div class="rounded border bg-white border-gray-300 px-4 py-2 flex justify-between">
-                        Skibasar 2019
-                        <UilAngleRight class="inline-block -mr-2 text-ourGray" />
-                    </div>
+                    <BazarCard name="Bazar 2023" />
+                    <BazarCard name="Bazar 2022" />
+                    <BazarCard name="Bazar 2021" />
+                    <BazarCard name="Bazar 2020" />
+                    <BazarCard name="Bazar 2019" />
                 </div>
             </div>
         </>
