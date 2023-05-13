@@ -16,6 +16,11 @@ app.use(cors({
   origin: ['http://localhost:3000', 'http://localhost:3001']
 }));
 
+//api auf homepage verlinken
+app.get('/', (req, res) => {
+  res.send('localhost:8085/api')
+})
+
 
 dbConnection.connectToDB()
 
@@ -23,9 +28,7 @@ app.listen(8085, () => { console.log("Server started on port 8085") })
 
 
 //alles auf require umstellen
-//mehr aufsplitten api routen unterrouten /produkte /kunden /verkäufe put update delete
-//api router auf /api in seperaten dateien
-//api auf homepage verlinken
+//put update delete
 //middleware regsitrieren
 //controller für die api
 //router für die api

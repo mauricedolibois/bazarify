@@ -22,3 +22,9 @@ productRouter.get("/allProducts", (req, res) => {
 }
 )
 
+// productRouter.post("/product", (req, res) => {
+//     dbConnection.insertProduct(req.query.name, req.query.price).then
+//     (product => { res.send(product) })  
+//     })
+
+

@@ -36,6 +36,20 @@ export default function App({ Component, pageProps }) {
         .catch(error => console.log(error))
     }, [])
 
+    // //PostProduct
+    // useEffect(() => {
+    //   const requestOptions = {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ name: 'Ski', price: 100 })
+    // };
+    //   fetch('http://localhost:8085/api/product', requestOptions)
+    //     .then(res => res.json())
+    //     .then(data => {
+    //       console.log(data)
+    //     })
+    //     .catch(error => console.log(error))
+    // }, [])
 
   return (
     <>
