@@ -3,8 +3,6 @@ import TextInput from '../components/textField'
 import BtnSubmit from '../components/button';
 
 export default function App({ Component, pageProps }) {
-  const [operator, setOperator] = useState("product_id");
-  const [inputID, setInputID] = useState();
   const [product, setProduct] = useState("");
   const [allProducts, setAllProducts] = useState("");
   
@@ -15,6 +13,8 @@ export default function App({ Component, pageProps }) {
     };
 
     //Getproduct
+    const inputID = 1
+    const operator = "product_id"
     useEffect(() => {
       fetch('http://localhost:8085/api/getProduct?operator='+operator+'&parameter='+inputID)
         .then(res => res.json())
@@ -43,9 +43,7 @@ export default function App({ Component, pageProps }) {
       <h1>Hallo Maurice!</h1>
 
       <form onSubmit={handleFormSubmit}>
-          <TextInput label="Search ProductID:" name="id" value={inputID} onChange={e => setInputID(e.target.value)} />
-          <button type='submit' onClick={()=>{window.location.reload()} }>Submit</button>
-          <br/><br/>
+          
           Product:
           <p>{product}</p>
 
