@@ -28,23 +28,19 @@ dbConnection.connectToDB()
 //middleware regsitrieren
 //Get from DB
 app.get("/api/getProduct", (req, res) => {
-  const filter = {[req.query.operator]: req.query.parameter}
-  dbConnection.findProduct(filter).then(product => {
+  dbConnection.findProduct(req.query.operator, req.query.parameter).then(product => {
     res.send(product)
-    console.log(product)
   })
 })
 
 app.get("/api/getCustomer", (req, res) => {
-  const filter = {[req.query.operator]: req.query.parameter}
-  dbConnection.findCustomer(filter).then(customer => {
+  dbConnection.findCustomer(req.query.operator, req.query.parameter).then(customer => {
     res.send(customer)
   })
 })
 
 app.get("/api/getSale", (req, res) => {
-  const filter = {[req.query.operator]: req.query.parameter}
-  dbConnection.findSale(filter).then(sale => {
+  dbConnection.findSale(req.query.operator, req.query.parameter).then(sale => {
     res.send(sale)
   })
 })

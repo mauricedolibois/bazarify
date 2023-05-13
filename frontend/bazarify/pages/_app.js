@@ -5,6 +5,7 @@ import BtnSubmit from '../components/button';
 export default function App({ Component, pageProps }) {
   const [product, setProduct] = useState("");
   const [allProducts, setAllProducts] = useState("");
+  const [id, setID] = useState("");
   
 
     const handleFormSubmit = async (event) => {
@@ -13,17 +14,16 @@ export default function App({ Component, pageProps }) {
     };
 
     //Getproduct
-    const inputID = 1
     const operator = "product_id"
     useEffect(() => {
-      fetch('http://localhost:8085/api/getProduct?operator='+operator+'&parameter='+inputID, {method: 'GET'})
+      fetch('http://localhost:8085/api/getProduct?operator='+[operator]+'&parameter='+id, {method: 'GET'})
         .then(res => res.json())
         .then(data => {
           console.log(data)
           setProduct(JSON.stringify(data))
         })
         .catch(error => console.log(error))
-    }, [])//id hier rein (dependency array)
+    }, [id])//id hier rein (dependency array) damit useEffect bei jeder änderung von id triggert
 
     //GetAllProducts
     useEffect(() => {
@@ -40,16 +40,15 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Component {...pageProps} />
-      <h1>Hallo Maurice!</h1>
+      <h1>Produkte</h1>
 
-      <form onSubmit={handleFormSubmit}>
-          
-          Product:
+      <form>
+          <TextInput label="ID suchen: " type="number" value={id} onChange={e => setID(e.target.value)} />
+      </form>  
           <p>{product}</p>
 
           allProducts:
           <p>{allProducts}</p>
-      </form>
     </>
   )
 }
