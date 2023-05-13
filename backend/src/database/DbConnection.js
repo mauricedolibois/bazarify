@@ -44,6 +44,27 @@ const Sale = require('./schemas/SaleSchema.cjs')
         const filter = {[operator]: parameter}
         return await Product.find(filter);
     },
+    async findCustomer(operator, parameter) {
+        const filter = {[operator]: parameter}
+        return await Customer.find(filter);
+    },
+    async findSale(operator, parameter) {
+        const filter = {[operator]: parameter}
+        return await Sale.find(filter);
+    },
+    async findAllProducts() {
+        return await Product.find();
+    },
+    async findAllCustomers() {
+        return await Customer.find();
+    },
+    async findAllSales() {
+        return await Sale.find();
+    },
+    async updateProduct(operator, parameter, update) {
+        const filter = {[operator]: parameter}
+        Product.updateOne(filter, update).then(console.log("product updated"))
+    },
     async deleteAllProducts() {
         await Product.deleteMany().then(console.log("All products deleted"))
     },
