@@ -26,9 +26,9 @@ const Sale = require('./schemas/SaleSchema.cjs')
         }
         catch{console.log("product already exists")}
     },
-    async insertCustomer(name, firstname, email, phone) {
+    async insertCustomer(id, name, firstname, email, phone) {
         try{
-            const customer = await Customer.create({customer_name : name, customer_firstname: firstname, customer_email: email, customer_phone: phone})
+            const customer = await Customer.create({customer_id: id, customer_name : name, customer_firstname: firstname, customer_email: email, customer_phone: phone})
             await customer.save().then(console.log(customer))
         }
         catch{console.log("customer already exists")}
