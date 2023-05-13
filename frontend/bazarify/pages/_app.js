@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }) {
     //Getproduct
     const operator = "product_id"
     useEffect(() => {
-      fetch('http://localhost:8085/api/getProduct?operator='+[operator]+'&parameter='+id, {method: 'GET'})
+      fetch('http://localhost:8085/api/product?operator='+[operator]+'&parameter='+id, {method: 'GET'})
         .then(res => res.json())
         .then(data => {
           console.log(data)
@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }) {
 
     //GetAllProducts
     useEffect(() => {
-      fetch('http://localhost:8085/api/getAllProducts')
+      fetch('http://localhost:8085/api/allProducts', {method: 'GET'})
         .then(res => res.json())
         .then(data => {
           console.log(data)

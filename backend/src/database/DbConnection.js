@@ -8,7 +8,7 @@ const DbIdHandler = require('./DbIdHandler.cjs')
 
 
 
-  export const dbConnection = {
+export const dbConnection = {
     async connectToDB() {
         const username = encodeURIComponent("maik");
         const password = encodeURIComponent("abc123");
