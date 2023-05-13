@@ -10,7 +10,7 @@ const DbIdHandler = require('./DbIdHandler.cjs')
 
 
 
-  export const dbConnection = {
+export const dbConnection = {
     async connectToDB() {
         const username = encodeURIComponent("maik");
         const password = encodeURIComponent("abc123");
@@ -36,7 +36,6 @@ const DbIdHandler = require('./DbIdHandler.cjs')
         try{
             //mongoose.connection.db.collection('customers')
             var id = DbIdHandler.generateCustomerId()
-            console.log(id)
             while((await this.findCustomer('customer_id', id)) != null){
                 id = DbIdHandler.generateCustomerId()
             }
@@ -99,3 +98,5 @@ const DbIdHandler = require('./DbIdHandler.cjs')
         await Sale.deleteMany().then(console.log("All sales deleted"))
     }
 }
+
+//validierung
