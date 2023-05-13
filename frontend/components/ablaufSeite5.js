@@ -1,7 +1,16 @@
+function Card({ title, description }) {
+    <div class="flex flex-col justify-between rounded-md border border-gray-300 bg-red-400 p-4 shadow-md">
+        <h3>{title}</h3>
+        <p>{description}</p>
+    </div>
+}
+
 export default function () {
     return (
         <>
             <div>
+                <Card title={"23.600€"} description="Umsatz">TEST</Card>
+
                 <h1>5. Analytics und Bilanz</h1>
                 <p>Wow, was ein toller Basar! Hier siehst du noch einmal schwarz auf weiß, wie gut er gelaufen ist - vielleicht kannst du aus den Informationen fürs nächste Mal lernen.</p>
                 <div class="grid grid-cols-3 gap-6">

@@ -8,7 +8,7 @@ export default function Document() {
       }
       <Html lang="de">
         <Head>
-          <title>Bazarify - Dein einfachster Bazar bisher!</title>
+
         </Head>
         <body className="bg-ourBackgroundColor font-inter">
           <Main />

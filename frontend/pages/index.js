@@ -13,6 +13,9 @@ import ButtonV5 from "@/components/buttonV5";
 import FormInput from "@/components/FormInput";
 
 
+import Template from "@/components/template";
+import AddButton from "@/components/template";
+
 export default function Home() {
   return (
     <>
