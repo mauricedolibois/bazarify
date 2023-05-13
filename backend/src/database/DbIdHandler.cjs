@@ -1,15 +1,19 @@
 
+const { customAlphabet } = require('nanoid')
+const nanoidProduct = customAlphabet('1234567890', 10)
+const nanoid = customAlphabet('1234567890', 5)
+
 module.exports = {
     generateProductId: function(){
-         return Math.floor(Math.random()*1000000);
+         return nanoidProduct()
     },
 
     generateCustomerId: function(){
-        return Math.floor(Math.random()*10000);
+        return nanoid()
     },
 
     generateSaleId: function(){
-        return Math.floor(Math.random()*10000);
+        return nanoid()
     }
 }
 //package cuid
