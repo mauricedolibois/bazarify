@@ -61,7 +61,8 @@ app.get("/api/getAllProducts", (req, res) => {
 app.get("/api/getAllCustomers", (req, res) => {
   dbConnection.findAllCustomers().then(customer => {
     res.send(customer)
-    
+  })
+})
 
 app.listen(8085, () => { console.log("Server started on port 8085") })
 
