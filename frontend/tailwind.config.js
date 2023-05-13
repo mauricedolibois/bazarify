@@ -15,11 +15,13 @@ module.exports = {
         serif: ['Pacifico', 'serif'],
       },
       colors: {
-        ourPrimaryColor: "#DEAE31",
-        ourLightGray: "#D8D8D8",
-        ourDarkGray: "#5E5E5E",
-        ourGray: "#A6A6A6",
-        ourBackgroundColor: "#f5f5f5"
+        ourPrimaryColor: "#DEAE31",     //bg-yellow-500
+        ourLightGray: "#D8D8D8",        //text-gray-300
+        ourDarkGray: "#5E5E5E",         //text-gray-700
+        ourGray: "#A6A6A6",             //text-gray-400
+        ourBackgroundColor: "#f5f5f5",  //bg-gray-100
+        ourSuperDarkGray: "#303030",    //text-gray-900
+        ourPrimaryColorHover: "#E0B93A" //bg-yellow-600
       }
     },
   },
