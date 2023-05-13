@@ -1,4 +1,5 @@
 import React from 'react'
+import FormInput from './formInput'
 
 export default function () {
     return (
