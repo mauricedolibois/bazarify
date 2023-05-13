@@ -17,6 +17,7 @@ export default function () {
                                 <h3>Infos zum Verkäufer</h3>
                                 <UnderlinedInput placeholder="Name des Verkäufers" />
                                 <UnderlinedInput placeholder="Email des Verkäufers" />
+                                <UnderlinedInput placeholder="Telefonnummer des Verkäufers" />
                             </div>
                             <div class="w-3/5 p-4">
 
