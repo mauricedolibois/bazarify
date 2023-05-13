@@ -20,21 +20,21 @@ export default function () {
 
 
                 <div class="flex flex-row items-center justify-center px-4 py-4">
-                    <button class="border-grey-500 text-grey-500 flex flex-col justify-center rounded-lg border-2 px-4 py-2 flex-1">
+                    <button class="border-ourGrey text-ourGrey flex flex-col justify-center rounded-lg border-2 px-4 py-2 flex-1">
                         <UilPlus class="" size="24" />
-                        <span class="text-grey-500 text-sm mt-4">Neuer Bazar</span>
+                        <span class="text-ourGrey text-sm mt-4">Neuer Bazar</span>
                     </button>
-                    <button class="border-grey-500 text-grey-500 ml-2 flex flex-col justify-center rounded-lg border-2 px-4 py-2 flex-1">
+                    <button class="border-ourGrey text-ourGrey ml-2 flex flex-col justify-center rounded-lg border-2 px-4 py-2 flex-1">
                         <UilApps class="" size="24" />
-                        <span class="text-grey-500 text-sm mt-4">Bazare verwalten</span>
+                        <span class="text-ourGrey text-sm mt-4">Bazare verwalten</span>
                     </button>
                 </div>
 
 
 
-                <div class="border-t border-gray-200 pb-4"></div>
+                <div class="border-t border-ourLightGray pb-4"></div>
 
-                <h3 class="px-4 py-2 text-lg font-bold text-gray-800">Name des Basars</h3>
+                <h3 class="px-4 py-2 text-lg font-bold text-ourSuperDarkGray">Name des Basars</h3>
 
                 <ul class="flex flex-grow flex-col space-y-2 px-4 py-2">
                     <li class="flex items-center line-through cursor-pointer">
@@ -49,18 +49,18 @@ export default function () {
                         </div>
                     </li>
                     <li class="flex items-center">
-                        <span class="text-sm text-gray-500">3. Verkauf</span>
+                        <span class="text-sm text-ourGray">3. Verkauf</span>
                     </li>
                     <li class="flex items-center">
-                        <span class="text-sm text-gray-500">4. Abholung</span>
+                        <span class="text-sm text-ourGrey">4. Abholung</span>
                     </li>
                     <li class="flex items-center">
-                        <span class="text-sm text-gray-500">5. Analytics und Bilanz</span>
+                        <span class="text-sm text-ourGrey">5. Analytics und Bilanz</span>
                     </li>
                 </ul>
 
 
-                <div class="mt-auto border-t border-gray-200">
+                <div class="mt-auto border-t border-ourLightGray">
                     <button class="justify-left flex h-10 w-full items-center pl-4 text-sm text-ourPrimaryColor">
                         <UilAngleRight size="24" />
                         Nächster Schritt
