@@ -1,3 +1,5 @@
+import { error } from "console"
+import e from "express"
 import { createRequire } from "module"
 const require = createRequire(import.meta.url)
 import mongoose from 'mongoose'
@@ -30,21 +32,22 @@ export const dbConnection = {
         }
         catch{console.log("product already exists")}
     },
-    async insertCustomer(id, name, firstname, email, phone) {
+    async insertCustomer(name, firstname, email, phone) {
         try{
+            //mongoose.connection.db.collection('customers')
             var id = DbIdHandler.generateCustomerId()
             while((await this.findCustomer('customer_id', id)) != null){
                 id = DbIdHandler.generateCustomerId()
             }
             const customer = await Customer.create({customer_id: id,customer_name : name, customer_firstname: firstname, customer_email: email, customer_phone: phone})
-            await customer.save().then(console.log(customer))
+            await customer.save()
         }
         catch{console.log("customer already exists")}
     },
     async insertSale(product_id, customer_id) {
         try{
             var id = DbIdHandler.generateProductId()
-            while((await this.findSale('product_id', id)) != null){
+            while((await this.findSale('order_id', id)) != null){
                 id = DbIdHandler.generateProductId()
             }
             const sale = await Sale.create({order_id: id, product_id : product_id, customer_id: customer_id})
