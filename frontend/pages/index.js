@@ -10,6 +10,8 @@ import ButtonV2 from "@/components/buttonV2";
 import ButtonV3 from "@/components/buttonV3";
 import ButtonV4 from "@/components/buttonV4";
 import ButtonV5 from "@/components/buttonV5";
+import FormInput from "@/components/FormInput";
+
 
 export default function Home() {
   return (
@@ -70,14 +72,10 @@ export default function Home() {
             <ButtonV3></ButtonV3>
             <ButtonV4></ButtonV4>
             <ButtonV5></ButtonV5>
+            <FormInput name="Test"></FormInput>
+            <FormInput name="Test2"></FormInput>
           </div>
         </div>
-
-
-
-
-
-
       </div>
     </>
   );

@@ -1,3 +1,6 @@
+import React from 'react'
+import UnderlinedInput from './UnderlinedInput'
+
 export default function () {
     return (
         <>
@@ -12,26 +15,16 @@ export default function () {
                             <div class="w-2/5 border-r border-gray-300 p-4">
 
                                 <h3>Infos zum Verkäufer</h3>
-                                <div class="group flex items-center">
-                                    <input class="w-full truncate border-b border-gray-300 text-gray-700 focus:border-yellow-500 focus:outline-none" type="text" placeholder="Name des Verkäufers" />
-                                </div>
-                                <div class="group flex items-center">
-                                    <input class="w-full truncate border-b border-gray-300 text-gray-700 focus:border-yellow-500 focus:outline-none" type="text" placeholder="Email des Verkäufers" />
-                                </div>
+                                <UnderlinedInput placeholder="Name des Verkäufers" />
+                                <UnderlinedInput placeholder="Email des Verkäufers" />
                             </div>
                             <div class="w-3/5 p-4">
 
                                 <h3>Produkte des Verkäufers</h3>
                                 <div class="flex flex-row gap-4">
-                                    <div class="group flex items-center">
-                                        <input class="w-full truncate border-b border-gray-300 text-gray-700 focus:border-yellow-500 focus:outline-none" type="text" placeholder="Name des Produkts" />
-                                    </div>
-                                    <div class="group flex items-center">
-                                        <input class="w-full truncate border-b border-gray-300 text-gray-700 focus:border-yellow-500 focus:outline-none" type="text" placeholder="Kategorie" />
-                                    </div>
-                                    <div class="group flex items-center">
-                                        <input class="w-full truncate border-b border-gray-300 text-gray-700 focus:border-yellow-500 focus:outline-none" type="text" placeholder="Preis in €" />
-                                    </div>
+                                    <UnderlinedInput placeholder="Name des Produkts" />
+                                    <UnderlinedInput placeholder="Kategorie" />
+                                    <UnderlinedInput placeholder="Preis in €" />
                                 </div>
 
                                 <div class="mt-4 flex">
