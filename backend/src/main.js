@@ -19,9 +19,9 @@ dbConnection.connectToDB()
 //dbConnection.deleteAllSales()
 //dbConnection.close()
 
-// dbConnection.insertProduct(1,"test", 69)
-// dbConnection.insertCustomer("bucher", "maik", "maik@bucher.de", 12345)
-// dbConnection.insertSale(1,1,1)
+dbConnection.insertProduct("test", 69)
+dbConnection.insertCustomer("bucher", "maik", "maik@bucher.de", 12345)
+dbConnection.insertSale(1,1,1)
 
 //dbConnection.findProduct("product_id", 1).then(product => {console.log(product)})
 //dbConnection.updateProduct("product_id", 1, {product_name: "test2"})
