@@ -20,16 +20,25 @@ const Sale = require('./schemas/SaleSchema.cjs')
         await mongoose.connection.close().then(console.log("DB closed"))
     },
     async insertProduct(id, name, price) {
-        const product = await Product.create({product_id: id, product_name : name, product_price: price})
-        await product.save().then(console.log(product))
+        try{
+            const product = await Product.create({product_id: id, product_name : name, product_price: price})
+            await product.save().then(console.log(product))
+        }
+        catch{console.log("product already exists")}
     },
     async insertCustomer(id, name, firstname, email, phone) {
-        const customer = await Customer.create({customer_id: id, customer_name : name, customer_firstname: firstname, customer_email: email, customer_phone: phone})
-        await customer.save().then(console.log(customer))
+        try{
+            const customer = await Customer.create({customer_id: id, customer_name : name, customer_firstname: firstname, customer_email: email, customer_phone: phone})
+            await customer.save().then(console.log(customer))
+        }
+        catch{console.log("customer already exists")}
     },
     async insertSale(id, product_id, customer_id) {
+        try{
         const sale = await Sale.create({order_id: id, product_id : product_id, customer_id: customer_id})
         await sale.save().then(console.log(sale))
+        }
+        catch{console.log("sale already exists")}
     },
     async findProduct(operator, parameter) {
         const filter = {[operator]: parameter}
