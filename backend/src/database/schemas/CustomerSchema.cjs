@@ -10,4 +10,4 @@ const CustomerSchema = new Schema({
     customer_email: {type: String, require: true},
     customer_phone: { type: Number, required: true }
 })
-module.exports = mongoose.model('customer', CustomerSchema)
+module.exports = mongoose.connection.model('customer', CustomerSchema)

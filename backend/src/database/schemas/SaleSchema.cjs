@@ -7,4 +7,4 @@ const SaleSchema = new Schema({
     customer_id: {type: Schema.Types.Number, ref: 'customer'},
     soldAt: { type: Date, default: Date.now }
 })
-module.exports = mongoose.model('sale', SaleSchema)
+module.exports = mongoose.connection.model('sale', SaleSchema)

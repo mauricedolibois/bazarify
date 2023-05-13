@@ -14,6 +14,7 @@ app.use(cors({
 
 dbConnection.connectToDB()
 
+
 //dbConnection.deleteAllProducts()
 //dbConnection.deleteAllCustomers()
 //dbConnection.deleteAllSales()
