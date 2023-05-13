@@ -16,14 +16,14 @@ export default function App({ Component, pageProps }) {
     const inputID = 1
     const operator = "product_id"
     useEffect(() => {
-      fetch('http://localhost:8085/api/getProduct?operator='+operator+'&parameter='+inputID)
+      fetch('http://localhost:8085/api/getProduct?operator='+operator+'&parameter='+inputID, {method: 'GET'})
         .then(res => res.json())
         .then(data => {
           console.log(data)
           setProduct(JSON.stringify(data))
         })
         .catch(error => console.log(error))
-    }, [])
+    }, [])//id hier rein (dependency array)
 
     //GetAllProducts
     useEffect(() => {

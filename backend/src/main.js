@@ -2,7 +2,8 @@ import express, { urlencoded } from 'express'
 import cors from'cors'
 const app = express()
 import { dbConnection } from './database/DbConnection.js';
-
+//alles auf require umstellen
+//mehr aufsplitten api routen unterrouten /produkte /kunden /verkäufe put update delete
 
 app.use(express.json())
 app.use(urlencoded({extended:true}))
@@ -22,7 +23,9 @@ dbConnection.connectToDB()
 //dbConnection.updateProduct("product_id", 1, {product_name: "test2"})
 //dbConnection.findAllCustomers().then(customer => {console.log(customer)})
 
-
+//api router auf /api in seperaten datei
+//in der main die homepage
+//middleware regsitrieren
 //Get from DB
 app.get("/api/getProduct", (req, res) => {
   const filter = {[req.query.operator]: req.query.parameter}
@@ -70,3 +73,7 @@ app.get("/api/getAllSales", (req, res) => {
 app.listen(8085, () => { console.log("Server started on port 8085") })
 
 
+//controller für die api
+//router für die api
+//services für die api
+//middleware für logging authentifizierung (quests rausfiltern)

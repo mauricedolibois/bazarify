@@ -12,3 +12,4 @@ module.exports = {
         return Math.floor(Math.random()*10000);
     }
 }
+//package cuid

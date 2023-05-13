@@ -95,3 +95,5 @@ const DbIdHandler = require('./DbIdHandler.cjs')
         await Sale.deleteMany().then(console.log("All sales deleted"))
     }
 }
+
+//validierung
