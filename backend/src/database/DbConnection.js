@@ -21,13 +21,13 @@ const DbIdHandler = require('./DbIdHandler.cjs')
     async close() { 
         await mongoose.connection.close().then(console.log("DB closed"))
     },
-    async insertProduct(name, price) {
+    async insertProduct(name, price, category) {
         try{
             var id = DbIdHandler.generateProductId()
             while((await this.findProduct('product_id', id)) != null){
                 id = DbIdHandler.generateProductId()
             }
-            const product = await Product.create({product_id: id, product_name : name, product_price: price})
+            const product = await Product.create({product_id: id, product_name : name, product_price: price, product_category: category})
             await product.save().then(console.log(product))
         }
         catch{console.log("product already exists")}
