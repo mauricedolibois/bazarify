@@ -1,5 +1,5 @@
 import React from 'react'
-import UnderlinedInput from './underlinedInput'
+import UnderlinedInput from './UnderlinedInput'
 
 export default function () {
     return (

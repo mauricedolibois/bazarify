@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UnderlinedInput = ({placeholder}) => {
+const UnderlindedInput = ({placeholder}) => {
   return (
     <div class="group flex items-center">
         <input class="w-full truncate border-b border-ourLightGray text-ourDarkGray focus:border-ourPrimaryColor focus:outline-none" 
@@ -9,4 +9,4 @@ const UnderlinedInput = ({placeholder}) => {
   );
 };
 
-export default UnderlinedInput;
+export default UnderlindedInput;

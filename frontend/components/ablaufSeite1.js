@@ -1,6 +1,5 @@
-
 import React from 'react'
-import FormInput from './FormInput'
+
 export default function () {
     return (
         <>
@@ -13,6 +12,7 @@ export default function () {
                     <FormInput name="Name des Basars" unit="" />
                     <FormInput name="Jahr" unit="" />
                     <FormInput name="Provision" unit="%" />
+
                     <div class="col-span-full">
                         <label for="about" class="block text-sm font-medium leading-6 text-ourSuperDarkGray">Beschreibung</label>
                         <div class="mt-2">
@@ -20,6 +20,7 @@ export default function () {
                         </div>
                     </div>
                 </div>
+
                 <div class="mt-6 flex items-center justify-end gap-x-6">
                     <button type="button" class="text-sm font-semibold leading-6 text-ourSuperDarkGray">Cancel</button>
                     <button type="submit" class="rounded-md bg-ourPrimaryColor px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-ourPrimaryColorHover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Save</button>
