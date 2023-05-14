@@ -50,7 +50,7 @@ productRouter.get("/allProducts", (req, res) => {
 //    const requestOptions = {
 //      method: 'POST',
 //      headers: { 'Content-Type': 'application/json' },
-//      body: JSON.stringify({ name: name, price: price, category: category })
+//      body: JSON.stringify(product)
 //  };
 //    fetch('http://localhost:8085/api/product', requestOptions)
 //      .then(res => res.json())
