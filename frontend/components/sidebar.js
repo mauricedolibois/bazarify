@@ -9,7 +9,7 @@ import { BazarContext } from '../pages/index.js'
 
 function Step({ step, text, currentStep }) {
     let stepClass = "text-sm text-ourGray";
-    if (step === currentStep) {
+    if (step == currentStep) {
         stepClass = "text-sm text-ourPrimaryColor font-bold";
     } else if (step < currentStep) {
         stepClass = "text-sm line-through";
@@ -24,18 +24,26 @@ function Step({ step, text, currentStep }) {
     );
 }
 
-function goToNextStep({ step, currentStep }) {
-    // If step < 5 then go to next step and show the text "Nächster Schritt"
-    // If step == 5 then go to step 1 and show the text "Basar abschließen"
-    return ({
-
-    })
-}
 
 export default function Sidebar() {
 
-    const { step, setStep, newBazar, setNewBazar, createBazar } = useContext(BazarContext)
+    let { step, setStep, newBazar, setNewBazar, createBazar } = useContext(BazarContext)
 
+    function showDashboard() {
+        setStep(0)
+    }
+
+    function goToNextStep() {
+        // If step < 5 then go to next step and show the text "Nächster Schritt"
+        if (step < 5) {
+            setStep(step + 1)
+        }
+
+        else {
+            showDashboard()
+            // If step == 5 then go to step 1 and show the text "Basar abschließen"
+        }
+    }
 
     return (
         <>
@@ -43,7 +51,7 @@ export default function Sidebar() {
 
                 <div class="flex items-center justify-between pt-4">
                     <div class="flex items-center cursor-pointer">
-                        <Link href="/">
+                        <Link onClick={showDashboard} href="/">
                             <span class="pl-4 font-serif text-2xl text-ourPrimaryColor">B</span>
                             <span class="font-serif text-2xl">azarify</span>
                         </Link>
@@ -71,21 +79,21 @@ export default function Sidebar() {
 
                 <div class="border-t border-ourLightGray pb-4"></div>
 
-                <h3 class="px-4 py-2 text-lg font-bold text-ourSuperDarkGray">Name des Basars</h3>
+                <h3 class="px-4 py-2 text-lg font-bold text-ourSuperDarkGray">Ablauf</h3>
 
                 <ul class="flex flex-grow flex-col space-y-2 px-4 py-2">
-                    <Step step="1" text="Neuer Basar" currentStep="2" />
-                    <Step step="2" text="Annahme" currentStep="2" />
-                    <Step step="3" text="Verkauf" currentStep="2" />
-                    <Step step="4" text="Abholung" currentStep="2" />
-                    <Step step="5" text="Analytics und Bilanz" currentStep="2" />
+                    <Step step="1" text="Basar erstellen" currentStep={step} />
+                    <Step step="2" text="Annahme" currentStep={step} />
+                    <Step step="3" text="Verkauf" currentStep={step} />
+                    <Step step="4" text="Abholung" currentStep={step} />
+                    <Step step="5" text="Analytics und Bilanz" currentStep={step} />
                 </ul>
 
 
                 <div class="mt-auto border-t border-ourLightGray">
-                    <button class="justify-left flex h-10 w-full items-center pl-4 text-sm text-ourPrimaryColor">
+                    <button onClick={goToNextStep} class="justify-left flex h-10 w-full items-center pl-4 text-sm text-ourPrimaryColor">
                         <UilAngleRight size="24" />
-                        Nächster Schritt
+                        {step < 5 ? "Nächster Schritt" : "Basar abschließen"}
                     </button>
                 </div>
             </div >

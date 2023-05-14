@@ -3,6 +3,11 @@ import React from "react";
 import Head from "next/head";
 import Sidebar from "../components/sidebar";
 import Step1 from "../components/ablaufSeite1";
+import Step2 from "../components/ablaufSeite2";
+import Step3 from "../components/ablaufSeite3";
+import Step4 from "../components/ablaufSeite4";
+import Step5 from "../components/ablaufSeite5";
+import Dashboard from "@/components/dashboard";
 
 export const BazarContext = createContext();
 
@@ -30,10 +35,17 @@ const CreatePage = () => {
           createBazar
         }}
       >
-        <Sidebar />
-        {step === 1 && <Step1 />}
-        {step === 2 && <Step2 />}
-        {step === 3 && <Step3 />}
+        <div className="flex flex-row">
+          <Sidebar />
+          <div className="pt-32 px-32">
+            {step === 0 && <Dashboard />}
+            {step === 1 && <Step1 />}
+            {step === 2 && <Step2 />}
+            {step === 3 && <Step3 />}
+            {step === 4 && <Step4 />}
+            {step === 5 && <Step5 />}
+          </div>
+        </div>
       </BazarContext.Provider>
     </>
   );
