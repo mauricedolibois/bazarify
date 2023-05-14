@@ -15,9 +15,12 @@ export default function () {
                             <div class="w-2/5 border-r border-ourLightGray p-4">
 
                                 <h3>Infos zum Verkäufer</h3>
-                                <UnderlinedInput placeholder="Name des Verkäufers" />
-                                <UnderlinedInput placeholder="Email des Verkäufers" />
-                                <UnderlinedInput placeholder="Telefonnummer des Verkäufers" />
+                                <div class="flex flex-row gap-4">
+                                    <UnderlinedInput placeholder="Vorname" />
+                                    <UnderlinedInput placeholder="Nachname" />
+                                </div>
+                                <UnderlinedInput placeholder="Email" />
+                                <UnderlinedInput placeholder="Telefonnummer" />
                             </div>
                             <div class="w-3/5 p-4">
 
