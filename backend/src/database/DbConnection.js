@@ -6,11 +6,11 @@ import mongoose from 'mongoose'
 const Product = require('./schemas/ProductSchema.cjs')
 const Customer = require('./schemas/CustomerSchema.cjs')
 const Sale = require('./schemas/SaleSchema.cjs')
-const DbIdHandler = require('./DbIdHandler.cjs')
+const DbIdHandler = require('../services/UniqueIDs.cjs')
+const InputValidation = require('../services/InputValidation.cjs')
 
 
-
-  export const dbConnection = {
+export const dbConnection = {
     async connectToDB() {
         const username = encodeURIComponent("maik");
         const password = encodeURIComponent("abc123");
@@ -27,23 +27,24 @@ const DbIdHandler = require('./DbIdHandler.cjs')
             while((await this.findProduct('product_id', id)) != null){
                 id = DbIdHandler.generateProductId()
             }
-            const product = await Product.create({product_id: id, product_name : name, product_price: price, product_category: category})
+            const validProduct = await InputValidation.validateProduct(id, name, price, category)
+            const product = await Product.create(validProduct)
             await product.save().then(console.log(product))
         }
-        catch{console.log("product already exists")}
+        catch{console.log("could not insert product")}
     },
     async insertCustomer(name, firstname, email, phone) {
         try{
-            //mongoose.connection.db.collection('customers')
             var id = DbIdHandler.generateCustomerId()
-            console.log(id)
             while((await this.findCustomer('customer_id', id)) != null){
                 id = DbIdHandler.generateCustomerId()
             }
-            const customer = await Customer.create({customer_id: id,customer_name : name, customer_firstname: firstname, customer_email: email, customer_phone: phone})
-            await customer.save()
+            const validCustomer = await InputValidation.validateCustomer(id, firstname, name, email, phone)
+            const customer = await Customer.create(validCustomer)
+            await customer.save().then(console.log(customer))
         }
-        catch{console.log("customer already exists")}
+        catch{console.log("could not insert customer")
+}
     },
     async insertSale(product_id, customer_id) {
         try{
@@ -51,10 +52,11 @@ const DbIdHandler = require('./DbIdHandler.cjs')
             while((await this.findSale('order_id', id)) != null){
                 id = DbIdHandler.generateProductId()
             }
-            const sale = await Sale.create({order_id: id, product_id : product_id, customer_id: customer_id})
+            const validSale = await InputValidation.validateSale(id, product_id, customer_id)
+            const sale = await Sale.create(validSale)
             await sale.save().then(console.log(sale))
         }
-        catch{console.log("sale already exists")}
+        catch{console.log("could not insert sale")}
     },
     async findProduct(operator, parameter) {
         const filter = {[operator]: parameter}
@@ -79,7 +81,7 @@ const DbIdHandler = require('./DbIdHandler.cjs')
     },
     async updateProduct(operator, parameter, update) {
         const filter = {[operator]: parameter}
-        Product.updateOne(filter, update).then(console.log("product updated"))
+        Product.findOneAndUpdate(filter, update).then(console.log("product updated"))
     },
     async updateCustomer(operator, parameter, update) {
         const filter = {[operator]: parameter}
@@ -88,6 +90,18 @@ const DbIdHandler = require('./DbIdHandler.cjs')
     async updateSale(operator, parameter, update) {
         const filter = {[operator]: parameter}
         Sale.updateOne(filter, update).then(console.log("sale updated"))
+    },
+    async deleteProduct(operator, parameter) {
+        const filter = {[operator]: parameter}
+        Product.deleteOne(filter).then(console.log("product deleted"))
+    },
+    async deleteCustomer(operator, parameter) {
+        const filter = {[operator]: parameter}
+        Customer.deleteOne(filter).then(console.log("customer deleted"))
+    },
+    async deleteSale(operator, parameter) {
+        const filter = {[operator]: parameter}
+        Sale.deleteOne(filter).then(console.log("sale deleted"))
     },
     async deleteAllProducts() {
         await Product.deleteMany().then(console.log("All products deleted"))
@@ -99,3 +113,5 @@ const DbIdHandler = require('./DbIdHandler.cjs')
         await Sale.deleteMany().then(console.log("All sales deleted"))
     }
 }
+
+//validierung
