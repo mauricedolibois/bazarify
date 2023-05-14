@@ -45,6 +45,10 @@ export default function Sidebar() {
         }
     }
 
+    function goToStep(step) {
+        setStep(step)
+    }
+
     return (
         <>
             <div class="flex h-screen flex-col bg-white min-w-[25%] max-w-md">
@@ -93,7 +97,9 @@ export default function Sidebar() {
                 <div class="mt-auto border-t border-ourLightGray">
                     <button onClick={goToNextStep} class="justify-left flex h-10 w-full items-center pl-4 text-sm text-ourPrimaryColor">
                         <UilAngleRight size="24" />
-                        {step < 5 ? "Nächster Schritt" : "Basar abschließen"}
+                        {step === 0 && "Los geht's!"}
+                        {(step < 5 && step > 0) && "Nächster Schritt"}
+                        {step == 5 && "Basar abschließen"}
                     </button>
                 </div>
             </div >
