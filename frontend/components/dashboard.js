@@ -2,7 +2,8 @@ import { UilPlay } from '@iconscout/react-unicons'
 import { UilPlus } from '@iconscout/react-unicons'
 import { UilAngleRight } from '@iconscout/react-unicons'
 
-function BazarCard({name}) {
+
+function BazarCard({ name }) {
     return (
         <div class="border bg-white border-ourLightGray px-4 py-2 rounded-lg flex justify-between">
             {name}

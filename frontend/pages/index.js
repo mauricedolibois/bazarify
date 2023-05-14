@@ -2,11 +2,11 @@ import { createContext, useState } from "react";
 import React from "react";
 import Head from "next/head";
 import Sidebar from "../components/sidebar";
-import Step1 from "../components/ablaufSeite1";
-import Step2 from "../components/ablaufSeite2";
-import Step3 from "../components/ablaufSeite3";
-import Step4 from "../components/ablaufSeite4";
-import Step5 from "../components/ablaufSeite5";
+import Step1 from "../components/ablauf/step1";
+import Step2 from "../components/ablauf/step2";
+import Step3 from "../components/ablauf/step3";
+import Step4 from "../components/ablauf/step4";
+import Step5 from "../components/ablauf/step5";
 import Dashboard from "@/components/dashboard";
 
 export const BazarContext = createContext();
@@ -24,7 +24,7 @@ const CreatePage = () => {
   return (
     <>
       <Head>
-        <title>Seite | Create</title>
+        <title>Bazarify | Dein einfachster Bazar bisher!</title>
       </Head>
       <BazarContext.Provider
         value={{

@@ -1,5 +1,5 @@
 import Image from "next/image"
-import template from "../public/template.png";
+import template from "../../public/template.png"
 import { UilInfoCircle } from '@iconscout/react-unicons'
 
 export default function () {
