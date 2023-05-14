@@ -22,7 +22,7 @@ saleRouter.get("/allSales", (req, res) => {
 )
 
 saleRouter.post("/sale", (req, res) => {
-    dbConnection.insertSale(req.body.productID, req.body.customerID).then
+    dbConnection.insertSale(req.body.product_id, req.body.customer_id).then
     (sale => { res.send(sale) })  
 }
 )

@@ -23,8 +23,6 @@ app.get('/', (req, res) => {
 
 
 dbConnection.connectToDB()
-dbConnection.updateProduct("product_id", 950966, {name: "SKYYYY", price: 1, category: "sort"})
-
 app.listen(8085, () => { console.log("Server started on port 8085") })
 
 

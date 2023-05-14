@@ -45,9 +45,7 @@ productRouter.get("/allProducts", (req, res) => {
 )
 
  // //PostProduct
-//  const name = "Ski"
-//  const price = 100
-//  const category = "Sport"
+// const product = {product_name: "skirt", product_price: 1, product_category: "short"}
 //  useEffect(() => {
 //    const requestOptions = {
 //      method: 'POST',
@@ -62,7 +60,7 @@ productRouter.get("/allProducts", (req, res) => {
 //      .catch(error => console.log(error))
 //  }, [])
 productRouter.post("/product", (req, res) => {
-    dbConnection.insertProduct(req.body.name, req.body.price, req.body.category).then
+    dbConnection.insertProduct(req.body.product_name, req.body.product_price, req.body.product_category).then
     (product => { res.send(product) })  
     })
 
@@ -84,6 +82,23 @@ productRouter.delete("/product", (req, res) => {
     })
 
 
+//updateProduct
+// const newProduct={product_name: "skir", product_price: 1, product_category: "sort"}
+// const operator = "product_id"
+// const id=950966
+// useEffect(() => {
+//   const requestOptions = {
+//     method: 'PUT',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify(newProduct)
+// };
+//   fetch('http://localhost:8085/api/product?operator='+[operator]+'&parameter='+id, requestOptions)
+//     .then(res => res.json())
+//     .then(data => {
+//       console.log(data)
+//     })
+//     .catch(error => console.log(error))
+// }, [])
 productRouter.put("/product", (req, res) => {
     dbConnection.updateProduct(req.query.operator, req.query.parameter, req.body).then
     (product => { res.send(product) })
