@@ -23,7 +23,6 @@ app.get('/', (req, res) => {
 
 
 dbConnection.connectToDB()
-
 app.listen(8085, () => { console.log("Server started on port 8085") })
 
 

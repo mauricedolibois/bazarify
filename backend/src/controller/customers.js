@@ -14,9 +14,25 @@ customerRouter.get("/customer", (req, res) => {
 }
 )
 
-customerRouter.get("/allProducts", (req, res) => {
-    dbConnection.findAllProducts().then(customer => {
+customerRouter.get("/allCustomers", (req, res) => {
+    dbConnection.findAllCustomers().then(customer => {
         res.send(customer)
     })
 }
 )
+
+customerRouter.post("/customer", (req, res) => {
+    dbConnection.insertCustomer(req.body.customer_name, req.body.customer_firstname, req.body.customer_email, req.body.customer_phone).then
+    (customer => { res.send(customer) })  
+}
+)
+
+customerRouter.delete("/customer", (req, res) => {
+    dbConnection.deleteCustomer(req.query.operator, req.query.parameter).then
+    (customer => { res.send(customer) })  
+    })
+
+customerRouter.put("/customer", (req, res) => {
+    dbConnection.updateCustomer(req.query.operator, req.query.parameter, req.body).then
+    (customer => { res.send(customer) })
+    })

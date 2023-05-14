@@ -78,7 +78,7 @@ export const dbConnection = {
     },
     async updateProduct(operator, parameter, update) {
         const filter = {[operator]: parameter}
-        Product.updateOne(filter, update).then(console.log("product updated"))
+        Product.findOneAndUpdate(filter, update).then(console.log("product updated"))
     },
     async updateCustomer(operator, parameter, update) {
         const filter = {[operator]: parameter}
@@ -87,6 +87,18 @@ export const dbConnection = {
     async updateSale(operator, parameter, update) {
         const filter = {[operator]: parameter}
         Sale.updateOne(filter, update).then(console.log("sale updated"))
+    },
+    async deleteProduct(operator, parameter) {
+        const filter = {[operator]: parameter}
+        Product.deleteOne(filter).then(console.log("product deleted"))
+    },
+    async deleteCustomer(operator, parameter) {
+        const filter = {[operator]: parameter}
+        Customer.deleteOne(filter).then(console.log("customer deleted"))
+    },
+    async deleteSale(operator, parameter) {
+        const filter = {[operator]: parameter}
+        Sale.deleteOne(filter).then(console.log("sale deleted"))
     },
     async deleteAllProducts() {
         await Product.deleteMany().then(console.log("All products deleted"))
