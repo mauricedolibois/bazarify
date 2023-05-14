@@ -1,4 +1,4 @@
-const DbIdHandler = require('../DbIdHandler.cjs')
+const DbIdHandler = require('../../services/UniqueIDs.cjs')
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema

@@ -22,7 +22,7 @@ customerRouter.get("/allCustomers", (req, res) => {
 )
 
 customerRouter.post("/customer", (req, res) => {
-    dbConnection.insertCustomer(req.body.customer_name, req.body.customer_firstname, req.body.customer_email, req.body.customer_phone).then
+    dbConnection.insertCustomer(req.body.customer_name,req.body.customer_firstname, req.body.customer_email, req.body.customer_phone).then
     (customer => { res.send(customer) })  
 }
 )
