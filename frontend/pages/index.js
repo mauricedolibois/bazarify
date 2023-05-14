@@ -1,3 +1,6 @@
+import { createContext, useState } from "react";
+import React from "react";
+import Head from "next/head";
 import Sidebar from "../components/sidebar";
 import Dashboard from "../components/dashboard";
 import AblaufSeite1 from "@/components/ablaufSeite1";
@@ -11,77 +14,46 @@ import ButtonV3 from "@/components/buttonV3";
 import ButtonV4 from "@/components/buttonV4";
 import ButtonV5 from "@/components/buttonV5";
 import FormInput from "@/components/FormInput";
-import React, { useState, useEffect } from 'react';
 
+export const BazarContext = createContext();
 
-import Template from "@/components/template";
-import AddButton from "@/components/template";
+const CreatePage = () => {
+  const [step, setStep] = useState(1);
+  const [newBazar, setNewBazar] = useState({
+    name: "test",
+    description: "test",
+    location: "test",
+  });
 
 export default function Home() {
-  
   return (
     <>
-      {
-        // Diese Seite hier wird standardmäßig aufgerufen, wenn man die Webseite öffnet.
-      }
-      <div className="flex flex-row">
-        <Sidebar>Test</Sidebar>
-        <div className="px-32 pt-32">
-          <Dashboard></Dashboard>
-        </div>
-      </div>
-
-
-
-      {//Ab hier sind nur Tests
-      }
-
-      <div className="">
-        <p className="bg-red-200 w-screen h-screen">Ab hier ist nur Zeug zum Testen</p>
-
+      <Head>
+        <title>Seite | Create</title>
+      </Head>
+      <BazarContext.Provider
+        value={{
+          step,
+          setStep,
+          newBazar,
+          setNewBazar,
+          createBazar
+        }}
+      >
         <div className="flex flex-row">
-          <Sidebar>Test</Sidebar>
-          <div className="px-32 pt-32">
-            <AblaufSeite1></AblaufSeite1>
+          <Sidebar />
+          <div className="pt-32 px-32">
+            {step === 0 && <Dashboard />}
+            {step === 1 && <Step1 />}
+            {step === 2 && <Step2 />}
+            {step === 3 && <Step3 />}
+            {step === 4 && <Step4 />}
+            {step === 5 && <Step5 />}
           </div>
         </div>
-        <div className="flex flex-row">
-          <Sidebar>Test</Sidebar>
-          <div className="px-32 pt-32">
-            <AblaufSeite2></AblaufSeite2>            
-          </div>
-        </div>
-        <div className="flex flex-row">
-          <Sidebar>Test</Sidebar>
-          <div className="px-32 pt-32">
-            <AblaufSeite3></AblaufSeite3>
-          </div>
-        </div>
-        <div className="flex flex-row">
-          <Sidebar>Test</Sidebar>
-          <div className="px-32 pt-32">
-            <AblaufSeite4></AblaufSeite4>
-          </div>
-        </div>
-        <div className="flex flex-row">
-          <Sidebar>Test</Sidebar>
-          <div className="px-32 pt-32">
-            <AblaufSeite5></AblaufSeite5>
-          </div>
-        </div>
-        <div className="flex flex-row">
-          <Sidebar>Test</Sidebar>
-          <div className="px-32 pt-32">
-            <ButtonV1></ButtonV1>
-            <ButtonV2></ButtonV2>
-            <ButtonV3></ButtonV3>
-            <ButtonV4></ButtonV4>
-            <ButtonV5></ButtonV5>
-            <FormInput name="Test"></FormInput>
-            <FormInput name="Test2"></FormInput>
-          </div>
-        </div>
-      </div>
+      </BazarContext.Provider>
     </>
   );
-}
+};
+
+export default CreatePage;
