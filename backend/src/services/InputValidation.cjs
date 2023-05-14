@@ -19,11 +19,12 @@ module.exports = {
 
         return validProduct
     },
-    validateCustomer: async function(id, name, email, phone){
+    validateCustomer: async function(id, name, firstname, email, phone){
         
         const schema = await Joi.object({
             customer_id: Joi.number().required(),
             customer_name: Joi.string().required(),
+            customer_firstname: Joi.string().required(),
             customer_email: Joi.string().required().regex(new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)),
             customer_phone: Joi.number().integer().required()
           });
@@ -31,6 +32,7 @@ module.exports = {
           const validCustomer = await schema.validateAsync({
                 customer_id: id,
                 customer_name: name,
+                customer_firstname: firstname,
                 customer_email: email,
                 customer_phone: phone
               }).catch(err => console.log(err.message))

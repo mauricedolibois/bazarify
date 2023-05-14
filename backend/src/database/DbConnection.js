@@ -33,13 +33,13 @@ export const dbConnection = {
         }
         catch{console.log("could not insert product")}
     },
-    async insertCustomer(name, email, phone) {
+    async insertCustomer(name, firstname, email, phone) {
         try{
             var id = DbIdHandler.generateCustomerId()
             while((await this.findCustomer('customer_id', id)) != null){
                 id = DbIdHandler.generateCustomerId()
             }
-            const validCustomer = await InputValidation.validateCustomer(id, name, email, phone)
+            const validCustomer = await InputValidation.validateCustomer(id, firstname, name, email, phone)
             const customer = await Customer.create(validCustomer)
             await customer.save().then(console.log(customer))
         }
