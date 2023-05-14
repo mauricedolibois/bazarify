@@ -10,7 +10,7 @@ import ButtonV2 from "@/components/buttonV2";
 import ButtonV3 from "@/components/buttonV3";
 import ButtonV4 from "@/components/buttonV4";
 import ButtonV5 from "@/components/buttonV5";
-import FormInput from "@/components/FormInput";
+import FormInput from "@/components/formInput";
 
 
 import Template from "@/components/template";

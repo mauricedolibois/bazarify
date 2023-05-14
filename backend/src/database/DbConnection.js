@@ -14,7 +14,7 @@ export const dbConnection = {
     async connectToDB() {
         const username = encodeURIComponent("maik");
         const password = encodeURIComponent("abc123");
-        const clusterUrl = "127.0.0.1:27017/Bazarify";
+        const clusterUrl = "mongo:27017/Bazarify";
         const uri = `mongodb://${username}:${password}@${clusterUrl}?authMechanism=DEFAULT`;
         await mongoose.connect(uri).then(console.log("DB connected")).catch(err => console.log(err))
   },
