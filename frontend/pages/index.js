@@ -2,18 +2,12 @@ import { createContext, useState } from "react";
 import React from "react";
 import Head from "next/head";
 import Sidebar from "../components/sidebar";
-import Dashboard from "../components/dashboard";
-import AblaufSeite1 from "@/components/ablaufSeite1";
-import AblaufSeite2 from "@/components/ablaufSeite2";
-import AblaufSeite3 from "@/components/ablaufSeite3";
-import AblaufSeite4 from "@/components/ablaufSeite4";
-import AblaufSeite5 from "@/components/ablaufSeite5";
-import ButtonV1 from "@/components/buttonV1";
-import ButtonV2 from "@/components/buttonV2";
-import ButtonV3 from "@/components/buttonV3";
-import ButtonV4 from "@/components/buttonV4";
-import ButtonV5 from "@/components/buttonV5";
-import FormInput from "@/components/FormInput";
+import Step1 from "../components/ablaufSeite1";
+import Step2 from "../components/ablaufSeite2";
+import Step3 from "../components/ablaufSeite3";
+import Step4 from "../components/ablaufSeite4";
+import Step5 from "../components/ablaufSeite5";
+import Dashboard from "@/components/dashboard";
 
 export const BazarContext = createContext();
 
@@ -25,7 +19,8 @@ const CreatePage = () => {
     location: "test",
   });
 
-export default function Home() {
+  function createBazar() { }
+
   return (
     <>
       <Head>

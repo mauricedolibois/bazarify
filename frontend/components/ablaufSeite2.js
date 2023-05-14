@@ -54,7 +54,7 @@ const handleAddProduct = () => {
   }, [product]);
 
   //GetAllProducts
- useEffect(() => {
+ /*useEffect(() => {
      fetch('http://localhost:8085/api/allProducts', {method: 'GET'})
        .then(res => res.json())
        .then(data => {
@@ -62,7 +62,7 @@ const handleAddProduct = () => {
          setAllProducts(JSON.stringify(data))
        })
        .catch(error => console.log(error + "Bin im Error!"))
-   }, [product])
+   }, [product])*/
 
   return (
     <>
@@ -74,8 +74,8 @@ const handleAddProduct = () => {
           eingepflegt sind.
         </p>
       </div>
-      <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-ourLightGray py-6 sm:py-12">
-        <div className="absolute inset-0 bg-[url(/img/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]">
+      <div className="relative flex flex-col justify-center py-10">
+        
           <div className="rounded border border-ourLightGrey bg-white">
             <div className="flex flex-row">
               <div className="w-2/5 border-r border-ourLightGray p-4">
@@ -157,10 +157,10 @@ const handleAddProduct = () => {
               </button>
             </div>
           </div>
-        </div>
+        
       </div>
     </div>
-    <p>{allProducts}</p>
+    
   </>
 );
 }
