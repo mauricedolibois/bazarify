@@ -25,7 +25,7 @@ module.exports = {
             customer_id: Joi.number().required(),
             customer_name: Joi.string().required(),
             customer_firstname: Joi.string().required(),
-            customer_email: Joi.string().required().regex(new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)),
+            customer_email: Joi.string().required().regex(new RegExp(/^.*@.*\..*$/i)).message('Invalid email'),
             customer_phone: Joi.number().integer().required()
           });
 
