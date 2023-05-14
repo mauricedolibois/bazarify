@@ -11,12 +11,14 @@ import ButtonV3 from "@/components/buttonV3";
 import ButtonV4 from "@/components/buttonV4";
 import ButtonV5 from "@/components/buttonV5";
 import FormInput from "@/components/FormInput";
+import React, { useState, useEffect } from 'react';
 
 
 import Template from "@/components/template";
 import AddButton from "@/components/template";
 
 export default function Home() {
+  
   return (
     <>
       {
@@ -46,7 +48,7 @@ export default function Home() {
         <div className="flex flex-row">
           <Sidebar>Test</Sidebar>
           <div className="px-32 pt-32">
-            <AblaufSeite2></AblaufSeite2>
+            <AblaufSeite2></AblaufSeite2>            
           </div>
         </div>
         <div className="flex flex-row">
