@@ -3,23 +3,11 @@ import TextInput from '../components/formInput'
 import '@/styles/globals.css'
 
 export default function App({ Component, pageProps }) {
-  const [product, setProduct] = useState('')
-
-  useEffect(() => {
-        fetch('http://localhost:8085/api/allProducts', {method: 'GET'})
-          .then(res => res.json())
-          .then(data => {
-            console.log(data)
-            setProduct(JSON.stringify(data))
-          })
-          .catch(error => console.log(error))
-      }, [])
-  
-
-  return (
-    <>
-      <Component {...pageProps} />
-      <p>{product}</p>
-    </>
-  )
+  return <>
+    {
+      // Hier wird am Anfang der Index reingerendet. Hier können wir Komponenten darstellen, die auf jeder Seite gleich sind, typischerweise Dinge wie ein Footer.
+      // The Component prop is the active page, so whenever you navigate between routes, Component will change to the new page. Therefore, any props you send to Component will be received by the page. Source: https://nextjs.org/docs/pages/building-your-application/routing/custom-app
+    }
+    <Component {...pageProps} />
+  </>
 }
