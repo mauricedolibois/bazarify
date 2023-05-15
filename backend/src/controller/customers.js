@@ -3,6 +3,7 @@ import cors from'cors'
 import { dbConnection } from '../database/DbConnection.js';
 export const customerRouter = express.Router()
 
+customerRouter.use(express.json())
 customerRouter.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:3001']
 }));

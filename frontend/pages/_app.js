@@ -3,6 +3,7 @@ import TextInput from '../components/formInput'
 import '@/styles/globals.css'
 
 export default function App({ Component, pageProps }) {
+
   return <>
     {
       // Hier wird am Anfang der Index reingerendet. Hier können wir Komponenten darstellen, die auf jeder Seite gleich sind, typischerweise Dinge wie ein Footer.

@@ -30,6 +30,7 @@ export const dbConnection = {
             const validProduct = await InputValidation.validateProduct(id, name, price, category)
             const product = await Product.create(validProduct)
             await product.save().then(console.log(product))
+            return product
         }
         catch{console.log("could not insert product")}
     },
@@ -42,6 +43,7 @@ export const dbConnection = {
             const validCustomer = await InputValidation.validateCustomer(id, firstname, name, email, phone)
             const customer = await Customer.create(validCustomer)
             await customer.save().then(console.log(customer))
+            return customer
         }
         catch{console.log("could not insert customer")
 }
@@ -55,6 +57,7 @@ export const dbConnection = {
             const validSale = await InputValidation.validateSale(id, product_id, customer_id)
             const sale = await Sale.create(validSale)
             await sale.save().then(console.log(sale))
+            return sale
         }
         catch{console.log("could not insert sale")}
     },
