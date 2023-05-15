@@ -3,6 +3,7 @@ import cors from'cors'
 import { dbConnection } from '../database/DbConnection.js';
 export const productRouter = express.Router()
 
+productRouter.use(express.json())
 productRouter.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:3001']
 }));
@@ -22,7 +23,6 @@ productRouter.use(cors({
 productRouter.get("/product", (req, res) => {
     dbConnection.findProduct(req.query.operator, req.query.parameter).then(product => {
         res.send(product)
-        console.log(product)
     })
 }
 )
