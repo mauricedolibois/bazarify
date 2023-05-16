@@ -1,21 +1,14 @@
 import React from 'react'
 import FormInput from '../formInput'
-import { UilPlus } from '@iconscout/react-unicons'
 
+import { UilPlus } from '@iconscout/react-unicons'
 import ButtonBigColor from '../buttons/ButtonBigColor'
-import ButtonBigNoColor from '../buttons/ButtonBigNoColor'
-import ButtonSmallJustIcon from '../buttons/ButtonSmallJustIcon'
-import ButtonYellowBorder from '../buttons/ButtonYellowBorder'
-import ButtonGrayBorder from '../buttons/ButtonGrayBorder'
 
 export default function () {
     return (
         <>
-            <ButtonBigColor text="ButtonBigColor" icon={<UilPlus />}></ButtonBigColor>
-            <ButtonBigNoColor text="ButtonBigNoColor" icon={<UilPlus />}></ButtonBigNoColor>
-            <ButtonSmallJustIcon icon={<UilPlus />}></ButtonSmallJustIcon>
-            <ButtonYellowBorder text="Text" icon={<UilPlus />}></ButtonYellowBorder >
-            <ButtonGrayBorder text="Text" icon={<UilPlus />}></ButtonGrayBorder>
+            {//<ButtonBigColor text="ButtonBigColor" icon={<UilPlus />}></ButtonBigColor>
+            }
 
             <div>
                 <h1>1. Basar erstellen</h1>

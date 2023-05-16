@@ -12,7 +12,7 @@ import Dashboard from "@/components/dashboard";
 export const BazarContext = createContext();
 
 const CreatePage = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [newBazar, setNewBazar] = useState({
     name: "test",
     description: "test",

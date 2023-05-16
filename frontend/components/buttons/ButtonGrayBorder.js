@@ -1,8 +1,8 @@
 export default function ({ icon, text }) {
     return (
-        <div className="flex items-center align-start px-4 py-2 border text-ourDarkGray border-ourGray rounded-lg">
+        <div className="inline-flex items-center align-start px-4 py-2 border text-ourDarkGray border-ourGray cursor-pointer hover:text-black hover:border-black  rounded-lg">
             <span>{icon}</span>
-            <p className="text-sm">
+            <p className="ml-1 text-sm">
                 {text}
             </p>
         </div >)
