@@ -8,6 +8,6 @@ const CustomerSchema = new Schema({
     customer_name: {type: String, require: true},
     customer_firstname: {type: String, require: true},
     customer_email: {type: String, require: true},
-    customer_phone: { type: Number, required: true }
+    customer_phone: { type: String, required: true }
 })
 module.exports = mongoose.connection.model('customer', CustomerSchema)
