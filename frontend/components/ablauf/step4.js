@@ -1,3 +1,7 @@
+import React from 'react'
+import { UseState, UseEffect } from 'react'
+import UnsoldProductsTableCell from '../unsoldProductsTableCell'
+
 export default function () {
     return (
         <>
@@ -17,30 +21,15 @@ export default function () {
                         <thead class="bg-ourLightGray text-xs uppercase text-ourDarkGray dark:bg-gray-700 dark:text-ourGray">
                             <tr>
                                 <th scope="col" class="px-6 py-3">Product name</th>
-                                <th scope="col" class="px-6 py-3">Color</th>
+                                <th scope="col" class="px-6 py-3">Verkäufer</th>
                                 <th scope="col" class="px-6 py-3">Category</th>
                                 <th scope="col" class="px-6 py-3">Price</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-b bg-white dark:border-ourDarkGray dark:bg-ourSuperDarkGray">
-                                <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-ourSuperDarkGray dark:text-white">Apple MacBook Pro 17"</th>
-                                <td class="px-6 py-4">Silver</td>
-                                <td class="px-6 py-4">Laptop</td>
-                                <td class="px-6 py-4">$2999</td>
-                            </tr>
-                            <tr class="border-b bg-white dark:border-ourSuperDarkGray dark:bg-ourSuperDarkGray">
-                                <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-ourSuperDarkGray dark:text-white">Microsoft Surface Pro</th>
-                                <td class="px-6 py-4">White</td>
-                                <td class="px-6 py-4">Laptop PC</td>
-                                <td class="px-6 py-4">$1999</td>
-                            </tr>
-                            <tr class="bg-white dark:bg-ourDarkGray">
-                                <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-ourSuperDarkGray dark:text-white">Magic Mouse 2</th>
-                                <td class="px-6 py-4">Black</td>
-                                <td class="px-6 py-4">Accessories</td>
-                                <td class="px-6 py-4">$99</td>
-                            </tr>
+                            <UnsoldProductsTableCell product_name="Microsoft Surface Pro" costumer_name="Max Mustermann" product_category="Laptop PC" product_price="$1999" />
+                            <UnsoldProductsTableCell product_name="Magic Mouse 2" costumer_name="Max Mustermann" product_category="Accessories" product_price="$99" />
+                            <UnsoldProductsTableCell product_name="Magic Keyboard" costumer_name="Max Mustermann" product_category="Accessories" product_price="$149" />
                         </tbody>
                     </table>
                 </div>
