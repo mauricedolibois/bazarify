@@ -56,7 +56,7 @@ const handleAddProduct = () => {
         customer_phone: customerPhoneNumber
       };
   
-      setProduct(customer);
+      setCustomer(customer);
   
       // Reset input fields
       setCustomerFirstName('');
