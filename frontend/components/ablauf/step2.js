@@ -7,11 +7,15 @@ export default function () {
     const [customerEmail, setCustomerEmail] = useState('');
     const [customerPhoneNumber, setCustomerPhoneNumber] = useState('');
     const [customer, setCustomer] = useState('');
+    const [currentCustomerID, setCurrentCustomerID] = useState('');
 
     const [productName, setProductName] = useState('');
     const [productCategory, setProductCategory] = useState('');
     const [productPrice, setProductPrice] = useState('');
     const [product, setProduct] = useState('');
+    const [currentProductID, setCurrentProductID] = useState('');
+
+    const [sale, setSale] = useState('');
 
 //add a product to the database
 const handleAddProduct = () => {
@@ -43,10 +47,13 @@ const handleAddProduct = () => {
         .then(res => res.json())
         .then(data => {
             console.log(data)
+            setCurrentProductID(data.product_id)
+            console.log("Product ID: " + data.product_id)
         })
         .catch(error => console.log(error));   
   }}, [product]);
 
+  //add a customer to the database
   const handleAddCustomer = () => {
 
     const customer = {
@@ -78,12 +85,45 @@ const handleAddProduct = () => {
           .then(res => res.json())
           .then(data => {
               console.log(data)
+              setCurrentCustomerID(data.customer_id)
+              console.log("Customer ID: " + data.customer_id)
           })
           .catch(error => console.log(error));   
     }}, [customer]);
 
+    //assign product to customer
+    const handleAssignProductToCustomer = () => {
+      const sale = {
+        product_id: currentProductID,
+        customer_id: currentCustomerID
+      };
+  
+      setSale(sale);
+  
+      // Reset current product and customer
+      setCurrentProductID('');
+      setCurrentCustomerID('');
+    };
+  
+    // cors error bei post request 
+    useEffect(() => {
+      if (sale !== '') {
+      const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(sale)
+        };
+        fetch('http://localhost:8085/api/sale', requestOptions)
+          .then(res => res.json())
+          .then(data => {console.log(data)})
+          .catch(error => console.log(error));   
+    }}, [sale]);
+
+
     const handleSubmit = () => {
       handleAddCustomer();
+      handleAddProduct();
+      handleAssignProductToCustomer();
     }
 
   return (
