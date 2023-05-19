@@ -6,6 +6,7 @@ import Link from 'next/link'
 import React from 'react'
 import { useContext } from 'react'
 import { BazarContext } from '../pages/index.js'
+import SidebarButton from './buttons/SidebarButton.js'
 
 function Step({ step, text, currentStep }) {
     let stepClass = "text-sm text-ourGray";
@@ -60,13 +61,15 @@ export default function Sidebar() {
                             <span class="font-serif text-2xl">azarify</span>
                         </Link>
                     </div>
-                    <button class="flex items-center pr-4 text-sm text-black">
+                    <button class="flex items-center pr-4 text-sm text-black hover:text-ourPrimaryColor">
                         <UilQuestionCircle size="24" />
                     </button>
                 </div>
 
-
+                {
+                /*
                 <div class="flex flex-row items-center justify-center px-4 py-4">
+             
                     <Link href="/template" className='flex-1'>
                         <button class="border-ourGrey text-ourGrey rounded-lg border-2 flex flex-col justify-center px-4 py-2 flex-1">
                             <UilPlus class="" size="24" />
@@ -77,6 +80,13 @@ export default function Sidebar() {
                         <UilApps class="" size="24" />
                         <span class="text-ourGrey text-sm mt-4">Bazare verwalten</span>
                     </button>
+                    
+                </div >
+                */}
+
+                <div class="flex flex-row px-4 py-4 gap-4">
+                    <SidebarButton text="Neuer Bazar" icon={<UilPlus />}></SidebarButton>
+                    <SidebarButton text="Bazare verwalten" icon={<UilApps />}></SidebarButton>
                 </div >
 
 
