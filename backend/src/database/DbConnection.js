@@ -26,6 +26,15 @@ export const dbConnection = {
         await this.close()
         await this.connectToDB()
     },
+    async newDB(newName, newYear, newCommission, newDescription) {
+        BazarName = newName
+        await this.close()
+        await this.connectToDB()
+        const validInfo = await InputValidation.validateInfo( DbIdHandler.generateBazarId(),newName, newYear, newCommission, newDescription)
+        const info = await Info.create(validInfo)
+        await info.save().then(console.log(info))
+        this.changeDB(newName)
+    },
     async close() {
         await mongoose.connection.close().then(console.log("DB closed"))
     },

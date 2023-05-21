@@ -9,8 +9,8 @@ bazarRouter.use(cors({
 }));
 
 bazarRouter.get("/newBazar", (req, res) => {
-    console.log("Now changing Bazar")
-    dbConnection.changeDB(req.query.operator).then(bazar => {
+    console.log("Now adding new Bazar")
+    dbConnection.newDB(req.body.bazar_name, req.body.bazar_year, req.body.bazar_commission, req.body.bazar_description).then(bazar => {
         res.send(bazar)
     })
 })
@@ -23,3 +23,10 @@ bazarRouter.get("/newBazar", (req, res) => {
 //        console.log(data)
 //      })
 //      .catch(error => console.log(error))
+
+bazarRouter.get("/changeBazar", (req, res) => {
+    console.log("Now changing Bazar")
+    dbConnection.changeDB(req.query.operator).then(bazar => {
+        res.send(bazar)
+    })
+})
