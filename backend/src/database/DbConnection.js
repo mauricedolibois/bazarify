@@ -8,17 +8,25 @@ const Customer = require('./schemas/CustomerSchema.cjs')
 const Sale = require('./schemas/SaleSchema.cjs')
 const DbIdHandler = require('../services/UniqueIDs.cjs')
 const InputValidation = require('../services/InputValidation.cjs')
+var BazarName = "Bazarify"
 
 
 export const dbConnection = {
+   
+
     async connectToDB() {
         const username = encodeURIComponent("maik");
         const password = encodeURIComponent("abc123");
-        const clusterUrl = "127.0.0.1:27017/Bazarify";
-        const uri = `mongodb://${username}:${password}@${clusterUrl}?authMechanism=DEFAULT`;
-        await mongoose.connect(uri).then(console.log("DB connected")).catch(err => console.log(err))
-  },
-    async close() { 
+        const clusterUrl = `127.0.0.1:27017/${BazarName}`;
+        const uri = `mongodb://${username}:${password}@${clusterUrl}?authSource=admin`;
+        await mongoose.connect(uri).then(console.log(`Connected to Database: ${BazarName}`)).catch(err => console.log(err))
+    },
+    async changeDB(newName) {
+        BazarName = newName
+        await this.close()
+        await this.connectToDB()
+    },
+    async close() {
         await mongoose.connection.close().then(console.log("DB closed"))
     },
     async insertProduct(name, price, category) {
