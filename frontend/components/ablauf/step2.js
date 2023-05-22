@@ -7,13 +7,14 @@ export default function () {
     const [customerEmail, setCustomerEmail] = useState('');
     const [customerPhoneNumber, setCustomerPhoneNumber] = useState('');
     const [customer, setCustomer] = useState('');
-    const [currentCustomerID, setCurrentCustomerID] = useState('');
+    let currentCustomerID = "";
+
 
     const [productName, setProductName] = useState('');
     const [productCategory, setProductCategory] = useState('');
     const [productPrice, setProductPrice] = useState('');
     const [product, setProduct] = useState('');
-    const [currentProductID, setCurrentProductID] = useState('');
+    let currentProductID = "";
 
     const [sale, setSale] = useState('');
 
@@ -47,8 +48,9 @@ const handleAddProduct = () => {
         .then(res => res.json())
         .then(data => {
             console.log(data)
-            setCurrentProductID(data.product_id)
+            currentProductID = data.product_id
             console.log("Product ID: " + data.product_id)
+            handleAssignProductToCustomer();
         })
         .catch(error => console.log(error));   
   }}, [product]);
@@ -85,8 +87,7 @@ const handleAddProduct = () => {
           .then(res => res.json())
           .then(data => {
               console.log(data)
-              setCurrentCustomerID(data.customer_id)
-              console.log("Customer ID: " + data.customer_id)
+              currentCustomerID = data.customer_id
           })
           .catch(error => console.log(error));   
     }}, [customer]);
@@ -99,10 +100,7 @@ const handleAddProduct = () => {
       };
   
       setSale(sale);
-  
-      // Reset current product and customer
-      setCurrentProductID('');
-      setCurrentCustomerID('');
+      console.log(sale)
     };
   
     // cors error bei post request 
@@ -123,7 +121,6 @@ const handleAddProduct = () => {
     const handleSubmit = () => {
       handleAddCustomer();
       handleAddProduct();
-      handleAssignProductToCustomer();
     }
 
   return (
@@ -200,7 +197,7 @@ const handleAddProduct = () => {
                   </button>
                   <button
                     className="flex items-center justify-center rounded-lg border border-ourPrimaryColor px-4"
-                    onClick={handleAddProduct}
+                    onClick={handleSubmit}
                   >
                     <span className="overflow-hidden truncate whitespace-nowrap text-sm text-ourPrimaryColor">
                       + Mehr Produkte von diesem Verkäufer hinzufügen
