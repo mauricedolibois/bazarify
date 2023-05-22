@@ -6,26 +6,28 @@ export default function () {
     const [customerLastName, setCustomerLastName] = useState('');
     const [customerEmail, setCustomerEmail] = useState('');
     const [customerPhoneNumber, setCustomerPhoneNumber] = useState('');
+    const [customer, setCustomer] = useState('');
+    let currentCustomerID = "";
+
 
     const [productName, setProductName] = useState('');
     const [productCategory, setProductCategory] = useState('');
     const [productPrice, setProductPrice] = useState('');
     const [product, setProduct] = useState('');
+    let currentProductID = "";
 
+    const [sale, setSale] = useState('');
 
+//add a product to the database
 const handleAddProduct = () => {
-    // POST product
-    const product = {
+
+  const product = {
       product_name: productName,
       product_price: productPrice,
       product_category: productCategory
     };
 
     setProduct(product);
-
-    // Log values for testing
-    //console.log('Product: ', product);
-
 
     // Reset input fields
     setProductName('');
@@ -46,20 +48,80 @@ const handleAddProduct = () => {
         .then(res => res.json())
         .then(data => {
             console.log(data)
+            currentProductID = data.product_id
+            console.log("Product ID: " + data.product_id)
+            handleAssignProductToCustomer();
         })
         .catch(error => console.log(error));   
   }}, [product]);
 
-  //GetAllProducts
- /*useEffect(() => {
-     fetch('http://localhost:8085/api/allProducts', {method: 'GET'})
-       .then(res => res.json())
-       .then(data => {
-         console.log(data)
-         setAllProducts(JSON.stringify(data))
-       })
-       .catch(error => console.log(error + "Bin im Error!"))
-   }, [product])*/
+  //add a customer to the database
+  const handleAddCustomer = () => {
+
+    const customer = {
+        customer_name: customerLastName,
+        customer_firstname: customerFirstName,
+        customer_email: customerEmail,
+        customer_phone: customerPhoneNumber
+      };
+  
+      setCustomer(customer);
+  
+      // Reset input fields
+      setCustomerFirstName('');
+      setCustomerLastName('');
+      setCustomerEmail('');
+      setCustomerPhoneNumber('');
+  
+    };
+  
+    // cors error bei post request 
+    useEffect(() => {
+      if (customer !== '') {
+      const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(customer)
+        };
+        fetch('http://localhost:8085/api/customer', requestOptions)
+          .then(res => res.json())
+          .then(data => {
+              console.log(data)
+              currentCustomerID = data.customer_id
+          })
+          .catch(error => console.log(error));   
+    }}, [customer]);
+
+    //assign product to customer
+    const handleAssignProductToCustomer = () => {
+      const sale = {
+        product_id: currentProductID,
+        customer_id: currentCustomerID
+      };
+  
+      setSale(sale);
+      console.log(sale)
+    };
+  
+    // cors error bei post request 
+    useEffect(() => {
+      if (sale !== '') {
+      const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(sale)
+        };
+        fetch('http://localhost:8085/api/sale', requestOptions)
+          .then(res => res.json())
+          .then(data => {console.log(data)})
+          .catch(error => console.log(error));   
+    }}, [sale]);
+
+
+    const handleSubmit = () => {
+      handleAddCustomer();
+      handleAddProduct();
+    }
 
   return (
     <>
@@ -78,18 +140,18 @@ const handleAddProduct = () => {
               <div className="w-2/5 border-r border-ourLightGray p-4">
                 <h3>Infos zum Verkäufer</h3>
                 <div className="flex flex-row gap-4">
-                  <UnderlinedInput
-                    id="customerFirstName"
-                    placeholder="Vorname"
-                    value={customerFirstName}
-                    onChange={(e) => setCustomerFirstName(e.target.value)}
-                  />
-                  <UnderlinedInput
-                    id="customerLastName"
-                    placeholder="Nachname"
-                    value={customerLastName}
-                    onChange={(e) => setCustomerLastName(e.target.value)}
-                  />
+                    <UnderlinedInput
+                      id="customerFirstName"
+                      placeholder="Vorname"
+                      value={customerFirstName}
+                      onChange={(e) => setCustomerFirstName(e.target.value)}
+                    />
+                    <UnderlinedInput
+                      id="customerLastName"
+                      placeholder="Nachname"
+                      value={customerLastName}
+                      onChange={(e) => setCustomerLastName(e.target.value)}
+                    />
                 </div>
                 <UnderlinedInput
                   id="customerEmail"
@@ -127,12 +189,15 @@ const handleAddProduct = () => {
                   />
                 </div>
                 <div className="mt-4 flex">
-                  <button className="mr-4 flex h-10 w-10 items-center justify-center rounded-lg bg-ourPrimaryColor px-8 text-white">
+                  {//bei einem button Verkäufer beibehalten
+                  }
+                  <button className="mr-4 flex h-10 w-10 items-center justify-center rounded-lg bg-ourPrimaryColor px-8 text-white"
+                          onClick={handleSubmit}>
                     X
                   </button>
                   <button
                     className="flex items-center justify-center rounded-lg border border-ourPrimaryColor px-4"
-                    onClick={handleAddProduct}
+                    onClick={handleSubmit}
                   >
                     <span className="overflow-hidden truncate whitespace-nowrap text-sm text-ourPrimaryColor">
                       + Mehr Produkte von diesem Verkäufer hinzufügen
@@ -154,10 +219,8 @@ const handleAddProduct = () => {
               </button>
             </div>
           </div>
-        
       </div>
     </div>
-    
   </>
 );
 }
