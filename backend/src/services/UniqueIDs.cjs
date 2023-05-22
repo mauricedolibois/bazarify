@@ -15,8 +15,5 @@ module.exports = {
     generateSaleId: function(){
         return nanoid()
     },
-    generateBazarId: function(){
-        return nanoid()
-    }
 }
 //package cuid

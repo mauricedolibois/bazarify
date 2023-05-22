@@ -53,6 +53,22 @@ module.exports = {
               }).catch(err => console.log(err.message))
 
             return validSale
-    }
+    },
+    validateInfo: async function(name, year , commission, description){
+        const schema = await Joi.object({
+            bazar_name: Joi.string().required(),
+            bazar_year: Joi.number().integer().required(),
+            bazar_commission: Joi.number().integer().required(),
+            bazar_description: Joi.string()
+            });
 
+            const validInfo = await schema.validateAsync({
+                bazar_name: name,
+                bazar_year: year,
+                bazar_commission: commission,
+                bazar_description: description
+              }).catch(err => console.log(err.message))
+
+            return validInfo
+            }
 }

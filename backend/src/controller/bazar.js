@@ -8,8 +8,9 @@ bazarRouter.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:3001']
 }));
 
-bazarRouter.get("/newBazar", (req, res) => {
+bazarRouter.post("/newBazar", (req, res) => {
     console.log("Now adding new Bazar")
+    console.log(req.body)
     dbConnection.newDB(req.body.bazar_name, req.body.bazar_year, req.body.bazar_commission, req.body.bazar_description).then(bazar => {
         res.send(bazar)
     })
