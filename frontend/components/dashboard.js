@@ -3,6 +3,7 @@ import { UilPlus } from '@iconscout/react-unicons'
 import { UilAngleRight } from '@iconscout/react-unicons'
 import ButtonBigColor from './buttons/ButtonBigColor'
 import ButtonBigNoColor from './buttons/ButtonBigNoColor'
+import PopupTemplate from './PopupTemplate'
 
 
 function BazarCard({ name }) {
@@ -17,6 +18,7 @@ function BazarCard({ name }) {
 export default function () {
     return (
         <>
+            <PopupTemplate>Hier</PopupTemplate>
             <div>
                 <h1>Dashboard</h1>
                 <p className="mb-4">Erstelle jetzt einen neuen Basar! Keine Sorge: Wir leiten dich vom ersten Schritt bis ganz zum Schluss! Es ist ganz einfach. Auf der linken Seite findest du den Ablauf. Wir werden dich Schritt für Schritt durch den ganzen Prozess leiten!</p>

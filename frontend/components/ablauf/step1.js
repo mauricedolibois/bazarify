@@ -10,6 +10,9 @@ export default function () {
             {//<ButtonBigColor text="ButtonBigColor" icon={<UilPlus />}></ButtonBigColor>
             }
 
+
+
+
             <div>
                 <h1>1. Basar erstellen</h1>
                 <p>Als erstes sollten wir ein paar generelle Infos zu deinem anstehenden Basar festhalten.</p>
