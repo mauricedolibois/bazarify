@@ -6,14 +6,13 @@ import mongoose from 'mongoose'
 const Product = require('./schemas/ProductSchema.cjs')
 const Customer = require('./schemas/CustomerSchema.cjs')
 const Sale = require('./schemas/SaleSchema.cjs')
+const BazarInfo = require('./schemas/InfoSchema.cjs')
 const DbIdHandler = require('../services/UniqueIDs.cjs')
 const InputValidation = require('../services/InputValidation.cjs')
 var BazarName = "Bazarify"
 
 
 export const dbConnection = {
-   
-
     async connectToDB() {
         const username = encodeURIComponent("maik");
         const password = encodeURIComponent("abc123");
@@ -26,14 +25,18 @@ export const dbConnection = {
         await this.close()
         await this.connectToDB()
     },
+    //Prüfen ob DB existiert
     async newDB(newName, newYear, newCommission, newDescription) {
+        try{
         BazarName = newName
         await this.close()
         await this.connectToDB()
-        const validInfo = await InputValidation.validateInfo( DbIdHandler.generateBazarId(),newName, newYear, newCommission, newDescription)
-        const info = await Info.create(validInfo)
+        const validInfo = await InputValidation.validateInfo(newName, newYear, newCommission, newDescription)
+        const info = await BazarInfo.create(validInfo)
         await info.save().then(console.log(info))
-        this.changeDB(newName)
+        return info
+            }
+        catch{console.log("could not create new DB")}
     },
     async close() {
         await mongoose.connection.close().then(console.log("DB closed"))
@@ -41,9 +44,6 @@ export const dbConnection = {
     async insertProduct(name, price, category) {
         try{
             var id = DbIdHandler.generateProductId()
-            while((await this.findProduct('product_id', id)) != null){
-                id = DbIdHandler.generateProductId()
-            }
             const validProduct = await InputValidation.validateProduct(id, name, price, category)
             const product = await Product.create(validProduct)
             await product.save().then(console.log(product))
@@ -54,9 +54,6 @@ export const dbConnection = {
     async insertCustomer(name, firstname, email, phone) {
         try{
             var id = DbIdHandler.generateCustomerId()
-            while((await this.findCustomer('customer_id', id)) != null){
-                id = DbIdHandler.generateCustomerId()
-            }
             const validCustomer = await InputValidation.validateCustomer(id, firstname, name, email, phone)
             const customer = await Customer.create(validCustomer)
             await customer.save().then(console.log(customer))
@@ -68,9 +65,6 @@ export const dbConnection = {
     async insertSale(product_id, customer_id) {
         try{
             var id = DbIdHandler.generateProductId()
-            while((await this.findSale('order_id', id)) != null){
-                id = DbIdHandler.generateProductId()
-            }
             const validSale = await InputValidation.validateSale(id, product_id, customer_id)
             const sale = await Sale.create(validSale)
             await sale.save().then(console.log(sale))
