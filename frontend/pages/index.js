@@ -8,6 +8,7 @@ import Step3 from "../components/ablauf/step3";
 import Step4 from "../components/ablauf/step4";
 import Step5 from "../components/ablauf/step5";
 import Dashboard from "@/components/dashboard";
+import PopupTemplate from "@/components/popupTemplate";
 
 export const BazarContext = createContext();
 
@@ -38,6 +39,7 @@ const CreatePage = () => {
         <div className="flex flex-row">
           <Sidebar />
           <div className="pt-32 px-32">
+            <PopupTemplate></PopupTemplate>
             {step === 0 && <Dashboard />}
             {step === 1 && <Step1 />}
             {step === 2 && <Step2 />}
