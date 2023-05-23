@@ -3,15 +3,15 @@ import cors from'cors'
 const app = express()
 import  {dbConnection} from './database/DbConnection.js';
 import {productRouter}  from './controller/products.js';
-import {customerRouter}  from './controller/customers.js';
-import {saleRouter}  from './controller/sales.js';
+import {sellerRouter}  from './controller/seller.js';
+import {offerRouter}  from './controller/offer.js';
 import { bazarRouter } from './controller/bazar.js';
 
 app.use(express.json())
 app.use(urlencoded({extended:true}))
 app.use('/api', productRouter)
-app.use('/api', customerRouter)
-app.use('/api', saleRouter)
+app.use('/api', sellerRouter)
+app.use('/api', offerRouter)
 app.use('/api', bazarRouter)
 
 app.use(cors({
