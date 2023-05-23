@@ -31,3 +31,16 @@ bazarRouter.get("/changeBazar", (req, res) => {
         res.send(bazar)
     })
 })
+
+bazarRouter.get("/getBazars", (req, res) => {
+    dbConnection.getBazars().then(bazar => {
+        res.send(bazar)
+    })
+})
+
+//needs a name
+bazarRouter.delete("/deleteBazar", (req, res) => {
+    dbConnection.dropBazar(req.query.name).then(bazar => {
+        res.send(bazar)
+    })
+})

@@ -6,12 +6,13 @@ import mongoose from 'mongoose'
 const Product = require('./schemas/ProductSchema.cjs')
 const Customer = require('./schemas/CustomerSchema.cjs')
 const Sale = require('./schemas/SaleSchema.cjs')
-const BazarInfo = require('./schemas/InfoSchema.cjs')
+const Info = require('./schemas/InfoSchema.cjs')
 const DbIdHandler = require('../services/UniqueIDs.cjs')
 const InputValidation = require('../services/InputValidation.cjs')
 var BazarName = "Bazarify"
 
 
+// Connection to DB 
 export const dbConnection = {
     async connectToDB() {
         const username = encodeURIComponent("maik");
@@ -25,22 +26,66 @@ export const dbConnection = {
         await this.close()
         await this.connectToDB()
     },
-    //Prüfen ob DB existiert
     async newDB(newName, newYear, newCommission, newDescription) {
         try{
-        BazarName = newName
-        await this.close()
+        // entry in Barazify Info
+        await this.close()    
+        BazarName="Bazarify"
         await this.connectToDB()
         const validInfo = await InputValidation.validateInfo(newName, newYear, newCommission, newDescription)
-        const info = await BazarInfo.create(validInfo)
-        await info.save().then(console.log(info))
-        return info
+        const info = await Info.create(validInfo).catch(err => console.log(err))
+        await info.save().then(console.log(info) +"saved")
+        await this.close()
+
+        // entry in DB Info
+        BazarName = newName
+        await this.connectToDB()
+        const validInfo2 = await InputValidation.validateInfo(newName, newYear, newCommission, newDescription)
+        const info2 = await Info.create(validInfo2)
+        await info2.save().then(console.log(info))
+        return info2
+
             }
         catch{console.log("could not create new DB")}
+    },
+    async getBazars() {
+        try{
+        const currentDB = BazarName
+        await this.close()
+        BazarName = "Bazarify"
+        await this.connectToDB()
+        const info = await Info.find().catch(err => console.log(err))
+        await this.close()
+        BazarName = currentDB
+        await this.connectToDB()
+        console.log(info)
+        return info
+        }
+        catch{console.log("could not get Bazars")}
+    },
+    async dropBazar(name) {
+        try{
+       const currentDB = BazarName
+         await this.close()
+            BazarName = name
+            await this.connectToDB()
+            await mongoose.connection.dropDatabase().then(console.log("DB dropped"))
+            await this.close()
+            BazarName = "Bazarify"
+            await this.connectToDB()
+            await Info.deleteOne({bazar_name: name}).then(console.log("Info deleted"))
+            await this.close()
+            BazarName = currentDB
+            await this.connectToDB()
+            return true
+        } catch{console.log("could not drop DB")}
     },
     async close() {
         await mongoose.connection.close().then(console.log("DB closed"))
     },
+
+
+    //CRUD Operations for Products, Customers and Sales
     async insertProduct(name, price, category) {
         try{
             var id = DbIdHandler.generateProductId()
@@ -127,5 +172,3 @@ export const dbConnection = {
         await Sale.deleteMany().then(console.log("All sales deleted"))
     }
 }
-
-//validierung
