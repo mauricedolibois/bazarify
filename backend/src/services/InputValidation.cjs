@@ -19,37 +19,37 @@ module.exports = {
 
         return validProduct
     },
-    validateCustomer: async function(id, name, firstname, email, phone){
+    validateSeller: async function(id, name, firstname, email, phone){
         
         const schema = await Joi.object({
-            customer_id: Joi.number().required(),
-            customer_name: Joi.string().required(),
-            customer_firstname: Joi.string().required(),
-            customer_email: Joi.string().required().regex(new RegExp(/^.*@.*\..*$/i)).message('Invalid email'),
-            customer_phone: Joi.number().integer().required()
+            seller_id: Joi.number().required(),
+            seller_name: Joi.string().required(),
+            seller_firstname: Joi.string().required(),
+            seller_email: Joi.string().required().regex(new RegExp(/^.*@.*\..*$/i)).message('Invalid email'),
+            seller_phone: Joi.number().integer().required()
           });
 
-          const validCustomer = await schema.validateAsync({
-                customer_id: id,
-                customer_name: name,
-                customer_firstname: firstname,
-                customer_email: email,
-                customer_phone: phone
+          const validSeller = await schema.validateAsync({
+            seller_id: id,
+            seller_name: name,
+            seller_firstname: firstname,
+            seller_email: email,
+            seller_phone: phone
               }).catch(err => console.log(err.message))
 
-            return validCustomer
+            return validSeller
     },
-    validateOffer: async function(id, product_id, customer_id){
+    validateOffer: async function(id, product_id, seller_id){
         const schema = await Joi.object({
             offer_id: Joi.number().required(),
             product_id: Joi.number().required(),
-            customer_id: Joi.number().required()
+            seller_id: Joi.number().required()
             });
 
             const validOffer = await schema.validateAsync({
                 offer_id: id,
                 product_id: product_id,
-                customer_id: customer_id
+                seller_id: seller_id
               }).catch(err => console.log(err.message))
 
             return validOffer

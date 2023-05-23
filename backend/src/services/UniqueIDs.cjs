@@ -8,7 +8,7 @@ module.exports = {
          return nanoidProduct()
     },
 
-    generateCustomerId: function(){
+    generateSellerId: function(){
         return nanoid()
     },
 

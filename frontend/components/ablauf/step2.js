@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import UnderlinedInput from '../underlinedInput'
 
 export default function () {
-    const [customerFirstName, setCustomerFirstName] = useState('');
-    const [customerLastName, setCustomerLastName] = useState('');
-    const [customerEmail, setCustomerEmail] = useState('');
-    const [customerPhoneNumber, setCustomerPhoneNumber] = useState('');
-    const [customer, setCustomer] = useState('');
-    let currentCustomerID = "";
+    const [sellerFirstName, setSellerFirstName] = useState('');
+    const [sellerLastName, setSellerLastName] = useState('');
+    const [sellerEmail, setSellerEmail] = useState('');
+    const [sellerPhoneNumber, setSellerPhoneNumber] = useState('');
+    const [seller, setSeller] = useState('');
+    let currentSellerID = "";
 
 
     const [productName, setProductName] = useState('');
@@ -50,53 +50,53 @@ const handleAddProduct = () => {
             console.log(data)
             currentProductID = data.product_id
             console.log("Product ID: " + data.product_id)
-            handleAssignProductToCustomer();
+            handleAssignProductToSeller();
         })
         .catch(error => console.log(error));   
   }}, [product]);
 
-  //add a customer to the database
-  const handleAddCustomer = () => {
+  //add a Seller to the database
+  const handleAddSeller = () => {
 
-    const customer = {
-        customer_name: customerLastName,
-        customer_firstname: customerFirstName,
-        customer_email: customerEmail,
-        customer_phone: customerPhoneNumber
+    const seller = {
+      seller_name: sellerLastName,
+      seller_firstname: sellerFirstName,
+      seller_email: sellerEmail,
+      seller_phone: sellerPhoneNumber
       };
   
-      setCustomer(customer);
+      setSeller(seller);
   
       // Reset input fields
-      setCustomerFirstName('');
-      setCustomerLastName('');
-      setCustomerEmail('');
-      setCustomerPhoneNumber('');
+      setSellerFirstName('');
+      setSellerLastName('');
+      setSellerEmail('');
+      setSellerPhoneNumber('');
   
     };
   
     // cors error bei post request 
     useEffect(() => {
-      if (customer !== '') {
+      if (seller !== '') {
       const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(customer)
+          body: JSON.stringify(seller)
         };
-        fetch('http://localhost:8085/api/customer', requestOptions)
+        fetch('http://localhost:8085/api/seller', requestOptions)
           .then(res => res.json())
           .then(data => {
               console.log(data)
-              currentCustomerID = data.customer_id
+              currentSellerID = data.seller_id
           })
           .catch(error => console.log(error));   
-    }}, [customer]);
+    }}, [seller]);
 
-    //assign product to customer
-    const handleAssignProductToCustomer = () => {
+    //assign product to seller
+    const handleAssignProductToSeller = () => {
       const offer = {
         product_id: currentProductID,
-        customer_id: currentCustomerID
+        seller_id: currentSellerID
       };
   
       setOffer(offer);
@@ -119,7 +119,7 @@ const handleAddProduct = () => {
 
 
     const handleSubmit = () => {
-      handleAddCustomer();
+      handleAddSeller();
       handleAddProduct();
     }
 
@@ -141,29 +141,29 @@ const handleAddProduct = () => {
                 <h3>Infos zum Verkäufer</h3>
                 <div className="flex flex-row gap-4">
                     <UnderlinedInput
-                      id="customerFirstName"
+                      id="sellerFirstName"
                       placeholder="Vorname"
-                      value={customerFirstName}
-                      onChange={(e) => setCustomerFirstName(e.target.value)}
+                      value={sellerFirstName}
+                      onChange={(e) => setSellerFirstName(e.target.value)}
                     />
                     <UnderlinedInput
-                      id="customerLastName"
+                      id="sellerLastName"
                       placeholder="Nachname"
-                      value={customerLastName}
-                      onChange={(e) => setCustomerLastName(e.target.value)}
+                      value={sellerLastName}
+                      onChange={(e) => setSellerLastName(e.target.value)}
                     />
                 </div>
                 <UnderlinedInput
-                  id="customerEmail"
+                  id="sellerEmail"
                   placeholder="Email"
-                  value={customerEmail}
-                  onChange={(e) => setCustomerEmail(e.target.value)}
+                  value={sellerEmail}
+                  onChange={(e) => setSellerEmail(e.target.value)}
                 />
                 <UnderlinedInput
-                  id="customerPhoneNumber"
+                  id="sellerPhoneNumber"
                   placeholder="Telefonnummer"
-                  value={customerPhoneNumber}
-                  onChange={(e) => setCustomerPhoneNumber(e.target.value)}
+                  value={sellerPhoneNumber}
+                  onChange={(e) => setSellerPhoneNumber(e.target.value)}
                 />
               </div>
               <div className="w-3/5 p-4">

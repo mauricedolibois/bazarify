@@ -23,7 +23,7 @@ offerRouter.get("/allOffers", (req, res) => {
 )
 
 offerRouter.post("/offer", (req, res) => {
-    dbConnection.insertOffer(req.body.product_id, req.body.customer_id).then
+    dbConnection.insertOffer(req.body.product_id, req.body.seller_id).then
     (offer => { res.send(offer) })  
 }
 )
