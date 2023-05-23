@@ -1,13 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { UilMultiply } from '@iconscout/react-unicons'
-
-import ButtonGrayBorder from './buttons/ButtonGrayBorder';
-import { UilKeyboard } from '@iconscout/react-unicons'
-import FormInput from './formInput';
 import ButtonSmallJustIcon from './buttons/ButtonSmallJustIcon';
-import { UilCheck } from '@iconscout/react-unicons'
+import { UilArrowRight } from '@iconscout/react-unicons'
 
-const AddProductsManuallyPopup = () => {
+const CalculationPopup2 = () => {
     const [isOpen, setIsOpen] = useState(false);
     const popupRef = useRef(null);
 
@@ -35,17 +31,14 @@ const AddProductsManuallyPopup = () => {
 
     return (
         <div>
-            {/*Alt: <button onClick={openPopup}>Open Popup</button>*/}
-            <div onClick={openPopup} className='inline-block'>
-                <ButtonGrayBorder text="Produkte manuell eintragen" icon={<UilKeyboard />}></ButtonGrayBorder>
-            </div>
+            <button onClick={openPopup}>Open Demo Popup</button>
             {isOpen && (
                 <div className='fixed w-screen h-screen top-0 left-0 bg-black/75 flex justify-center items-center'>
                     <div className='w-1/2 h-1/2 bg-white rounded-lg relative p-8' ref={popupRef}>
                         <UilMultiply className='absolute top-4 right-4 cursor-pointer' onClick={closePopup} />
-                        <h2>Produkte manuell eintragen</h2>
-                        <FormInput name="Barcode des Produkts" />
-                        <ButtonSmallJustIcon icon={<UilCheck />}></ButtonSmallJustIcon>
+                        <h2>Das Rückgeld beträgt ...</h2>
+                        <h3>5.00€</h3>
+                        <ButtonSmallJustIcon icon={<UilArrowRight />}></ButtonSmallJustIcon>
                     </div>
                 </div>
             )}
@@ -53,4 +46,4 @@ const AddProductsManuallyPopup = () => {
     );
 };
 
-export default AddProductsManuallyPopup;
+export default CalculationPopup2;

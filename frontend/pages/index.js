@@ -37,7 +37,7 @@ const CreatePage = () => {
       >
         <div className="flex flex-row">
           <Sidebar />
-          <div className="pt-32 px-32">
+          <div className="pt-16 px-32">
             {step === 0 && <Dashboard />}
             {step === 1 && <Step1 />}
             {step === 2 && <Step2 />}
