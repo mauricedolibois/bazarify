@@ -74,6 +74,7 @@ export const dbConnection = {
     },
     async findProduct(operator, parameter) {
         const filter = {[operator]: parameter}
+        console.log({filter})
         return await Product.findOne(filter);
     },
     async findCustomer(operator, parameter) {

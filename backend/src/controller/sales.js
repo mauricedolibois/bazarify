@@ -9,14 +9,14 @@ saleRouter.use(cors({
 }));
 
 saleRouter.get("/sale", (req, res) => {
-    dbConnection.findProduct(req.query.operator, req.query.parameter).then(sale => {
+    dbConnection.findSale(req.query.operator, req.query.parameter).then(sale => {
         res.send(sale)
     })
 }
 )
 
 saleRouter.get("/allSales", (req, res) => {
-    dbConnection.findAllProducts().then(sale => {
+    dbConnection.findAllSales().then(sale => {
         res.send(sale)
     })
 }

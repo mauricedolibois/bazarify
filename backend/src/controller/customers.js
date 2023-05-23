@@ -9,8 +9,9 @@ customerRouter.use(cors({
 }));
 
 customerRouter.get("/customer", (req, res) => {
-    dbConnection.findProduct(req.query.operator, req.query.parameter).then(customer => {
+    dbConnection.findCustomer(req.query.operator, req.query.parameter).then(customer => {
         res.send(customer)
+        console.log("Customer: " + customer)
     })
 }
 )
