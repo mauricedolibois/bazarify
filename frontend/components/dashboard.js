@@ -13,7 +13,6 @@ useEffect(() => {
     fetch('http://localhost:8085/api/changeBazar?operator='+name)
         .then(res => res.json())
         .then(data => {
-            console.log(data)
             setBazar(undefined)
         }
         )}
@@ -23,7 +22,9 @@ useEffect(() => {
     return (
         <div class="border bg-white border-ourLightGray px-4 py-2 rounded-lg flex justify-between">
             {name}
-            <UilAngleRight class="inline-block -mr-2 text-ourGray" onClick={()=>setBazar(name)}/>           
+            <UilAngleRight class="inline-block -mr-2 text-ourGray" onClick={()=>{
+                window.location.reload()
+                setBazar(name)}}/>           
         </div>
     )
 }
@@ -58,7 +59,6 @@ useEffect(() => {
                 <h2 className="mt-16">Deine Basare</h2>
 
                 <div class="grid grid-cols-3 gap-4">
-                {console.log(bazars)}
                 {(bazars === undefined) ? (<p>Keine Basare vorhanden</p>) : (bazars.map(bazar => {
                         return (bazar.hasOwnProperty('bazar_name')) ? <BazarCard name={bazar.bazar_name} /> : null;
                     }))}

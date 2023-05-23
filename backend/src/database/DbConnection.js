@@ -64,6 +64,9 @@ export const dbConnection = {
         }
         catch{console.log("could not get Bazars")}
     },
+    async getCurrentBazar() {
+        return BazarName
+    },
     async dropBazar(name) {
         try{
        const currentDB = BazarName

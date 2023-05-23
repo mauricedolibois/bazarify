@@ -44,3 +44,9 @@ bazarRouter.delete("/deleteBazar", (req, res) => {
         res.send(bazar)
     })
 })
+
+bazarRouter.get("/currentBazar", (req, res) => {
+    dbConnection.getCurrentBazar().then(bazar => {
+        res.json(bazar)
+    })
+})
