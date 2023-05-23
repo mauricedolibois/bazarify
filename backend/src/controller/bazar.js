@@ -28,7 +28,7 @@ bazarRouter.post("/newBazar", (req, res) => {
 bazarRouter.get("/changeBazar", (req, res) => {
     console.log("Now changing Bazar")
     dbConnection.changeDB(req.query.operator).then(bazar => {
-        res.send(bazar)
+        res.json(bazar)
     })
 })
 

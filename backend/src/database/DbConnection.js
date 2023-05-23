@@ -25,6 +25,7 @@ export const dbConnection = {
         BazarName = newName
         await this.close()
         await this.connectToDB()
+        return "connected to "+ BazarName
     },
     async newDB(newName, newYear, newCommission, newDescription) {
         try{
