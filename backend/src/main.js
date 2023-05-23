@@ -3,7 +3,7 @@ import cors from'cors'
 const app = express()
 import  {dbConnection} from './database/DbConnection.js';
 import {productRouter}  from './controller/products.js';
-import {sellerRouter}  from './controller/customers.js';
+import {sellerRouter}  from './controller/seller.js';
 import {offerRouter}  from './controller/offer.js';
 import { bazarRouter } from './controller/bazar.js';
 
