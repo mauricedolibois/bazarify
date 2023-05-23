@@ -16,7 +16,7 @@ export default function () {
     const [product, setProduct] = useState('');
     let currentProductID = "";
 
-    const [sale, setSale] = useState('');
+    const [offer, setOffer] = useState('');
 
 //add a product to the database
 const handleAddProduct = () => {
@@ -94,28 +94,28 @@ const handleAddProduct = () => {
 
     //assign product to customer
     const handleAssignProductToCustomer = () => {
-      const sale = {
+      const offer = {
         product_id: currentProductID,
         customer_id: currentCustomerID
       };
   
-      setSale(sale);
-      console.log(sale)
+      setOffer(offer);
+      console.log(offer)
     };
   
     // cors error bei post request 
     useEffect(() => {
-      if (sale !== '') {
+      if (offer !== '') {
       const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(sale)
+          body: JSON.stringify(offer)
         };
-        fetch('http://localhost:8085/api/sale', requestOptions)
+        fetch('http://localhost:8085/api/offer', requestOptions)
           .then(res => res.json())
           .then(data => {console.log(data)})
           .catch(error => console.log(error));   
-    }}, [sale]);
+    }}, [offer]);
 
 
     const handleSubmit = () => {

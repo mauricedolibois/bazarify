@@ -39,20 +39,20 @@ module.exports = {
 
             return validCustomer
     },
-    validateSale: async function(id, product_id, customer_id){
+    validateOffer: async function(id, product_id, customer_id){
         const schema = await Joi.object({
-            order_id: Joi.number().required(),
+            offer_id: Joi.number().required(),
             product_id: Joi.number().required(),
             customer_id: Joi.number().required()
             });
 
-            const validSale = await schema.validateAsync({
-                order_id: id,
+            const validOffer = await schema.validateAsync({
+                offer_id: id,
                 product_id: product_id,
                 customer_id: customer_id
               }).catch(err => console.log(err.message))
 
-            return validSale
+            return validOffer
     },
     validateInfo: async function(name, year , commission, description){
         const schema = await Joi.object({

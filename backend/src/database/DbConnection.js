@@ -5,7 +5,7 @@ const require = createRequire(import.meta.url)
 import mongoose from 'mongoose'
 const Product = require('./schemas/ProductSchema.cjs')
 const Customer = require('./schemas/CustomerSchema.cjs')
-const Sale = require('./schemas/SaleSchema.cjs')
+const Offer = require('./schemas/OfferSchema.cjs')
 const Info = require('./schemas/InfoSchema.cjs')
 const DbIdHandler = require('../services/UniqueIDs.cjs')
 const InputValidation = require('../services/InputValidation.cjs')
@@ -89,7 +89,7 @@ export const dbConnection = {
     },
 
 
-    //CRUD Operations for Products, Customers and Sales
+    //CRUD Operations for Products, Customers and Offers
     async insertProduct(name, price, category) {
         try{
             var id = DbIdHandler.generateProductId()
@@ -111,15 +111,15 @@ export const dbConnection = {
         catch{console.log("could not insert customer")
 }
     },
-    async insertSale(product_id, customer_id) {
+    async insertOffer(product_id, customer_id) {
         try{
-            var id = DbIdHandler.generateProductId()
-            const validSale = await InputValidation.validateSale(id, product_id, customer_id)
-            const sale = await Sale.create(validSale)
-            await sale.save().then(console.log(sale))
-            return sale
+            var id = DbIdHandler.generateOfferId()
+            const validOffer = await InputValidation.validateOffer(id, product_id, customer_id)
+            const offer = await Offer.create(validOffer)
+            await offer.save().then(console.log(offer))
+            return offer
         }
-        catch{console.log("could not insert sale")}
+        catch{console.log("could not insert offer")}
     },
     async findProduct(operator, parameter) {
         const filter = {[operator]: parameter}
@@ -129,9 +129,9 @@ export const dbConnection = {
         const filter = {[operator]: parameter}
         return await Customer.findOne(filter);
     },
-    async findSale(operator, parameter) {
+    async findOffer(operator, parameter) {
         const filter = {[operator]: parameter}
-        return await Sale.findOne(filter);
+        return await Offer.findOne(filter);
     },
     async findAllProducts() {
         return await Product.find();
@@ -139,8 +139,8 @@ export const dbConnection = {
     async findAllCustomers() {
         return await Customer.find();
     },
-    async findAllSales() {
-        return await Sale.find();
+    async findAllOffers() {
+        return await Offer.find();
     },
     async updateProduct(operator, parameter, update) {
         const filter = {[operator]: parameter}
@@ -150,9 +150,9 @@ export const dbConnection = {
         const filter = {[operator]: parameter}
         Customer.updateOne(filter, update).then(console.log("customer updated"))
     },
-    async updateSale(operator, parameter, update) {
+    async updateOffer(operator, parameter, update) {
         const filter = {[operator]: parameter}
-        Sale.updateOne(filter, update).then(console.log("sale updated"))
+        Offer.updateOne(filter, update).then(console.log("offer updated"))
     },
     async deleteProduct(operator, parameter) {
         const filter = {[operator]: parameter}
@@ -162,9 +162,9 @@ export const dbConnection = {
         const filter = {[operator]: parameter}
         Customer.deleteOne(filter).then(console.log("customer deleted"))
     },
-    async deleteSale(operator, parameter) {
+    async deleteOffer(operator, parameter) {
         const filter = {[operator]: parameter}
-        Sale.deleteOne(filter).then(console.log("sale deleted"))
+        Offer.deleteOne(filter).then(console.log("offer deleted"))
     },
     async deleteAllProducts() {
         await Product.deleteMany().then(console.log("All products deleted"))
@@ -172,7 +172,7 @@ export const dbConnection = {
     async deleteAllCustomers() {
         await Customer.deleteMany().then(console.log("All customers deleted"))
     },
-    async deleteAllSales() {
-        await Sale.deleteMany().then(console.log("All sales deleted"))
+    async deleteAllOffers() {
+        await Offer.deleteMany().then(console.log("All offers deleted"))
     }
 }

@@ -12,7 +12,7 @@ module.exports = {
         return nanoid()
     },
 
-    generateSaleId: function(){
+    generateOfferId: function(){
         return nanoid()
     }
 }
