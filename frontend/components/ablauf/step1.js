@@ -25,8 +25,13 @@ export default function () {
         };
 
         console.log(bazar);
-
         setBazar(bazar);
+
+        //clear fields
+        setBazarName('');
+        setBazarYear('');
+        setBazarCommission('');
+        setBazarDescription('');
     }
     
     useEffect(() => {
@@ -39,7 +44,10 @@ export default function () {
             fetch('http://localhost:8085/api/newBazar', requestOptions)
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data)
+                    if(data) {
+                        //go to next step
+                        console.log(data)
+                    }
                 })
                 .catch(error => console.log(error))
         }
@@ -59,8 +67,8 @@ export default function () {
             </div>
             <div>
                 <div class="grid grid-cols-1 gap-x-8 sm:grid-cols-6">
-                    <FormInput name="Name des Basars" unit="" onChange={(e) => setBazarName(e.target.value)}/>
-                    <FormInput name="Jahr" unit="" onChange={(e) => setBazarYear(e.target.value)}/>
+                    <FormInput name="Name des Basars" onChange={(e) => setBazarName(e.target.value)}/>
+                    <FormInput name="Jahr" onChange={(e) => setBazarYear(e.target.value)}/>
                     <FormInput name="Provision" unit="%" onChange={(e) => setBazarCommission(e.target.value)}/>
 
                     <div class="col-span-full">

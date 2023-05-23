@@ -28,6 +28,25 @@ bazarRouter.post("/newBazar", (req, res) => {
 bazarRouter.get("/changeBazar", (req, res) => {
     console.log("Now changing Bazar")
     dbConnection.changeDB(req.query.operator).then(bazar => {
+        res.json(bazar)
+    })
+})
+
+bazarRouter.get("/getBazars", (req, res) => {
+    dbConnection.getBazars().then(bazar => {
         res.send(bazar)
+    })
+})
+
+//needs a name
+bazarRouter.delete("/deleteBazar", (req, res) => {
+    dbConnection.dropBazar(req.query.name).then(bazar => {
+        res.send(bazar)
+    })
+})
+
+bazarRouter.get("/currentBazar", (req, res) => {
+    dbConnection.getCurrentBazar().then(bazar => {
+        res.json(bazar)
     })
 })
