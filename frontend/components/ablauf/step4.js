@@ -6,10 +6,10 @@ export default function () {
         <>
             <div>
                 <h1>4. Abholung</h1>
-                <p>Schön, dass du so viel verkaufen konntest. Du solltest jetzt die Verkäufer benachrichtigen, dass sie ihren Erlös und ggf. ihre liegengebliebene Artikel abholen kommen können.</p>
+                <p className='mb-4'>Schön, dass du so viel verkaufen konntest. Du solltest jetzt die Verkäufer benachrichtigen, dass sie ihren Erlös und ggf. ihre liegengebliebene Artikel abholen kommen können.</p>
                 <ButtonBigColor icon={<UilEnvelopeUpload />} text="Verkäufer benachrichtigen" />
-                <h2>Infos zum Verkäufer finden</h2>
 
+                <h2 className="mt-8">Infos zum Verkäufer finden</h2>
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-left text-sm text-ourGray dark:text-ourGray">
                         <thead class="bg-ourLightGray text-xs uppercase text-ourDarkGray dark:bg-gray-700 dark:text-ourGray">

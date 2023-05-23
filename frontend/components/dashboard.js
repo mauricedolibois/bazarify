@@ -4,6 +4,10 @@ import { UilAngleRight } from '@iconscout/react-unicons'
 import ButtonBigColor from './buttons/ButtonBigColor'
 import ButtonBigNoColor from './buttons/ButtonBigNoColor'
 import PopupTemplate from './PopupTemplate'
+import Link from 'next/link'
+
+import { useContext } from 'react'
+import { BazarContext } from '../pages/index.js'
 
 
 function BazarCard({ name }) {
@@ -16,6 +20,8 @@ function BazarCard({ name }) {
 }
 
 export default function () {
+    let { step, setStep, newBazar, setNewBazar, createBazar } = useContext(BazarContext)
+
     return (
         <>
             <PopupTemplate>Hier</PopupTemplate>
@@ -23,7 +29,10 @@ export default function () {
                 <h1>Dashboard</h1>
                 <p className="mb-4">Erstelle jetzt einen neuen Basar! Keine Sorge: Wir leiten dich vom ersten Schritt bis ganz zum Schluss! Es ist ganz einfach. Auf der linken Seite findest du den Ablauf. Wir werden dich Schritt für Schritt durch den ganzen Prozess leiten!</p>
                 <div class="flex flex-row gap-4">
-                    <ButtonBigColor text="Neuen Basar erstellen" icon={<UilPlus />}></ButtonBigColor>
+                    {/* Sollen wir das hier lieber mit dem Stepper machen (so wie in der Sidebar, also onClick={showDashboard}) oder mit href? */}
+                    <Link href="/" onClick={() => setStep(1)}>
+                        <ButtonBigColor text="Neuen Basar erstellen" icon={<UilPlus />}></ButtonBigColor>
+                    </Link>
                     <ButtonBigNoColor text="Tutorial anschauen" icon={<UilPlay />}></ButtonBigNoColor>
                 </div>
                 <h2 className="mt-16">Deine Basare</h2>

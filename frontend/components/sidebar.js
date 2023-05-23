@@ -8,7 +8,7 @@ import { useContext } from 'react'
 import { BazarContext } from '../pages/index.js'
 import SidebarButton from './buttons/SidebarButton.js'
 
-function Step({ step, text, currentStep }) {
+function Step({ step, text, currentStep, onClick }) {
     let stepClass = "text-sm text-ourGray";
     if (step == currentStep) {
         stepClass = "text-sm text-ourPrimaryColor font-bold";
@@ -17,7 +17,7 @@ function Step({ step, text, currentStep }) {
     }
 
     return (
-        <li className="flex items-center">
+        <li className="flex items-center" >
             <span className={stepClass}>
                 {step}. {text}
             </span>
@@ -56,7 +56,7 @@ export default function Sidebar() {
 
                 <div class="flex items-center justify-between pt-4">
                     <div class="flex items-center cursor-pointer">
-                        <Link onClick={showDashboard} href="/">
+                        <Link onClick={showDashboard} href="">
                             <span class="pl-4 font-serif text-2xl text-ourPrimaryColor">B</span>
                             <span class="font-serif text-2xl">azarify</span>
                         </Link>
@@ -85,9 +85,13 @@ export default function Sidebar() {
                 */}
 
                 <div class="flex flex-row px-4 py-4 gap-4">
-                    <SidebarButton text="Neuer Bazar" icon={<UilPlus />}></SidebarButton>
-                    <SidebarButton text="Bazare verwalten" icon={<UilApps />}></SidebarButton>
-                </div >
+                    <Link href="/" onClick={() => goToStep(1)} className="w-full">
+                        <SidebarButton text="Neuer Bazar" icon={<UilPlus />} />
+                    </Link>
+                    <Link href="/" onClick={showDashboard} className="w-full">
+                        <SidebarButton text="Bazare verwalten" icon={<UilApps />} />
+                    </Link>
+                </div>
 
 
 

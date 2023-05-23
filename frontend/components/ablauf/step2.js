@@ -7,6 +7,8 @@ import { UilPlus } from '@iconscout/react-unicons'
 import { UilInfoCircle } from '@iconscout/react-unicons'
 import ButtonGrayBorder from '../buttons/ButtonGrayBorder';
 import { UilPrint } from '@iconscout/react-unicons'
+import { UilLabel } from '@iconscout/react-unicons'
+import { UilHistory } from '@iconscout/react-unicons'
 
 export default function () {
   const [customerFirstName, setCustomerFirstName] = useState('');
@@ -73,14 +75,13 @@ export default function () {
     <>
       <div>
         <h1>2. Annahme</h1>
-        <p>
+        <p className='mb-4'>
           Jetzt kannst du damit anfangen die Produkte verschiedener Verkäufer hinzuzufügen. Wenn du das erledigt hast,
           kannst du im nächsten Schritt die Verkäufe einscannen. Das solltest du aber erst machen, wenn alle Produkte
           eingepflegt sind.
         </p>
       </div>
-      <div className="relative flex flex-col justify-center py-10">
-
+      <div className="relative flex flex-col justify-center ">
         <div className="rounded border border-ourLightGrey bg-white">
           <div className="flex flex-row">
             <div className="w-2/5 border-r border-ourLightGray p-4">
@@ -155,7 +156,10 @@ export default function () {
 
         </div>
       </div>
-
+      <div className='mt-4 flex gap-4'>
+        <ButtonGrayBorder icon={<UilLabel />} text="Kategorien verwalten"></ButtonGrayBorder>
+        <ButtonGrayBorder icon={<UilHistory />} text="Eingetragene Produkte sehen"></ButtonGrayBorder>
+      </div>
     </>
   );
 }

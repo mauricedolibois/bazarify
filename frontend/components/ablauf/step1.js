@@ -4,7 +4,12 @@ import FormInput from '../formInput'
 import { UilPlus } from '@iconscout/react-unicons'
 import ButtonBigColor from '../buttons/ButtonBigColor'
 
+
+import { useContext } from 'react'
+import { BazarContext } from '@/pages'
+
 export default function () {
+    let { step, setStep, newBazar, setNewBazar, createBazar } = useContext(BazarContext)
     return (
         <>
             {//<ButtonBigColor text="ButtonBigColor" icon={<UilPlus />}></ButtonBigColor>
@@ -15,7 +20,7 @@ export default function () {
 
             <div>
                 <h1>1. Basar erstellen</h1>
-                <p>Als erstes sollten wir ein paar generelle Infos zu deinem anstehenden Basar festhalten.</p>
+                <p className='mb-4'>Als erstes sollten wir ein paar generelle Infos zu deinem anstehenden Basar festhalten.</p>
             </div>
             <div>
                 <div class="grid grid-cols-1 gap-x-8 sm:grid-cols-6">
@@ -32,8 +37,8 @@ export default function () {
                 </div>
 
                 <div class="mt-6 flex items-center justify-end gap-x-6">
-                    <button type="button" class="text-sm font-semibold leading-6 text-ourSuperDarkGray">Cancel</button>
-                    <button type="submit" class="rounded-md bg-ourPrimaryColor px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-ourPrimaryColorHover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Save</button>
+                    <button type="button" onClick={() => setStep(0)} class="text-sm font-semibold leading-6 text-ourSuperDarkGray">Cancel</button>
+                    <button type="submit" onClick={() => setStep(2)} class="rounded-md bg-ourPrimaryColor px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-ourPrimaryColorHover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Save</button>
                 </div>
             </div>
         </>
