@@ -4,7 +4,7 @@ import { createRequire } from "module"
 const require = createRequire(import.meta.url)
 import mongoose from 'mongoose'
 const Product = require('./schemas/ProductSchema.cjs')
-const Customer = require('./schemas/CustomerSchema.cjs')
+const Seller = require('./schemas/SellerSchema.cjs')
 const Offer = require('./schemas/OfferSchema.cjs')
 const Info = require('./schemas/InfoSchema.cjs')
 const DbIdHandler = require('../services/UniqueIDs.cjs')
@@ -89,7 +89,7 @@ export const dbConnection = {
     },
 
 
-    //CRUD Operations for Products, Customers and Offers
+    //CRUD Operations for Products, Sellers and Offers
     async insertProduct(name, price, category) {
         try{
             var id = DbIdHandler.generateProductId()
@@ -100,21 +100,21 @@ export const dbConnection = {
         }
         catch{console.log("could not insert product")}
     },
-    async insertCustomer(name, firstname, email, phone) {
+    async insertSeller(name, firstname, email, phone) {
         try{
-            var id = DbIdHandler.generateCustomerId()
-            const validCustomer = await InputValidation.validateCustomer(id, firstname, name, email, phone)
-            const customer = await Customer.create(validCustomer)
-            await customer.save().then(console.log(customer))
-            return customer
+            var id = DbIdHandler.generateSellerId()
+            const validSeller = await InputValidation.validateSeller(id, firstname, name, email, phone)
+            const seller = await Seller.create(validSeller)
+            await seller.save().then(console.log(seller))
+            return seller
         }
-        catch{console.log("could not insert customer")
+        catch{console.log("could not insert seller")
 }
     },
     async insertOffer(product_id, customer_id) {
         try{
             var id = DbIdHandler.generateOfferId()
-            const validOffer = await InputValidation.validateOffer(id, product_id, customer_id)
+            const validOffer = await InputValidation.validateOffer(id, product_id, seller_id)
             const offer = await Offer.create(validOffer)
             await offer.save().then(console.log(offer))
             return offer
@@ -125,9 +125,9 @@ export const dbConnection = {
         const filter = {[operator]: parameter}
         return await Product.findOne(filter);
     },
-    async findCustomer(operator, parameter) {
+    async findSeller(operator, parameter) {
         const filter = {[operator]: parameter}
-        return await Customer.findOne(filter);
+        return await Seller.findOne(filter);
     },
     async findOffer(operator, parameter) {
         const filter = {[operator]: parameter}
@@ -136,8 +136,8 @@ export const dbConnection = {
     async findAllProducts() {
         return await Product.find();
     },
-    async findAllCustomers() {
-        return await Customer.find();
+    async findAllSellers() {
+        return await Seller.find();
     },
     async findAllOffers() {
         return await Offer.find();
@@ -146,9 +146,9 @@ export const dbConnection = {
         const filter = {[operator]: parameter}
         Product.findOneAndUpdate(filter, update).then(console.log("product updated"))
     },
-    async updateCustomer(operator, parameter, update) {
+    async updateSeller(operator, parameter, update) {
         const filter = {[operator]: parameter}
-        Customer.updateOne(filter, update).then(console.log("customer updated"))
+        Seller.updateOne(filter, update).then(console.log("seller updated"))
     },
     async updateOffer(operator, parameter, update) {
         const filter = {[operator]: parameter}
@@ -158,9 +158,9 @@ export const dbConnection = {
         const filter = {[operator]: parameter}
         Product.deleteOne(filter).then(console.log("product deleted"))
     },
-    async deleteCustomer(operator, parameter) {
+    async deleteSeller(operator, parameter) {
         const filter = {[operator]: parameter}
-        Customer.deleteOne(filter).then(console.log("customer deleted"))
+        Seller.deleteOne(filter).then(console.log("seller deleted"))
     },
     async deleteOffer(operator, parameter) {
         const filter = {[operator]: parameter}
@@ -169,8 +169,8 @@ export const dbConnection = {
     async deleteAllProducts() {
         await Product.deleteMany().then(console.log("All products deleted"))
     },
-    async deleteAllCustomers() {
-        await Customer.deleteMany().then(console.log("All customers deleted"))
+    async deleteAllSellers() {
+        await Seller.deleteMany().then(console.log("All sellers deleted"))
     },
     async deleteAllOffers() {
         await Offer.deleteMany().then(console.log("All offers deleted"))
