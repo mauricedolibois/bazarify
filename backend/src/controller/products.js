@@ -3,6 +3,7 @@ import cors from'cors'
 import { dbConnection } from '../database/DbConnection.js';
 export const productRouter = express.Router()
 
+productRouter.use(express.json())
 productRouter.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:3001']
 }));
@@ -19,12 +20,9 @@ productRouter.use(cors({
 //      })
 //      .catch(error => console.log(error))
 //  }, [id])//id hier rein (dependency array) damit useEffect bei jeder änderung von id triggert
-
- 
 productRouter.get("/product", (req, res) => {
     dbConnection.findProduct(req.query.operator, req.query.parameter).then(product => {
         res.send(product)
-        console.log(product)
     })
 }
 )
@@ -39,7 +37,6 @@ productRouter.get("/product", (req, res) => {
 //       })
 //       .catch(error => console.log(error))
 //   }, [])
- 
 productRouter.get("/allProducts", (req, res) => {
     dbConnection.findAllProducts().then(product => {
         res.send(product)
@@ -47,25 +44,65 @@ productRouter.get("/allProducts", (req, res) => {
 }
 )
 
-  // //PostProduct
-  // useEffect(() => {
-  //   const requestOptions = {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify({ name: 'Ski', price: 100 })
-  // };
-  //   fetch('http://localhost:8085/api/product', requestOptions)
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       console.log(data)
-  //     })
-  //     .catch(error => console.log(error))
-  // }, [])
- 
+ // //PostProduct
+// const product = {product_name: "skirt", product_price: 1, product_category: "short"}
+//  useEffect(() => {
+//    const requestOptions = {
+//      method: 'POST',
+//      headers: { 'Content-Type': 'application/json' },
+//      body: JSON.stringify(product)
+//  };
+//    fetch('http://localhost:8085/api/product', requestOptions)
+//      .then(res => res.json())
+//      .then(data => {
+//        console.log(data)
+//      })
+//      .catch(error => console.log(error))
+//  }, [])
+productRouter.post("/product", (req, res) => {
+    dbConnection.insertProduct(req.body.product_name, req.body.product_price, req.body.product_category).then
+    (product => { res.send(product) })  
+    })
 
-// productRouter.post("/product", (req, res) => {
-//     dbConnection.insertProduct(req.query.name, req.query.price).then
-//     (product => { res.send(product) })  
+
+//deleteProduct
+// const operator = "product_id"
+// const id=25250
+// useEffect(() => {
+//   fetch('http://localhost:8085/api/product?operator='+[operator]+'&parameter='+id, {method: 'DELETE'})
+//     .then(res => res.json())
+//     .then(data => {
+//       console.log(data)
 //     })
+//     .catch(error => console.log(error))
+// }, [])    
+productRouter.delete("/product", (req, res) => {
+    dbConnection.deleteProduct(req.query.operator, req.query.parameter).then
+    (product => { res.send(product) })  
+    })
+
+
+//updateProduct
+// const newProduct={product_name: "skir", product_price: 1, product_category: "sort"}
+// const operator = "product_id"
+// const id=950966
+// useEffect(() => {
+//   const requestOptions = {
+//     method: 'PUT',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify(newProduct)
+// };
+//   fetch('http://localhost:8085/api/product?operator='+[operator]+'&parameter='+id, requestOptions)
+//     .then(res => res.json())
+//     .then(data => {
+//       console.log(data)
+//     })
+//     .catch(error => console.log(error))
+// }, [])
+productRouter.put("/product", (req, res) => {
+    dbConnection.updateProduct(req.query.operator, req.query.parameter, req.body).then
+    (product => { res.send(product) })
+    })
+
 
 

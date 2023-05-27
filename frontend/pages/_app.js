@@ -4,24 +4,11 @@ import '@/styles/globals.css'
 
 export default function App({ Component, pageProps }) {
 
-   //PostProduct
-   useEffect(() => {
-     const requestOptions = {
-       method: 'POST',
-       headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify({ name: 'Ski', price: 100 })
-   };
-     fetch('http://backend:8080/api/product', requestOptions)
-       .then(res => res.json())
-       .then(data => {
-         console.log(data)
-       })
-       .catch(error => console.log(error))
-   }, [])
-
-  return (
-    <>
-      <Component {...pageProps} />
-    </>
-  )
+  return <>
+    {
+      // Hier wird am Anfang der Index reingerendet. Hier können wir Komponenten darstellen, die auf jeder Seite gleich sind, typischerweise Dinge wie ein Footer.
+      // The Component prop is the active page, so whenever you navigate between routes, Component will change to the new page. Therefore, any props you send to Component will be received by the page. Source: https://nextjs.org/docs/pages/building-your-application/routing/custom-app
+    }
+    <Component {...pageProps} />
+  </>
 }
