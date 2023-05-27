@@ -5,4 +5,4 @@ WORKDIR /app
 COPY . .
 RUN yarn install --production
 CMD ["node", "src/main.js"]
-EXPOSE 8085
+EXPOSE 8080

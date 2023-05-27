@@ -41,7 +41,7 @@ export default function () {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(bazar)
             };
-            fetch('http://localhost:8085/api/newBazar', requestOptions)
+            fetch('http://127.0.0.1:8080/api/newBazar', requestOptions)
                 .then(res => res.json())
                 .then(data => {
                     if(data) {
