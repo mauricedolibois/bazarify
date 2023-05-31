@@ -4,22 +4,49 @@ import { UilAngleRight } from '@iconscout/react-unicons'
 import ButtonBigColor from './buttons/ButtonBigColor'
 import ButtonBigNoColor from './buttons/ButtonBigNoColor'
 import Link from 'next/link'
-
 import { useContext } from 'react'
 import { BazarContext } from '../pages/index.js'
+import { useState, useEffect } from 'react'
 
 
 function BazarCard({ name }) {
+    const [bazar, setBazar] = useState(undefined)
+
+    useEffect(() => {
+        if (bazar !== undefined) {
+            fetch('http://localhost:8080/api/changeBazar?operator=' + name)
+                .then(res => res.json())
+                .then(data => {
+                    setBazar(data)
+                }
+                )
+        }
+    }, [bazar])
+
+
     return (
         <div class="border bg-white border-ourLightGray px-4 py-2 rounded-lg flex justify-between">
             {name}
-            <UilAngleRight class="inline-block -mr-2 text-ourGray" />
+            <UilAngleRight class="inline-block -mr-2 text-ourGray" onClick={() => {
+                window.location.reload()
+                setBazar(name)
+            }} />
         </div>
     )
 }
 
 export default function () {
     let { step, setStep, newBazar, setNewBazar, createBazar } = useContext(BazarContext)
+    const [bazars, setBazars] = useState(undefined)
+
+    useEffect(() => {
+        fetch('http://localhost:8080/api/getBazars')
+            .then(res => res.json())
+            .then(data => {
+                setBazars(data)
+            }
+            )
+    }, [])
 
     return (
         <>
@@ -35,12 +62,11 @@ export default function () {
                     <ButtonBigNoColor text="Tutorial anschauen" icon={<UilPlay />}></ButtonBigNoColor>
                 </div>
                 <h2 className="mt-16">Deine Basare</h2>
+
                 <div class="grid grid-cols-3 gap-4">
-                    <BazarCard name="Bazar 2023" />
-                    <BazarCard name="Bazar 2022" />
-                    <BazarCard name="Bazar 2021" />
-                    <BazarCard name="Bazar 2020" />
-                    <BazarCard name="Bazar 2019" />
+                    {(bazars === undefined) ? (<p>Keine Basare vorhanden</p>) : (bazars.map(bazar => {
+                        return (bazar.hasOwnProperty('bazar_name')) ? <BazarCard name={bazar.bazar_name} /> : null;
+                    }))}
                 </div>
             </div>
         </>

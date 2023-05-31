@@ -8,11 +8,11 @@ module.exports = {
          return nanoidProduct()
     },
 
-    generateCustomerId: function(){
+    generateSellerId: function(){
         return nanoid()
     },
 
-    generateSaleId: function(){
+    generateOfferId: function(){
         return nanoid()
     }
 }

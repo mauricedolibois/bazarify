@@ -3,7 +3,7 @@ import { UilApps } from '@iconscout/react-unicons'
 import { UilPlus } from '@iconscout/react-unicons'
 import { UilQuestionCircle } from '@iconscout/react-unicons'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
 import { BazarContext } from '../pages/index.js'
 import SidebarButton from './buttons/SidebarButton.js'
@@ -27,13 +27,13 @@ function Step({ step, text, currentStep, onClick }) {
 
 
 export default function Sidebar() {
-
+    
     let { step, setStep, newBazar, setNewBazar, createBazar } = useContext(BazarContext)
-
+    
     function showDashboard() {
         setStep(0)
     }
-
+    
     function goToNextStep() {
         // If step < 5 then go to next step and show the text "Nächster Schritt"
         if (step < 5) {
@@ -45,11 +45,28 @@ export default function Sidebar() {
             // If step == 5 then go to step 1 and show the text "Basar abschließen"
         }
     }
-
+    
     function goToStep(step) {
         setStep(step)
     }
+    
 
+    // bazarname anzeigen
+    const [bazar, setBazar] = useState("");
+
+    useEffect(() => {
+        fetch('http://localhost:8080/api/currentBazar')
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    setBazar(data)
+                }
+            }
+            )
+            .catch(error => console.log(error))
+    }, [])
+    
+    
     return (
         <>
             <div class="flex h-screen flex-col bg-white min-w-[25%] max-w-md">
@@ -96,6 +113,8 @@ export default function Sidebar() {
 
 
                 <div class="border-t border-ourLightGray pb-4"></div>
+
+                <h2 class="px-4 py-2 text-lg font-bold text-ourSuperDarkGray">{bazar}</h2>
 
                 <h3 class="px-4 py-2 text-lg font-bold text-ourSuperDarkGray">Ablauf</h3>
 
