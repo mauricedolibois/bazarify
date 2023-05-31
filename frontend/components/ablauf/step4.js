@@ -1,17 +1,15 @@
+import ButtonBigColor from "../buttons/ButtonBigColor"
+import { UilEnvelopeUpload } from '@iconscout/react-unicons'
+
 export default function () {
     return (
         <>
             <div>
                 <h1>4. Abholung</h1>
-                <p>Schön, dass du so viel verkaufen konntest. Du solltest jetzt die Verkäufer benachrichtigen, dass sie ihren Erlös und ggf. ihre liegengebliebene Artikel abholen kommen können.</p>
-                <button class="flex flex-col justify-center rounded-lg bg-ourPrimaryColor px-4 py-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="mb-4 h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
-                    </svg>
-                    <span class="text-sm text-white">Button Text </span>
-                </button>
-                <h2>Infos zum Verkäufer finden</h2>
+                <p className='mb-4'>Schön, dass du so viel verkaufen konntest. Du solltest jetzt die Verkäufer benachrichtigen, dass sie ihren Erlös und ggf. ihre liegengebliebene Artikel abholen kommen können.</p>
+                <ButtonBigColor icon={<UilEnvelopeUpload />} text="Verkäufer benachrichtigen" />
 
+                <h2 className="mt-8">Infos zum Verkäufer finden</h2>
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-left text-sm text-ourGray dark:text-ourGray">
                         <thead class="bg-ourLightGray text-xs uppercase text-ourDarkGray dark:bg-gray-700 dark:text-ourGray">

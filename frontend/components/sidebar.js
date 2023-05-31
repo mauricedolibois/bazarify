@@ -6,8 +6,9 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
 import { BazarContext } from '../pages/index.js'
+import SidebarButton from './buttons/SidebarButton.js'
 
-function Step({ step, text, currentStep }) {
+function Step({ step, text, currentStep, onClick }) {
     let stepClass = "text-sm text-ourGray";
     if (step == currentStep) {
         stepClass = "text-sm text-ourPrimaryColor font-bold";
@@ -16,7 +17,7 @@ function Step({ step, text, currentStep }) {
     }
 
     return (
-        <li className="flex items-center">
+        <li className="flex items-center" >
             <span className={stepClass}>
                 {step}. {text}
             </span>
@@ -26,13 +27,13 @@ function Step({ step, text, currentStep }) {
 
 
 export default function Sidebar() {
-    
+
     let { step, setStep, newBazar, setNewBazar, createBazar } = useContext(BazarContext)
-    
+
     function showDashboard() {
         setStep(0)
     }
-    
+
     function goToNextStep() {
         // If step < 5 then go to next step and show the text "Nächster Schritt"
         if (step < 5) {
@@ -44,11 +45,11 @@ export default function Sidebar() {
             // If step == 5 then go to step 1 and show the text "Basar abschließen"
         }
     }
-    
+
     function goToStep(step) {
         setStep(step)
     }
-    
+
 
     // bazarname anzeigen
     const [bazar, setBazar] = useState("");
@@ -64,26 +65,28 @@ export default function Sidebar() {
             )
             .catch(error => console.log(error))
     }, [])
-    
-    
+
+
     return (
         <>
             <div class="flex h-screen flex-col bg-white min-w-[25%] max-w-md">
 
                 <div class="flex items-center justify-between pt-4">
                     <div class="flex items-center cursor-pointer">
-                        <Link onClick={showDashboard} href="/">
+                        <Link onClick={showDashboard} href="">
                             <span class="pl-4 font-serif text-2xl text-ourPrimaryColor">B</span>
                             <span class="font-serif text-2xl">azarify</span>
                         </Link>
                     </div>
-                    <button class="flex items-center pr-4 text-sm text-black">
+                    <button class="flex items-center pr-4 text-sm text-black hover:text-ourPrimaryColor">
                         <UilQuestionCircle size="24" />
                     </button>
                 </div>
 
-
+                {
+                /*
                 <div class="flex flex-row items-center justify-center px-4 py-4">
+             
                     <Link href="/template" className='flex-1'>
                         <button class="border-ourGrey text-ourGrey rounded-lg border-2 flex flex-col justify-center px-4 py-2 flex-1">
                             <UilPlus class="" size="24" />
@@ -94,7 +97,18 @@ export default function Sidebar() {
                         <UilApps class="" size="24" />
                         <span class="text-ourGrey text-sm mt-4">Bazare verwalten</span>
                     </button>
+                    
                 </div >
+                */}
+
+                <div className="flex flex-row px-4 py-4 gap-4">
+                    <Link href="/" onClick={() => goToStep(1)} className="w-full">
+                        <SidebarButton text="Neuer Bazar" icon={<UilPlus />} />
+                    </Link>
+                    <Link href="/" onClick={showDashboard} className="w-full">
+                        <SidebarButton text="Bazare verwalten" icon={<UilApps />} />
+                    </Link>
+                </div>
 
 
 

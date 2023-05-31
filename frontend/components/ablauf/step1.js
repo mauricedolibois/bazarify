@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import FormInput from '../formInput'
-import { UilPlus } from '@iconscout/react-unicons'
 
+import { UilPlus } from '@iconscout/react-unicons'
 import ButtonBigColor from '../buttons/ButtonBigColor'
-import ButtonBigNoColor from '../buttons/ButtonBigNoColor'
-import ButtonSmallJustIcon from '../buttons/ButtonSmallJustIcon'
-import ButtonYellowBorder from '../buttons/ButtonYellowBorder'
-import ButtonGrayBorder from '../buttons/ButtonGrayBorder'
+
+
+import { useContext } from 'react'
+import { BazarContext } from '@/pages'
 
 
 export default function () {
+    let { step, setStep, newBazar, setNewBazar, createBazar } = useContext(BazarContext)
     const [bazarName, setBazarName] = useState('');
     const [bazarYear, setBazarYear] = useState('');
     const [bazarCommission, setBazarCommission] = useState('');
     const [bazarDescription, setBazarDescription] = useState(' ');
     const [bazar, setBazar] = useState('');
-    
+
     const handleAddBazar = () => {
         const bazar = {
             bazar_name: bazarName,
@@ -32,8 +33,11 @@ export default function () {
         setBazarYear('');
         setBazarCommission('');
         setBazarDescription('');
+
+        //go to next step
+        //setStep(2);
     }
-    
+
     useEffect(() => {
         if (bazar !== '') {
             const requestOptions = {
@@ -44,7 +48,7 @@ export default function () {
             fetch('http://127.0.0.1:8080/api/newBazar', requestOptions)
                 .then(res => res.json())
                 .then(data => {
-                    if(data) {
+                    if (data) {
                         //go to next step
                         console.log(data)
                     }
@@ -55,21 +59,22 @@ export default function () {
 
     return (
         <>
-            <ButtonBigColor text="ButtonBigColor" icon={<UilPlus />}></ButtonBigColor>
-            <ButtonBigNoColor text="ButtonBigNoColor" icon={<UilPlus />}></ButtonBigNoColor>
-            <ButtonSmallJustIcon icon={<UilPlus />}></ButtonSmallJustIcon>
-            <ButtonYellowBorder text="Text" icon={<UilPlus />}></ButtonYellowBorder >
-            <ButtonGrayBorder text="Text" icon={<UilPlus />}></ButtonGrayBorder>
+
+            {//<ButtonBigColor text="ButtonBigColor" icon={<UilPlus />}></ButtonBigColor>
+            }
+
+
+
 
             <div>
                 <h1>1. Basar erstellen</h1>
-                <p>Als erstes sollten wir ein paar generelle Infos zu deinem anstehenden Basar festhalten.</p>
+                <p className='mb-4'>Als erstes sollten wir ein paar generelle Infos zu deinem anstehenden Basar festhalten. Fülle einfach die vorgefertigen Felder aus!</p>
             </div>
             <div>
                 <div class="grid grid-cols-1 gap-x-8 sm:grid-cols-6">
-                    <FormInput name="Name des Basars" onChange={(e) => setBazarName(e.target.value)}/>
-                    <FormInput name="Jahr" onChange={(e) => setBazarYear(e.target.value)}/>
-                    <FormInput name="Provision" unit="%" onChange={(e) => setBazarCommission(e.target.value)}/>
+                    <FormInput name="Name des Basars" onChange={(e) => setBazarName(e.target.value)} />
+                    <FormInput name="Jahr" onChange={(e) => setBazarYear(e.target.value)} />
+                    <FormInput name="Provision" unit="%" onChange={(e) => setBazarCommission(e.target.value)} />
 
                     <div class="col-span-full">
                         <label for="about" class="block text-sm font-medium leading-6 text-ourSuperDarkGray">Beschreibung</label>
@@ -80,10 +85,11 @@ export default function () {
                 </div>
 
                 <div class="mt-6 flex items-center justify-end gap-x-6">
-                    <button type="button" class="text-sm font-semibold leading-6 text-ourSuperDarkGray">Cancel</button>
-                    <button type="submit" class="rounded-md bg-ourPrimaryColor px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-ourPrimaryColorHover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2" onClick={handleAddBazar}>Save</button>
+                    <button type="button" onClick={() => setStep(0)} class="text-sm font-semibold leading-6 text-ourSuperDarkGray">Cancel</button>
+                    <button type="submit" onClick={() => handleAddBazar()} class="rounded-md bg-ourPrimaryColor px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-ourPrimaryColorHover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Save</button>
                 </div>
             </div>
+
         </>
     )
 }

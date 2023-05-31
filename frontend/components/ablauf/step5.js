@@ -13,7 +13,7 @@ export default function () {
             <div>
 
                 <h1>5. Analytics und Bilanz</h1>
-                <p>Wow, was ein toller Basar! Hier siehst du noch einmal schwarz auf weiß, wie gut er gelaufen ist - vielleicht kannst du aus den Informationen fürs nächste Mal lernen.</p>
+                <p className='mb-4'>Wow, was ein toller Basar! Hier siehst du noch einmal schwarz auf weiß, wie gut er gelaufen ist - vielleicht kannst du aus den Informationen fürs nächste Mal lernen.</p>
                 <div class="grid grid-cols-3 gap-6">
                     <Card title={"23.600€"} description="Umsatz"></Card>
                     <Card title={"1180€"} description="Profit bei aktueller Provisionsrate (5%)"></Card>
