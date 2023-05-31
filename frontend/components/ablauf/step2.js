@@ -44,7 +44,7 @@ const handleAddProduct = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(product)
       };
-      fetch('http://localhost:8085/api/product', requestOptions)
+      fetch('http://localhost:8080/api/product', requestOptions)
         .then(res => res.json())
         .then(data => {
             console.log(data)
@@ -83,7 +83,7 @@ const handleAddProduct = () => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(seller)
         };
-        fetch('http://localhost:8085/api/seller', requestOptions)
+        fetch('http://localhost:8080/api/seller', requestOptions)
           .then(res => res.json())
           .then(data => {
               console.log(data)
@@ -111,7 +111,7 @@ const handleAddProduct = () => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(offer)
         };
-        fetch('http://localhost:8085/api/offer', requestOptions)
+        fetch('http://localhost:8080/api/offer', requestOptions)
           .then(res => res.json())
           .then(data => {console.log(data)})
           .catch(error => console.log(error));   

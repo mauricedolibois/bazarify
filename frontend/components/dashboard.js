@@ -10,10 +10,10 @@ const [bazar, setBazar] = useState(undefined)
 
 useEffect(() => {
     if (bazar !== undefined) {
-    fetch('http://localhost:8085/api/changeBazar?operator='+name)
+    fetch('http://localhost:8080/api/changeBazar?operator='+name)
         .then(res => res.json())
         .then(data => {
-            setBazar(undefined)
+            setBazar(data)
         }
         )}
 }, [bazar])
@@ -33,7 +33,7 @@ export default function () {
 const [bazars, setBazars] = useState(undefined)
 
 useEffect(() => {
-    fetch('http://localhost:8085/api/getBazars')
+    fetch('http://localhost:8080/api/getBazars')
         .then(res => res.json())
         .then(data => {
          setBazars(data)

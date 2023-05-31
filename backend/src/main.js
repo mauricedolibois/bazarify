@@ -20,12 +20,12 @@ app.use(cors({
 
 //api auf homepage verlinken
 app.get('/', (req, res) => {
-  res.send('localhost:8085/api')
+  res.send('http://localhost:8080/api')
 })
 
 
 dbConnection.connectToDB()
-app.listen(8085, () => { console.log("Server started on port 8085") })
+app.listen(8080, () => { console.log("Server started on port 8080") })
 
 
 //alles auf require umstellen

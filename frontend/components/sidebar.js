@@ -54,7 +54,7 @@ export default function Sidebar() {
     const [bazar, setBazar] = useState("");
 
     useEffect(() => {
-        fetch('http://localhost:8085/api/currentBazar')
+        fetch('http://localhost:8080/api/currentBazar')
             .then(res => res.json())
             .then(data => {
                 if (data) {
