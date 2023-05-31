@@ -27,13 +27,13 @@ function Step({ step, text, currentStep, onClick }) {
 
 
 export default function Sidebar() {
-    
+
     let { step, setStep, newBazar, setNewBazar, createBazar } = useContext(BazarContext)
-    
+
     function showDashboard() {
         setStep(0)
     }
-    
+
     function goToNextStep() {
         // If step < 5 then go to next step and show the text "Nächster Schritt"
         if (step < 5) {
@@ -45,11 +45,11 @@ export default function Sidebar() {
             // If step == 5 then go to step 1 and show the text "Basar abschließen"
         }
     }
-    
+
     function goToStep(step) {
         setStep(step)
     }
-    
+
 
     // bazarname anzeigen
     const [bazar, setBazar] = useState("");
@@ -65,8 +65,8 @@ export default function Sidebar() {
             )
             .catch(error => console.log(error))
     }, [])
-    
-    
+
+
     return (
         <>
             <div class="flex h-screen flex-col bg-white min-w-[25%] max-w-md">
@@ -101,7 +101,7 @@ export default function Sidebar() {
                 </div >
                 */}
 
-                <div class="flex flex-row px-4 py-4 gap-4">
+                <div className="flex flex-row px-4 py-4 gap-4">
                     <Link href="/" onClick={() => goToStep(1)} className="w-full">
                         <SidebarButton text="Neuer Bazar" icon={<UilPlus />} />
                     </Link>

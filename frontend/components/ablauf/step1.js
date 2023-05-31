@@ -35,7 +35,7 @@ export default function () {
         setBazarDescription('');
 
         //go to next step
-        setStep(2);
+        //setStep(2);
     }
 
     useEffect(() => {
@@ -87,7 +87,6 @@ export default function () {
                 <div class="mt-6 flex items-center justify-end gap-x-6">
                     <button type="button" onClick={() => setStep(0)} class="text-sm font-semibold leading-6 text-ourSuperDarkGray">Cancel</button>
                     <button type="submit" onClick={() => handleAddBazar()} class="rounded-md bg-ourPrimaryColor px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-ourPrimaryColorHover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Save</button>
-                    <button type="submit" class="rounded-md bg-ourPrimaryColor px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-ourPrimaryColorHover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2" onClick={handleAddBazar}>Save</button>
                 </div>
             </div>
 

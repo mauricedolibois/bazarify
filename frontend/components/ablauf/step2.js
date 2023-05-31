@@ -201,7 +201,7 @@ export default function () {
                 />
               </div>
               <div className="mt-4 gap-4 flex">
-                <ButtonSmallJustIcon icon={<UilCheck />}></ButtonSmallJustIcon>
+                <ButtonSmallJustIcon onClick={handleSubmit} icon={<UilCheck />}></ButtonSmallJustIcon>
                 <ButtonYellowBorder onClick={handleSubmit} icon={<UilPlus />} text="Mehr Produkte von diesem Verkäufer hinzufügen"></ButtonYellowBorder>
               </div>
             </div>
