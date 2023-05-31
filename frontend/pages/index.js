@@ -12,6 +12,7 @@ import Dashboard from "@/components/dashboard";
 export const BazarContext = createContext();
 
 const CreatePage = () => {
+  const [currentBazar, setCurrentBazar] = useState("Bazarify");
   const [step, setStep] = useState(0);
   const [newBazar, setNewBazar] = useState({
     name: "test",
@@ -20,6 +21,7 @@ const CreatePage = () => {
   });
 
   function createBazar() { }
+
 
   return (
     <>
@@ -32,7 +34,9 @@ const CreatePage = () => {
           setStep,
           newBazar,
           setNewBazar,
-          createBazar
+          createBazar,
+          currentBazar,
+          setCurrentBazar
         }}
       >
         <div className="flex flex-row">
