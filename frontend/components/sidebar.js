@@ -28,7 +28,7 @@ function Step({ step, text, currentStep, onClick }) {
 
 export default function Sidebar() {
 
-    let { step, setStep, newBazar, setNewBazar, createBazar } = useContext(BazarContext)
+    let { step, setStep, currentBazar} = useContext(BazarContext)
 
     function showDashboard() {
         setStep(0)
@@ -55,16 +55,8 @@ export default function Sidebar() {
     const [bazar, setBazar] = useState("");
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/currentBazar')
-            .then(res => res.json())
-            .then(data => {
-                if (data) {
-                    setBazar(data)
-                }
-            }
-            )
-            .catch(error => console.log(error))
-    }, [])
+    setBazar(currentBazar)     
+    }, [currentBazar])
 
 
     return (

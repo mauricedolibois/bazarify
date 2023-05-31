@@ -59,7 +59,6 @@ export const dbConnection = {
             await this.close()
             BazarName = currentDB
             await this.connectToDB()
-            console.log(info)
             return info
         }
         catch { console.log("could not get Bazars") }
