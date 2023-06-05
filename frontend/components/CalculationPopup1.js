@@ -3,6 +3,8 @@ import { UilMultiply, UilCheck, UilArrowRight } from '@iconscout/react-unicons'
 import FormInput from './formInput';
 import ButtonSmallJustIcon from './buttons/ButtonSmallJustIcon';
 
+// Wie öffnen wir das über den Scan?
+
 const CalculationPopup1 = () => {
     const [isOpen, setIsOpen] = useState(false);
     const popupRef = useRef(null);
@@ -30,14 +32,8 @@ const CalculationPopup1 = () => {
     }, []);
 
     const [cashReceived, setCashReceived] = useState('');
-    const totalAmount = 50; // Gesamtbetrag der Bestellung, wird aus der Datenbank geholt und berechnet
-    const change = cashReceived - totalAmount; // Berechnung des Wechselgelds
-
-    function handleCashCalculation() {
-        //TODO: Implement cash calculation
-        console.log(cashReceived);
-        console.log('Cash calculation done');
-    }
+    const totalAmount = 50; // Das hier muss noch dynamisch gesetzt werden
+    const change = cashReceived - totalAmount; 
 
     return (
         <div>
@@ -52,13 +48,13 @@ const CalculationPopup1 = () => {
                         </div>
                         {change > 0 && 
                         <div className='mt-4'>
-                            <hr></hr>
+                            <hr className='text-ourGray'></hr>
                             <p className='mt-4'>Das Wechselgeld beträgt: <span className='font-bold'>{change}€</span>.
                         </p></div>
                         }
                         {change <= 0 && 
                         <div className='mt-4'>
-                            <hr></hr>
+                            <hr className='text-ourGray'></hr>
                             <p className='mt-4'>Aktuell gibt es kein Wechselgeld zurück.
                         </p>
                         </div>
