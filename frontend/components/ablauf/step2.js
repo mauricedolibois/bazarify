@@ -10,6 +10,8 @@ import { UilPrint } from '@iconscout/react-unicons'
 import { UilLabel } from '@iconscout/react-unicons'
 import { UilHistory } from '@iconscout/react-unicons'
 
+import ShoppingCart from '../ShoppingCart';
+
 export default function () {
   const [sellerFirstName, setSellerFirstName] = useState('');
   const [sellerLastName, setSellerLastName] = useState('');
@@ -138,6 +140,7 @@ export default function () {
   return (
     <>
       <div>
+
         <h1>2. Annahme</h1>
         <p className='mb-4'>
           Jetzt kannst du damit anfangen die Produkte verschiedener Verkäufer hinzuzufügen. Wenn du das erledigt hast,
@@ -218,13 +221,18 @@ export default function () {
               <ButtonGrayBorder text="Barcodes ausdrucken" icon={<UilPrint />}></ButtonGrayBorder>
             </div>
           </div>
-
         </div>
+
+
+
       </div>
-      <div className='mt-4 flex gap-4'>
+      {
+
+      }<div className='mt-4 flex gap-4'>
         <ButtonGrayBorder icon={<UilLabel />} text="Kategorien verwalten"></ButtonGrayBorder>
         <ButtonGrayBorder icon={<UilHistory />} text="Eingetragene Produkte sehen"></ButtonGrayBorder>
       </div>
+
     </>
   );
 }
