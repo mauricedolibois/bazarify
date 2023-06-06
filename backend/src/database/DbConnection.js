@@ -101,6 +101,10 @@ export const dbConnection = {
     },
     async insertSeller(name, firstname, email, phone) {
         try {
+            // const existingId = await this.checkDuplicateSeller(name, firstname, email, phone)
+            // if (existingId != 0) {
+            //     return existingId
+            // }
             var id = DbIdHandler.generateSellerId()
             const validSeller = await InputValidation.validateSeller(id, firstname, name, email, phone)
             const seller = await Seller.create(validSeller)
@@ -142,6 +146,13 @@ export const dbConnection = {
     async findAllOffers() {
         return await Offer.find();
     },
+    // async checkDuplicateSeller(name, firstname, email, phone) {
+    //     const dupseller = await this.findSeller("seller_name", name);
+    //     if (dupseller.seller_name == name && dupseller.seller_firstname == firstname && dupseller.seller_email == email && dupseller.seller_phone == phone) {
+    //         return dupseller.seller_id;
+    //     }
+    //     return 0;
+    // },
     async updateProduct(operator, parameter, update) {
         const filter = { [operator]: parameter }
         Product.findOneAndUpdate(filter, update).then(console.log("product updated"))
