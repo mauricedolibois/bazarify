@@ -21,10 +21,10 @@ function ShoppingCart() {
                             <table class="min-w-full text-left text-sm font-light rounded">
                                 <thead class="border-b font-medium dark:border-neutral-500">
                                     <tr>
-                                        <th scope="col" class="px-8 py-4">#</th>
-                                        <th scope="col" class="px-8 py-4">Artikel</th>
-                                        <th scope="col" class="px-8 py-4">Kategorie</th>
-                                        <th scope="col" class="px-8 py-4">Preis</th>
+                                        <th scope="col" class="px-8 py-4 ">#</th>
+                                        <th scope="col" class="px-8 py-4 ">Artikel</th>
+                                        <th scope="col" class="px-8 py-4 ">Kategorie</th>
+                                        <th scope="col" class="px-8 py-4 ">Preis</th>
                                         <th scope="col" class="px-8 py-4">Entfernen</th>
                                     </tr>
                                 </thead>
