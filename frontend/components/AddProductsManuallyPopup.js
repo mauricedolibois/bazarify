@@ -9,6 +9,7 @@ import { UilCheck } from '@iconscout/react-unicons'
 
 const AddProductsManuallyPopup = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [barcode, setBarcode] = useState('');
     const popupRef = useRef(null);
 
     const openPopup = () => {
@@ -18,6 +19,12 @@ const AddProductsManuallyPopup = () => {
     const closePopup = () => {
         setIsOpen(false);
     };
+
+    const searchForOffer = () => {
+        setBarcode(document.getElementById("Barcode des Produkts").value)
+        setIsOpen(false);
+    };
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -33,6 +40,24 @@ const AddProductsManuallyPopup = () => {
         };
     }, []);
 
+    //fetch offer from database
+  const operator = "offer_id"
+  const link = 'http://localhost:8080/api/offer?operator='+[operator]+'&parameter='+barcode
+  console.log(link)
+  useEffect(() => {
+    if (barcode !== '') {
+    fetch(link, {method: 'GET'})
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+      })
+      .catch(error => console.log(error))
+    }
+  }, [barcode])//barcode == offer_id 
+
+
+
+
     return (
         <div>
             {/*Alt: <button onClick={openPopup}>Open Popup</button>*/}
@@ -44,8 +69,10 @@ const AddProductsManuallyPopup = () => {
                     <div className='w-1/2 h-1/2 bg-white rounded-lg relative p-8' ref={popupRef}>
                         <UilMultiply className='absolute top-4 right-4 cursor-pointer' onClick={closePopup} />
                         <h2>Produkte manuell eintragen</h2>
-                        <FormInput name="Barcode des Produkts" />
-                        <ButtonSmallJustIcon icon={<UilCheck />}></ButtonSmallJustIcon>
+                        <FormInput name="Barcode des Produkts"/>
+                        <div onClick={searchForOffer}>
+                            <ButtonSmallJustIcon icon={<UilCheck />}></ButtonSmallJustIcon>
+                        </div>
                     </div>
                 </div>
             )}
