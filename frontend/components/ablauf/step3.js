@@ -3,6 +3,7 @@ import ButtonSmallJustIcon from '../buttons/ButtonSmallJustIcon';
 import ButtonGrayBorder from '../buttons/ButtonGrayBorder';
 import { UilCheck, UilKeyboard, UilCalculator, UilInfoCircle } from '@iconscout/react-unicons'
 import NewProductInput from '../NewProductInput';
+import CalculationPopup from '../CalculationPopup';
 
 function ShoppingCart() {
 
@@ -44,7 +45,7 @@ function ShoppingCart() {
         </div>
         <div>
             <div className="flex flex-row justify-between px-4 py-4 mb-8 gap-32 border-ourLightGray border bg-white rounded ">
-                <NewProductInput placeholder="Produkte einscannen"></NewProductInput>
+                <NewProductInput placeholder="Barcode einscannen/eintippen"></NewProductInput>
                 <div className="flex flex-row items-center">
                     <UilInfoCircle className="mr-4 text-ourDarkGray"></UilInfoCircle>
                     <p className="mr-2 text-sm">
@@ -57,9 +58,10 @@ function ShoppingCart() {
         <hr className='border-ourLightGray'></hr>
         <div className="mt-4 gap-4 flex">
             <ButtonSmallJustIcon icon={<UilCheck />}></ButtonSmallJustIcon>
-            <ButtonGrayBorder icon={<UilCalculator />} text="Rückgeld berechnen">Weiter</ButtonGrayBorder>
-            {//<ButtonGrayBorder icon={<UilKeyboard />} text="Produkt manuell eintragen"></ButtonGrayBorder>
-            }
+            {/*<ButtonGrayBorder icon={<UilCalculator />} text="Rückgeld berechnen">Weiter</ButtonGrayBorder>
+            <ButtonGrayBorder icon={<UilKeyboard />} text="Produkt manuell eintragen"></ButtonGrayBorder>
+            */}
+            <CalculationPopup></CalculationPopup>
         </div>
     </>)
 }

@@ -10,8 +10,6 @@ import { UilPrint } from '@iconscout/react-unicons'
 import { UilLabel } from '@iconscout/react-unicons'
 import { UilHistory } from '@iconscout/react-unicons'
 
-import ShoppingCart from '../ShoppingCart';
-
 export default function () {
   const [sellerFirstName, setSellerFirstName] = useState('');
   const [sellerLastName, setSellerLastName] = useState('');
