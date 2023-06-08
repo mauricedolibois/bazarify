@@ -8,7 +8,12 @@ import UnderlindedInput from '../UnderlinedInput';
 import { useState, useEffect } from 'react';
 import Step3TableRow from '../step3TableRow';
 
-
+//TODO: Tabelle scrollbar machen
+//TODO: Item nicht doppelt einfügen
+//TODO: Item entfernen können
+//TODO: Gesamtpreis berechnen
+//TODO: Input validieren
+//TODO: autofocus auf input
 
 export default function() {
 
@@ -24,6 +29,7 @@ export default function() {
         input = document.getElementById('Barcode des Produkts');
         console.log('Enter pressed');
         setBarcode(input.value)
+        input.value = '';
     }
 
     //handle enter key
