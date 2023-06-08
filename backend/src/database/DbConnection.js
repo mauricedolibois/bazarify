@@ -103,7 +103,7 @@ export const dbConnection = {
         try {
             // const existingId = await this.checkDuplicateSeller(name, firstname, email, phone)
             // if (existingId != 0) {
-            //     return existingId
+            // return existingId
             // }
             var id = DbIdHandler.generateSellerId()
             const validSeller = await InputValidation.validateSeller(id, firstname, name, email, phone)
@@ -146,12 +146,36 @@ export const dbConnection = {
     async findAllOffers() {
         return await Offer.find();
     },
-    // async checkDuplicateSeller(name, firstname, email, phone) {
-    //     const dupseller = await this.findSeller("seller_name", name);
-    //     if (dupseller.seller_name == name && dupseller.seller_firstname == firstname && dupseller.seller_email == email && dupseller.seller_phone == phone) {
-    //         return dupseller.seller_id;
+    // async allOffers() {
+    //     const offers = await Offer.find();
+    //     const products = await Product.find();
+    //     const sellers = await Seller.find();
+    //     var allOffers = []
+    //     for (var i = 0; i < offers.length; i++) {
+    //         var offer = offers[i]
+    //         var product = products.find(product => product.product_id == offer.product_id)
+    //         var seller = sellers.find(seller => seller.seller_id == offer.seller_id)
+    //         var offer = {
+    //             offer_id: offer.offer_id,
+    //             offer_status: offer.state,
+    //             product_name: product.product_name,
+    //             product_price: product.product_price,
+    //             product_category: product.product_category,
+    //             seller_name: seller.seller_name,
+    //             seller_firstname: seller.seller_firstname,
+    //             seller_email: seller.seller_email,
+    //             seller_phone: seller.seller_phone
+    //         }
+    //         allOffers.push(offer)
     //     }
-    //     return 0;
+    //     return allOffers
+    // },
+    // async checkDuplicateSeller(name, firstname, email, phone) {
+    // const dupseller = await this.findSeller("seller_name", name);
+    // if (dupseller.seller_name == name && dupseller.seller_firstname == firstname && dupseller.seller_email == email && dupseller.seller_phone == phone) {
+    //   return dupseller.seller_id;
+    // }
+    // return 0;
     // },
     async updateProduct(operator, parameter, update) {
         const filter = { [operator]: parameter }

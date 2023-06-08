@@ -48,7 +48,6 @@ offerRouter.put("/offer", (req, res) => {
     (offer => { res.send(offer) })
     }
 )
-
 // let prod=dbConnection.insertProduct(req.body.product)
 //     let sell=dbConnection.insertSeller(req.body.seller)
 //     dbConnection.insertOffer(prod.product_id, sell.seller_id).then
