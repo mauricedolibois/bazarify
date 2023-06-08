@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import FormInput from '../formInput'
+import FormInput from '../FormInput'
 
 import { UilPlus } from '@iconscout/react-unicons'
 import ButtonBigColor from '../buttons/ButtonBigColor'

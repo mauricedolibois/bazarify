@@ -4,8 +4,106 @@ import ButtonGrayBorder from '../buttons/ButtonGrayBorder';
 import { UilCheck, UilKeyboard, UilCalculator, UilInfoCircle } from '@iconscout/react-unicons'
 import NewProductInput from '../NewProductInput';
 import CalculationPopup from '../CalculationPopup';
+import UnderlindedInput from '../UnderlinedInput';
+import { useState, useEffect } from 'react';
+import Step3TableRow from '../step3TableRow';
 
-function ShoppingCart() {
+
+
+export default function() {
+
+    const [barcode, setBarcode] = useState('');
+    const [offer, setOffer] = useState('');
+    const [scannedProducts, setScannedProducts] = useState([]);
+    const [allOffers, setAllOffers] = useState([]);
+    const [updatedOffer, setUpdatedOffer] = useState('');
+
+    let input;
+
+    const handleScan= () => {
+        input = document.getElementById('Barcode des Produkts');
+        console.log('Enter pressed');
+        setBarcode(input.value)
+    }
+
+    //handle enter key
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            handleScan();
+          }
+        };
+    
+        input = document.getElementById('Barcode des Produkts');
+        input.addEventListener('keydown', handleKeyDown);
+        console.log("useEffect getriggert")
+    
+        return () => {
+          input.removeEventListener('keydown', handleKeyDown);
+        };
+      }, []); // Empty dependency array ensures the effect runs only once
+
+    //fetch offer from database
+    useEffect(() => {
+        if (barcode !== '') {
+        fetch('http://localhost:8080/api/offer?operator=offer_id&parameter='+barcode, {method: 'GET'})
+        .then(res => res.json())
+        .then(data => {
+            setOffer(data)
+            console.log(data)
+        })
+        .catch(error => console.log(error))
+        }
+    }, [barcode])//barcode == offer_id 
+
+    //fetch product from database
+    useEffect(() => {
+        if (offer !== '') {
+        fetch('http://localhost:8080/api/product?operator=product_id&parameter='+offer.product_id, {method: 'GET'})
+        .then(res => res.json())
+        .then(data => {
+            setScannedProducts(scannedProducts => [...scannedProducts, data])
+            setAllOffers(allOffers => [...allOffers, offer])
+            console.log(scannedProducts)
+            console.log(data)
+        })
+        .catch(error => console.log(error))
+        }
+    }, [offer])
+
+    const handleSubmit = () => {
+        console.log("submit")
+        //update offer status to sold
+        allOffers.forEach(offer => {
+            const updatedOffer = {
+                ...offer,
+                state: "sold"
+            };
+            console.log("all offers: ", allOffers)
+            console.log("updated offer: ", updatedOffer)
+            setUpdatedOffer(updatedOffer)
+        })
+    }
+
+    //update offer status to sold in db
+    useEffect(() => {
+        if(updatedOffer !== '') {
+            const requestOptions = {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedOffer)
+            };
+            fetch('http://localhost:8080/api/offer?operator=offer_id&parameter='+updatedOffer.offer_id, requestOptions)
+                .then(res => res.json())
+                .then(data => {
+                console.log(data)
+                })
+                .catch(error => console.log(error))
+        }
+    }, [updatedOffer])
+
+
 
     return (<>
         <h1>3. Verkauf</h1>
@@ -14,12 +112,12 @@ function ShoppingCart() {
         </p>
         <div className="rounded border border-ourLightGrey bg-white my-8">
 
-            <div class="flex flex-col">
-                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="inline-block min-w-full sm:px-6 lg:px-8">
-                        <div class="overflow-hidden">
-                            <table class="min-w-full text-left text-sm font-light rounded">
-                                <thead class="border-b font-medium dark:border-neutral-500">
+            <div className="flex flex-col">
+                <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div className="inline-block min-w-full sm:px-6 lg:px-8">
+                        <div className="overflow-hidden">
+                            <table className="min-w-full text-left text-sm font-light rounded">
+                                <thead className="border-b font-medium dark:border-neutral-500">
                                     <tr>
                                         <th scope="col" class="px-8 py-4">#</th>
                                         <th scope="col" class="px-8 py-4">Artikel</th>
@@ -28,15 +126,17 @@ function ShoppingCart() {
                                         <th scope="col" class="px-8 py-4">Entfernen</th>
                                     </tr>
                                 </thead>
-                                <tbody className=''>
-                                    <tr class="border-b dark:border-neutral-500">
-                                        <td class="whitespace-nowrap px-8 py-4">1</td>
-                                        <td class="whitespace-nowrap px-8 py-4">Olega CS500</td>
-                                        <td class="whitespace-nowrap px-8 py-4">Skischuhe</td>
-                                        <td class="whitespace-nowrap px-8 py-4">100€</td>
-                                        <td class="whitespace-nowrap px-8 py-4"><UilTrash size="16"></UilTrash></td>
-                                    </tr>
-                                </tbody>
+                                <tbody className="">
+                                    {scannedProducts.map((product, index) => (
+                                        <Step3TableRow
+                                            key={index}
+                                            counter={index + 1}
+                                            name={product.product_name}
+                                            category={product.product_category}
+                                            price={product.product_price}
+                                        />
+                                    ))}
+                                </tbody>    
                             </table>
                         </div>
                     </div>
@@ -45,7 +145,7 @@ function ShoppingCart() {
         </div>
         <div>
             <div className="flex flex-row justify-between px-4 py-4 mb-8 gap-32 border-ourLightGray border bg-white rounded ">
-                <NewProductInput placeholder="Barcode einscannen/eintippen"></NewProductInput>
+                <UnderlindedInput id="Barcode des Produkts" placeholder="Barcode des Produkts"></UnderlindedInput>
                 <div className="flex flex-row items-center">
                     <UilInfoCircle className="mr-4 text-ourDarkGray"></UilInfoCircle>
                     <p className="mr-2 text-sm">
@@ -57,7 +157,7 @@ function ShoppingCart() {
         <h2>Gesamt: 420€</h2>
         <hr className='border-ourLightGray'></hr>
         <div className="mt-4 gap-4 flex">
-            <ButtonSmallJustIcon icon={<UilCheck />}></ButtonSmallJustIcon>
+            <ButtonSmallJustIcon icon={<UilCheck />} onClick={handleSubmit}></ButtonSmallJustIcon>
             {/*<ButtonGrayBorder icon={<UilCalculator />} text="Rückgeld berechnen">Weiter</ButtonGrayBorder>
             <ButtonGrayBorder icon={<UilKeyboard />} text="Produkt manuell eintragen"></ButtonGrayBorder>
             */}
@@ -65,5 +165,3 @@ function ShoppingCart() {
         </div>
     </>)
 }
-
-export default ShoppingCart
