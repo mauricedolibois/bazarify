@@ -9,6 +9,11 @@ import { useState, useEffect } from 'react';
 import Step3TableRow from '../step3TableRow';
 
 //TODO: check if input is a number
+//TODO: check if offer exists in database
+//TODO: autofocus on input field
+//TODO: increase width of input field
+//TODO: add error message for invalid input
+//TODO: display info when there's no product scanned yet
 
 export default function () {
     const [barcode, setBarcode] = useState('');
@@ -67,7 +72,7 @@ export default function () {
     useEffect(() => {
         if (offer !== '') {
             const productExists = scannedProducts.some((product) => product.product_id === offer.product_id);
-            if (!productExists) {
+            //if (!productExists) {
                 fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
                     .then((res) => res.json())
                     .then((data) => {
@@ -77,7 +82,7 @@ export default function () {
                         console.log(data);
                     })
                     .catch((error) => console.log(error));
-            }
+           // }
         }
     }, [offer]);
 
