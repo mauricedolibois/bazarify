@@ -9,8 +9,25 @@ sellerRouter.use(cors({
 }));
 
 sellerRouter.get("/seller", (req, res) => {
-    dbConnection.findProduct(req.query.operator, req.query.parameter).then(seller => {
+    dbConnection.findSeller(req.query.operator, req.query.parameter).then(seller => {
         res.send(seller)
+    })
+}
+)
+
+
+// useEffect(() => {
+//     fetch('http://localhost:8080/api/sellerProducts?seller_id='+idVariable, {method: 'GET'})
+//     .then(res => res.json())
+//     .then(data => {
+//       console.log(data)
+//     })
+//     .catch(error => console.log(error));
+//     }, []);
+
+sellerRouter.get("/sellerProducts", (req, res) => {
+    dbConnection.getSellersProducts(req.query.seller_id).then(products => {
+        res.send(products)
     })
 }
 )
