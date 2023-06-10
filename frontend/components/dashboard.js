@@ -47,12 +47,17 @@ function BazarCard({ name }) {
     return (
         <div class="border bg-white border-ourLightGray px-4 py-2 rounded-lg flex justify-between">
             {name}
-            <UilTrashAlt class="inline-block -ml-2 text-ourGray" onClick={() => {deleteBazar()}} />
-               
-            <UilAngleRight class="inline-block -mr-2 text-ourGray" onClick={() => {
+            <div class="flex justify-between">
+            <div title="Basar löschen">
+            <UilTrashAlt  class="inline-block -ml-2 text-ourGray" onClick={() => {deleteBazar()}} /> 
+            </div>
+            <div title="Basar wechseln">
+            <UilAngleRight  class="inline-block -mr-2 text-ourGray" onClick={() => {
                 setBazar(name)
                 setCurrentBazar(name)
             }} />
+            </div>
+            </div>
         </div>
     )
 }
