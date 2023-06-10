@@ -37,7 +37,7 @@ function BazarCard({ name }) {
                 .then(res => res.json())
                 .then(data => {
                     setBazarToDelete(undefined)
-                    //TODO: reload page
+                    //TODO: reload page und maybe bazar ausklappen können
                     window.location.reload()
                 }
                 )
