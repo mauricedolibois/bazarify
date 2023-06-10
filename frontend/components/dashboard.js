@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react'
 
 
 function BazarCard({ name }) {
-    let {setCurrentBazar} = useContext(BazarContext)
+    let {setCurrentBazar, setStep} = useContext(BazarContext)
     const [bazar, setBazar] = useState(undefined)
 
     useEffect(() => {
@@ -19,6 +19,7 @@ function BazarCard({ name }) {
                 .then(res => res.json())
                 .then(data => {
                     setBazar(undefined)
+                    setStep(2)
                 }
                 )
         }

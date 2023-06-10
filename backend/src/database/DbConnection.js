@@ -35,7 +35,7 @@ export const dbConnection = {
             BazarName = "Bazarify"
             await this.connectToDB()
             const validInfo = await InputValidation.validateInfo(newName, newYear, newCommission, newDescription)
-            const info = await Info.create(validInfo).catch(err => console.log(err))
+            const info = await Info.create(validInfo)
             await info.save().then(console.log(info) + "saved")
             await this.close()
 
@@ -48,7 +48,10 @@ export const dbConnection = {
             return info2
 
         }
-        catch { console.log("could not create new DB") }
+        catch (error){ 
+            console.log(error)
+            return (error.message)
+        }
     },
     async getBazars() {
         try {

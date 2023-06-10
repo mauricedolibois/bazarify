@@ -11,8 +11,8 @@ bazarRouter.use(cors({
 bazarRouter.post("/newBazar", (req, res) => {
     console.log("Now adding new Bazar")
     console.log(req.body)
-    dbConnection.newDB(req.body.bazar_name, req.body.bazar_year, req.body.bazar_commission, req.body.bazar_description).then(bazar => {
-        res.send(bazar)
+    dbConnection.newDB(req.body.bazar_name, req.body.bazar_year, req.body.bazar_commission, req.body.bazar_description).then(response => {
+        res.json(response)
     })
 })
 

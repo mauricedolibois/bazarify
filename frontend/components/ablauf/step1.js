@@ -10,12 +10,13 @@ import { BazarContext } from '@/pages'
 
 
 export default function () {
-    let { step, setStep, newBazar, setNewBazar, createBazar } = useContext(BazarContext)
+    let {setStep, setCurrentBazar} = useContext(BazarContext)
     const [bazarName, setBazarName] = useState('');
     const [bazarYear, setBazarYear] = useState('');
     const [bazarCommission, setBazarCommission] = useState('');
     const [bazarDescription, setBazarDescription] = useState(' ');
     const [bazar, setBazar] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleAddBazar = () => {
         const bazar = {
@@ -34,8 +35,6 @@ export default function () {
         setBazarCommission('');
         setBazarDescription('');
 
-        //go to next step
-        //setStep(2);
     }
 
     useEffect(() => {
@@ -48,12 +47,19 @@ export default function () {
             fetch('http://127.0.0.1:8080/api/newBazar', requestOptions)
                 .then(res => res.json())
                 .then(data => {
-                    if (data) {
-                        //go to next step
                         console.log(data)
+                        if (typeof data === 'object' && data !== null) {        
+                            setStep(2);
+                            setCurrentBazar(bazar.bazar_name);
+                        }
+                        else
+                        {
+                            setErrorMessage(data);
                     }
                 })
-                .catch(error => console.log(error))
+                .catch(error => 
+                    {setErrorMessage('Es ist ein Fehler bei der Eingabe aufgetreten. Bitte versuche es erneut!')
+                    console.log(error)})
         }
     }, [bazar])
 
@@ -71,10 +77,11 @@ export default function () {
                 <p className='mb-4'>Als erstes sollten wir ein paar generelle Infos zu deinem anstehenden Basar festhalten. Fülle einfach die vorgefertigen Felder aus!</p>
             </div>
             <div>
+            <p className="mr-2 text-sm text-rose-600 text-left">{errorMessage}</p>
                 <div class="grid grid-cols-1 gap-x-8 sm:grid-cols-6">
-                    <FormInput name="Name des Basars" onChange={(e) => setBazarName(e.target.value)} />
-                    <FormInput name="Jahr" onChange={(e) => setBazarYear(e.target.value)} />
-                    <FormInput name="Provision" unit="%" onChange={(e) => setBazarCommission(e.target.value)} />
+                    <FormInput name="Name des Basars" value={bazarName} onChange={(e) => setBazarName(e.target.value)} />
+                    <FormInput name="Jahr" value={bazarYear} onChange={(e) => setBazarYear(e.target.value)} />
+                    <FormInput name="Provision" unit="%" value={bazarCommission} onChange={(e) => setBazarCommission(e.target.value)} />
 
                     <div class="col-span-full">
                         <label for="about" class="block text-sm font-medium leading-6 text-ourSuperDarkGray">Beschreibung</label>
