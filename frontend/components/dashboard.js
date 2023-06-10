@@ -1,6 +1,6 @@
 import { UilPlay } from '@iconscout/react-unicons'
 import { UilPlus } from '@iconscout/react-unicons'
-import { UilAngleRight } from '@iconscout/react-unicons'
+import { UilAngleRight, UilTrashAlt  } from '@iconscout/react-unicons'
 import ButtonBigColor from './buttons/ButtonBigColor'
 import ButtonBigNoColor from './buttons/ButtonBigNoColor'
 import Link from 'next/link'
@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react'
 function BazarCard({ name }) {
     let {setCurrentBazar, setStep} = useContext(BazarContext)
     const [bazar, setBazar] = useState(undefined)
+    const [bazarToDelete, setBazarToDelete] = useState(undefined)
 
     useEffect(() => {
         if (bazar !== undefined) {
@@ -25,10 +26,29 @@ function BazarCard({ name }) {
         }
     }, [bazar])
 
+    const deleteBazar = () => {
+        console.log("clicked")
+        setBazarToDelete(name)
+    }
+
+    useEffect(() => {
+        if (bazarToDelete !== undefined) {
+            fetch('http://localhost:8080/api//deleteBazar?operator=' + bazarToDelete, { method: 'DELETE' })
+                .then(res => res.json())
+                .then(data => {
+                    setBazarToDelete(undefined)
+                    //TODO: reload page
+                    window.location.reload()
+                }
+                )
+        }
+    }, [bazarToDelete])
 
     return (
         <div class="border bg-white border-ourLightGray px-4 py-2 rounded-lg flex justify-between">
             {name}
+            <UilTrashAlt class="inline-block -ml-2 text-ourGray" onClick={() => {deleteBazar()}} />
+               
             <UilAngleRight class="inline-block -mr-2 text-ourGray" onClick={() => {
                 setBazar(name)
                 setCurrentBazar(name)
