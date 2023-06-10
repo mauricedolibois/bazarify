@@ -91,7 +91,7 @@ export const dbConnection = {
         await mongoose.connection.close().then(console.log("DB closed"))
     },
 
-
+    //TODO: ab hier in neue Klasse auslagern
     //CRUD Operations for Products, Sellers and Offers
     async insertProduct(name, price, category) {
         try {
