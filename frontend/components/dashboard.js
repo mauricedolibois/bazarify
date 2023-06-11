@@ -46,7 +46,10 @@ function BazarCard({ name }) {
 
     return (
         <div class="border bg-white border-ourLightGray px-4 py-2 rounded-lg flex justify-between">
-            {name}
+           <p title="Basar wechseln" onClick={() => {
+                setBazar(name)
+                setCurrentBazar(name)
+            }}>{name}</p>
             <div class="flex justify-between">
             <div title="Basar löschen">
             <UilTrashAlt  class="inline-block -ml-2 text-ourGray" onClick={() => {deleteBazar()}} /> 

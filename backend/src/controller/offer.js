@@ -27,12 +27,12 @@ offerRouter.post("/offer", async (req, res) => {
     try {
         const p = req.body.product;
         const s = req.body.seller;
-        const prod = await dbConnection.insertProduct(p.product_name,p.product_price,p.product_category).catch(error => console.log(error));
-        const sell = await dbConnection.insertSeller(s.seller_name,s.seller_firstname,s.seller_email,s.seller_phone).catch(error => console.log(error));
+        const prod = await dbConnection.insertProduct(p.product_name,p.product_price,p.product_category)
+        const sell = await dbConnection.insertSeller(s.seller_name,s.seller_firstname,s.seller_email,s.seller_phone)
         const offer = await dbConnection.insertOffer(prod.product_id, sell.seller_id);
-        res.send(offer);  
+        res.json(offer);  
     } catch (error) {
-        console.log(error);  
+        res.json(error.message); 
     }
 }
 )

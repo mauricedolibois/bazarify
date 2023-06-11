@@ -101,12 +101,13 @@ export const dbConnection = {
             await product.save().then(console.log(product))
             return product
         }
-        catch { console.log("could not insert product") }
+        catch(error) { return (error.message) }
     },
     async insertSeller(name, firstname, email, phone) {
         try {
             const existingSeller = await this.checkDuplicateSeller(email)
             if (existingSeller != null) {
+            console.log("Seller already exists: "+existingSeller)
             return existingSeller;
             }
             var id = DbIdHandler.generateSellerId()
@@ -115,9 +116,7 @@ export const dbConnection = {
             await seller.save().then(console.log(seller))
             return seller
         }
-        catch {
-            console.log("could not insert seller")
-        }
+        catch(error) { return (error.message) }
     },
     async insertOffer(product_id, seller_id) {
         try {
@@ -127,7 +126,7 @@ export const dbConnection = {
             await offer.save().then(console.log(offer))
             return offer
         }
-        catch { console.log("could not insert offer") }
+        catch(error) { return (error.message) }
     },
     async findProduct(operator, parameter) {
         const filter = { [operator]: parameter }
@@ -152,9 +151,7 @@ export const dbConnection = {
     },
     async checkDuplicateSeller(email) {
         const seller = {seller_email: email,}
-        console.log(seller);
         const duplicateSeller = await Seller.findOne(seller);    
-        console.log(duplicateSeller);
         return duplicateSeller;
       },
     async updateProduct(operator, parameter, update) {

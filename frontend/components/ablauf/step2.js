@@ -20,6 +20,7 @@ export default function () {
   const [productPrice, setProductPrice] = useState('');
   const [product, setProduct] = useState('');
   const [seller, setSeller] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
  //add a Seller to the database
  const handleAddOffer = (keepSeller) =>{
@@ -67,8 +68,19 @@ export default function () {
         .then(res => res.json())
         .then(data => {
           console.log(data)
+          if (typeof data === 'object' && data !== null) { 
+            console.log('success');   
+            setErrorMessage('');                     
+           }
+          else
+          {
+          console.log("error");
+          setErrorMessage(data);
+          }
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          setErrorMessage(error);
+          console.log(error)});
     }
   }, [product,seller]);
 
@@ -85,6 +97,7 @@ export default function () {
           eingepflegt sind.
         </p>
       </div>
+      <p className="mr-2 text-sm text-rose-600 text-left">{errorMessage}</p>
       <div className="relative flex flex-col justify-center py-10">
 
         <div className="rounded border border-ourLightGrey bg-white">
