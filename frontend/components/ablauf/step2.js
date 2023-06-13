@@ -75,6 +75,7 @@ export default function () {
           else
           {
           console.log("error");
+          //TODO: specific error message
           setErrorMessage("Fehler beim Hinzufügen des Angebots, bitte überprüfe deine Eingaben!");
           }
         })
