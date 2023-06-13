@@ -75,7 +75,7 @@ export default function () {
           else
           {
           console.log("error");
-          setErrorMessage(data);
+          setErrorMessage("Fehler beim Hinzufügen des Angebots, bitte überprüfe deine Eingaben!");
           }
         })
         .catch(error => {
@@ -97,7 +97,6 @@ export default function () {
           eingepflegt sind.
         </p>
       </div>
-      <p className="mr-2 text-sm text-rose-600 text-left">{errorMessage}</p>
       <div className="relative flex flex-col justify-center py-10">
 
         <div className="rounded border border-ourLightGrey bg-white">
@@ -167,18 +166,13 @@ export default function () {
                   Scanne am besten noch 1 Produkt(e) ein, damit du beim Drucken möglichst effizient bist!
                 </p>
               </div>
-
               <ButtonGrayBorder text="Barcodes ausdrucken" icon={<UilPrint />}></ButtonGrayBorder>
             </div>
           </div>
         </div>
-
-
-
+        <p className="mr-2 text-sm text-rose-600 text-left">{errorMessage}</p>
       </div>
-      {
-
-      }<div className='mt-4 flex gap-4'>
+      <div className='mt-4 flex gap-4'>
         <ButtonGrayBorder icon={<UilLabel />} text="Kategorien verwalten"></ButtonGrayBorder>
         <ButtonGrayBorder icon={<UilHistory />} text="Eingetragene Produkte sehen"></ButtonGrayBorder>
       </div>

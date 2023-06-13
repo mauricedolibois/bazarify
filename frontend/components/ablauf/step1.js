@@ -54,7 +54,7 @@ export default function () {
                         }
                         else
                         {
-                            setErrorMessage(data);
+                            setErrorMessage("Es ist ein Fehler bei der Eingabe aufgetreten. Bitte überprüfe deine Eingaben!");
                     }
                 })
                 .catch(error => 
