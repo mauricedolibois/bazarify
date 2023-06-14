@@ -20,6 +20,7 @@ export default function () {
   const [productPrice, setProductPrice] = useState('');
   const [product, setProduct] = useState('');
   const [seller, setSeller] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
  //add a Seller to the database
  const handleAddOffer = (keepSeller) =>{
@@ -67,8 +68,20 @@ export default function () {
         .then(res => res.json())
         .then(data => {
           console.log(data)
+          if (typeof data === 'object' && data !== null) { 
+            console.log('success');   
+            setErrorMessage('');                     
+           }
+          else
+          {
+          console.log("error");
+          //TODO: specific error message
+          setErrorMessage("Fehler beim Hinzufügen des Angebots, bitte überprüfe deine Eingaben!");
+          }
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          setErrorMessage(error);
+          console.log(error)});
     }
   }, [product,seller]);
 
@@ -154,18 +167,13 @@ export default function () {
                   Scanne am besten noch 1 Produkt(e) ein, damit du beim Drucken möglichst effizient bist!
                 </p>
               </div>
-
               <ButtonGrayBorder text="Barcodes ausdrucken" icon={<UilPrint />}></ButtonGrayBorder>
             </div>
           </div>
         </div>
-
-
-
+        <p className="mr-2 text-sm text-rose-600 text-left">{errorMessage}</p>
       </div>
-      {
-
-      }<div className='mt-4 flex gap-4'>
+      <div className='mt-4 flex gap-4'>
         <ButtonGrayBorder icon={<UilLabel />} text="Kategorien verwalten"></ButtonGrayBorder>
         <ButtonGrayBorder icon={<UilHistory />} text="Eingetragene Produkte sehen"></ButtonGrayBorder>
       </div>

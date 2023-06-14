@@ -35,7 +35,7 @@ export const dbConnection = {
             BazarName = "Bazarify"
             await this.connectToDB()
             const validInfo = await InputValidation.validateInfo(newName, newYear, newCommission, newDescription)
-            const info = await Info.create(validInfo).catch(err => console.log(err))
+            const info = await Info.create(validInfo)
             await info.save().then(console.log(info) + "saved")
             await this.close()
 
@@ -48,7 +48,10 @@ export const dbConnection = {
             return info2
 
         }
-        catch { console.log("could not create new DB") }
+        catch (error){ 
+            console.log(error)
+            return (error.message)
+        }
     },
     async getBazars() {
         try {
@@ -88,7 +91,7 @@ export const dbConnection = {
         await mongoose.connection.close().then(console.log("DB closed"))
     },
 
-
+    //TODO: ab hier in neue Klasse auslagern
     //CRUD Operations for Products, Sellers and Offers
     async insertProduct(name, price, category) {
         try {
@@ -98,12 +101,13 @@ export const dbConnection = {
             await product.save().then(console.log(product))
             return product
         }
-        catch { console.log("could not insert product") }
+        catch(error) { return (error.message) }
     },
     async insertSeller(name, firstname, email, phone) {
         try {
             const existingSeller = await this.checkDuplicateSeller(email)
             if (existingSeller != null) {
+            console.log("Seller already exists: "+existingSeller)
             return existingSeller;
             }
             var id = DbIdHandler.generateSellerId()
@@ -112,9 +116,7 @@ export const dbConnection = {
             await seller.save().then(console.log(seller))
             return seller
         }
-        catch {
-            console.log("could not insert seller")
-        }
+        catch(error) { return (error.message) }
     },
     async insertOffer(product_id, seller_id) {
         try {
@@ -124,7 +126,7 @@ export const dbConnection = {
             await offer.save().then(console.log(offer))
             return offer
         }
-        catch { console.log("could not insert offer") }
+        catch(error) { return (error.message) }
     },
     async findProduct(operator, parameter) {
         const filter = { [operator]: parameter }
@@ -149,9 +151,7 @@ export const dbConnection = {
     },
     async checkDuplicateSeller(email) {
         const seller = {seller_email: email,}
-        console.log(seller);
         const duplicateSeller = await Seller.findOne(seller);    
-        console.log(duplicateSeller);
         return duplicateSeller;
       },
     async updateProduct(operator, parameter, update) {
