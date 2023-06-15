@@ -1,3 +1,6 @@
+import { PieChart } from 'react-minimal-pie-chart';
+
+
 function Card({ title, description, info }) {
     return (
         <div class="flex flex-col justify-between rounded-md border border-ourLightGray bg-white p-4 shadow-md">
@@ -19,7 +22,21 @@ export default function () {
                     <Card title={"1180€"} description="Profit bei aktueller Provisionsrate (5%)"></Card>
                     <Card title={"___€"} description="Trinkgeld" info=" Das Trinkgeld musst du manuell eintragen"></Card>
                     <div class="col-span-2 row-span-2 rounded-md border border-ourLightGray bg-white p-4 shadow-md">
-                        <img />
+
+                        <PieChart
+                            label={({ dataEntry }) => dataEntry.title}
+                            labelStyle={{
+                                fontSize: '3px',
+                                fill: '#fff'
+                            }}
+                            data={[
+                                { title: 'Eingereichte Produkte', value: 507, color: '#E38627' },
+                                { title: 'Verkauft', value: 463, color: '#C13C37' },
+                                { title: 'Liegengeblieben', value: 45, color: '#6A2135' },
+                            ]}
+                        />
+
+
                     </div>
                     <Card title={"23.600€"} description="Ø Trinkgeld/Verkauf">
                     </Card>

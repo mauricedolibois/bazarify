@@ -8,7 +8,7 @@ export default function Document() {
       }
       <Html lang="de">
         <Head>
-
+          <link rel="icon" href="/favicon.ico" />
         </Head>
         <body className="bg-ourBackgroundColor font-inter">
           <Main />

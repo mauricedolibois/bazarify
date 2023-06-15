@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
 import { BazarContext } from '../pages/index.js'
 import SidebarButton from './buttons/SidebarButton.js'
+import HelpPopup from './HelpPopup.js'
 
 function Step({ step, text, currentStep, onClick }) {
     let stepClass = "text-sm text-ourGray";
@@ -28,7 +29,7 @@ function Step({ step, text, currentStep, onClick }) {
 
 export default function Sidebar() {
 
-    let { step, setStep, currentBazar} = useContext(BazarContext)
+    let { step, setStep, currentBazar } = useContext(BazarContext)
 
     function showDashboard() {
         setStep(0)
@@ -55,13 +56,13 @@ export default function Sidebar() {
     const [bazar, setBazar] = useState("");
 
     useEffect(() => {
-    setBazar(currentBazar)     
+        setBazar(currentBazar)
     }, [currentBazar])
 
 
     return (
         <>
-            <div class="flex h-screen flex-col bg-white min-w-[25%] max-w-md">
+            <div class="flex h-screen flex-col bg-white min-w-[25%] max-w-md border-r border-ourLightGray">
 
                 <div class="flex items-center justify-between pt-4">
                     <div class="flex items-center cursor-pointer">
@@ -70,9 +71,7 @@ export default function Sidebar() {
                             <span class="font-serif text-2xl">azarify</span>
                         </Link>
                     </div>
-                    <button class="flex items-center pr-4 text-sm text-black hover:text-ourPrimaryColor">
-                        <UilQuestionCircle size="24" />
-                    </button>
+                    <HelpPopup />
                 </div>
 
                 {
@@ -120,7 +119,7 @@ export default function Sidebar() {
 
 
                 <div class="mt-auto border-t border-ourLightGray">
-                    <button onClick={goToNextStep} class="justify-left flex h-10 w-full items-center pl-4 text-sm text-ourPrimaryColor">
+                    <button onClick={goToNextStep} class="justify-left flex h-10 w-full items-center pl-4 text-sm text-ourPrimaryColor hover:bg-ourPrimaryColorHover hover:text-white">
                         <UilAngleRight size="24" />
                         {step === 0 && "Los geht's!"}
                         {(step < 5 && step > 0) && "Nächster Schritt"}

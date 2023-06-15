@@ -75,7 +75,7 @@ export default function () {
 
             <div>
                 <h1>1. Basar erstellen</h1>
-                <p className='mb-4'>Als erstes sollten wir ein paar generelle Infos zu deinem anstehenden Basar festhalten. Fülle einfach die vorgefertigen Felder aus!</p>
+                <p>Als erstes sollten wir ein paar generelle Infos zu deinem anstehenden Basar festhalten. Fülle einfach die vorgefertigen Felder aus!</p>
             </div>
             <div>
             <p className="mr-2 text-sm text-rose-600 text-left">{errorMessage}</p>
@@ -85,7 +85,7 @@ export default function () {
                     <FormInput name="Provision" unit="%" value={bazarCommission} onChange={(e) => setBazarCommission(e.target.value)} />
 
                     <div class="col-span-full">
-                        <label for="about" class="block text-sm font-medium leading-6 text-ourSuperDarkGray">Beschreibung</label>
+                        <label for="about" class="block text-sm font-medium leading-6 text-ourSuperDarkGray mt-4">Beschreibung</label>
                         <div class="mt-2">
                             <textarea value={bazarDescription} placeholder="Eine kurze optionale Beschreibung des geplanten Basars" id="about" name="about" rows="3" class="block w-full rounded-md border-0 px-2 py-1.5 text-ourSuperDarkGray shadow-sm ring-1 ring-inset ring-ourLightGray placeholder:text-ourGray focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" onChange={(e) => setBazarDescription(e.target.value)}></textarea>
                         </div>
@@ -93,8 +93,8 @@ export default function () {
                 </div>
 
                 <div class="mt-6 flex items-center justify-end gap-x-6">
-                    <button type="button" onClick={() => setStep(0)} class="text-sm font-semibold leading-6 text-ourSuperDarkGray">Cancel</button>
-                    <button type="submit" onClick={() => handleAddBazar()} class="rounded-md bg-ourPrimaryColor px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-ourPrimaryColorHover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Save</button>
+                    <button type="button" onClick={() => setStep(0)} class="text-sm font-semibold leading-6  hover:text-ourSuperDarkGray text-ourDarkGray">Abbrechen</button>
+                    <button type="submit" onClick={() => handleAddBazar()} class="rounded-md bg-ourPrimaryColor px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-ourPrimaryColorHover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Speichern</button>
                 </div>
             </div>
 

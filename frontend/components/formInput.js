@@ -12,6 +12,7 @@ const FormInput = ({name, value, unit, onChange}) => {
               <span class="text-ourDarkGray sm:text-sm">{unit}</span>
             </div>
         </div>
+      </div>
     </div>
   );
 };
