@@ -45,20 +45,14 @@ function BazarCard({ name }) {
     }, [bazarToDelete])
 
     return (
-        <div class="border bg-white border-ourLightGray px-4 py-2 rounded-lg flex justify-between">
-            <p title="Basar wechseln" onClick={() => {
-                setBazar(name)
-                setCurrentBazar(name)
-            }}>{name}</p>
+        <div onClick={() => {
+            setBazar(name)
+            setCurrentBazar(name)
+        }} class="border bg-white border-ourLightGray hover:text-ourPrimaryColorHover mt-2 px-4 py-2 cursor-pointer rounded-lg flex justify-between">
+            <p title="Basar wechseln">{name}</p>
             <div class="flex justify-between">
                 <div title="Basar löschen">
-                    <UilTrashAlt class="inline-block -ml-2 text-ourGray" onClick={() => { deleteBazar() }} />
-                </div>
-                <div title="Basar wechseln">
-                    <UilAngleRight class="inline-block -mr-2 text-ourGray" onClick={() => {
-                        setBazar(name)
-                        setCurrentBazar(name)
-                    }} />
+                    <UilTrashAlt class="inline-block -ml-2 hover:text-red-400 text-ourGray" onClick={() => { deleteBazar() }} />
                 </div>
             </div>
         </div>
@@ -95,7 +89,6 @@ export default function () {
                     </Link>
                 </div>
                 <h2 className="mt-16">Deine Basare</h2>
-
                 <div class="grid grid-cols-3 gap-4">
                     {(bazars === undefined) ? (<p>Keine Basare vorhanden</p>) : (bazars.map(bazar => {
                         return (bazar.hasOwnProperty('bazar_name')) ? <BazarCard name={bazar.bazar_name} /> : null;

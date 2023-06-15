@@ -78,7 +78,6 @@ export default function () {
                 <p>Als erstes sollten wir ein paar generelle Infos zu deinem anstehenden Basar festhalten. Fülle einfach die vorgefertigen Felder aus!</p>
             </div>
             <div>
-                <p className="mr-2 text-sm text-rose-600 text-left">{errorMessage}</p>
                 <div class="grid grid-cols-1 gap-x-8 sm:grid-cols-6">
                     <FormInput name="Name des Basars" value={bazarName} onChange={(e) => setBazarName(e.target.value)} />
                     <FormInput name="Jahr" value={bazarYear} onChange={(e) => setBazarYear(e.target.value)} />
@@ -87,10 +86,12 @@ export default function () {
                     <div class="col-span-full">
                         <label for="about" class="block text-sm font-medium leading-6 text-ourSuperDarkGray mt-4">Beschreibung</label>
                         <div class="mt-2">
-                            <textarea value={bazarDescription} placeholder="Eine kurze optionale Beschreibung des geplanten Basars" id="about" name="about" rows="3" class="block w-full rounded-md border-0 px-2 py-1.5 text-ourSuperDarkGray shadow-sm ring-1 ring-inset ring-ourLightGray placeholder:text-ourGray focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" onChange={(e) => setBazarDescription(e.target.value)}></textarea>
+                            <textarea placeholder="Eine kurze optionale Beschreibung des geplanten Basars" id="about" name="about" rows="3" class="block w-full rounded-md border-0 px-2 py-1.5 text-ourSuperDarkGray shadow-sm ring-1 ring-inset ring-ourLightGray placeholder:text-ourGray focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" onChange={(e) => setBazarDescription(e.target.value)}></textarea>
+
                         </div>
                     </div>
                 </div>
+                <p className="mt-4 text-sm text-red-400 text-left">{errorMessage}</p>
 
                 <div class="mt-6 flex items-center justify-end gap-x-6">
                     <button type="button" onClick={() => setStep(0)} class="text-sm font-semibold leading-6  hover:text-ourSuperDarkGray text-ourDarkGray">Abbrechen</button>

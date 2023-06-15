@@ -106,8 +106,10 @@ export default function Sidebar() {
                 <div class="border-t border-ourLightGray pb-4"></div>
 
                 <h2 class="px-4 py-2 text-lg font-bold text-ourSuperDarkGray">
-                    {bazar ? bazar : "Ablauf"}
+                    {step === 0 ? "Ablauf" : step === 1 ? "Unbenannter Basar" : (bazar !== "Bazarify" ? bazar : "Ablauf")}
                 </h2>
+
+
 
                 <ul class="flex flex-grow flex-col space-y-2 px-4 py-2">
                     <Step step="1" text="Basar erstellen" currentStep={step} />

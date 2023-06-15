@@ -5,7 +5,7 @@ import { UilCheck, UilKeyboard, UilCalculator, UilInfoCircle } from '@iconscout/
 import NewProductInput from '../NewProductInput';
 import CalculationPopup from '../CalculationPopup';
 import UnderlindedInput from '../underlinedInput';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Step3TableRow from '../step3TableRow';
 
 //TODO: check if input is a number
@@ -23,6 +23,13 @@ export default function () {
     const [updatedOffer, setUpdatedOffer] = useState('');
 
     let input;
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, []);
 
     const handleScan = () => {
         input = document.getElementById('Barcode des Produkts');
@@ -176,7 +183,14 @@ export default function () {
             </div>
             <div>
                 <div className="flex flex-row justify-between px-4 py-4 mb-8 gap-32 border-ourLightGray border bg-white rounded ">
-                    <UnderlindedInput id="Barcode des Produkts" placeholder="Barcode des Produkts" autoFocus></UnderlindedInput>
+                    <input
+                        className="w-full truncate border-b mt-2 border-ourLightGray text-ourDarkGray focus:border-ourPrimaryColor focus:outline-none"
+                        name="name"
+                        id="Barcode des Produkts"
+                        type="text"
+                        ref={inputRef}
+                        placeholder="Barcode des Produkts"
+                    />
                     <div className="flex flex-row items-center">
                         <UilInfoCircle className="mr-4 text-ourDarkGray"></UilInfoCircle>
                         <p className="mr-2 text-sm">
