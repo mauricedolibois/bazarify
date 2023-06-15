@@ -155,7 +155,7 @@ export default function () {
                 />
               </div>
               <div className="mt-4 gap-4 flex">
-                <ButtonSmallJustIcon onClick={() => handleAddOffer(false)} icon={<UilCheck />}></ButtonSmallJustIcon>
+                <ButtonSmallJustIcon tooltip="Nur dieses Produkt hinzufügen" onClick={() => handleAddOffer(false)} icon={<UilCheck />}></ButtonSmallJustIcon>
                 <ButtonYellowBorder onClick={() => handleAddOffer(true)} icon={<UilPlus />} text="Mehr Produkte von diesem Verkäufer hinzufügen"></ButtonYellowBorder>
               </div>
             </div>

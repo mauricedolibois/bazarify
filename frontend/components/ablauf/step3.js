@@ -189,7 +189,7 @@ export default function () {
             <h2>Gesamt: {totalPrice}€</h2>
             <hr className="border-ourLightGray"></hr>
             <div className="mt-4 gap-4 flex">
-                <ButtonSmallJustIcon icon={<UilCheck />} onClick={handleSubmit}></ButtonSmallJustIcon>
+                <ButtonSmallJustIcon icon={<UilCheck />} tooltip="Alle Produkte eingetragen" onClick={handleSubmit}></ButtonSmallJustIcon>
                 <CalculationPopup></CalculationPopup>
             </div>
         </>
