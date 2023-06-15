@@ -29,12 +29,13 @@ export const dbConnection = {
     },
     async newDB(newName, newYear, newCommission, newDescription) {
         try {
+            newName = newName.replaceAll(" ", "_")
             // entry in Barazify Info
             await this.close()
             BazarName = "Bazarify"
             await this.connectToDB()
             const validInfo = await InputValidation.validateInfo(newName, newYear, newCommission, newDescription)
-            const info = await Info.create(validInfo).catch(err => console.log(err))
+            const info = await Info.create(validInfo)
             await info.save().then(console.log(info) + "saved")
             await this.close()
 
@@ -47,7 +48,10 @@ export const dbConnection = {
             return info2
 
         }
-        catch { console.log("could not create new DB") }
+        catch (error){ 
+            console.log(error)
+            return (error.message)
+        }
     },
     async getBazars() {
         try {
@@ -87,7 +91,7 @@ export const dbConnection = {
         await mongoose.connection.close().then(console.log("DB closed"))
     },
 
-
+    //TODO: ab hier in neue Klasse auslagern
     //CRUD Operations for Products, Sellers and Offers
     async insertProduct(name, price, category) {
         try {
@@ -97,19 +101,22 @@ export const dbConnection = {
             await product.save().then(console.log(product))
             return product
         }
-        catch { console.log("could not insert product") }
+        catch(error) { return (error.message) }
     },
     async insertSeller(name, firstname, email, phone) {
         try {
+            const existingSeller = await this.checkDuplicateSeller(email)
+            if (existingSeller != null) {
+            console.log("Seller already exists: "+existingSeller)
+            return existingSeller;
+            }
             var id = DbIdHandler.generateSellerId()
             const validSeller = await InputValidation.validateSeller(id, firstname, name, email, phone)
             const seller = await Seller.create(validSeller)
             await seller.save().then(console.log(seller))
             return seller
         }
-        catch {
-            console.log("could not insert seller")
-        }
+        catch(error) { return (error.message) }
     },
     async insertOffer(product_id, seller_id) {
         try {
@@ -119,7 +126,7 @@ export const dbConnection = {
             await offer.save().then(console.log(offer))
             return offer
         }
-        catch { console.log("could not insert offer") }
+        catch(error) { return (error.message) }
     },
     async findProduct(operator, parameter) {
         const filter = { [operator]: parameter }
@@ -142,6 +149,11 @@ export const dbConnection = {
     async findAllOffers() {
         return await Offer.find();
     },
+    async checkDuplicateSeller(email) {
+        const seller = {seller_email: email,}
+        const duplicateSeller = await Seller.findOne(seller);    
+        return duplicateSeller;
+      },
     async updateProduct(operator, parameter, update) {
         const filter = { [operator]: parameter }
         Product.findOneAndUpdate(filter, update).then(console.log("product updated"))
@@ -174,5 +186,26 @@ export const dbConnection = {
     },
     async deleteAllOffers() {
         await Offer.deleteMany().then(console.log("All offers deleted"))
+    },
+    async getSellersProducts(seller_id) {
+        try {
+        const offers = await Offer.find({ seller_id: seller_id })
+        const products = await Product.find();
+        var sellersProducts = []
+        for (var i = 0; i < offers.length; i++) {
+            var offer = offers[i]
+            var product = products.find(product => product.product_id == offer.product_id)
+            var offer = {
+                offer_id: offer.offer_id,
+                offer_status: offer.state,
+                product_name: product.product_name,
+                product_price: product.product_price,
+                product_category: product.product_category,
+            }
+            sellersProducts.push(offer)
+        }
+        return sellersProducts
     }
+    catch { console.log("could not get sellers products") }
+}
 }

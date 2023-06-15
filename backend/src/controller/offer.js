@@ -22,9 +22,18 @@ offerRouter.get("/allOffers", (req, res) => {
 }
 )
 
-offerRouter.post("/offer", (req, res) => {
-    dbConnection.insertOffer(req.body.product_id, req.body.seller_id).then
-    (offer => { res.send(offer) })  
+
+offerRouter.post("/offer", async (req, res) => {
+    try {
+        const p = req.body.product;
+        const s = req.body.seller;
+        const prod = await dbConnection.insertProduct(p.product_name,p.product_price,p.product_category)
+        const sell = await dbConnection.insertSeller(s.seller_name,s.seller_firstname,s.seller_email,s.seller_phone)
+        const offer = await dbConnection.insertOffer(prod.product_id, sell.seller_id);
+        res.json(offer);  
+    } catch (error) {
+        res.json(error.message); 
+    }
 }
 )
 
@@ -39,3 +48,7 @@ offerRouter.put("/offer", (req, res) => {
     (offer => { res.send(offer) })
     }
 )
+// let prod=dbConnection.insertProduct(req.body.product)
+//     let sell=dbConnection.insertSeller(req.body.seller)
+//     dbConnection.insertOffer(prod.product_id, sell.seller_id).then
+//     (offer => { res.send(offer) }) 

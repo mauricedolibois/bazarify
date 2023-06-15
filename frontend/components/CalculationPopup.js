@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { UilMultiply, UilCalculator, UilArrowRight } from '@iconscout/react-unicons';
-import FormInput from './formInput';
+import FormInput from './FormInput';
 import ButtonSmallJustIcon from './buttons/ButtonSmallJustIcon';
 
 const CalculationPopup = () => {

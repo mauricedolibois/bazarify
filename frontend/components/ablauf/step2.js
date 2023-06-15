@@ -15,125 +15,77 @@ export default function () {
   const [sellerLastName, setSellerLastName] = useState('');
   const [sellerEmail, setSellerEmail] = useState('');
   const [sellerPhoneNumber, setSellerPhoneNumber] = useState('');
-  const [seller, setSeller] = useState('');
-  let currentSellerID = "";
-
-
   const [productName, setProductName] = useState('');
   const [productCategory, setProductCategory] = useState('');
   const [productPrice, setProductPrice] = useState('');
   const [product, setProduct] = useState('');
-  let currentProductID = "";
+  const [seller, setSeller] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const [offer, setOffer] = useState('');
-
-  //add a product to the database
-  const handleAddProduct = () => {
-
-    const product = {
-      product_name: productName,
-      product_price: productPrice,
-      product_category: productCategory
-    };
-
-    setProduct(product);
-
-    // Reset input fields
-    setProductName('');
-    setProductCategory('');
-    setProductPrice('');
-
+ //add a Seller to the database
+ const handleAddOffer = (keepSeller) =>{
+  console.log('add offer');
+  const sellerData = {
+    seller_name: sellerLastName,
+    seller_firstname: sellerFirstName,
+    seller_email: sellerEmail,
+    seller_phone: sellerPhoneNumber
   };
 
-  // cors error bei post request 
-  useEffect(() => {
-    if (product !== '') {
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(product)
-      };
-      fetch('http://localhost:8080/api/product', requestOptions)
-        .then(res => res.json())
-        .then(data => {
-          console.log(data)
-          currentProductID = data.product_id
-          console.log("Product ID: " + data.product_id)
-          handleAssignProductToSeller();
-        })
-        .catch(error => console.log(error));
-    }
-  }, [product]);
+  const productData = {
+    product_name: productName,
+    product_price: productPrice,
+    product_category: productCategory
+  };
 
-  //add a Seller to the database
-  const handleAddSeller = () => {
+  setProduct(productData);
+  setSeller(sellerData);
 
-    const seller = {
-      seller_name: sellerLastName,
-      seller_firstname: sellerFirstName,
-      seller_email: sellerEmail,
-      seller_phone: sellerPhoneNumber
-    };
-
-    setSeller(seller);
-
-    // Reset input fields
+  // Reset input fields
+  if (keepSeller === false) {
     setSellerFirstName('');
     setSellerLastName('');
     setSellerEmail('');
     setSellerPhoneNumber('');
-
-  };
+  }
+  setProductName('');
+  setProductCategory('');
+  setProductPrice('');
+}
 
   // cors error bei post request 
   useEffect(() => {
-    if (seller !== '') {
-      const requestOptions = {
+    if (product !== '' && seller !== '') {
+      fetch('http://localhost:8080/api/offer', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(seller)
-      };
-      fetch('http://localhost:8080/api/seller', requestOptions)
+        headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        product: product,
+        seller: seller
+      })})
         .then(res => res.json())
         .then(data => {
           console.log(data)
-          currentSellerID = data.seller_id
+          if (typeof data === 'object' && data !== null) { 
+            console.log('success');   
+            setErrorMessage('');                     
+           }
+          else
+          {
+          console.log("error");
+          //TODO: specific error message
+          setErrorMessage("Fehler beim Hinzufügen des Angebots, bitte überprüfe deine Eingaben!");
+          }
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          setErrorMessage(error);
+          console.log(error)});
     }
-  }, [seller]);
+  }, [product,seller]);
 
-  //assign product to seller
-  const handleAssignProductToSeller = () => {
-    const offer = {
-      product_id: currentProductID,
-      seller_id: currentSellerID
-    };
-
-    setOffer(offer);
-    console.log(offer)
-  };
-
-  // cors error bei post request 
-  useEffect(() => {
-    if (offer !== '') {
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(offer)
-      };
-      fetch('http://localhost:8080/api/offer', requestOptions)
-        .then(res => res.json())
-        .then(data => { console.log(data) })
-        .catch(error => console.log(error));
-    }
-  }, [offer]);
-
-
-  const handleSubmit = () => {
-    handleAddSeller();
-    handleAddProduct();
-  }
+ 
 
   return (
     <>
@@ -202,8 +154,8 @@ export default function () {
                 />
               </div>
               <div className="mt-4 gap-4 flex">
-                <ButtonSmallJustIcon onClick={handleSubmit} icon={<UilCheck />}></ButtonSmallJustIcon>
-                <ButtonYellowBorder onClick={handleSubmit} icon={<UilPlus />} text="Mehr Produkte von diesem Verkäufer hinzufügen"></ButtonYellowBorder>
+                <ButtonSmallJustIcon onClick={()=>handleAddOffer(false)}icon={<UilCheck />}></ButtonSmallJustIcon>
+                <ButtonYellowBorder onClick={()=>handleAddOffer(true)} icon={<UilPlus />} text="Mehr Produkte von diesem Verkäufer hinzufügen"></ButtonYellowBorder>
               </div>
             </div>
           </div>
@@ -215,22 +167,17 @@ export default function () {
                   Scanne am besten noch 1 Produkt(e) ein, damit du beim Drucken möglichst effizient bist!
                 </p>
               </div>
-
               <ButtonGrayBorder text="Barcodes ausdrucken" icon={<UilPrint />}></ButtonGrayBorder>
             </div>
           </div>
         </div>
-
-
-
+        <p className="mr-2 text-sm text-rose-600 text-left">{errorMessage}</p>
       </div>
-      {
-
-      }<div className='mt-4 flex gap-4'>
+      <div className='mt-4 flex gap-4'>
         <ButtonGrayBorder icon={<UilLabel />} text="Kategorien verwalten"></ButtonGrayBorder>
         <ButtonGrayBorder icon={<UilHistory />} text="Eingetragene Produkte sehen"></ButtonGrayBorder>
       </div>
 
     </>
-  );
+  )
 }
