@@ -78,11 +78,25 @@ export default function () {
                 <p>Als erstes sollten wir ein paar generelle Infos zu deinem anstehenden Basar festhalten. Fülle einfach die vorgefertigen Felder aus!</p>
             </div>
             <div>
-                <div class="grid grid-cols-1 gap-x-8 sm:grid-cols-6">
-                    <FormInput name="Name des Basars" value={bazarName} onChange={(e) => setBazarName(e.target.value)} />
-                    <FormInput name="Jahr" value={bazarYear} onChange={(e) => setBazarYear(e.target.value)} />
-                    <FormInput name="Provision" unit="%" value={bazarCommission} onChange={(e) => setBazarCommission(e.target.value)} />
-
+                <div>
+                    <div className="flex justify-between gap-8">
+                        <FormInput
+                            name="Name des Basars"
+                            value={bazarName}
+                            onChange={(e) => setBazarName(e.target.value)}
+                        />
+                        <FormInput
+                            name="Jahr"
+                            value={bazarYear}
+                            onChange={(e) => setBazarYear(e.target.value)}
+                        />
+                        <FormInput
+                            name="Provision"
+                            unit="%"
+                            value={bazarCommission}
+                            onChange={(e) => setBazarCommission(e.target.value)}
+                        />
+                    </div>
                     <div class="col-span-full">
                         <label for="about" class="block text-sm font-medium leading-6 text-ourSuperDarkGray mt-4">Beschreibung</label>
                         <div class="mt-2">

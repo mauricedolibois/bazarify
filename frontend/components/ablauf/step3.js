@@ -1,10 +1,6 @@
-import { UilTrash } from '@iconscout/react-unicons';
 import ButtonSmallJustIcon from '../buttons/ButtonSmallJustIcon';
-import ButtonGrayBorder from '../buttons/ButtonGrayBorder';
-import { UilCheck, UilKeyboard, UilCalculator, UilInfoCircle } from '@iconscout/react-unicons';
-import NewProductInput from '../NewProductInput';
+import { UilCheck, UilInfoCircle } from '@iconscout/react-unicons';
 import CalculationPopup from '../CalculationPopup';
-import UnderlindedInput from '../underlinedInput';
 import { useState, useEffect, useRef } from 'react';
 import Step3TableRow from '../step3TableRow';
 
@@ -139,52 +135,47 @@ export default function () {
                 eingescannt hast, kannst du weiter zum nächsten Schritt.
             </p>
             <div className="rounded border border-ourLightGrey bg-white my-8">
-                <div className="flex flex-col">
-                    <div className="overflow-x-auto max-h-64">
-                        <div className="inline-block min-w-full sm:px-6 lg:px-8">
-                            <div className="overflow-hidden">
-                                <table className="min-w-full text-left text-sm font-light rounded">
-                                    <thead className="border-b font-medium dark:border-neutral-500">
-                                        <tr>
-                                            <th scope="col" className="px-8 py-4">
-                                                #
-                                            </th>
-                                            <th scope="col" className="px-8 py-4">
-                                                Artikel
-                                            </th>
-                                            <th scope="col" className="px-8 py-4">
-                                                Kategorie
-                                            </th>
-                                            <th scope="col" className="px-8 py-4">
-                                                Preis
-                                            </th>
-                                            <th scope="col" className="px-8 py-4">
-                                                Entfernen
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="">
-                                        {scannedProducts.map((product, index) => (
-                                            <Step3TableRow
-                                                key={index}
-                                                counter={index + 1}
-                                                name={product.product_name}
-                                                category={product.product_category}
-                                                price={product.product_price}
-                                                removeItem={() => handleRemoveProduct(index)}
-                                            />
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                <div className="overflow-hidden">
+                    <table className="min-w-full text-left text-sm font-light rounded">
+                        <thead className="font-medium ">
+                            <tr>
+                                <th scope="col" className="px-8 py-4">
+                                    #
+                                </th>
+                                <th scope="col" className="px-8 py-4">
+                                    Artikel
+                                </th>
+                                <th scope="col" className="px-8 py-4">
+                                    Kategorie
+                                </th>
+                                <th scope="col" className="px-8 py-4">
+                                    Preis
+                                </th>
+                                <th scope="col" className="px-8 py-4">
+                                    Entfernen
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody className="">
+                            {scannedProducts.map((product, index) => (
+                                <Step3TableRow
+                                    key={index}
+                                    counter={index + 1}
+                                    name={product.product_name}
+                                    category={product.product_category}
+                                    price={product.product_price}
+                                    removeItem={() => handleRemoveProduct(index)}
+                                />
+                            ))}
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
             <div>
-                <div className="flex flex-row justify-between px-4 py-4 mb-8 gap-32 border-ourLightGray border bg-white rounded ">
+                <div className="flex flex-row justify-between px-8 py-4 mb-8 gap-32 border-ourLightGray border bg-white rounded ">
                     <input
-                        className="w-full truncate border-b mt-2 border-ourLightGray text-ourDarkGray focus:border-ourPrimaryColor focus:outline-none"
+                        className="w-full truncate border-b border-ourLightGray text-ourDarkGray focus:border-ourPrimaryColor focus:outline-none"
                         name="name"
                         id="Barcode des Produkts"
                         type="text"
@@ -203,7 +194,7 @@ export default function () {
             <h2>Gesamt: {totalPrice}€</h2>
             <hr className="border-ourLightGray"></hr>
             <div className="mt-4 gap-4 flex">
-                <ButtonSmallJustIcon icon={<UilCheck />} tooltip="Alle Produkte eingetragen" onClick={handleSubmit}></ButtonSmallJustIcon>
+                <ButtonSmallJustIcon icon={<UilCheck />} tooltip="Alle Produkte dieses Käufers eingetragen" onClick={handleSubmit}></ButtonSmallJustIcon>
                 <CalculationPopup></CalculationPopup>
             </div>
         </>

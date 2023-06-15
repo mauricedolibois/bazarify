@@ -1,6 +1,5 @@
 import { PieChart } from 'react-minimal-pie-chart';
 
-
 function Card({ title, description, info }) {
     return (
         <div class="flex flex-col justify-between rounded-md border border-ourLightGray bg-white p-4 shadow-md">
