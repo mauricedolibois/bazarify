@@ -4,7 +4,7 @@ import ButtonGrayBorder from '../buttons/ButtonGrayBorder';
 import { UilCheck, UilKeyboard, UilCalculator, UilInfoCircle } from '@iconscout/react-unicons';
 import NewProductInput from '../NewProductInput';
 import CalculationPopup from '../CalculationPopup';
-import UnderlindedInput from '../UnderlinedInput';
+import UnderlindedInput from '../underlinedInput';
 import { useState, useEffect } from 'react';
 import Step3TableRow from '../step3TableRow';
 
@@ -73,16 +73,16 @@ export default function () {
         if (offer !== '') {
             const productExists = scannedProducts.some((product) => product.product_id === offer.product_id);
             //if (!productExists) {
-                fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
-                    .then((res) => res.json())
-                    .then((data) => {
-                        setScannedProducts((scannedProducts) => [...scannedProducts, data]);
-                        setAllOffers((allOffers) => [...allOffers, offer]);
-                        console.log(scannedProducts);
-                        console.log(data);
-                    })
-                    .catch((error) => console.log(error));
-           // }
+            fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
+                .then((res) => res.json())
+                .then((data) => {
+                    setScannedProducts((scannedProducts) => [...scannedProducts, data]);
+                    setAllOffers((allOffers) => [...allOffers, offer]);
+                    console.log(scannedProducts);
+                    console.log(data);
+                })
+                .catch((error) => console.log(error));
+            // }
         }
     }, [offer]);
 

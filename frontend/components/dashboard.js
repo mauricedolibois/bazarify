@@ -1,6 +1,6 @@
 import { UilPlay } from '@iconscout/react-unicons'
 import { UilPlus } from '@iconscout/react-unicons'
-import { UilAngleRight, UilTrashAlt  } from '@iconscout/react-unicons'
+import { UilAngleRight, UilTrashAlt } from '@iconscout/react-unicons'
 import ButtonBigColor from './buttons/ButtonBigColor'
 import ButtonBigNoColor from './buttons/ButtonBigNoColor'
 import Link from 'next/link'
@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react'
 
 
 function BazarCard({ name }) {
-    let {setCurrentBazar, setStep} = useContext(BazarContext)
+    let { setCurrentBazar, setStep } = useContext(BazarContext)
     const [bazar, setBazar] = useState(undefined)
     const [bazarToDelete, setBazarToDelete] = useState(undefined)
 
@@ -46,27 +46,27 @@ function BazarCard({ name }) {
 
     return (
         <div class="border bg-white border-ourLightGray px-4 py-2 rounded-lg flex justify-between">
-           <p title="Basar wechseln" onClick={() => {
+            <p title="Basar wechseln" onClick={() => {
                 setBazar(name)
                 setCurrentBazar(name)
             }}>{name}</p>
             <div class="flex justify-between">
-            <div title="Basar löschen">
-            <UilTrashAlt  class="inline-block -ml-2 text-ourGray" onClick={() => {deleteBazar()}} /> 
-            </div>
-            <div title="Basar wechseln">
-            <UilAngleRight  class="inline-block -mr-2 text-ourGray" onClick={() => {
-                setBazar(name)
-                setCurrentBazar(name)
-            }} />
-            </div>
+                <div title="Basar löschen">
+                    <UilTrashAlt class="inline-block -ml-2 text-ourGray" onClick={() => { deleteBazar() }} />
+                </div>
+                <div title="Basar wechseln">
+                    <UilAngleRight class="inline-block -mr-2 text-ourGray" onClick={() => {
+                        setBazar(name)
+                        setCurrentBazar(name)
+                    }} />
+                </div>
             </div>
         </div>
     )
 }
 
 export default function () {
-    let {setStep} = useContext(BazarContext)
+    let { setStep } = useContext(BazarContext)
     const [bazars, setBazars] = useState(undefined)
 
     useEffect(() => {

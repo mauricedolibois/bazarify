@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import FormInput from '../FormInput'
+import FormInput from '../formInput'
 
 import { UilPlus } from '@iconscout/react-unicons'
 import ButtonBigColor from '../buttons/ButtonBigColor'
@@ -10,7 +10,7 @@ import { BazarContext } from '@/pages'
 
 
 export default function () {
-    let {setStep, setCurrentBazar} = useContext(BazarContext)
+    let { setStep, setCurrentBazar } = useContext(BazarContext)
     const [bazarName, setBazarName] = useState('');
     const [bazarYear, setBazarYear] = useState('');
     const [bazarCommission, setBazarCommission] = useState('');
@@ -47,20 +47,20 @@ export default function () {
             fetch('http://127.0.0.1:8080/api/newBazar', requestOptions)
                 .then(res => res.json())
                 .then(data => {
-                        console.log(data)
-                        if (typeof data === 'object' && data !== null) {        
-                            setStep(2);
-                            setCurrentBazar(bazar.bazar_name);
-                        }
-                        else
-                        {
-                            //TODO: specific error message
-                            setErrorMessage("Es ist ein Fehler bei der Eingabe aufgetreten. Bitte überprüfe deine Eingaben!");
+                    console.log(data)
+                    if (typeof data === 'object' && data !== null) {
+                        setStep(2);
+                        setCurrentBazar(bazar.bazar_name);
+                    }
+                    else {
+                        //TODO: specific error message
+                        setErrorMessage("Es ist ein Fehler bei der Eingabe aufgetreten. Bitte überprüfe deine Eingaben!");
                     }
                 })
-                .catch(error => 
-                    {setErrorMessage('Es ist ein Fehler bei der Eingabe aufgetreten. Bitte versuche es erneut!')
-                    console.log(error)})
+                .catch(error => {
+                    setErrorMessage('Es ist ein Fehler bei der Eingabe aufgetreten. Bitte versuche es erneut!')
+                    console.log(error)
+                })
         }
     }, [bazar])
 
@@ -78,7 +78,7 @@ export default function () {
                 <p>Als erstes sollten wir ein paar generelle Infos zu deinem anstehenden Basar festhalten. Fülle einfach die vorgefertigen Felder aus!</p>
             </div>
             <div>
-            <p className="mr-2 text-sm text-rose-600 text-left">{errorMessage}</p>
+                <p className="mr-2 text-sm text-rose-600 text-left">{errorMessage}</p>
                 <div class="grid grid-cols-1 gap-x-8 sm:grid-cols-6">
                     <FormInput name="Name des Basars" value={bazarName} onChange={(e) => setBazarName(e.target.value)} />
                     <FormInput name="Jahr" value={bazarYear} onChange={(e) => setBazarYear(e.target.value)} />

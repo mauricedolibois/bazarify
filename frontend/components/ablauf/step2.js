@@ -22,36 +22,36 @@ export default function () {
   const [seller, setSeller] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
- //add a Seller to the database
- const handleAddOffer = (keepSeller) =>{
-  console.log('add offer');
-  const sellerData = {
-    seller_name: sellerLastName,
-    seller_firstname: sellerFirstName,
-    seller_email: sellerEmail,
-    seller_phone: sellerPhoneNumber
-  };
+  //add a Seller to the database
+  const handleAddOffer = (keepSeller) => {
+    console.log('add offer');
+    const sellerData = {
+      seller_name: sellerLastName,
+      seller_firstname: sellerFirstName,
+      seller_email: sellerEmail,
+      seller_phone: sellerPhoneNumber
+    };
 
-  const productData = {
-    product_name: productName,
-    product_price: productPrice,
-    product_category: productCategory
-  };
+    const productData = {
+      product_name: productName,
+      product_price: productPrice,
+      product_category: productCategory
+    };
 
-  setProduct(productData);
-  setSeller(sellerData);
+    setProduct(productData);
+    setSeller(sellerData);
 
-  // Reset input fields
-  if (keepSeller === false) {
-    setSellerFirstName('');
-    setSellerLastName('');
-    setSellerEmail('');
-    setSellerPhoneNumber('');
+    // Reset input fields
+    if (keepSeller === false) {
+      setSellerFirstName('');
+      setSellerLastName('');
+      setSellerEmail('');
+      setSellerPhoneNumber('');
+    }
+    setProductName('');
+    setProductCategory('');
+    setProductPrice('');
   }
-  setProductName('');
-  setProductCategory('');
-  setProductPrice('');
-}
 
   // cors error bei post request 
   useEffect(() => {
@@ -59,33 +59,34 @@ export default function () {
       fetch('http://localhost:8080/api/offer', {
         method: 'POST',
         headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        product: product,
-        seller: seller
-      })})
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          product: product,
+          seller: seller
+        })
+      })
         .then(res => res.json())
         .then(data => {
           console.log(data)
-          if (typeof data === 'object' && data !== null) { 
-            console.log('success');   
-            setErrorMessage('');                     
-           }
-          else
-          {
-          console.log("error");
-          //TODO: specific error message
-          setErrorMessage("Fehler beim Hinzufügen des Angebots, bitte überprüfe deine Eingaben!");
+          if (typeof data === 'object' && data !== null) {
+            console.log('success');
+            setErrorMessage('');
+          }
+          else {
+            console.log("error");
+            //TODO: specific error message
+            setErrorMessage("Fehler beim Hinzufügen des Angebots, bitte überprüfe deine Eingaben!");
           }
         })
         .catch(error => {
           setErrorMessage(error);
-          console.log(error)});
+          console.log(error)
+        });
     }
-  }, [product,seller]);
+  }, [product, seller]);
 
- 
+
 
   return (
     <>
@@ -98,12 +99,12 @@ export default function () {
           eingepflegt sind.
         </p>
       </div>
-      <div className="relative flex flex-col justify-center py-10">
+      <div className="relative flex flex-col justify-center">
 
         <div className="rounded border border-ourLightGrey bg-white">
           <div className="flex flex-row">
             <div className="w-2/5 border-r border-ourLightGray p-4">
-              <h3>Infos zum Verkäufer</h3>
+              <h3 className='mb-2'>Infos zum Verkäufer</h3>
               <div className="flex flex-row gap-4">
                 <UnderlinedInput
                   id="sellerFirstName"
@@ -132,7 +133,7 @@ export default function () {
               />
             </div>
             <div className="w-3/5 p-4">
-              <h3>Produkte des Verkäufers</h3>
+              <h3 className='mb-2'>Produkte des Verkäufers</h3>
               <div className="flex flex-row gap-4">
                 <UnderlinedInput
                   id="productName"
@@ -154,8 +155,8 @@ export default function () {
                 />
               </div>
               <div className="mt-4 gap-4 flex">
-                <ButtonSmallJustIcon onClick={()=>handleAddOffer(false)}icon={<UilCheck />}></ButtonSmallJustIcon>
-                <ButtonYellowBorder onClick={()=>handleAddOffer(true)} icon={<UilPlus />} text="Mehr Produkte von diesem Verkäufer hinzufügen"></ButtonYellowBorder>
+                <ButtonSmallJustIcon onClick={() => handleAddOffer(false)} icon={<UilCheck />}></ButtonSmallJustIcon>
+                <ButtonYellowBorder onClick={() => handleAddOffer(true)} icon={<UilPlus />} text="Mehr Produkte von diesem Verkäufer hinzufügen"></ButtonYellowBorder>
               </div>
             </div>
           </div>

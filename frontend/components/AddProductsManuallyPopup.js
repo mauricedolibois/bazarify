@@ -3,7 +3,7 @@ import { UilMultiply } from '@iconscout/react-unicons'
 
 import ButtonGrayBorder from './buttons/ButtonGrayBorder';
 import { UilKeyboard } from '@iconscout/react-unicons'
-import FormInput from './FormInput';
+import FormInput from './formInput';
 import ButtonSmallJustIcon from './buttons/ButtonSmallJustIcon';
 import { UilCheck } from '@iconscout/react-unicons'
 
@@ -45,12 +45,12 @@ const AddProductsManuallyPopup = () => {
     console.log(link)
     useEffect(() => {
         if (barcode !== '') {
-        fetch('http://localhost:8080/api/offer?operator=offer_id&parameter='+barcode, {method: 'GET'})
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-        })
-        .catch(error => console.log(error))
+            fetch('http://localhost:8080/api/offer?operator=offer_id&parameter=' + barcode, { method: 'GET' })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                })
+                .catch(error => console.log(error))
         }
         fetch()
     }, [barcode])//barcode == offer_id 
@@ -67,7 +67,7 @@ const AddProductsManuallyPopup = () => {
                     <div className='w-1/2 h-1/2 bg-white rounded-lg relative p-8' ref={popupRef}>
                         <UilMultiply className='absolute top-4 right-4 cursor-pointer' onClick={closePopup} />
                         <h2>Produkte manuell eintragen</h2>
-                        <FormInput name="Barcode des Produkts"/>
+                        <FormInput name="Barcode des Produkts" />
                         <div onClick={searchForOffer}>
                             <ButtonSmallJustIcon icon={<UilCheck />}></ButtonSmallJustIcon>
                         </div>
