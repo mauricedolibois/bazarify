@@ -195,7 +195,7 @@ export default function () {
             <hr className="border-ourLightGray"></hr>
             <div className="mt-4 gap-4 flex">
                 <ButtonSmallJustIcon icon={<UilCheck />} tooltip="Alle Produkte dieses Käufers eingetragen" onClick={handleSubmit}></ButtonSmallJustIcon>
-                <CalculationPopup></CalculationPopup>
+                <CalculationPopup totalPrice={totalPrice}></CalculationPopup>
             </div>
         </>
     );
