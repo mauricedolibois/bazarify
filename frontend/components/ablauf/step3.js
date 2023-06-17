@@ -4,6 +4,8 @@ import CalculationPopup from '../CalculationPopup';
 import { useState, useEffect, useRef } from 'react';
 import Step3TableRow from '../step3TableRow';
 
+
+
 //TODO: check if input is a number
 //TODO: check if offer exists in database
 //TODO: autofocus on input field

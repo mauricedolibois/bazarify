@@ -62,7 +62,7 @@ export default function Sidebar() {
 
     return (
         <>
-            <div class="flex h-screen flex-col bg-white min-w-[25%] max-w-md border-r border-ourLightGray">
+            <div class="flex h-screen flex-col bg-white min-w-[20%] max-w-md border-r border-ourLightGray">
 
                 <div class="flex items-center justify-between pt-4">
                     <div class="flex items-center cursor-pointer">
@@ -93,9 +93,6 @@ export default function Sidebar() {
                 */}
 
                 <div className="flex flex-row px-4 py-4 gap-4">
-                    <Link href="/" onClick={() => goToStep(1)} className="w-full">
-                        <SidebarButton text="Neuer Bazar" icon={<UilPlus />} />
-                    </Link>
                     <Link href="/" onClick={showDashboard} className="w-full">
                         <SidebarButton text="Bazare verwalten" icon={<UilApps />} />
                     </Link>
@@ -105,11 +102,11 @@ export default function Sidebar() {
 
                 <div class="border-t border-ourLightGray pb-4"></div>
 
-                <h2 class="px-4 py-2 text-lg font-bold text-ourSuperDarkGray">
-                    {step === 0 ? "Ablauf" : step === 1 ? "Unbenannter Basar" : (bazar !== "Bazarify" ? bazar : "Ablauf")}
-                </h2>
+                <h2 class="px-4 py-2 text-lg font-bold text-ourSuperDarkGray">{bazar}</h2>
 
-
+                {/*}
+                <h3 class="px-4 py-2 text-lg font-bold text-ourSuperDarkGray">Ablauf</h3>
+                {*/}
 
                 <ul class="flex flex-grow flex-col space-y-2 px-4 py-2">
                     <Step step="1" text="Basar erstellen" currentStep={step} />
@@ -119,7 +116,7 @@ export default function Sidebar() {
                     <Step step="5" text="Analytics und Bilanz" currentStep={step} />
                 </ul>
 
-
+                {/*
                 <div class="mt-auto border-t border-ourLightGray">
                     <button onClick={goToNextStep} class="justify-left flex h-10 w-full items-center pl-4 text-sm text-ourPrimaryColor hover:bg-ourPrimaryColorHover hover:text-white">
                         <UilAngleRight size="24" />
@@ -128,7 +125,10 @@ export default function Sidebar() {
                         {step == 5 && "Basar abschließen"}
                     </button>
                 </div>
+                */}
+
             </div >
+
         </>
     )
 }

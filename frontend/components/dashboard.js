@@ -9,6 +9,7 @@ import { BazarContext } from '../pages/index.js'
 import { useState, useEffect } from 'react'
 
 
+
 function BazarCard({ name }) {
     let { setCurrentBazar, setStep } = useContext(BazarContext)
     const [bazar, setBazar] = useState(undefined)
@@ -48,11 +49,11 @@ function BazarCard({ name }) {
         <div onClick={() => {
             setBazar(name)
             setCurrentBazar(name)
-        }} class="border bg-white border-ourLightGray hover:text-ourPrimaryColorHover mt-2 px-4 py-2 cursor-pointer rounded-lg flex justify-between">
-            <p title="Basar wechseln">{name}</p>
+        }} class="border bg-white border-ourLightGray hover:text-ourPrimaryColorHover items-center mt-2 px-4 py-2 cursor-pointer rounded-lg flex justify-between">
+            <p title="Basar wechseln" className='text-sm'>{name}</p>
             <div class="flex justify-between">
                 <div title="Basar löschen">
-                    <UilTrashAlt class="inline-block -ml-2 hover:text-red-400 text-ourGray" onClick={() => { deleteBazar() }} />
+                    <UilTrashAlt size="17" class="inline-block -ml-2 hover:text-red-400 text-ourGray" onClick={() => { deleteBazar() }} />
                 </div>
             </div>
         </div>
@@ -77,7 +78,7 @@ export default function () {
 
             <div>
                 <h1>Dashboard</h1>
-                <p className="mb-4">Erstelle jetzt einen neuen Basar! Keine Sorge: Wir leiten dich vom ersten Schritt bis ganz zum Schluss! Es ist ganz einfach. Auf der linken Seite findest du den Ablauf. Wir werden dich Schritt für Schritt durch den ganzen Prozess leiten!</p>
+                <p className="mb-4">Willkommen bei Bazarify! Hier kannst du ganz einfach einen neuen Basar erstellen oder einen existierenden Basar auswählen. Keine Sorge, wir führen dich Schritt für Schritt durch den gesamten Prozess, damit dieser dein einfachster Basar bisher wird!</p>
                 <div class="flex flex-row gap-4">
                     {/* Sollen wir das hier lieber mit dem Stepper machen (so wie in der Sidebar, also onClick={showDashboard}) oder mit href? */}
                     <Link href="/" onClick={() => setStep(1)}>

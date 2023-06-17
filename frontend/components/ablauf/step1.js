@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import FormInput from '../formInput'
-
 import { UilPlus } from '@iconscout/react-unicons'
 import ButtonBigColor from '../buttons/ButtonBigColor'
 
@@ -79,7 +78,7 @@ export default function () {
             </div>
             <div>
                 <div>
-                    <div className="flex justify-between gap-8">
+                    <div className="flex justify-between gap-4">
                         <FormInput
                             name="Name des Basars"
                             value={bazarName}
@@ -106,11 +105,6 @@ export default function () {
                     </div>
                 </div>
                 <p className="mt-4 text-sm text-red-400 text-left">{errorMessage}</p>
-
-                <div class="mt-6 flex items-center justify-end gap-x-6">
-                    <button type="button" onClick={() => setStep(0)} class="text-sm font-semibold leading-6  hover:text-ourSuperDarkGray text-ourDarkGray">Abbrechen</button>
-                    <button type="submit" onClick={() => handleAddBazar()} class="rounded-md bg-ourPrimaryColor px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-ourPrimaryColorHover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Speichern</button>
-                </div>
             </div>
 
         </>

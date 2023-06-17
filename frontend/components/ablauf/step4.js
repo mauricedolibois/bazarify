@@ -1,6 +1,7 @@
 import SellerInformation from "../SellerInformation"
 import SendMailsButton from "../buttons/SendMailsButton"
 
+
 export default function () {
     return (
         <>
