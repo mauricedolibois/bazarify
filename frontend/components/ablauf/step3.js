@@ -12,7 +12,7 @@ import Step3TableRow from '../step3TableRow';
 //TODO: display info when there's no product scanned yet
 
 export default function () {
-    const [barcode, setBarcode] = useState('');
+    const [barcode, setBarcode] = useState(null);
     const [offer, setOffer] = useState('');
     const [scannedProducts, setScannedProducts] = useState([]);
     const [allOffers, setAllOffers] = useState([]);
@@ -32,7 +32,12 @@ export default function () {
         if (input.value.trim() !== '') {
             console.log('Enter pressed');
             setBarcode(input.value);
-            input.value = '';
+            if (isNaN(input.value)) {
+                console.log('Invalid input: not a number');
+                // Display an error message or prevent scanning
+                input.value = '';
+                return;
+            }
         } else {
             console.log('Input is empty');
             // Display an error message or prevent scanning
@@ -105,6 +110,10 @@ export default function () {
             console.log('updated offer: ', updatedOffer);
             setUpdatedOffer(updatedOffer);
         });
+
+        // Reset table to show no products
+        setScannedProducts([]);
+        setAllOffers([]);
     };
 
     //update offer status to sold in db
