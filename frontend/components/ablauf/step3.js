@@ -12,7 +12,7 @@ import Step3TableRow from '../step3TableRow';
 //TODO: display info when there's no product scanned yet
 
 export default function () {
-    const [barcode, setBarcode] = useState(null);
+    const [barcode, setBarcode] = useState('');
     const [offer, setOffer] = useState('');
     const [scannedProducts, setScannedProducts] = useState([]);
     const [allOffers, setAllOffers] = useState([]);
@@ -29,20 +29,24 @@ export default function () {
 
     const handleScan = () => {
         input = document.getElementById('Barcode des Produkts');
-        if (input.value.trim() !== '') {
-            console.log('Enter pressed');
-            setBarcode(input.value);
-            if (isNaN(input.value)) {
+        const inputValue = input.value.trim();
+
+        if (inputValue !== '') {
+            if (!isNaN(inputValue)) {
+                console.log('Enter pressed');
+                setBarcode(inputValue);
+                input.value = '';
+            } else {
                 console.log('Invalid input: not a number');
                 // Display an error message or prevent scanning
                 input.value = '';
-                return;
             }
         } else {
             console.log('Input is empty');
             // Display an error message or prevent scanning
         }
     };
+
 
     //handle enter key
     useEffect(() => {
