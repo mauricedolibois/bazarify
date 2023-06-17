@@ -81,22 +81,24 @@ export default function () {
     }, [barcode]); //barcode == offer_id
 
     //fetch product from database
+    //fetch product from database
     useEffect(() => {
         if (offer !== '') {
             const productExists = scannedProducts.some((product) => product.product_id === offer.product_id);
-            //if (!productExists) {
-            fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
-                .then((res) => res.json())
-                .then((data) => {
-                    setScannedProducts((scannedProducts) => [...scannedProducts, data]);
-                    setAllOffers((allOffers) => [...allOffers, offer]);
-                    console.log(scannedProducts);
-                    console.log(data);
-                })
-                .catch((error) => console.log(error));
-            // }
+            if (!productExists) { // Nur hinzufügen, wenn das Produkt noch nicht vorhanden ist
+                fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        setScannedProducts((scannedProducts) => [...scannedProducts, data]);
+                        setAllOffers((allOffers) => [...allOffers, offer]);
+                        console.log(scannedProducts);
+                        console.log(data);
+                    })
+                    .catch((error) => console.log(error));
+            }
         }
     }, [offer]);
+
 
     const handleRemoveProduct = (index) => {
         setScannedProducts((scannedProducts) => scannedProducts.filter((_, i) => i !== index));
