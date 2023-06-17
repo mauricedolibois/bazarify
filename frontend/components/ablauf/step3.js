@@ -142,49 +142,50 @@ export default function () {
     return (
         <>
             <h1>3. Verkauf</h1>
-            <p>
+            <p className='mb-4'>
                 Klasse! Du solltest jetzt alle Produkte eingetragen haben. Ab jetzt kannst du die Verkäufe abrechnen.
                 Scanne dafür einfach die Codes der Produkte ein, welche ein Kunde kaufen möchte. Wenn du alle Verkäufe
                 eingescannt hast, kannst du weiter zum nächsten Schritt.
             </p>
-            <div className="rounded border border-ourLightGrey bg-white my-8">
-                <div className="overflow-hidden">
-                    <table className="min-w-full text-left text-sm font-light rounded">
-                        <thead className="font-medium ">
-                            <tr>
-                                <th scope="col" className="px-8 py-4">
-                                    #
-                                </th>
-                                <th scope="col" className="px-8 py-4">
-                                    Artikel
-                                </th>
-                                <th scope="col" className="px-8 py-4">
-                                    Kategorie
-                                </th>
-                                <th scope="col" className="px-8 py-4">
-                                    Preis
-                                </th>
-                                <th scope="col" className="px-8 py-4">
-                                    Entfernen
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="">
-                            {scannedProducts.map((product, index) => (
-                                <Step3TableRow
-                                    key={index}
-                                    counter={index + 1}
-                                    name={product.product_name}
-                                    category={product.product_category}
-                                    price={product.product_price}
-                                    removeItem={() => handleRemoveProduct(index)}
-                                />
-                            ))}
-                        </tbody>
-                    </table>
-
+            {scannedProducts.length > 0 && (
+                <div className="rounded border border-ourLightGrey bg-white mb-4">
+                    <div className="overflow-hidden">
+                        <table className="min-w-full text-left text-sm font-light rounded">
+                            <thead className="font-medium ">
+                                <tr>
+                                    <th scope="col" className="px-8 py-4">
+                                        #
+                                    </th>
+                                    <th scope="col" className="px-8 py-4">
+                                        Artikel
+                                    </th>
+                                    <th scope="col" className="px-8 py-4">
+                                        Kategorie
+                                    </th>
+                                    <th scope="col" className="px-8 py-4">
+                                        Preis
+                                    </th>
+                                    <th scope="col" className="px-8 py-4">
+                                        Entfernen
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="">
+                                {scannedProducts.map((product, index) => (
+                                    <Step3TableRow
+                                        key={index}
+                                        counter={index + 1}
+                                        name={product.product_name}
+                                        category={product.product_category}
+                                        price={product.product_price}
+                                        removeItem={() => handleRemoveProduct(index)}
+                                    />
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            )}
             <div>
                 <div className="flex flex-row justify-between px-8 py-4 mb-8 gap-32 border-ourLightGray border bg-white rounded ">
                     <input
