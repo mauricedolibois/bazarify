@@ -8,8 +8,6 @@ import { useContext } from 'react'
 import { BazarContext } from '../pages/index.js'
 import { useState, useEffect } from 'react'
 
-
-
 function BazarCard({ name }) {
     let { setCurrentBazar, setStep } = useContext(BazarContext)
     const [bazar, setBazar] = useState(undefined)
@@ -27,7 +25,8 @@ function BazarCard({ name }) {
         }
     }, [bazar])
 
-    const deleteBazar = () => {
+    const deleteBazar = (event) => {
+        event.stopPropagation(); // Prevent event propagation
         console.log("clicked")
         setBazarToDelete(name)
     }
@@ -53,7 +52,7 @@ function BazarCard({ name }) {
             <p title="Basar wechseln" className='text-sm'>{name}</p>
             <div class="flex justify-between">
                 <div title="Basar löschen">
-                    <UilTrashAlt size="17" class="inline-block -ml-2 hover:text-red-400 text-ourGray" onClick={() => { deleteBazar() }} />
+                    <UilTrashAlt size="17" class="inline-block -ml-2 hover:text-red-400 text-ourGray" onClick={(event) => { deleteBazar(event) }} />
                 </div>
             </div>
         </div>
@@ -75,7 +74,6 @@ export default function () {
 
     return (
         <>
-
             <div>
                 <h1>Dashboard</h1>
                 <p className="mb-4">Willkommen bei Bazarify! Hier kannst du ganz einfach einen neuen Basar erstellen oder einen existierenden Basar auswählen. Keine Sorge, wir führen dich Schritt für Schritt durch den gesamten Prozess, damit dieser dein einfachster Basar bisher wird!</p>
