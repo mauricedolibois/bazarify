@@ -1,4 +1,4 @@
-import { PieChart } from 'react-minimal-pie-chart';
+//import { PieChart } from 'react-minimal-pie-chart';
 
 
 function Card({ title, description, info }) {

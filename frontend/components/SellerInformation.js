@@ -4,12 +4,7 @@ import ButtonSmallJustIcon from './buttons/ButtonSmallJustIcon';
 import { UilSearch } from '@iconscout/react-unicons'
 import FormInput from './formInput';
 
-function SellerInformation() {
-    // Annahme: Der Name, der Erlös und die Anzahl der nicht verkauften Produkte werden aus dem Backend geholt
-    const name = 'John Doe';
-    const revenue = 230;
-    const unsoldProductsCount = 5;
-
+function SellerInformation(name, revenue, unsoldProductsCount) {
     // Funktion zum Bestimmen des Texts für den dritten Div-Inhalt basierend auf der Anzahl der nicht verkauften Produkte
     const getUnsoldProductsText = () => {
         if (unsoldProductsCount === 0) {
