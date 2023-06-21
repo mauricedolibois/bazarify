@@ -18,9 +18,10 @@ export default function () {
     const [offer, setOffer] = useState('');
     const [scannedProducts, setScannedProducts] = useState([]);
     const [allOffers, setAllOffers] = useState([]);
-    const [updatedOffer, setUpdatedOffer] = useState('');
+    const [allUpdatedOffers, setAllUpdatedOffer] = useState('');
 
     let input;
+    let tmpAllUpdatedOffers = [];
     const inputRef = useRef(null);
 
     useEffect(() => {
@@ -114,9 +115,10 @@ export default function () {
                 ...offer,
                 state: 'sold',
             };
+            tmpAllUpdatedOffers.push(updatedOffer);
             console.log('all offers: ', allOffers);
             console.log('updated offer: ', updatedOffer);
-            setUpdatedOffer(updatedOffer);
+            setAllUpdatedOffer(tmpAllUpdatedOffers);
         });
 
         // Reset table to show no products
@@ -126,20 +128,23 @@ export default function () {
 
     //update offer status to sold in db
     useEffect(() => {
-        if (updatedOffer !== '') {
-            const requestOptions = {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedOffer),
-            };
-            fetch('http://localhost:8080/api/offer?operator=offer_id&parameter=' + updatedOffer.offer_id, requestOptions)
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log(data);
-                })
-                .catch((error) => console.log(error));
+        if (allUpdatedOffers !== '') {
+            allUpdatedOffers.forEach((offer) => {
+                const requestOptions = {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(offer),
+                };
+                fetch('http://localhost:8080/api/offer?operator=offer_id&parameter=' + offer.offer_id, requestOptions)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        console.log(data);
+                    })
+                    .catch((error) => console.log(error));
+            });
+            
         }
-    }, [updatedOffer]);
+    }, [allUpdatedOffers]);
 
     const totalPrice = scannedProducts.reduce((total, product) => total + product.product_price, 0);
 
