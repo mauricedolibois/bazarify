@@ -50,3 +50,9 @@ bazarRouter.get("/currentBazar", (req, res) => {
         res.json(bazar)
     })
 })
+
+bazarRouter.get("/analytics", (req, res) => {
+    dbConnection.analytics().then(ana => {
+        res.json(ana)
+    })
+})

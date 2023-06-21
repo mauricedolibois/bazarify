@@ -25,6 +25,7 @@ app.get('/', (req, res) => {
 
 
 dbConnection.connectToDB()
+dbConnection.changeDB("1").then(() => {dbConnection.addTip(8)})
 app.listen(8080, () => { console.log("Server started on port 8080") })
 
 
