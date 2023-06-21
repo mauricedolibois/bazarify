@@ -82,7 +82,7 @@ export default function () {
                     <Link href="/" onClick={() => setStep(1)}>
                         <ButtonBigColor text="Neuen Basar erstellen" icon={<UilPlus />}></ButtonBigColor>
                     </Link>
-                    <Link href="https://www.youtube.com/watch?v=EngW7tLk6R8" target='_blank'>
+                    <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target='_blank'>
                         <ButtonBigNoColor text="Tutorial anschauen" icon={<UilPlay />}>
                         </ButtonBigNoColor>
                     </Link>
