@@ -88,6 +88,15 @@ export const dbConnection = {
         await mongoose.connection.close().then(console.log("DB closed"))
     },
 
+    async insertPendingProduct(name, price, category) {
+        try {
+            var id = DbIdHandler.generateProductId()
+            const validProduct = await InputValidation.validateProduct(id, name, price, category)
+            PendingProducts.push(validProduct)
+            return PendingProducts
+        }
+        catch { console.log("could not insert pending product") }
+    },
 
     //CRUD Operations for Products, Sellers and Offers
     async insertProduct(name, price, category) {
@@ -96,10 +105,13 @@ export const dbConnection = {
             const validProduct = await InputValidation.validateProduct(id, name, price, category)
             const product = await Product.create(validProduct)
             await product.save().then(console.log(product))
-            return product
+            products.push(product)
+            return products
         }
         catch { console.log("could not insert product") }
     },
+
+
     async insertSeller(name, firstname, email, phone) {
         try {
             const existingSeller = await this.checkDuplicateSeller(email)

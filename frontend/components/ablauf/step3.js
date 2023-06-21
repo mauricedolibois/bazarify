@@ -7,6 +7,7 @@ import CalculationPopup from '../CalculationPopup';
 import UnderlindedInput from '../UnderlinedInput';
 import { useState, useEffect } from 'react';
 import Step3TableRow from '../step3TableRow';
+import ButtonBigColor from '../buttons/ButtonBigColor';
 
 //TODO: check if input is a number
 //TODO: check if offer exists in database
@@ -189,7 +190,7 @@ export default function () {
             <h2>Gesamt: {totalPrice}€</h2>
             <hr className="border-ourLightGray"></hr>
             <div className="mt-4 gap-4 flex">
-                <ButtonSmallJustIcon icon={<UilCheck />} onClick={handleSubmit}></ButtonSmallJustIcon>
+                <ButtonBigColor text={" Abrechnen "} onClick={handleSubmit}></ButtonBigColor>
                 <CalculationPopup></CalculationPopup>
             </div>
         </>
