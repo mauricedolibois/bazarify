@@ -8,6 +8,8 @@ import Step3 from "../components/ablauf/step3";
 import Step4 from "../components/ablauf/step4";
 import Step5 from "../components/ablauf/step5";
 import Dashboard from "@/components/dashboard";
+import ButtonNextStep from "@/components/buttons/ButtonNextStep";
+import ButtonLastStep from "@/components/buttons/ButtonLastStep";
 
 export const BazarContext = createContext();
 
@@ -49,6 +51,13 @@ const CreatePage = () => {
             {step === 4 && <Step4 />}
             {step === 5 && <Step5 />}
           </div>
+        </div>
+
+
+
+        <div id="scrollManager" className={`fixed bottom-8 right-16 flex items-center justify-end gap-x-6 ${step === 0 ? 'hidden' : ''}`}>
+          <ButtonLastStep></ButtonLastStep>
+          <ButtonNextStep></ButtonNextStep>
         </div>
       </BazarContext.Provider>
     </>

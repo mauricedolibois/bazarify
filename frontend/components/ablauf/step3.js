@@ -1,12 +1,10 @@
-import { UilTrash } from '@iconscout/react-unicons';
 import ButtonSmallJustIcon from '../buttons/ButtonSmallJustIcon';
-import ButtonGrayBorder from '../buttons/ButtonGrayBorder';
-import { UilCheck, UilKeyboard, UilCalculator, UilInfoCircle } from '@iconscout/react-unicons';
-import NewProductInput from '../NewProductInput';
+import { UilCheck, UilInfoCircle } from '@iconscout/react-unicons';
 import CalculationPopup from '../CalculationPopup';
-import UnderlindedInput from '../underlinedInput';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Step3TableRow from '../step3TableRow';
+
+
 
 //TODO: check if input is a number
 //TODO: check if offer exists in database
@@ -23,18 +21,34 @@ export default function () {
     const [updatedOffer, setUpdatedOffer] = useState('');
 
     let input;
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, []);
 
     const handleScan = () => {
         input = document.getElementById('Barcode des Produkts');
-        if (input.value.trim() !== '') {
-            console.log('Enter pressed');
-            setBarcode(input.value);
-            input.value = '';
+        const inputValue = input.value.trim();
+
+        if (inputValue !== '') {
+            if (!isNaN(inputValue)) {
+                console.log('Enter pressed');
+                setBarcode(inputValue);
+                input.value = '';
+            } else {
+                console.log('Invalid input: not a number');
+                // Display an error message or prevent scanning
+                input.value = '';
+            }
         } else {
             console.log('Input is empty');
             // Display an error message or prevent scanning
         }
     };
+
 
     //handle enter key
     useEffect(() => {
@@ -69,22 +83,24 @@ export default function () {
     }, [barcode]); //barcode == offer_id
 
     //fetch product from database
+    //fetch product from database
     useEffect(() => {
         if (offer !== '') {
             const productExists = scannedProducts.some((product) => product.product_id === offer.product_id);
-            //if (!productExists) {
-            fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
-                .then((res) => res.json())
-                .then((data) => {
-                    setScannedProducts((scannedProducts) => [...scannedProducts, data]);
-                    setAllOffers((allOffers) => [...allOffers, offer]);
-                    console.log(scannedProducts);
-                    console.log(data);
-                })
-                .catch((error) => console.log(error));
-            // }
+            if (!productExists) { // Nur hinzufügen, wenn das Produkt noch nicht vorhanden ist
+                fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        setScannedProducts((scannedProducts) => [...scannedProducts, data]);
+                        setAllOffers((allOffers) => [...allOffers, offer]);
+                        console.log(scannedProducts);
+                        console.log(data);
+                    })
+                    .catch((error) => console.log(error));
+            }
         }
     }, [offer]);
+
 
     const handleRemoveProduct = (index) => {
         setScannedProducts((scannedProducts) => scannedProducts.filter((_, i) => i !== index));
@@ -102,6 +118,10 @@ export default function () {
             console.log('updated offer: ', updatedOffer);
             setUpdatedOffer(updatedOffer);
         });
+
+        // Reset table to show no products
+        setScannedProducts([]);
+        setAllOffers([]);
     };
 
     //update offer status to sold in db
@@ -126,57 +146,60 @@ export default function () {
     return (
         <>
             <h1>3. Verkauf</h1>
-            <p>
+            <p className='mb-4'>
                 Klasse! Du solltest jetzt alle Produkte eingetragen haben. Ab jetzt kannst du die Verkäufe abrechnen.
                 Scanne dafür einfach die Codes der Produkte ein, welche ein Kunde kaufen möchte. Wenn du alle Verkäufe
                 eingescannt hast, kannst du weiter zum nächsten Schritt.
             </p>
-            <div className="rounded border border-ourLightGrey bg-white my-8">
-                <div className="flex flex-col">
-                    <div className="overflow-x-auto max-h-64">
-                        <div className="inline-block min-w-full sm:px-6 lg:px-8">
-                            <div className="overflow-hidden">
-                                <table className="min-w-full text-left text-sm font-light rounded">
-                                    <thead className="border-b font-medium dark:border-neutral-500">
-                                        <tr>
-                                            <th scope="col" className="px-8 py-4">
-                                                #
-                                            </th>
-                                            <th scope="col" className="px-8 py-4">
-                                                Artikel
-                                            </th>
-                                            <th scope="col" className="px-8 py-4">
-                                                Kategorie
-                                            </th>
-                                            <th scope="col" className="px-8 py-4">
-                                                Preis
-                                            </th>
-                                            <th scope="col" className="px-8 py-4">
-                                                Entfernen
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="">
-                                        {scannedProducts.map((product, index) => (
-                                            <Step3TableRow
-                                                key={index}
-                                                counter={index + 1}
-                                                name={product.product_name}
-                                                category={product.product_category}
-                                                price={product.product_price}
-                                                removeItem={() => handleRemoveProduct(index)}
-                                            />
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+            {scannedProducts.length > 0 && (
+                <div className="rounded border border-ourLightGrey bg-white mb-4">
+                    <div className="overflow-hidden">
+                        <table className="min-w-full text-left text-sm font-light rounded">
+                            <thead className="font-medium ">
+                                <tr>
+                                    <th scope="col" className="px-8 py-4">
+                                        #
+                                    </th>
+                                    <th scope="col" className="px-8 py-4">
+                                        Artikel
+                                    </th>
+                                    <th scope="col" className="px-8 py-4">
+                                        Kategorie
+                                    </th>
+                                    <th scope="col" className="px-8 py-4">
+                                        Preis
+                                    </th>
+                                    <th scope="col" className="px-8 py-4">
+                                        Entfernen
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="">
+                                {scannedProducts.map((product, index) => (
+                                    <Step3TableRow
+                                        key={index}
+                                        counter={index + 1}
+                                        name={product.product_name}
+                                        category={product.product_category}
+                                        price={product.product_price}
+                                        removeItem={() => handleRemoveProduct(index)}
+                                    />
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div>
+            )}
             <div>
-                <div className="flex flex-row justify-between px-4 py-4 mb-8 gap-32 border-ourLightGray border bg-white rounded ">
-                    <UnderlindedInput id="Barcode des Produkts" placeholder="Barcode des Produkts" autoFocus></UnderlindedInput>
+                <div className="flex flex-row justify-between px-8 py-4 mb-8 gap-32 border-ourLightGray border bg-white rounded ">
+                    <input
+                        className="w-full truncate border-b border-ourLightGray text-ourDarkGray focus:border-ourPrimaryColor focus:outline-none"
+                        name="name"
+                        id="Barcode des Produkts"
+                        type="text"
+                        ref={inputRef}
+                        placeholder="Barcode des Produkts"
+                    />
                     <div className="flex flex-row items-center">
                         <UilInfoCircle className="mr-4 text-ourDarkGray"></UilInfoCircle>
                         <p className="mr-2 text-sm">
@@ -189,8 +212,8 @@ export default function () {
             <h2>Gesamt: {totalPrice}€</h2>
             <hr className="border-ourLightGray"></hr>
             <div className="mt-4 gap-4 flex">
-                <ButtonSmallJustIcon icon={<UilCheck />} onClick={handleSubmit}></ButtonSmallJustIcon>
-                <CalculationPopup></CalculationPopup>
+                <ButtonSmallJustIcon icon={<UilCheck />} tooltip="Alle Produkte dieses Käufers eingetragen" onClick={handleSubmit}></ButtonSmallJustIcon>
+                <CalculationPopup totalPrice={totalPrice}></CalculationPopup>
             </div>
         </>
     );

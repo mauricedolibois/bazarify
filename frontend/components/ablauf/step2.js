@@ -7,7 +7,6 @@ import { UilPlus } from '@iconscout/react-unicons'
 import { UilInfoCircle } from '@iconscout/react-unicons'
 import ButtonGrayBorder from '../buttons/ButtonGrayBorder';
 import { UilPrint } from '@iconscout/react-unicons'
-import { UilLabel } from '@iconscout/react-unicons'
 import { UilHistory } from '@iconscout/react-unicons'
 
 export default function () {
@@ -103,22 +102,22 @@ export default function () {
 
         <div className="rounded border border-ourLightGrey bg-white">
           <div className="flex flex-row">
-            <div className="w-2/5 border-r border-ourLightGray p-4">
-              <h3 className='mb-2'>Infos zum Verkäufer</h3>
-              <div className="flex flex-row gap-4">
-                <UnderlinedInput
-                  id="sellerFirstName"
-                  placeholder="Vorname"
-                  value={sellerFirstName}
-                  onChange={(e) => setSellerFirstName(e.target.value)}
-                />
-                <UnderlinedInput
-                  id="sellerLastName"
-                  placeholder="Nachname"
-                  value={sellerLastName}
-                  onChange={(e) => setSellerLastName(e.target.value)}
-                />
-              </div>
+            <div className="w-[36%] border-r pb-8 border-ourLightGray py-4 px-8">
+              <h3 className=''>Infos zum Verkäufer</h3>
+
+              <UnderlinedInput
+                id="sellerFirstName"
+                placeholder="Vorname"
+                value={sellerFirstName}
+                onChange={(e) => setSellerFirstName(e.target.value)}
+              />
+              <UnderlinedInput
+                id="sellerLastName"
+                placeholder="Nachname"
+                value={sellerLastName}
+                onChange={(e) => setSellerLastName(e.target.value)}
+              />
+
               <UnderlinedInput
                 id="sellerEmail"
                 placeholder="Email"
@@ -132,12 +131,12 @@ export default function () {
                 onChange={(e) => setSellerPhoneNumber(e.target.value)}
               />
             </div>
-            <div className="w-3/5 p-4">
-              <h3 className='mb-2'>Produkte des Verkäufers</h3>
+            <div className="w-[64%] py-4 px-8">
+              <h3 className=''>Produkte des Verkäufers</h3>
               <div className="flex flex-row gap-4">
                 <UnderlinedInput
                   id="productName"
-                  placeholder="Name des Produkts"
+                  placeholder="Produktname"
                   value={productName}
                   onChange={(e) => setProductName(e.target.value)}
                 />
@@ -154,30 +153,40 @@ export default function () {
                   onChange={(e) => setProductPrice(e.target.value)}
                 />
               </div>
+
               <div className="mt-4 gap-4 flex">
-                <ButtonSmallJustIcon onClick={() => handleAddOffer(false)} icon={<UilCheck />}></ButtonSmallJustIcon>
-                <ButtonYellowBorder onClick={() => handleAddOffer(true)} icon={<UilPlus />} text="Mehr Produkte von diesem Verkäufer hinzufügen"></ButtonYellowBorder>
+                <ButtonSmallJustIcon onClick={() => handleAddOffer(true)} tooltip="Weitere Produkte dieses Verkäufers hinzufügen" icon={<UilPlus />}></ButtonSmallJustIcon>
+                <ButtonYellowBorder onClick={() => handleAddOffer(false)} icon={<UilPrint />} text="Barcodes ausdrucken"></ButtonYellowBorder>
               </div>
             </div>
           </div>
           <div className="border-t border-ourLightGray p-4">
             <div className="flex flex-row justify-between">
+
               <div className="flex flex-row items-center">
                 <UilInfoCircle className="mr-4 text-ourDarkGray"></UilInfoCircle>
-                <p className="mr-2 text-sm">
-                  Scanne am besten noch 1 Produkt(e) ein, damit du beim Drucken möglichst effizient bist!
+                <p className="text-sm">
+                  {errorMessage ? (
+                    <span className="text-red-400">Fehler beim Hinzufügen des Angebots, bitte überprüfe deine Eingaben!</span>
+                  ) : (
+                    "Scanne einfach alle Produkte eines Verkäufers ein und drucke dann die Barcodes oben aus"
+                  )}
                 </p>
+
               </div>
-              <ButtonGrayBorder text="Barcodes ausdrucken" icon={<UilPrint />}></ButtonGrayBorder>
             </div>
+
           </div>
+
         </div>
-        <p className="mr-2 text-sm text-rose-600 text-left">{errorMessage}</p>
+
       </div>
+      {/*
       <div className='mt-4 flex gap-4'>
         <ButtonGrayBorder icon={<UilLabel />} text="Kategorien verwalten"></ButtonGrayBorder>
         <ButtonGrayBorder icon={<UilHistory />} text="Eingetragene Produkte sehen"></ButtonGrayBorder>
       </div>
+      */}
 
     </>
   )

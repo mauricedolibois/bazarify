@@ -28,7 +28,7 @@ function SellerInformation() {
                         <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-4 pr-20 text-ourSuperDarkGray ring-1 ring-inset ring-ourLightGray placeholder:text-ourGray focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" placeholder="Verkäufer suchen" />
                     </div>
                 </div>
-                <ButtonSmallJustIcon icon={<UilSearch></UilSearch>}></ButtonSmallJustIcon>
+                <ButtonSmallJustIcon tooltip="Verkäufer finden" icon={<UilSearch></UilSearch>}></ButtonSmallJustIcon>
             </div>
 
             <div class="grid grid-cols-3 mt-4 bg-white rounded border-ourLightGray border ">

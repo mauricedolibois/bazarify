@@ -3,11 +3,11 @@ import { UilMultiply, UilCalculator, UilArrowRight } from '@iconscout/react-unic
 import FormInput from './formInput';
 import ButtonSmallJustIcon from './buttons/ButtonSmallJustIcon';
 
-const CalculationPopup = () => {
+const CalculationPopup = ({ totalPrice }) => {
     const [isOpen, setIsOpen] = useState(false);
     const popupRef = useRef(null);
     const [cashReceived, setCashReceived] = useState('');
-    const totalAmount = 50; // Hier muss der Wert dynamisch gesetzt werden
+    const totalAmount = totalPrice;
 
     const openPopup = () => {
         setIsOpen(true);
@@ -32,8 +32,17 @@ const CalculationPopup = () => {
     }, []);
 
     const calculateChange = () => {
-        const change = cashReceived - totalAmount;
+        const change = parseFloat(cashReceived.replace(',', '.')) - totalAmount;
         return change > 0 ? change : 0;
+    };
+
+    const formatCurrency = (value) => {
+        return value.toLocaleString('de-DE', {
+            style: 'currency',
+            currency: 'EUR',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        });
     };
 
     return (
@@ -52,23 +61,17 @@ const CalculationPopup = () => {
                     <div className="w-1/2 h-1/2 bg-white rounded-lg relative p-8" ref={popupRef}>
                         <UilMultiply className="absolute top-4 right-4 cursor-pointer" onClick={closePopup} />
                         <h2 className="mb-2">Wie viel Geld haben Sie erhalten?</h2>
-                        <FormInput name="Erhaltenes Geld" unit="€" onChange={e => setCashReceived(e.target.value)} />
+                        <FormInput name="Erhaltenes Geld" unit="€" onChange={(e) => setCashReceived(e.target.value.replace(',', '.'))} />
                         <div className="mt-4">
-
                             {cashReceived && (
                                 <>
+                                    <hr className="text-ourGray" />
                                     {calculateChange() > 0 ? (
-                                        <>
-                                            <hr className="text-ourGray"></hr>
-                                            <p className="mt-4">
-                                                Das Wechselgeld beträgt: <span className="font-bold">{calculateChange()}€</span>.
-                                            </p>
-                                        </>
+                                        <p className="mt-4">
+                                            Das Wechselgeld beträgt: <span className="font-bold">{formatCurrency(calculateChange())}</span>.
+                                        </p>
                                     ) : (
-                                        <>
-                                            <hr className="text-ourGray"></hr>
-                                            <p className="mt-4">Aktuell gibt es kein Wechselgeld zurück.</p>
-                                        </>
+                                        <p className="mt-4">Aktuell gibt es kein Wechselgeld zurück.</p>
                                     )}
                                 </>
                             )}
