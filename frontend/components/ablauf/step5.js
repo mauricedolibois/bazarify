@@ -18,7 +18,12 @@ export default function () {
     const [trinkgeldProVerkauf, setTrinkgeldProVerkauf] = useState(0);
 
     useEffect(() => {
-        // Hier den Code einfügen, um die Daten aus dem Backend zu laden und die Zustandsvariablen zu aktualisieren
+        fetch('http://localhost:8080/api/analytics', { method: 'GET' })
+            .then(res => res.json())
+            .then(data => {
+               console.log(data)
+            }
+            )
     }, []);
 
     return (
