@@ -207,5 +207,57 @@ export const dbConnection = {
         return sellersProducts
     }
     catch { console.log("could not get sellers products") }
+},
+async addTip(tip) {
+    try {
+        const info = await Info.find()
+        var newTip = info[0].bazar_tips + tip
+        console.log(newTip)
+        Info.updateMany({}, { bazar_tips: newTip }).then(console.log("tip added"))
+    }
+    catch (err) { console.log(err) }
+},
+async analytics() {
+    try {
+        const offers = await Offer.find()
+        const products = await Product.find()
+        const sellers = await Seller.find()
+        const info = await Info.find()
+        var soldProducts = 0
+        var totalRevenue = 0
+        var unsoldProducts = 0
+        var totalOffers = 0
+        for (var i = 0; i < offers.length; i++) {
+            var offer = offers[i]
+            var product = products.find(product => product.product_id == offer.product_id)
+            if (offer.state == "sold") {
+                soldProducts++
+                totalRevenue += product.product_price
+            }
+            else {
+                unsoldProducts++
+            }
+            totalOffers++
+        }
+        var totalProducts = products.length
+        var totalSellers = sellers.length
+        var totalOffers = offers.length
+        var provision = info[0].bazar_commission
+        var tips = info[0].bazar_tips
+        const analytics = {
+            Revenue: totalRevenue,
+            Provision: provision,
+            Tips: tips,
+            Offers: totalOffers,
+            Sellers: totalSellers,
+            Products: totalProducts,
+            SoldProducts: soldProducts,
+            UnsoldProducts: unsoldProducts
+        }
+        console.log(analytics)
+        return analytics
+    }
+    catch(err) { console.log(err) }
+
 }
 }
