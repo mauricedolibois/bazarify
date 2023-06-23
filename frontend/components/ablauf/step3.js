@@ -3,6 +3,7 @@ import { UilCheck, UilInfoCircle } from '@iconscout/react-unicons';
 import CalculationPopup from '../CalculationPopup';
 import { useState, useEffect, useRef } from 'react';
 import Step3TableRow from '../step3TableRow';
+import ButtonYellowBorder from '../buttons/ButtonYellowBorder';
 
 
 
@@ -217,7 +218,8 @@ export default function () {
             <h2>Gesamt: {totalPrice}€</h2>
             <hr className="border-ourLightGray"></hr>
             <div className="mt-4 gap-4 flex">
-                <ButtonSmallJustIcon icon={<UilCheck />} tooltip="Alle Produkte dieses Käufers eingetragen" onClick={handleSubmit}></ButtonSmallJustIcon>
+
+                <ButtonYellowBorder icon={<UilCheck />} text="Verkauf abschließen" onClick={handleSubmit}></ButtonYellowBorder>
                 <CalculationPopup totalPrice={totalPrice}></CalculationPopup>
             </div>
         </>
