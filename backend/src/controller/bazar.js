@@ -60,7 +60,7 @@ bazarRouter.get("/analytics", (req, res) => {
 
 //set tips
 bazarRouter.post("/tip", (req, res) => {
-    dbConnection.addTip(req.query.body.tip).then(bazar => {
+    dbConnection.addTip(req.body.tip).then(bazar => {
         res.json(bazar)
     }
     )

@@ -44,7 +44,7 @@ export default function () {
             const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(tips)
+            body: JSON.stringify({tip: tips})
         };
             fetch('http://localhost:8080/api/tip', requestOptions)
             .then(res => res.json())
