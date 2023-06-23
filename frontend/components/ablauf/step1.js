@@ -14,19 +14,8 @@ export default function () {
     const [bazar, setBazar] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     let { step, setStep, currentBazar } = useContext(BazarContext)
-    function goToNextStep() {
-        if (step < 5) {
-            setStep(step + 1)
-        }
-
-        else {
-            setStep(0)
-        }
-    }
 
     const handleAddBazar = () => {
-        console.log("handleAddBazar")
-
         const bazar = {
             bazar_name: bazarName,
             bazar_year: bazarYear,
@@ -42,8 +31,6 @@ export default function () {
         setBazarYear('');
         setBazarCommission('');
         setBazarDescription('');
-
-        goToNextStep();
     }
 
     useEffect(() => {
@@ -75,13 +62,6 @@ export default function () {
 
     return (
         <>
-
-            {//<ButtonBigColor text="ButtonBigColor" icon={<UilPlus />}></ButtonBigColor>
-            }
-
-
-
-
             <div>
                 <h1>1. Basar erstellen</h1>
                 <p>Als erstes sollten wir ein paar generelle Infos zu deinem anstehenden Basar festhalten. Fülle einfach die vorgefertigen Felder aus!</p>
@@ -127,7 +107,7 @@ export default function () {
                     </button>
                 </div>
             </div>
-
+            <button type="submit" onClick={() => handleAddBazar()} class="rounded-md bg-ourPrimaryColor px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-ourPrimaryColorHover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Speichern</button>
         </>
     )
 }
