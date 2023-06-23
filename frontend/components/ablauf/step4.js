@@ -114,8 +114,7 @@ export default function () {
                 <div className='flex gap-4'>
                     <div class="">
                         <div class="relative mt-2 rounded-md shadow-sm">
-                            <div class="pointer-events-none absolute inset-y-0 left-2 flex items-center"></div>
-                            <input type="text" onChange={searchSeller} class="rounded py-2 px-4 text-ourSuperDarkGray placeholder:text-ourGray focus:outline-ourPrimaryColor" id="sellerSearchBar" placeholder="Verkäufer suchen..." />
+                            <input type="text" onChange={searchSeller} class="w-full rounded py-2 px-4 text-ourSuperDarkGray placeholder:text-ourGray focus:outline-ourPrimaryColor" id="sellerSearchBar" placeholder="Verkäufer suchen..." />
                             <div>
                                 {searchedSeller.map((seller) => (
                                     <div key={seller.id} onClick={() => handleSellerClick(seller)} className="px-4 py-2 cursor-pointer bg-white border border-ourLightGray rounded hover:text-ourPrimaryColorHover">
