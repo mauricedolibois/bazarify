@@ -58,7 +58,7 @@ export default function () {
     //update tips in frontend
     useEffect(() => {
         if (tips !== 0) {
-            setTipPerCustomer(tips / totalSellerCount)
+            setTipPerCustomer((tips / totalSellerCount).toFixed(2))
         }
     }, [tips]);
 
