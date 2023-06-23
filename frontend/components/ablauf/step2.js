@@ -20,58 +20,95 @@ export default function () {
   const [productPrice, setProductPrice] = useState('');
   const [product, setProduct] = useState('');
   const [seller, setSeller] = useState('');
+  const [pendingProducts, setPendingProducts] = useState([]);
 
- //add a Seller to the database
- const handleAddOffer = (keepSeller) =>{
-  console.log('add offer');
-  const sellerData = {
-    seller_name: sellerLastName,
-    seller_firstname: sellerFirstName,
-    seller_email: sellerEmail,
-    seller_phone: sellerPhoneNumber
+  const handleAddPendingProduct = () => {
+    console.log('add pending product');
+  
+    const productData = {
+      product_name: productName,
+      product_price: productPrice,
+      product_category: productCategory,
+    };
+  
+    setProduct(productData);
+    setProductName('');
+    setProductCategory('');
+    setProductPrice('');
   };
+  
+  useEffect(() => {
+    if (product !== '') {
+      fetch('http://localhost:8080/api/addPendingProduct', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product: product,
+        }),
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('Failed to add pending product');
+          }
+          return res.json();
+        })
+        .then((data) => {
+          setPendingProducts(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [product]);
 
-  const productData = {
-    product_name: productName,
-    product_price: productPrice,
-    product_category: productCategory
-  };
 
-  setProduct(productData);
-  setSeller(sellerData);
 
-  // Reset input fields
-  if (keepSeller === false) {
+ 
+
+  const handleAddOffer = () => {
+    console.log('add offer');
+    const sellerData = {
+      seller_name: sellerLastName,
+      seller_firstname: sellerFirstName,
+      seller_email: sellerEmail,
+      seller_phone: sellerPhoneNumber,
+    };
+
+    setSeller(sellerData);
+
     setSellerFirstName('');
     setSellerLastName('');
     setSellerEmail('');
     setSellerPhoneNumber('');
-  }
-  setProductName('');
-  setProductCategory('');
-  setProductPrice('');
-}
+    setProductName('');
+    setProductCategory('');
+    setProductPrice('');
 
-  // cors error bei post request 
-  useEffect(() => {
-    if (product !== '' && seller !== '') {
-      fetch('http://localhost:8080/api/offer', {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        product: product,
-        seller: seller
-      })})
-        .then(res => res.json())
-        .then(data => {
-          console.log(data)
+    // Send pending products
+    if (pendingProducts.length > 0) {
+      pendingProducts.forEach((pendingProduct) => {
+        fetch('http://localhost:8080/api/offer', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            product: pendingProduct.product,
+            seller: sellerData,
+          }),
         })
-        .catch(error => console.log(error));
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((error) => console.log(error));
+      });
+      // Clear pending products array
+      setPendingProducts([]);
     }
-  }, [product,seller]);
-
+  }
  
 
   return (
@@ -142,7 +179,7 @@ export default function () {
               </div>
               <div className="mt-4 gap-4 flex">
                 <ButtonSmallJustIcon onClick={()=>handleAddOffer(false)}icon={<UilCheck />}></ButtonSmallJustIcon>
-                <ButtonYellowBorder onClick={()=>handleAddOffer(true)} icon={<UilPlus />} text="Mehr Produkte von diesem Verkäufer hinzufügen"></ButtonYellowBorder>
+                <ButtonYellowBorder onClick={()=>handleAddPendingProduct()} icon={<UilPlus />} text="Mehr Produkte von diesem Verkäufer hinzufügen"></ButtonYellowBorder>
               </div>
             </div>
           </div>
@@ -155,7 +192,7 @@ export default function () {
                 </p>
               </div>
 
-              <ButtonGrayBorder text="Barcodes ausdrucken" icon={<UilPrint />}></ButtonGrayBorder>
+              <ButtonGrayBorder onClick={()=>handleAddOffer()} text="Barcodes ausdrucken" icon={<UilPrint />}></ButtonGrayBorder>
             </div>
           </div>
         </div>

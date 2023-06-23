@@ -2,6 +2,7 @@ import express from 'express'
 import cors from'cors'
 import { dbConnection } from '../database/DbConnection.js';
 export const productRouter = express.Router()
+var pendingProducts = []
 
 productRouter.use(express.json())
 productRouter.use(cors({
@@ -65,6 +66,21 @@ productRouter.post("/product", (req, res) => {
     })
 
 
+productRouter.post('/addPendingProduct', (req, res) => {
+    const product = req.body;
+      
+    pendingProducts.push(product);
+      
+    res.send(pendingProducts);
+})
+
+
+productRouter.post("/PrintPendingProduct", (req,res) => {
+    for (let i = 0; i < pendingProducts.length; i++) {
+        PrintingService.createPDF(pendingProducts[i])
+    }
+})
+
 //deleteProduct
 // const operator = "product_id"
 // const id=25250
@@ -75,7 +91,9 @@ productRouter.post("/product", (req, res) => {
 //       console.log(data)
 //     })
 //     .catch(error => console.log(error))
-// }, [])    
+// }, [])
+
+
 productRouter.delete("/product", (req, res) => {
     dbConnection.deleteProduct(req.query.operator, req.query.parameter).then
     (product => { res.send(product) })  

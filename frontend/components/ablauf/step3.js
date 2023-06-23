@@ -4,7 +4,7 @@ import ButtonGrayBorder from '../buttons/ButtonGrayBorder';
 import { UilCheck, UilKeyboard, UilCalculator, UilInfoCircle } from '@iconscout/react-unicons';
 import NewProductInput from '../NewProductInput';
 import CalculationPopup from '../CalculationPopup';
-import UnderlindedInput from '../UnderlinedInput';
+import UnderlindedInput from '../underlinedInput';
 import { useState, useEffect } from 'react';
 import Step3TableRow from '../step3TableRow';
 import ButtonBigColor from '../buttons/ButtonBigColor';
