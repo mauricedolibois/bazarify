@@ -15,7 +15,7 @@ export default function ({ onClick }) {
     }
 
     return (
-        <button onClick={goToNextStep} title="Weiter zum nächsten Schritt" className="flex items-center justify-center w-10 h-10 bg-ourPrimaryColor cursor-pointer hover:bg-ourPrimaryColorHover text-white rounded-full">
+        <button onClick={goToNextStep} title="Weiter zum nächsten Schritt" className="flex items-center justify-center z-30 w-10 h-10 bg-ourPrimaryColor cursor-pointer hover:bg-ourPrimaryColorHover text-white rounded-full">
             <span className="flex items-center justify-center">
                 <UilAngleRight />
             </span>

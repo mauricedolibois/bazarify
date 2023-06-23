@@ -1,23 +1,32 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import FormInput from '../formInput'
 import { UilPlus } from '@iconscout/react-unicons'
 import ButtonBigColor from '../buttons/ButtonBigColor'
-
-
-import { useContext } from 'react'
-import { BazarContext } from '@/pages'
+import { UilAngleRight } from '@iconscout/react-unicons'
+import { BazarContext } from '../../pages/index.js'
 
 
 export default function () {
-    let { setStep, setCurrentBazar } = useContext(BazarContext)
     const [bazarName, setBazarName] = useState('');
     const [bazarYear, setBazarYear] = useState('');
     const [bazarCommission, setBazarCommission] = useState('');
     const [bazarDescription, setBazarDescription] = useState(' ');
     const [bazar, setBazar] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    let { step, setStep, currentBazar } = useContext(BazarContext)
+    function goToNextStep() {
+        if (step < 5) {
+            setStep(step + 1)
+        }
+
+        else {
+            setStep(0)
+        }
+    }
 
     const handleAddBazar = () => {
+        console.log("handleAddBazar")
+
         const bazar = {
             bazar_name: bazarName,
             bazar_year: bazarYear,
@@ -34,6 +43,7 @@ export default function () {
         setBazarCommission('');
         setBazarDescription('');
 
+        goToNextStep();
     }
 
     useEffect(() => {
@@ -106,9 +116,15 @@ export default function () {
                 </div>
                 <p className="mt-4 text-sm text-red-400 text-left">{errorMessage}</p>
 
-                <div class="mt-6 flex items-center justify-end gap-x-6">
-                    <button type="button" onClick={() => setStep(0)} class="text-sm font-semibold leading-6  hover:text-ourSuperDarkGray text-ourDarkGray">Abbrechen</button>
-                    <button type="submit" onClick={() => handleAddBazar()} class="rounded-md bg-ourPrimaryColor px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-ourPrimaryColorHover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Speichern</button>
+
+
+                <div id="scrollManager" className="fixed bottom-8 right-16 flex items-center justify-end gap-x-6 z-40">
+                    <button type='submit' onClick={() => handleAddBazar()} title="Weiter zum nächsten Schritt" className="flex items-center justify-center w-10 h-10 bg-red-400  cursor-pointer hover:bg-ourPrimaryColorHover text-white rounded-full">
+                        <span className="flex items-center justify-center">
+                            <UilAngleRight />
+                        </span>
+
+                    </button>
                 </div>
             </div>
 
