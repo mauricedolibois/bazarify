@@ -1,7 +1,9 @@
 import express from 'express'
 import cors from'cors'
 import { dbConnection } from '../database/DbConnection.js';
+import { createPDF } from '../services/PrintingService.cjs'; 
 export const productRouter = express.Router()
+var pendingProducts = []
 
 productRouter.use(express.json())
 productRouter.use(cors({
@@ -32,7 +34,7 @@ productRouter.get("/product", (req, res) => {
 //     fetch('http://localhost:8085/api/allProducts', {method: 'GET'})
 //       .then(res => res.json())
 //       .then(data => {
-//         console.log(data)
+//         console.log(data)^
 //         setAllProducts(JSON.stringify(data))
 //       })
 //       .catch(error => console.log(error))
@@ -63,6 +65,25 @@ productRouter.post("/product", (req, res) => {
     dbConnection.insertProduct(req.body.product_name, req.body.product_price, req.body.product_category).then
     (product => { res.send(product) })  
     })
+
+    productRouter.post('/addPendingProduct', (req, res) => {
+        const product = req.body;
+          
+        pendingProducts.push(product);
+          
+        res.send(pendingProducts);
+    })
+    
+    
+    productRouter.post("/PrintPendingProduct", async (req, res) => {
+        try {
+          const pendingOffers = req.body.pendingOffers;
+          createPDF(pendingOffers);
+        } catch (error) {
+          res.status(500).json({ error: 'Failed to generate offers' });
+        }
+      });
+    
 
 
 //deleteProduct
