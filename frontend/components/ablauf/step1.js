@@ -99,7 +99,7 @@ export default function () {
 
 
                 <div id="scrollManager" className="fixed bottom-8 right-16 flex items-center justify-end gap-x-6 z-40">
-                    <button type='submit' onClick={() => handleAddBazar()} title="Weiter zum nächsten Schritt" className="flex items-center justify-center w-10 h-10 bg-red-400  cursor-pointer hover:bg-ourPrimaryColorHover text-white rounded-full">
+                    <button type='submit' onClick={() => handleAddBazar()} title="Weiter zum nächsten Schritt" className="flex items-center justify-center w-10 h-10 bg-ourPrimaryColor  cursor-pointer hover:bg-ourPrimaryColorHover text-white rounded-full">
                         <span className="flex items-center justify-center">
                             <UilAngleRight />
                         </span>
