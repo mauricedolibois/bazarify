@@ -215,6 +215,7 @@ async addTip(tip) {
         //console.log(newTip)
        // Info.updateMany({}, { bazar_tips: newTip }).then(console.log("tip added"))
        Info.updateMany({}, { bazar_tips: tip }).then(console.log("tip added"))
+       return true
     }
     catch (err) { console.log(err) }
 },
