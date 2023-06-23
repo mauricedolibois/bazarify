@@ -31,14 +31,16 @@ export default function () {
       });
   }, []);
 
-  // set tips when input changes
-  // set tips when input changes
-const handleTipsChange = (e) => {
-    const input = e.target.value;
-    if (/^[0-9]*([.,][0-9]{0,2})?$/.test(input)) {
-      setTips(input);
-    }
-  };
+
+    // set tips when input changes
+    const handleTipsChange = (e) => {
+        const input = e.target.value;
+        const regex = /^([0-9]{0,7}([.,][0-9]{0,2})?)?$/;
+        if (regex.test(input)) {
+        setTips(input);
+        }
+    };
+  
   
 
   // update tips in db
