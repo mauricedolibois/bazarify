@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import FormInput from '../formInput';
 
 function Card({ title, description, info }) {
     return (
@@ -31,6 +32,33 @@ export default function () {
             })
     }, []);
 
+ 
+    //set tips when input changes
+    const handleTipsChange = (e) => {
+        setTips(e.target.value)
+    }
+
+    //update tips in db
+    useEffect(() => {
+        if (tips !== 0) {
+            const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(tips)
+        };
+            fetch('http://localhost:8080/api/tip', requestOptions)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+            })
+            .catch(error => console.log(error))
+        }
+    }, [tips]);
+
+
+
+
+
     return (
         <>
             <div>
@@ -40,8 +68,7 @@ export default function () {
 
                     <Card title={`${revenue}€`} description="Umsatz"></Card>
                     <Card title={`${revenue * provision/100}€`} description={`Profit bei aktueller Provisionsrate (${provision}%)`}></Card>
-                    <Card title={<><span className='text-ourPrimaryColor'>{tips}€</span></>} description="Trinkgeld" info=" Das Trinkgeld musst du manuell eintragen"></Card>
-
+                    <Card title={<FormInput id="tips" value={tips} unit="€" onChange={handleTipsChange}></FormInput>} description="Trinkgeld" info=" Das Trinkgeld musst du manuell eintragen"></Card>
                     <div class="col-span-2 row-span-2 rounded-md border border-ourLightGray bg-white p-4 shadow-md">
                     </div>
                     <Card title={`${tipPerCustomer}€`} description="Ø Trinkgeld/Verkauf">
