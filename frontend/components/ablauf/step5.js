@@ -37,13 +37,13 @@ export default function () {
         const input = e.target.value;
         const regex = /^([0-9]{0,7}([.,][0-9]{0,2})?)?$/;
         if (regex.test(input)) {
-        setTips(input);
+            setTips(input);
         }
     };
   
   
 
-  // update tips in db
+  // update tips in db when input hasn't changed for 1 second (safe api calls)
   useEffect(() => {
     let timeoutId;
 
@@ -77,7 +77,11 @@ export default function () {
   // update tips in frontend
   useEffect(() => {
     if (tips !== '0') {
-      setTipPerCustomer((parseFloat(tips.replace(',', '.')) / totalSellerCount).toFixed(2));
+        if (totalSellerCount === 0) {
+            setTipPerCustomer(0);
+        } else {
+            setTipPerCustomer((parseFloat(tips.replace(',', '.')) / totalSellerCount).toFixed(2));
+        }
     }
   }, [tips, totalSellerCount]);
 
