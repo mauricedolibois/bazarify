@@ -14,7 +14,21 @@ export default function AbholungPage() {
     const [sellerPayback, setSellerPayback] = useState(0);
     const [name, setName] = useState('Kein Verkäufer ausgewählt');
     const [unsoldProductsCount, setUnsoldProductsCount] = useState(0);
+    const [provision, setProvision] = useState(0);
 
+
+
+    //get provision
+    useEffect(() => {
+        fetch('http://localhost:8080/api/analytics', { method: 'GET' })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            setProvision(data.Provision);
+          });
+      }, []);
+
+    // get all sellers
     useEffect(() => {
         fetch('http://localhost:8080/api/allSellers', { method: 'GET' })
             .then(res => res.json())
@@ -25,6 +39,7 @@ export default function AbholungPage() {
             .catch(error => console.log(error));
     }, []);
 
+    // search seller
     const searchSeller = () => {
         const searchBar = document.getElementById("sellerSearchBar");
         const searchString = searchBar.value.toLowerCase();
@@ -41,6 +56,7 @@ export default function AbholungPage() {
         setSearchedSeller(tmpSearchedSeller.slice(0, 5));
     };
 
+    // set clicked seller id
     const handleSellerClick = (seller) => {
         console.log("seller clicked: ", seller);
         setClickedSellerID(seller.seller_id);
@@ -51,6 +67,7 @@ export default function AbholungPage() {
         setSearchedSeller([]);
     };
 
+    // get all products from seller
     useEffect(() => {
         if (clickedSellerID !== 0) {
             console.log("clicked seller id: ", clickedSellerID);
@@ -72,7 +89,8 @@ export default function AbholungPage() {
                 tmpSellerPayback += product.product_price;
             }
         });
-        setSellerPayback(tmpSellerPayback);
+        tmpSellerPayback = tmpSellerPayback - (tmpSellerPayback * provision / 100); // subtract provision
+        setSellerPayback(tmpSellerPayback.toFixed(2));
     };
 
     const getUnsoldProductsText = () => {
@@ -150,6 +168,9 @@ export default function AbholungPage() {
                                     {allProductsFromSeller.map((product) => (
                                         <tr key={product.id} className="bg-white dark:border-ourDarkGray dark:bg-ourSuperDarkGray">
                                             <td></td>
+                                            {
+                                            //TODO: component for each row}
+                                            }                                       
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_name}</td>
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_category}</td>
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_price}</td>
