@@ -165,6 +165,7 @@ export const dbConnection = {
     async updateOffer(operator, parameter, update) {
         const filter = { [operator]: parameter }
         Offer.updateOne(filter, update).then(console.log("offer updated"))
+        return true
     },
     async deleteProduct(operator, parameter) {
         const filter = { [operator]: parameter }
