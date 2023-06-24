@@ -77,7 +77,7 @@ export default function () {
   // update tips in frontend
   useEffect(() => {
     if (tips !== '0') {
-        if (totalSellerCount === 0) {
+        if (totalSellerCount === 0 || tips === '') {
             setTipPerCustomer(0);
         } else {
             setTipPerCustomer((parseFloat(tips.replace(',', '.')) / totalSellerCount).toFixed(2));
