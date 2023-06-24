@@ -17,7 +17,7 @@ export default function () {
   const [provision, setProvision] = useState(0);
   const [tips, setTips] = useState('0');
   const [totalSellerCount, setTotalSellerCount] = useState(0);
-  const [tipsAverage, setTipsAverage] = useState("0 %");
+  const [tipsAverage, setTipsAverage] = useState(0);
 
   useEffect(() => {
     fetch('http://localhost:8080/api/analytics', { method: 'GET' })
@@ -27,6 +27,8 @@ export default function () {
         setRevenue(data.Revenue);
         setProvision(data.Provision);
         setTotalSellerCount(data.Sellers);
+        setTips(data.Tips.toString());
+        setTipsAverage((data.Revenue / data.Tips * 100).toFixed(2))
       });
   }, []);
 
@@ -76,7 +78,7 @@ export default function () {
   // update tips in frontend
   useEffect(() => {
     if (tips !== '0') {
-        setTipsAverage(`${(parseFloat(tips.replace(',', '.')) / revenue * 100).toFixed(2)} %`);
+        setTipsAverage((parseFloat(tips.replace(',', '.')) / revenue * 100).toFixed(2));
         console.log(tipsAverage);
     }
   }, [tips, totalSellerCount]);
@@ -94,7 +96,7 @@ export default function () {
           <Card title={`${(revenue * provision) / 100}€`} description={`Profit bei aktueller Provisionsrate (${provision}%)`} />
           <Card title={<FormInput id="tips" value={tips} unit="€" onChange={handleTipsChange} />} description="Trinkgeld" info="Das Trinkgeld musst du manuell eintragen" />
           <div className="col-span-2 row-span-2 rounded-md border border-ourLightGray bg-white p-4 shadow-md"></div>
-          <Card title={`${tipsAverage}`} description="Ø Trinkgeld" />
+          <Card title={`${tipsAverage} %`} description="Ø Trinkgeld" />
           <Card title={totalSellerCount} description="Verkäufer" />
         </div>
       </div>
