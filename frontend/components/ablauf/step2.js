@@ -69,7 +69,7 @@ export default function () {
 
  
 
-  const handleAddOffer = () => {
+  const handleAddOffer = async () => {
     console.log('add offer');
     const sellerData = {
       seller_name: sellerLastName,
@@ -77,9 +77,9 @@ export default function () {
       seller_email: sellerEmail,
       seller_phone: sellerPhoneNumber,
     };
-
+  
     setSeller(sellerData);
-
+  
     setSellerFirstName('');
     setSellerLastName('');
     setSellerEmail('');
@@ -87,49 +87,46 @@ export default function () {
     setProductName('');
     setProductCategory('');
     setProductPrice('');
-
-    // Send pending products
+  
     if (pendingProducts.length > 0) {
-      pendingProducts.forEach((pendingProduct) => {
-        fetch('http://localhost:8080/api/offer', {
-          method: 'POST',
+      try {
+        const offerPromises = pendingProducts.map(async (pendingProduct) => {
+          const response = await fetch('http://localhost:8080/api/offer', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              product: pendingProduct.product,
+              seller: sellerData,
+            }),
+          });
+  
+          const data = await response.json();
+  
+          return data;
+        });
+  
+        const offers = await Promise.all(offerPromises);
+  
+        const printResponse = await fetch('http://localhost:8080/api/PrintAllOffers', {
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            product: pendingProduct.product,
-            seller: sellerData,
+            offers: offers,
           }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            setPendingOffers(data)
-            console.log(data);
-          })
-          .catch((error) => console.log(error));
-      });
-
-      pendingOffers.forEach((pendingOffer) => {
-        fetch('http://localhost:8080/api/PrintPendingProduct', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            offer: pendingOffer.offer,
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-          })
-          .catch((error) => console.log(error));
-      });
-      // Clear pending products array
+        });
+  
+        // Handle the response if needed
+      } catch (error) {
+        console.log(error);
+      }
+  
       setPendingProducts([]);
     }
-  }
-
+  };
 
   return (
     <>

@@ -98,7 +98,7 @@ export const dbConnection = {
             var id = DbIdHandler.generateProductId()
             const validProduct = await InputValidation.validateProduct(id, name, price, category)
             const product = await Product.create(validProduct)
-            await product.save().then(console.log(product))
+            await product.save()
             return product
         }
         catch(error) { return (error.message) }
@@ -107,13 +107,13 @@ export const dbConnection = {
         try {
             const existingSeller = await this.checkDuplicateSeller(email)
             if (existingSeller != null) {
-            console.log("Seller already exists: "+existingSeller)
+            //console.log("Seller already exists: "+existingSeller)
             return existingSeller;
             }
             var id = DbIdHandler.generateSellerId()
             const validSeller = await InputValidation.validateSeller(id, firstname, name, email, phone)
             const seller = await Seller.create(validSeller)
-            await seller.save().then(console.log(seller))
+            await seller.save()
             return seller
         }
         catch(error) { return (error.message) }
@@ -123,7 +123,7 @@ export const dbConnection = {
             var id = DbIdHandler.generateOfferId()
             const validOffer = await InputValidation.validateOffer(id, product_id, seller_id)
             const offer = await Offer.create(validOffer)
-            await offer.save().then(console.log(offer))
+            await offer.save()
             return offer
         }
         catch(error) { return (error.message) }

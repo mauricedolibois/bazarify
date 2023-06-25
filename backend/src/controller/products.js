@@ -1,7 +1,6 @@
 import express from 'express'
 import cors from'cors'
 import { dbConnection } from '../database/DbConnection.js';
-import { createPDF } from '../services/PrintingService.cjs'; 
 export const productRouter = express.Router()
 var pendingProducts = []
 
@@ -73,16 +72,11 @@ productRouter.post("/product", (req, res) => {
           
         res.send(pendingProducts);
     })
-    
-    
-    productRouter.post("/PrintPendingProduct", async (req, res) => {
-        try {
-          const pendingOffers = req.body.pendingOffers;
-          createPDF(pendingOffers);
-        } catch (error) {
-          res.status(500).json({ error: 'Failed to generate offers' });
-        }
-      });
+
+productRouter.put("/DeletePendingProduct", (req, res) => {
+    pendingProducts = [];
+    res.send(pendingProducts);
+})    
     
 
 
