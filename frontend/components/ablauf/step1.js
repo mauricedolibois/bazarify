@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import FormInput from '../formInput'
 import { UilPlus } from '@iconscout/react-unicons'
 import ButtonBigColor from '../buttons/ButtonBigColor'
-
-
-import { useContext } from 'react'
-import { BazarContext } from '@/pages'
+import { UilAngleRight } from '@iconscout/react-unicons'
+import { BazarContext } from '../../pages/index.js'
 
 
 export default function () {
-    let { setStep, setCurrentBazar } = useContext(BazarContext)
     const [bazarName, setBazarName] = useState('');
     const [bazarYear, setBazarYear] = useState('');
     const [bazarCommission, setBazarCommission] = useState('');
     const [bazarDescription, setBazarDescription] = useState(' ');
     const [bazar, setBazar] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    let { step, setStep, currentBazar } = useContext(BazarContext)
 
     const handleAddBazar = () => {
         const bazar = {
@@ -33,7 +31,6 @@ export default function () {
         setBazarYear('');
         setBazarCommission('');
         setBazarDescription('');
-
     }
 
     useEffect(() => {
@@ -65,13 +62,6 @@ export default function () {
 
     return (
         <>
-
-            {//<ButtonBigColor text="ButtonBigColor" icon={<UilPlus />}></ButtonBigColor>
-            }
-
-
-
-
             <div>
                 <h1>1. Basar erstellen</h1>
                 <p>Als erstes sollten wir ein paar generelle Infos zu deinem anstehenden Basar festhalten. Fülle einfach die vorgefertigen Felder aus!</p>
@@ -99,19 +89,24 @@ export default function () {
                     <div class="col-span-full">
                         <label for="about" class="block text-sm font-medium leading-6 text-ourSuperDarkGray mt-4">Beschreibung</label>
                         <div class="mt-2">
-                            <textarea placeholder="Eine kurze optionale Beschreibung des geplanten Basars" id="about" name="about" rows="3" class="block w-full rounded-md border-0 px-2 py-1.5 text-ourSuperDarkGray shadow-sm ring-1 ring-inset ring-ourLightGray placeholder:text-ourGray focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" onChange={(e) => setBazarDescription(e.target.value)}></textarea>
+                            <textarea placeholder="Eine kurze optionale Beschreibung des geplanten Basars" id="about" name="about" rows="3" class="block focus:outline-ourPrimaryColor w-full rounded-md border-0 px-2 py-1.5 text-ourSuperDarkGray shadow-sm ring-1 ring-inset ring-ourLightGray placeholder:text-ourGray focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" onChange={(e) => setBazarDescription(e.target.value)}></textarea>
 
                         </div>
                     </div>
                 </div>
                 <p className="mt-4 text-sm text-red-400 text-left">{errorMessage}</p>
 
-                <div class="mt-6 flex items-center justify-end gap-x-6">
-                    <button type="button" onClick={() => setStep(0)} class="text-sm font-semibold leading-6  hover:text-ourSuperDarkGray text-ourDarkGray">Abbrechen</button>
-                    <button type="submit" onClick={() => handleAddBazar()} class="rounded-md bg-ourPrimaryColor px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-ourPrimaryColorHover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">Speichern</button>
+
+
+                <div id="scrollManager" className="fixed bottom-8 right-16 flex items-center justify-end gap-x-6 z-40">
+                    <button type='submit' onClick={() => handleAddBazar()} title="Weiter zum nächsten Schritt" className="flex items-center justify-center w-10 h-10 bg-ourPrimaryColor  cursor-pointer hover:bg-ourPrimaryColorHover text-white rounded-full">
+                        <span className="flex items-center justify-center">
+                            <UilAngleRight />
+                        </span>
+
+                    </button>
                 </div>
             </div>
-
         </>
     )
 }

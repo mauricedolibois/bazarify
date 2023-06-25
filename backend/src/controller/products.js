@@ -121,3 +121,10 @@ productRouter.put("/product", (req, res) => {
 
 
 
+productRouter.put("/product-recline", (req, res) => {
+    console.log("recline")
+    dbConnection.updateOffer('product_id', req.query.id, {state: 'reclined'}).then
+    (product => { res.send(product) })
+    })
+
+
