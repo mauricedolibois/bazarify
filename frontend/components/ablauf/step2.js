@@ -21,71 +21,112 @@ export default function () {
   const [seller, setSeller] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  //add a Seller to the database
-  const handleAddOffer = (keepSeller) => {
+  const [pendingProducts, setPendingProducts] = useState([]);
+  const [pendingOffers, setPendingOffers] = useState([]);
+
+  const handleAddPendingProduct = () => {
+    console.log('add pending product');
+  
+    const productData = {
+      product_name: productName,
+      product_price: productPrice,
+      product_category: productCategory,
+    };
+  
+    setProduct(productData);
+    setProductName('');
+    setProductCategory('');
+    setProductPrice('');
+  };
+  
+  useEffect(() => {
+    if (product !== '') {
+      fetch('http://localhost:8080/api/addPendingProduct', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product: product,
+        }),
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('Failed to add pending product');
+          }
+          return res.json();
+        })
+        .then((data) => {
+          setPendingProducts(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [product]);
+
+
+
+ 
+
+  const handleAddOffer = async () => {
     console.log('add offer');
     const sellerData = {
       seller_name: sellerLastName,
       seller_firstname: sellerFirstName,
       seller_email: sellerEmail,
-      seller_phone: sellerPhoneNumber
+      seller_phone: sellerPhoneNumber,
     };
-
-    const productData = {
-      product_name: productName,
-      product_price: productPrice,
-      product_category: productCategory
-    };
-
-    setProduct(productData);
+  
     setSeller(sellerData);
-
-    // Reset input fields
-    if (keepSeller === false) {
-      setSellerFirstName('');
-      setSellerLastName('');
-      setSellerEmail('');
-      setSellerPhoneNumber('');
-    }
+  
+    setSellerFirstName('');
+    setSellerLastName('');
+    setSellerEmail('');
+    setSellerPhoneNumber('');
     setProductName('');
     setProductCategory('');
     setProductPrice('');
-  }
-
-  // cors error bei post request 
-  useEffect(() => {
-    if (product !== '' && seller !== '') {
-      fetch('http://localhost:8080/api/offer', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          product: product,
-          seller: seller
-        })
-      })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data)
-          if (typeof data === 'object' && data !== null) {
-            console.log('success');
-            setErrorMessage('');
-          }
-          else {
-            console.log("error");
-            //TODO: specific error message
-            setErrorMessage("Fehler beim Hinzufügen des Angebots, bitte überprüfe deine Eingaben!");
-          }
-        })
-        .catch(error => {
-          setErrorMessage(error);
-          console.log(error)
+  
+    if (pendingProducts.length > 0) {
+      try {
+        const offerPromises = pendingProducts.map(async (pendingProduct) => {
+          const response = await fetch('http://localhost:8080/api/offer', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              product: pendingProduct.product,
+              seller: sellerData,
+            }),
+          });
+  
+          const data = await response.json();
+  
+          return data;
         });
+  
+        const offers = await Promise.all(offerPromises);
+  
+        const printResponse = await fetch('http://localhost:8080/api/PrintAllOffers', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            offers: offers,
+          }),
+        });
+  
+        // Handle the response if needed
+      } catch (error) {
+        console.log(error);
+      }
+  
+      setPendingProducts([]);
     }
-  }, [product, seller]);
-
-
+  };
 
   return (
     <>
@@ -155,8 +196,8 @@ export default function () {
               </div>
 
               <div className="mt-4 gap-4 flex">
-                <ButtonSmallJustIcon onClick={() => handleAddOffer(true)} tooltip="Weitere Produkte dieses Verkäufers hinzufügen" icon={<UilPlus />}></ButtonSmallJustIcon>
-                <ButtonYellowBorder onClick={() => handleAddOffer(false)} icon={<UilPrint />} text="Barcodes ausdrucken"></ButtonYellowBorder>
+                <ButtonSmallJustIcon onClick={() => handleAddPendingProduct()} tooltip="Weitere Produkte dieses Verkäufers hinzufügen" icon={<UilPlus />}></ButtonSmallJustIcon>
+                <ButtonYellowBorder onClick={() => handleAddOffer()} icon={<UilPrint />} text="Barcodes ausdrucken"></ButtonYellowBorder>
               </div>
             </div>
           </div>

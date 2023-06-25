@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from'cors'
 import { dbConnection } from '../database/DbConnection.js';
+import { printing } from '../services/Printing.js';
 export const offerRouter = express.Router()
 
 offerRouter.use(express.json())
@@ -35,6 +36,12 @@ offerRouter.post("/offer", async (req, res) => {
         res.json(error.message); 
     }
 }
+)
+
+offerRouter.put("/PrintAllOffers", (req, res) => {
+        printing.printOffers(req.body.offers);
+        
+    }
 )
 
 offerRouter.delete("/offer", (req, res) => {
