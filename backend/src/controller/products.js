@@ -65,13 +65,13 @@ productRouter.post("/product", (req, res) => {
     (product => { res.send(product) })  
     })
 
-    productRouter.post('/addPendingProduct', (req, res) => {
-        const product = req.body;
+productRouter.post('/addPendingProduct', (req, res) => {
+    const product = req.body;
           
-        pendingProducts.push(product);
+    pendingProducts.push(product);
           
-        res.send(pendingProducts);
-    })
+    res.send(pendingProducts);
+})
 
 productRouter.put("/DeletePendingProduct", (req, res) => {
     pendingProducts = [];
