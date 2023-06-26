@@ -55,25 +55,16 @@ export const dbConnection = {
     },
     async getBazars() {
         try {
-            const currentDB = BazarName;
-            await this.close();
-            BazarName = "Bazarify";
-            await this.connectToDB();
-          
-            const info = await Info.find().catch((err) => console.log(err));
-          
-            // Replace underscore in bazar_name field
-            info.forEach((document) => {
-              if (document.bazar_name) {
-                document.bazar_name = document.bazar_name.replace(/_/g, " ");
-              }
-            });
-          
-            await this.close();
-            BazarName = currentDB;
-            await this.connectToDB();
-            return info;
-        } 
+            const currentDB = BazarName
+            await this.close()
+            BazarName = "Bazarify"
+            await this.connectToDB()
+            const info = await Info.find().catch(err => console.log(err))
+            await this.close()
+            BazarName = currentDB
+            await this.connectToDB()
+            return info
+        }
         catch { console.log("could not get Bazars") }
     },
     async getCurrentBazar() {
