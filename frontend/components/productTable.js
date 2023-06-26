@@ -1,11 +1,16 @@
 import React from 'react';
 import Step3TableRow from './Step3TableRow';
+import { useState } from 'react';
+
 
 const ProductTable = ({ data }) => {
+    const [products, setProducts] = useState(data);
 
     const handleRemoveProduct = (index) => {
-        setScannedProducts((scannedProducts) => scannedProducts.filter((_, i) => i !== index));
+        setProducts((products) => products.filter((_, i) => i !== index));
     };
+
+    console.log("Data in component: ", products);
 
     return (
         <div className="rounded border border-ourLightGrey bg-white mb-4">
@@ -31,13 +36,13 @@ const ProductTable = ({ data }) => {
                     </tr>
                 </thead>
                 <tbody className="">
-                    {data.map((product, index) => (
+                    {products.map((product, index) => (
                         <Step3TableRow
                             key={index}
                             counter={index + 1}
-                            name={product.product_name}
-                            category={product.product_category}
-                            price={product.product_price}
+                            name={product.product.product_name}
+                            category={product.product.product_category}
+                            price={product.product.product_price}
                             removeItem={() => handleRemoveProduct(index)}
                         />
                     ))}

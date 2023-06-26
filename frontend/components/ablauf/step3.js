@@ -52,6 +52,10 @@ export default function () {
         }
     };
 
+    const handleRemoveProduct = (index) => {
+        setScannedProducts((scannedProducts) => scannedProducts.filter((_, i) => i !== index));
+    };
+
 
     //handle enter key
     useEffect(() => {

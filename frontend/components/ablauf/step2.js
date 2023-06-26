@@ -8,6 +8,7 @@ import { UilInfoCircle } from '@iconscout/react-unicons'
 import ButtonGrayBorder from '../buttons/ButtonGrayBorder';
 import { UilPrint } from '@iconscout/react-unicons'
 import { UilHistory } from '@iconscout/react-unicons'
+import ProductTable from '../productTable';
 
 export default function () {
   const [sellerFirstName, setSellerFirstName] = useState('');
@@ -220,6 +221,10 @@ export default function () {
           </div>
 
         </div>
+
+        {pendingProducts.length > 0 && (
+                <ProductTable data = {pendingProducts}/>
+            )}
 
       </div>
       {/*
