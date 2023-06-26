@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from'cors'
 import { dbConnection } from '../database/DbConnection.js';
+import { exampleData } from '../exampleData.js';
 export const bazarRouter = express.Router()
 
 bazarRouter.use(express.json())
@@ -65,3 +66,10 @@ bazarRouter.post("/tip", (req, res) => {
     }
     )
 })
+
+//set tips
+bazarRouter.put("/loadExampleData", (req, res) => {
+    exampleData.createExampleData()
+    res.json("Example Data created")
+})
+
