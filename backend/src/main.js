@@ -1,5 +1,6 @@
 import express, { urlencoded } from 'express'
 import cors from'cors'
+import { exec } from 'child_process'
 const app = express()
 import  {dbConnection} from './database/DbConnection.js';
 import {productRouter}  from './controller/products.js';
@@ -22,6 +23,12 @@ app.use(cors({
 app.get('/', (req, res) => {
   res.send('http://localhost:8080/api')
 })
+const command = `open -a "Google Chrome" --args --start-fullscreen --app="http://localhost:3000"`;
+exec(command, (error) => {
+   if (error) {
+     console.error(`Error executing command: ${error}`);
+  }
+});
 
 
 dbConnection.connectToDB()

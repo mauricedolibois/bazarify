@@ -70,5 +70,6 @@ bazarRouter.post("/tip", (req, res) => {
 //set tips
 bazarRouter.put("/loadExampleData", (req, res) => {
     exampleData.createExampleData()
+    res.json("Example Data created")
 })
 

@@ -68,12 +68,11 @@ export default function () {
         headers: {
           'Content-Type': 'application/json',
         },
-      })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-            })
-            .catch(error => console.log(error))
+      }).then(res => res.json())
+        .then(data => {
+            window.location.reload()
+        })
+        .catch(error => console.log(error))
     }
 
     let { setStep } = useContext(BazarContext)
@@ -103,7 +102,7 @@ export default function () {
                         </ButtonBigNoColor>
                     </Link>
                     <Link href="/" onClick={() => loadExampleData()}>
-                        <ButtonBigNoColor text="Beispiel-Daten laden" icon={<UilPlay />}></ButtonBigNoColor>
+                        <ButtonBigNoColor text="Demonstration laden" icon={<UilPlay />}></ButtonBigNoColor>
                     </Link>
                 </div>
                 <h2 className="mt-16">Deine Basare</h2>

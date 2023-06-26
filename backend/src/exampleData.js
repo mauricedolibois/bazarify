@@ -11,7 +11,7 @@ export const exampleData = {
     },
 
     async createExampleBazars() {
-        var exampleBazar = {bazar_name: "Ski_Bazar", bazar_year: 2023, bazar_commission: 4, bazar_description: "Unser alljährlicher SkI Bazar in Laichingen. Hier finden Sie alles rund ums Skifahren."}
+        var exampleBazar = {bazar_name: "Demo Ski Bazar", bazar_year: 2023, bazar_commission: 4, bazar_description: "Unser alljährlicher SkI Bazar in Laichingen. Hier finden Sie alles rund ums Skifahren."}
 
         var bazar = dbConnection.newDB(exampleBazar.bazar_name, exampleBazar.bazar_year, exampleBazar.bazar_commission, exampleBazar.bazar_description)
     },
@@ -24,9 +24,9 @@ export const exampleData = {
             { product_name: "Poc Helm", product_price: 200,  product_category: "Helm"},
             { product_name: "Poc Brille", product_price: 79.99,  product_category: "Brille"},
             { product_name: "Völkl Renntiger", product_price: 50,  product_category: "Ski"},
-            { product_name: "Technica Cochise Team", product_price: 300,  product_category: "Skischuhe"},
+            { product_name: "J Lindenberg Jacke", product_price: 300,  product_category: "Jacke"},
             { product_name: "Ziener Jacke grün", product_price: 120.50,  product_category: "Jacke"},
-            { product_name: "Spyder Jacke", product_price: 299.95,  product_category: "Jacke"},
+            { product_name: "Technica Cochise Team", product_price: 299.95,  product_category: "Skischuhe"},
             { product_name: "Schlitten", product_price: 5,  product_category: "Schlitten"},
           ];
           return exampleProductsSki
