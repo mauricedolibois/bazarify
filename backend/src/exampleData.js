@@ -3,17 +3,14 @@ import {dbConnection} from './database/DbConnection.js'
 
 export const exampleData = {
     async createExampleData() {
-        this.createExampleBazars().then(this.createExampleOffers())
+        await this.createExampleBazar()
+        await this.createExampleOffers()
         
     },
 
-    async deleteExampleData() {
-    },
-
-    async createExampleBazars() {
-        var exampleBazar = {bazar_name: "Demo Ski Bazar", bazar_year: 2023, bazar_commission: 4, bazar_description: "Unser alljährlicher SkI Bazar in Laichingen. Hier finden Sie alles rund ums Skifahren."}
-
-        var bazar = dbConnection.newDB(exampleBazar.bazar_name, exampleBazar.bazar_year, exampleBazar.bazar_commission, exampleBazar.bazar_description)
+    async createExampleBazar() {
+        var exampleBazar = {bazar_name: "Demo_Ski_Bazar", bazar_year: 2023, bazar_commission: 4, bazar_description: "Unser alljährlicher SkI Bazar in Laichingen. Hier finden Sie alles rund ums Skifahren."}
+        await dbConnection.newDB(exampleBazar.bazar_name, exampleBazar.bazar_year, exampleBazar.bazar_commission, exampleBazar.bazar_description)
     },
 
     async createExampleProducts() {
@@ -70,7 +67,7 @@ export const exampleData = {
     
     async createExampleOffers() {
       await dbConnection.connectToDB()
-        var db = await dbConnection.changeDB("Ski_Bazar").then({})
+        var db = await dbConnection.changeDB("Demo_Ski_Bazar").then({})
         var porducts = await this.createExampleProducts()
         var sellers = await this.createExampleSellers()
         var exampleOffers = []
