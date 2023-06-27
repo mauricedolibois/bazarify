@@ -114,10 +114,18 @@ export default function AbholungPage() {
         }
     };
 
-    function setStatusToPickedUp(product_id) {
-        console.log("Status ändern");
-        setProductReclinedID(product_id);
-    }
+    const handleReclineProduct = (productID) => {
+        console.log("product reclined: ", productID);
+        setProductReclinedID(productID);
+        //remove product from unsold products
+        let tmpUnsoldProducts = [];
+        unsoldProductsFromSeller.map(product => {
+            if (product.product_id !== productID) {
+                tmpUnsoldProducts.push(product);
+            }
+        });
+        setUnsoldProductsFromSeller(tmpUnsoldProducts);
+    };
 
     useEffect(() => {
         if (productReclinedID !== 0) {
@@ -169,8 +177,8 @@ export default function AbholungPage() {
                         </div>
                     </div>
                 }
-                {allProductsFromSeller.length !== 0 &&
-                    <div className="rounded border border-ourLightGrey mt-4 bg-white mb-4">
+                {unsoldProductsFromSeller.length !== 0 &&
+                    <div className="rounded border border-ourLightGrey mt-4 bg-white mb-4" style={{ maxHeight: "100px", overflowY: "auto" }}>
                         <div className="overflow-hidden">
                             <table className="min-w-full text-left text-sm font-light rounded">
                                 <thead className="font-medium">
@@ -202,7 +210,7 @@ export default function AbholungPage() {
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_name}</td>
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_category}</td>
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_price}</td>
-                                            <td className="whitespace-nowrap px-8 py-4"><button className='hover:text-ourPrimaryColorHover' onClick={() => setProductReclinedID(product.product_id)}><UilCheck size="17" /></button></td>
+                                            <td className="whitespace-nowrap px-8 py-4"><button className='hover:text-ourPrimaryColorHover' onClick={() => handleReclineProduct(product.product_id)}><UilCheck size="17" /></button></td>
                                         </tr>
                                     ))}
                                 </tbody>
