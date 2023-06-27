@@ -13,9 +13,11 @@ export default function () {
     const [bazarDescription, setBazarDescription] = useState(' ');
     const [bazar, setBazar] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [submitted, setSubmitted] = useState(false);
     let {setStep, setCurrentBazar } = useContext(BazarContext)
 
     const handleAddBazar = () => {
+        setSubmitted(true);
         const bazar = {
             bazar_name: bazarName,
             bazar_year: bazarYear,
@@ -23,8 +25,15 @@ export default function () {
             bazar_description: bazarDescription
         };
 
+
+        console.log('Bazar Name is empty: ', !bazarName);
+        console.log('Bazar: ', bazar);
+
         console.log(bazar);
-        setBazar(bazar);
+
+        if(bazarName && bazarYear && bazarCommission){
+            setBazar(bazar);
+        }
 
         //clear fields
         setBazarName('');
@@ -73,17 +82,23 @@ export default function () {
                             name="Name des Basars"
                             value={bazarName}
                             onChange={(e) => setBazarName(e.target.value)}
+                            isEmpty={!bazarName}
+                            submitted={submitted}
                         />
                         <FormInput
                             name="Jahr"
                             value={bazarYear}
                             onChange={(e) => setBazarYear(e.target.value)}
+                            isEmpty={!bazarYear}
+                            submitted={submitted}
                         />
                         <FormInput
                             name="Provision"
                             unit="%"
                             value={bazarCommission}
                             onChange={(e) => setBazarCommission(e.target.value)}
+                            isEmpty={!bazarCommission}
+                            submitted={submitted}
                         />
                     </div>
                     <div class="col-span-full">
