@@ -2,7 +2,7 @@ import ButtonSmallJustIcon from '../buttons/ButtonSmallJustIcon';
 import { UilCheck, UilInfoCircle } from '@iconscout/react-unicons';
 import CalculationPopup from '../CalculationPopup';
 import { useState, useEffect, useRef } from 'react';
-import Step3TableRow from '../step3TableRow';
+import Step3TableRow from '../Step3TableRow';
 import ButtonYellowBorder from '../buttons/ButtonYellowBorder';
 import ProductTable from '../productTable';
 
@@ -95,15 +95,15 @@ export default function () {
         if (offer !== '') {
             const productExists = scannedProducts.some((product) => product.product_id === offer.product_id);
             //if (!productExists) { // Nur hinzufügen, wenn das Produkt noch nicht vorhanden ist
-                fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
-                    .then((res) => res.json())
-                    .then((data) => {
-                        setScannedProducts((scannedProducts) => [...scannedProducts, data]);
-                        setAllOffers((allOffers) => [...allOffers, offer]);
-                        console.log(scannedProducts);
-                        console.log(data);
-                    })
-                    .catch((error) => console.log(error));
+            fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
+                .then((res) => res.json())
+                .then((data) => {
+                    setScannedProducts((scannedProducts) => [...scannedProducts, data]);
+                    setAllOffers((allOffers) => [...allOffers, offer]);
+                    console.log(scannedProducts);
+                    console.log(data);
+                })
+                .catch((error) => console.log(error));
             //}
         }
     }, [offer]);
@@ -143,16 +143,16 @@ export default function () {
                     })
                     .catch((error) => console.log(error));
             });
-            
+
         }
     }, [allUpdatedOffers]);
 
     const scrollRef = useRef(null);
 
     useEffect(() => {
-    if (scrollRef.current) {
-        scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }
+        if (scrollRef.current) {
+            scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
     }, [scannedProducts]);
 
 
@@ -168,45 +168,45 @@ export default function () {
             </p>
             {//TODO: Tabelle als Komponente auslagern
             }
-                {scannedProducts.length > 0 && (
-                    <div className="rounded border border-ourLightGrey bg-white mb-4" style={{ maxHeight: "270px", overflowY: "auto" }}>
-                        <div className="overflow-hidden">
+            {scannedProducts.length > 0 && (
+                <div className="rounded border border-ourLightGrey bg-white mb-4" style={{ maxHeight: "270px", overflowY: "auto" }}>
+                    <div className="overflow-hidden">
                         <table className="min-w-full text-left text-sm font-light rounded">
                             <thead className="font-medium">
-                            <tr>
-                                <th scope="col" className="px-8 py-4">
-                                #
-                                </th>
-                                <th scope="col" className="px-8 py-4">
-                                Artikel
-                                </th>
-                                <th scope="col" className="px-8 py-4">
-                                Kategorie
-                                </th>
-                                <th scope="col" className="px-8 py-4">
-                                Preis
-                                </th>
-                                <th scope="col" className="px-8 py-4">
-                                Entfernen
-                                </th>
-                            </tr>
+                                <tr>
+                                    <th scope="col" className="px-8 py-4">
+                                        #
+                                    </th>
+                                    <th scope="col" className="px-8 py-4">
+                                        Artikel
+                                    </th>
+                                    <th scope="col" className="px-8 py-4">
+                                        Kategorie
+                                    </th>
+                                    <th scope="col" className="px-8 py-4">
+                                        Preis
+                                    </th>
+                                    <th scope="col" className="px-8 py-4">
+                                        Entfernen
+                                    </th>
+                                </tr>
                             </thead>
                             <tbody>
-                            {scannedProducts.map((product, index) => (
-                                <Step3TableRow
-                                key={index}
-                                counter={index + 1}
-                                name={product.product_name}
-                                category={product.product_category}
-                                price={product.product_price}
-                                removeItem={() => handleRemoveProduct(index)}
-                                />
-                            ))}
-                            <tr ref={scrollRef}></tr> {/* Empty row for scrolling to the bottom */}
+                                {scannedProducts.map((product, index) => (
+                                    <Step3TableRow
+                                        key={index}
+                                        counter={index + 1}
+                                        name={product.product_name}
+                                        category={product.product_category}
+                                        price={product.product_price}
+                                        removeItem={() => handleRemoveProduct(index)}
+                                    />
+                                ))}
+                                <tr ref={scrollRef}></tr> {/* Empty row for scrolling to the bottom */}
                             </tbody>
                         </table>
-                        </div>
                     </div>
+                </div>
             )}
             <div>
                 <div className="flex flex-row justify-between px-8 py-4 mb-8 gap-32 border-ourLightGray border bg-white rounded ">
