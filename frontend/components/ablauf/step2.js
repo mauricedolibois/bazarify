@@ -25,6 +25,7 @@ export default function () {
 
   const [pendingProducts, setPendingProducts] = useState([]);
   const [pendingOffers, setPendingOffers] = useState([]);
+  const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
 
   const handleAddPendingProduct = () => {
     console.log('add pending product');
@@ -170,10 +171,11 @@ useEffect(() => {
   const scrollRef = useRef(null);
 
   useEffect(() => {
-  if (scrollRef.current) {
+    if (shouldScrollToBottom && scrollRef.current) { // Überprüfe den Trigger-Wert
       scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  }
-  }, [pendingProducts]);
+      setShouldScrollToBottom(false); // Setze den Trigger zurück, um erneutes Scrollen zu verhindern
+    }
+  }, [shouldScrollToBottom]);
 
   return (
     <>
