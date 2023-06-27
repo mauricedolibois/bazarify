@@ -94,7 +94,7 @@ export default function () {
     useEffect(() => {
         if (offer !== '') {
             const productExists = scannedProducts.some((product) => product.product_id === offer.product_id);
-            if (!productExists) { // Nur hinzufügen, wenn das Produkt noch nicht vorhanden ist
+            //if (!productExists) { // Nur hinzufügen, wenn das Produkt noch nicht vorhanden ist
                 fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
                     .then((res) => res.json())
                     .then((data) => {
@@ -104,7 +104,7 @@ export default function () {
                         console.log(data);
                     })
                     .catch((error) => console.log(error));
-            }
+            //}
         }
     }, [offer]);
 
@@ -160,7 +160,7 @@ export default function () {
             {//TODO: Tabelle als Komponente auslagern
             }
             {scannedProducts.length > 0 && (
-                    <div className="rounded border border-ourLightGrey bg-white mb-4">
+                    <div className="rounded border border-ourLightGrey bg-white mb-4" style={{ maxHeight: "250px", overflowY: "auto" }}>
                       <div className="overflow-hidden">
                         <table className="min-w-full text-left text-sm font-light rounded">
                           <thead className="font-medium">

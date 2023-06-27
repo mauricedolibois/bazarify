@@ -226,7 +226,7 @@ export default function () {
         </div>
 
         {pendingProducts.length > 0 && (
-                <div className="rounded border border-ourLightGrey bg-white mb-4">
+                <div className="rounded border border-ourLightGrey bg-white mb-4" style={{ maxHeight: "250px", overflowY: "auto" }}>
                 <div className="overflow-hidden">
                   <table className="min-w-full text-left text-sm font-light rounded">
                     <thead className="font-medium">
