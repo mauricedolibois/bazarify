@@ -43,7 +43,7 @@ export default function () {
   };
   
 
-  //TODO: printen einbinden nach der Medianight
+  //TODO: beim router im backend array abgreifen und dann printen
   // useEffect(() => {
   //   if (product !== '') {
   //     fetch('http://localhost:8080/api/addPendingProduct', {

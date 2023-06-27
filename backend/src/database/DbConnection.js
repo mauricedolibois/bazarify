@@ -119,7 +119,6 @@ export const dbConnection = {
         catch(error) { return (error.message) }
     },
     async insertOffer(product_id, seller_id) {
-        console.log("insertOffer" + product_id + seller_id)
         try {
             var id = DbIdHandler.generateOfferId()
             const validOffer = await InputValidation.validateOffer(id, product_id, seller_id)
