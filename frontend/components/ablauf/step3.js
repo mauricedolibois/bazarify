@@ -147,6 +147,15 @@ export default function () {
         }
     }, [allUpdatedOffers]);
 
+    const scrollRef = useRef(null);
+
+    useEffect(() => {
+    if (scrollRef.current) {
+        scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+    }, [scannedProducts]);
+
+
     const totalPrice = scannedProducts.reduce((total, product) => total + product.product_price, 0);
 
     return (
@@ -159,43 +168,44 @@ export default function () {
             </p>
             {//TODO: Tabelle als Komponente auslagern
             }
-            {scannedProducts.length > 0 && (
-                    <div className="rounded border border-ourLightGrey bg-white mb-4" style={{ maxHeight: "250px", overflowY: "auto" }}>
-                      <div className="overflow-hidden">
+                {scannedProducts.length > 0 && (
+                    <div className="rounded border border-ourLightGrey bg-white mb-4" style={{ maxHeight: "270px", overflowY: "auto" }}>
+                        <div className="overflow-hidden">
                         <table className="min-w-full text-left text-sm font-light rounded">
-                          <thead className="font-medium">
+                            <thead className="font-medium">
                             <tr>
-                              <th scope="col" className="px-8 py-4">
+                                <th scope="col" className="px-8 py-4">
                                 #
-                              </th>
-                              <th scope="col" className="px-8 py-4">
+                                </th>
+                                <th scope="col" className="px-8 py-4">
                                 Artikel
-                              </th>
-                              <th scope="col" className="px-8 py-4">
+                                </th>
+                                <th scope="col" className="px-8 py-4">
                                 Kategorie
-                              </th>
-                              <th scope="col" className="px-8 py-4">
+                                </th>
+                                <th scope="col" className="px-8 py-4">
                                 Preis
-                              </th>
-                              <th scope="col" className="px-8 py-4">
+                                </th>
+                                <th scope="col" className="px-8 py-4">
                                 Entfernen
-                              </th>
+                                </th>
                             </tr>
-                          </thead>
-                          <tbody>
+                            </thead>
+                            <tbody>
                             {scannedProducts.map((product, index) => (
-                              <Step3TableRow
+                                <Step3TableRow
                                 key={index}
                                 counter={index + 1}
                                 name={product.product_name}
                                 category={product.product_category}
                                 price={product.product_price}
                                 removeItem={() => handleRemoveProduct(index)}
-                              />
+                                />
                             ))}
-                          </tbody>
+                            <tr ref={scrollRef}></tr> {/* Empty row for scrolling to the bottom */}
+                            </tbody>
                         </table>
-                      </div>
+                        </div>
                     </div>
             )}
             <div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import UnderlinedInput from '../underlinedInput'
 import ButtonSmallJustIcon from '../buttons/ButtonSmallJustIcon';
 import ButtonYellowBorder from '../buttons/ButtonYellowBorder';
@@ -132,6 +132,14 @@ export default function () {
     }
   };
 
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+  if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
+  }, [pendingProducts]);
+
   return (
     <>
       <div>
@@ -259,6 +267,8 @@ export default function () {
                           removeItem={() => handleRemoveProduct(index)}
                         />
                       ))}
+                    <tr ref={scrollRef}></tr> {/* Empty row for scrolling to the bottom */}
+
                     </tbody>
                   </table>
                 </div>
