@@ -25,6 +25,7 @@ export default function () {
 
   const [pendingProducts, setPendingProducts] = useState([]);
   const [pendingOffers, setPendingOffers] = useState([]);
+  const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
 
   const handleAddPendingProduct = () => {
     console.log('add pending product');
@@ -60,6 +61,8 @@ export default function () {
         })
         .then(() => {
           setPendingProducts((pendingProducts) => [...pendingProducts, { product: product }]);
+          setShouldScrollToBottom(true); // Setze den Trigger für das Scrollen
+
         })
         .catch((error) => {
           console.log(error);
@@ -113,7 +116,7 @@ export default function () {
   
         const offers = await Promise.all(offerPromises);
   
-        const printResponse = await fetch('http://localhost:8080/api/PrintAllOffers', {
+        /*const printResponse = await fetch('http://localhost:8080/api/PrintAllOffers', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -121,12 +124,12 @@ export default function () {
           body: JSON.stringify({
             offers: offers,
           }),
-        });
+        }); */
   
         // Handle the response if needed
       } catch (error) {
         console.log(error);
-      }
+      } 
   
       setPendingProducts([]);
     }
@@ -135,10 +138,11 @@ export default function () {
   const scrollRef = useRef(null);
 
   useEffect(() => {
-  if (scrollRef.current) {
+    if (shouldScrollToBottom && scrollRef.current) { // Überprüfe den Trigger-Wert
       scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  }
-  }, [pendingProducts]);
+      setShouldScrollToBottom(false); // Setze den Trigger zurück, um erneutes Scrollen zu verhindern
+    }
+  }, [shouldScrollToBottom]);
 
   return (
     <>

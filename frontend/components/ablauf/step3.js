@@ -21,6 +21,7 @@ export default function () {
     const [scannedProducts, setScannedProducts] = useState([]);
     const [allOffers, setAllOffers] = useState([]);
     const [allUpdatedOffers, setAllUpdatedOffer] = useState('');
+    const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
 
     let input;
     let tmpAllUpdatedOffers = [];
@@ -99,6 +100,7 @@ export default function () {
                     .then((res) => res.json())
                     .then((data) => {
                         setScannedProducts((scannedProducts) => [...scannedProducts, data]);
+                        setShouldScrollToBottom(true);
                         setAllOffers((allOffers) => [...allOffers, offer]);
                         console.log(scannedProducts);
                         console.log(data);
@@ -150,10 +152,11 @@ export default function () {
     const scrollRef = useRef(null);
 
     useEffect(() => {
-    if (scrollRef.current) {
-        scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }
-    }, [scannedProducts]);
+        if (shouldScrollToBottom && scrollRef.current) { // Überprüfe den Trigger-Wert
+          scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+          setShouldScrollToBottom(false); // Setze den Trigger zurück, um erneutes Scrollen zu verhindern
+        }
+      }, [shouldScrollToBottom]);
 
 
     const totalPrice = scannedProducts.reduce((total, product) => total + product.product_price, 0);
