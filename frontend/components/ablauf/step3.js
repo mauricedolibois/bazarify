@@ -21,6 +21,7 @@ export default function () {
     const [scannedProducts, setScannedProducts] = useState([]);
     const [allOffers, setAllOffers] = useState([]);
     const [allUpdatedOffers, setAllUpdatedOffer] = useState('');
+    const [popupOpened, setPopupOpened] = useState(false);
 
     let input;
     let tmpAllUpdatedOffers = [];
@@ -31,6 +32,11 @@ export default function () {
             inputRef.current.focus();
         }
     }, []);
+
+    const closePopup = () => {
+        setPopupOpened(false);
+        // Callback
+    };
 
     const handleScan = () => {
         input = document.getElementById('Barcode des Produkts');
@@ -122,9 +128,15 @@ export default function () {
             setAllUpdatedOffer(tmpAllUpdatedOffers);
         });
 
+        //open popup
+        setPopupOpened(true);
+
         // Reset table to show no products
         setScannedProducts([]);
         setAllOffers([]);
+
+        console.log("TotalPrice")
+        console.log(totalPrice)
     };
 
     //update offer status to sold in db
@@ -154,7 +166,6 @@ export default function () {
             scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
         }
     }, [scannedProducts]);
-
 
     const totalPrice = scannedProducts.reduce((total, product) => total + product.product_price, 0);
 
@@ -230,10 +241,14 @@ export default function () {
             <h2>Gesamt: {totalPrice}€</h2>
             <hr className="border-ourLightGray"></hr>
             <div className="mt-4 gap-4 flex">
-
                 <ButtonYellowBorder icon={<UilCheck />} text="Verkauf abschließen" onClick={handleSubmit}></ButtonYellowBorder>
-                <CalculationPopup totalPrice={totalPrice}></CalculationPopup>
+                {popupOpened &&
+                    <>
+                        <CalculationPopup popupOpen={popupOpened} closePopup={closePopup} totalPrice={totalPrice}></CalculationPopup>
+                    </>
+                }
             </div>
         </>
     );
 }
+
