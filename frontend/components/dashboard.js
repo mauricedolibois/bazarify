@@ -25,6 +25,7 @@ function BazarCard({ name }) {
         }
     }, [bazar])
 
+
     const deleteBazar = (event) => {
         event.stopPropagation(); // Prevent event propagation
         console.log("clicked")
@@ -60,6 +61,20 @@ function BazarCard({ name }) {
 }
 
 export default function () {
+
+    function loadExampleData() {
+        fetch('http://localhost:8080/api/loadExampleData', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(res => res.json())
+        .then(data => {
+            window.location.reload()
+        })
+        .catch(error => console.log(error))
+    }
+
     let { setStep } = useContext(BazarContext)
     const [bazars, setBazars] = useState(undefined)
 
@@ -85,6 +100,9 @@ export default function () {
                     <Link href="https://www.youtube.com/watch?v=EngW7tLk6R8" target='_blank'>
                         <ButtonBigNoColor text="Tutorial anschauen" icon={<UilPlay />}>
                         </ButtonBigNoColor>
+                    </Link>
+                    <Link href="/" onClick={() => loadExampleData()}>
+                        <ButtonBigNoColor text="Demonstration laden" icon={<UilPlay />}></ButtonBigNoColor>
                     </Link>
                 </div>
                 <h2 className="mt-16">Deine Basare</h2>
