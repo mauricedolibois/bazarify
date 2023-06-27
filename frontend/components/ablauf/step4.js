@@ -18,6 +18,7 @@ export default function AbholungPage() {
     const [unsoldProductsCount, setUnsoldProductsCount] = useState(0);
     const [provision, setProvision] = useState(0);
     const [productReclined, setProductReclined] = useState(0);
+    const [searchString, setSearchString] = useState('');
 
 
 
@@ -45,7 +46,7 @@ export default function AbholungPage() {
     // search seller
     const searchSeller = () => {
         const searchBar = document.getElementById("sellerSearchBar");
-        const searchString = searchBar.value.toLowerCase();
+        setSearchString(searchBar.value.toLowerCase());
         let tmpSearchedSeller = [];
 
         console.log("search string: ", searchString);
@@ -140,6 +141,7 @@ export default function AbholungPage() {
                     <div className="">
                         <div className="relative mt-2 rounded-md shadow-sm">
                             <input type="text" onChange={searchSeller} className="w-full rounded py-2 px-4 text-ourSuperDarkGray placeholder:text-ourGray focus:outline-ourPrimaryColor" id="sellerSearchBar" placeholder="Verkäufer suchen..." />
+                            {searchString !== '' &&
                             <div>
                                 {searchedSeller.map((seller) => (
                                     <div key={seller.id} onClick={() => handleSellerClick(seller)} className="px-4 py-2 cursor-pointer bg-white border border-ourLightGray rounded hover:text-ourPrimaryColorHover">
@@ -147,6 +149,7 @@ export default function AbholungPage() {
                                     </div>
                                 ))}
                             </div>
+                            }
                         </div>
                     </div>
                     {/* <ButtonSmallJustIcon tooltip="Verkäufer finden" icon={<UilSearch />} /> */}
