@@ -10,11 +10,14 @@ export default function AbholungPage() {
     const [allSellers, setAllSellers] = useState([]);
     const [searchedSeller, setSearchedSeller] = useState([]);
     const [allProductsFromSeller, setAllProductsFromSeller] = useState([]);
+    const [soldProductsFromSeller, setSoldProductsFromSeller] = useState([]);
+    const [unsoldProductsFromSeller, setUnsoldProductsFromSeller] = useState([]);
     const [clickedSellerID, setClickedSellerID] = useState(0);
     const [sellerPayback, setSellerPayback] = useState(0);
     const [name, setName] = useState('Kein Verkäufer ausgewählt');
     const [unsoldProductsCount, setUnsoldProductsCount] = useState(0);
     const [provision, setProvision] = useState(0);
+    const [productReclined, setProductReclined] = useState(0);
 
 
 
@@ -76,34 +79,55 @@ export default function AbholungPage() {
                 .then(data => {
                     console.log("products from seller: ", data);
                     setAllProductsFromSeller(data);
-                    calculateSellerPayback(data);
+                    data.map(product => {
+                        if (product.offer_status === "sold") {
+                            setSoldProductsFromSeller((soldProductsFromSeller) => [...soldProductsFromSeller, product]);
+                        } else if (product.offer_status === "open") {
+                            setUnsoldProductsFromSeller((unsoldProductsFromSeller) => [...unsoldProductsFromSeller, product]);
+                        }
+                    });
                 })
                 .catch(error => console.log(error));
         }
     }, [clickedSellerID]);
 
-    const calculateSellerPayback = (products) => {
+    // calculate seller payback
+    useEffect(() => {
+        console.log("sold products: ", soldProductsFromSeller);
         let tmpSellerPayback = 0;
-        products.map(product => {
-            if (product.offer_status === "sold") {
-                tmpSellerPayback += product.product_price;
-            }
+        soldProductsFromSeller.map(product => {
+            tmpSellerPayback += product.product_price;
         });
         tmpSellerPayback = tmpSellerPayback - (tmpSellerPayback * provision / 100); // subtract provision
         setSellerPayback(tmpSellerPayback.toFixed(2));
-    };
+    }, [soldProductsFromSeller]);
 
     const getUnsoldProductsText = () => {
-        if (unsoldProductsCount === 0) {
-            return 'Keine nicht verkaufte Produkte vorhanden';
+        console.log("unsold products: ", unsoldProductsFromSeller);
+        if (unsoldProductsFromSeller.length === 0) {
+            return 'Es wurden alle Produkte verkauft';
+        } else if (unsoldProductsFromSeller.length === 1) {
+            return `1 nicht verkauftes Produkt vorhanden`;
         } else {
-            return `${unsoldProductsCount} nicht verkaufte Produkte vorhanden`;
+            return `${unsoldProductsFromSeller.length} nicht verkaufte Produkte vorhanden`;
         }
     };
 
     function setStatusToPickedUp(product_id) {
         console.log("Status ändern");
+        setProductReclined(product_id);
     }
+
+    useEffect(() => {
+        if (productReclined !== 0) {
+            fetch('http://localhost:8080/api/product-recline?id='+productReclined, {method: 'PUT'})
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                })
+                .catch(error => console.log(error))
+        }
+    }, [productReclined])
 
     return (
         <>
@@ -165,7 +189,7 @@ export default function AbholungPage() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {allProductsFromSeller.map((product) => (
+                                    {unsoldProductsFromSeller.map((product) => (
                                         <tr key={product.id} className="bg-white dark:border-ourDarkGray dark:bg-ourSuperDarkGray">
                                             <td></td>
                                             {
