@@ -17,7 +17,7 @@ export default function AbholungPage() {
     const [name, setName] = useState('Kein Verkäufer ausgewählt');
     const [unsoldProductsCount, setUnsoldProductsCount] = useState(0);
     const [provision, setProvision] = useState(0);
-    const [productReclined, setProductReclined] = useState(0);
+    const [productReclinedID, setProductReclinedID] = useState(0);
     const [searchString, setSearchString] = useState('');
 
 
@@ -116,19 +116,20 @@ export default function AbholungPage() {
 
     function setStatusToPickedUp(product_id) {
         console.log("Status ändern");
-        setProductReclined(product_id);
+        setProductReclinedID(product_id);
     }
 
     useEffect(() => {
-        if (productReclined !== 0) {
-            fetch('http://localhost:8080/api/product-recline?id='+productReclined, {method: 'PUT'})
+        if (productReclinedID !== 0) {
+            console.log("productReclinedID: ", productReclinedID);
+            fetch('http://localhost:8080/api/product-recline?id='+productReclinedID, {method: 'PUT'})
                 .then(res => res.json())
                 .then(data => {
                     console.log(data)
                 })
                 .catch(error => console.log(error))
         }
-    }, [productReclined])
+    }, [productReclinedID])
 
     return (
         <>
@@ -201,7 +202,7 @@ export default function AbholungPage() {
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_name}</td>
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_category}</td>
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_price}</td>
-                                            <td className="whitespace-nowrap px-8 py-4"><button className='hover:text-ourPrimaryColorHover' onClick={() => setStatusToPickedUp(product.product_id)}><UilCheck size="17" /></button></td>
+                                            <td className="whitespace-nowrap px-8 py-4"><button className='hover:text-ourPrimaryColorHover' onClick={() => setProductReclinedID(product.product_id)}><UilCheck size="17" /></button></td>
                                         </tr>
                                     ))}
                                 </tbody>
