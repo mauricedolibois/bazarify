@@ -8,6 +8,8 @@ import { UilInfoCircle } from '@iconscout/react-unicons'
 import ButtonGrayBorder from '../buttons/ButtonGrayBorder';
 import { UilPrint } from '@iconscout/react-unicons'
 import { UilHistory } from '@iconscout/react-unicons'
+import ProductTable from '../productTable';
+import Step3TableRow from '../step3TableRow';
 
 export default function () {
   const [sellerFirstName, setSellerFirstName] = useState('');
@@ -56,8 +58,8 @@ export default function () {
           }
           return res.json();
         })
-        .then((data) => {
-          setPendingProducts(data);
+        .then(() => {
+          setPendingProducts((pendingProducts) => [...pendingProducts, { product: product }]);
         })
         .catch((error) => {
           console.log(error);
@@ -66,7 +68,9 @@ export default function () {
   }, [product]);
 
 
-
+  const handleRemoveProduct = (index) => {
+    setPendingProducts((scannedProducts) => scannedProducts.filter((_, i) => i !== index));
+};
  
 
   const handleAddOffer = async () => {
@@ -220,6 +224,46 @@ export default function () {
           </div>
 
         </div>
+
+        {pendingProducts.length > 0 && (
+                <div className="rounded border border-ourLightGrey bg-white mb-4">
+                <div className="overflow-hidden">
+                  <table className="min-w-full text-left text-sm font-light rounded">
+                    <thead className="font-medium">
+                      <tr>
+                        <th scope="col" className="px-8 py-4">
+                          #
+                        </th>
+                        <th scope="col" className="px-8 py-4">
+                          Artikel
+                        </th>
+                        <th scope="col" className="px-8 py-4">
+                          Kategorie
+                        </th>
+                        <th scope="col" className="px-8 py-4">
+                          Preis
+                        </th>
+                        <th scope="col" className="px-8 py-4">
+                          Entfernen
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {pendingProducts.map((product, index) => (
+                        <Step3TableRow
+                          key={index}
+                          counter={index + 1}
+                          name={product.product.product_name}
+                          category={product.product.product_category}
+                          price={product.product.product_price}
+                          removeItem={() => handleRemoveProduct(index)}
+                        />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
 
       </div>
       {/*
