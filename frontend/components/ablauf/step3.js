@@ -1,10 +1,11 @@
 import ButtonSmallJustIcon from '../buttons/ButtonSmallJustIcon';
-import { UilCheck, UilInfoCircle, UilEnter } from '@iconscout/react-unicons';
+import { UilCheck, UilInfoCircle } from '@iconscout/react-unicons';
 import CalculationPopup from '../CalculationPopup';
 import { useState, useEffect, useRef } from 'react';
-import Step3TableRow from '../Step3TableRow';
+import Step3TableRow from '../step3TableRow';
 import ButtonYellowBorder from '../buttons/ButtonYellowBorder';
 import ProductTable from '../productTable';
+
 
 
 //TODO: check if input is a number
@@ -32,11 +33,6 @@ export default function () {
         }
     }, []);
 
-    const closePopup = () => {
-        setPopupOpened(false);
-        // Callback
-    };
-
     const handleScan = () => {
         input = document.getElementById('Barcode des Produkts');
         const inputValue = input.value.trim();
@@ -61,18 +57,6 @@ export default function () {
         setScannedProducts((scannedProducts) => scannedProducts.filter((_, i) => i !== index));
     };
 
-    //const totalPrice = scannedProducts.reduce((total, product) => total + product.product_price, 0);
-    const [totalPrice, setTotalPrice] = useState(scannedProducts.reduce((total, product) => total + product.product_price, 0));
-
-
-    // Use Effect hook to always refresh the totalPrice whenever a new product is added to the scannedProducts array
-    useEffect(() => {
-        setTotalPrice(scannedProducts.reduce((total, product) => total + product.product_price, 0));
-    }, [scannedProducts, popupOpened]);
-
-    const getFinalTotalPrice = () => {
-        return totalPrice;
-    }
 
     //handle enter key
     useEffect(() => {
@@ -140,15 +124,9 @@ export default function () {
             setAllUpdatedOffer(tmpAllUpdatedOffers);
         });
 
-        //open popup
-        setPopupOpened(true);
-
         // Reset table to show no products
         setScannedProducts([]);
         setAllOffers([]);
-
-        console.log("TotalPrice" + totalPrice)
-
     };
 
     //update offer status to sold in db
@@ -167,7 +145,7 @@ export default function () {
                     })
                     .catch((error) => console.log(error));
             });
-
+            
         }
     }, [allUpdatedOffers]);
 
@@ -180,6 +158,9 @@ export default function () {
         }
       }, [shouldScrollToBottom]);
 
+
+    const totalPrice = scannedProducts.reduce((total, product) => total + product.product_price, 0);
+
     return (
         <>
             <h1>3. Verkauf</h1>
@@ -188,8 +169,50 @@ export default function () {
                 Scanne dafür einfach die Codes der Produkte ein, welche ein Kunde kaufen möchte. Wenn du alle Verkäufe
                 eingescannt hast, kannst du weiter zum nächsten Schritt.
             </p>
-            <div className='border-ourLightGray border bg-white rounded mb-8'>
-                <div className="flex flex-row justify-between px-8 py-4 gap-16">
+            {//TODO: Tabelle als Komponente auslagern
+            }
+                {scannedProducts.length > 0 && (
+                    <div className="rounded border border-ourLightGrey bg-white mb-4" style={{ maxHeight: "270px", overflowY: "auto" }}>
+                        <div className="overflow-hidden">
+                        <table className="min-w-full text-left text-sm font-light rounded">
+                            <thead className="font-medium">
+                            <tr>
+                                <th scope="col" className="px-8 py-4">
+                                #
+                                </th>
+                                <th scope="col" className="px-8 py-4">
+                                Artikel
+                                </th>
+                                <th scope="col" className="px-8 py-4">
+                                Kategorie
+                                </th>
+                                <th scope="col" className="px-8 py-4">
+                                Preis
+                                </th>
+                                <th scope="col" className="px-8 py-4">
+                                Entfernen
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {scannedProducts.map((product, index) => (
+                                <Step3TableRow
+                                key={index}
+                                counter={index + 1}
+                                name={product.product_name}
+                                category={product.product_category}
+                                price={product.product_price}
+                                removeItem={() => handleRemoveProduct(index)}
+                                />
+                            ))}
+                            <tr ref={scrollRef}></tr> {/* Empty row for scrolling to the bottom */}
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+            )}
+            <div>
+                <div className="flex flex-row justify-between px-8 py-4 mb-8 gap-32 border-ourLightGray border bg-white rounded ">
                     <input
                         className="w-full truncate border-b border-ourLightGray text-ourDarkGray focus:border-ourPrimaryColor focus:outline-none"
                         name="name"
@@ -198,72 +221,22 @@ export default function () {
                         ref={inputRef}
                         placeholder="Barcode des Produkts"
                     />
-                    <div className='flex flex-row gap-4'>
-                        <ButtonSmallJustIcon icon={<UilEnter></UilEnter>} onClick={() => handleScan()}></ButtonSmallJustIcon>
-
-
-                        <button title="Test" className="inline-flex flex-col justify-center px-4 py-2 border border-ourGray cursor-pointer hover:border-ourDarkGray hover:text-ourDarkGray  text-ourGray rounded-lg">
-                            <span><UilInfoCircle></UilInfoCircle></span>
-                        </button >
-                    </div>
-
-                </div>
-
-            </div >
-            {//TODO: Tabelle als Komponente auslagern
-            }
-            {scannedProducts.length > 0 && (
-                <div className="rounded border border-ourLightGray bg-white mb-8" style={{ maxHeight: "216px", overflowY: "auto" }}>
-                    <div className="overflow-hidden">
-                        <table className="min-w-full text-left text-sm font-light rounded">
-                            <thead className="font-medium">
-                                <tr>
-                                    <th scope="col" className="px-8 py-4">
-                                        #
-                                    </th>
-                                    <th scope="col" className="px-8 py-4">
-                                        Artikel
-                                    </th>
-                                    <th scope="col" className="px-8 py-4">
-                                        Kategorie
-                                    </th>
-                                    <th scope="col" className="px-8 py-4">
-                                        Preis
-                                    </th>
-                                    <th scope="col" className="px-8 py-4">
-                                        Entfernen
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {scannedProducts.map((product, index) => (
-                                    <Step3TableRow
-                                        key={index}
-                                        counter={index + 1}
-                                        name={product.product_name}
-                                        category={product.product_category}
-                                        price={product.product_price}
-                                        removeItem={() => handleRemoveProduct(index)}
-                                    />
-                                ))}
-                                <tr ref={scrollRef}></tr> {/* Empty row for scrolling to the bottom */}
-                            </tbody>
-                        </table>
+                    <div className="flex flex-row items-center">
+                        <UilInfoCircle className="mr-4 text-ourDarkGray"></UilInfoCircle>
+                        <p className="mr-2 text-sm">
+                            Klicke das Eingabefeld an und scanne den Barcode des Produkts ein. Alternativ kannst du ihn
+                            auch eintippen.
+                        </p>
                     </div>
                 </div>
-            )}
-
+            </div>
             <h2>Gesamt: {totalPrice}€</h2>
             <hr className="border-ourLightGray"></hr>
             <div className="mt-4 gap-4 flex">
+
                 <ButtonYellowBorder icon={<UilCheck />} text="Verkauf abschließen" onClick={handleSubmit}></ButtonYellowBorder>
-                {popupOpened &&
-                    <>
-                        <CalculationPopup popupOpen={popupOpened} closePopup={closePopup} getFinalTotalPrice={getFinalTotalPrice}></CalculationPopup>
-                    </>
-                }
+                <CalculationPopup totalPrice={totalPrice}></CalculationPopup>
             </div>
         </>
     );
 }
-
