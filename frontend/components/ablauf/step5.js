@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import FormInput from '../formInput';
+import { Cell, PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 
 function Card({ title, description, info }) {
   return (
@@ -11,13 +12,82 @@ function Card({ title, description, info }) {
   );
 }
 
-export default function () {
+
+function Graph() {
+
+  const [soldOffers, setSoldOffers] = useState([]);
+  const [unsoldOffers, setUnsoldOffers] = useState([]);
+  const [reclinedOffers, setReclinedOffers] = useState([]);
+  
+  //get all offers
+  useEffect(() => {
+    fetch('http://localhost:8080/api/allOffers', {method: 'GET'})
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        data.map((offer) => {
+             if (offer.state === "sold") {
+                 setSoldOffers(soldOffers => [...soldOffers, offer]);
+             }
+             else if (offer.state === "open") {
+                 setUnsoldOffers(unsoldOffers => [...unsoldOffers, offer]);
+             }
+             else {
+                 setReclinedOffers(reclinedOffers => [...reclinedOffers, offer]);
+             }
+         })
+        
+      })
+      .catch(error => console.log(error))
+  }, [])
+
+  console.log("soldOffers: ",soldOffers.length/2);
+  console.log("unsoldOffers: ",unsoldOffers.length/2);
+  console.log("reclinedOffers: ",reclinedOffers.length/2);
+
+  //durch 2 geteilt weil alles doppelt gerendert wird
+  //TODO: doppelt gerendertes entfernen
+  const chartData = [
+    { name: 'Verkaufte Produkte', value: soldOffers.length/2 },
+    { name: 'Offene Produkte', value: unsoldOffers.length/2 },
+    { name: 'Liegengebliebene Produkte', value: reclinedOffers.length/2 },
+  ];
+
+  const COLORS = ['#DEAE31', '#5E5E5E', '#A6A6A6'];
+
+  return (
+    <ResponsiveContainer width="100%" height={300}>
+      <PieChart>
+        <Pie
+          data={chartData}
+          cx="50%"
+          cy="50%"
+          outerRadius={80}
+          fill="#8884d8"
+          dataKey="value"
+          label
+        >
+          {chartData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Legend />
+        <Tooltip />
+      </PieChart>
+    </ResponsiveContainer>
+  );
+}
+
+export default function Analytics() {
   const [revenue, setRevenue] = useState(0);
   const [profit, setProfit] = useState(0);
   const [provision, setProvision] = useState(0);
   const [tips, setTips] = useState('0');
   const [totalSellerCount, setTotalSellerCount] = useState(0);
   const [tipsAverage, setTipsAverage] = useState(0);
+  const [soldOffers, setSoldOffers] = useState([]);
+  const [unsoldOffers, setUnsoldOffers] = useState([]);
+  const [reclinedOffers, setReclinedOffers] = useState([]);
 
   useEffect(() => {
     fetch('http://localhost:8080/api/analytics', { method: 'GET' })
@@ -27,24 +97,54 @@ export default function () {
         setRevenue(data.Revenue);
         setProvision(data.Provision);
         setTotalSellerCount(data.Sellers);
-        setTips(data.Tips.toString());
-        setTipsAverage((data.Revenue / data.Tips * 100).toFixed(2))
+
+        if (data.Tips) setTips(data.Tips.toString());
+        if (
+          data.Revenue > 0 &&
+          data.Tips !== 0 &&
+          data.Tips !== null &&
+          tips !== 0 &&
+          tips !== null
+        ) {
+          setTipsAverage((data.Revenue / data.Tips / 100).toFixed(2));
+        } else {
+          setTipsAverage(0);
+        }
       });
   }, []);
 
+  useEffect(() => {
+    fetch('http://localhost:8080/api/allOffers', { method: 'GET' })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        const soldOffers = [];
+        const unsoldOffers = [];
+        const reclinedOffers = [];
+        data.forEach(offer => {
+          if (offer.state === 'sold') {
+            soldOffers.push(offer);
+          } else if (offer.state === 'open') {
+            unsoldOffers.push(offer);
+          } else {
+            reclinedOffers.push(offer);
+          }
+        });
+        setSoldOffers(soldOffers);
+        setUnsoldOffers(unsoldOffers);
+        setReclinedOffers(reclinedOffers);
+      })
+      .catch(error => console.log(error));
+  }, []);
 
-    // set tips when input changes
-    const handleTipsChange = (e) => {
-        const input = e.target.value;
-        const regex = /^([0-9]{0,7}([.,][0-9]{0,2})?)?$/;
-        if (regex.test(input)) {
-            setTips(input);
-        }
-    };
-  
-  
+  const handleTipsChange = (e) => {
+    const input = e.target.value;
+    const regex = /^([0-9]{0,7}([.,][0-9]{0,2})?)?$/;
+    if (regex.test(input)) {
+      setTips(input);
+    }
+  };
 
-  // update tips in db when input hasn't changed for 1 second (safe api calls)
   useEffect(() => {
     let timeoutId;
 
@@ -75,13 +175,11 @@ export default function () {
     return () => clearTimeout(timeoutId);
   }, [tips]);
 
-  // update tips in frontend
   useEffect(() => {
-    if (tips !== '0') {
-        setTipsAverage((parseFloat(tips.replace(',', '.')) / revenue * 100).toFixed(2));
-        console.log(tipsAverage);
+    if (tips !== 0) {
+      setTipsAverage((parseFloat(tips.replace(',', '.')) / revenue * 100).toFixed(2));
     }
-  }, [tips, totalSellerCount]);
+  }, [tips, revenue]);
 
   return (
     <>
@@ -94,10 +192,13 @@ export default function () {
         <div className="grid grid-cols-3 gap-6">
           <Card title={`${revenue}€`} description="Umsatz" />
           <Card title={`${(revenue * provision) / 100}€`} description={`Profit bei aktueller Provisionsrate (${provision}%)`} />
-          <Card title={<FormInput id="tips" value={tips} unit="€" onChange={handleTipsChange} />} description="Trinkgeld" info="Das Trinkgeld musst du manuell eintragen" />
-          <div className="col-span-2 row-span-2 rounded-md border border-ourLightGray bg-white p-4 shadow-md"></div>
-          <Card title={`${tipsAverage} %`} description="Ø Trinkgeld" />
           <Card title={totalSellerCount} description="Verkäufer" />
+
+          <div className="col-span-2 row-span-2 rounded-md border border-ourLightGray bg-white p-4 shadow-md">
+            <Graph soldOffers={soldOffers} unsoldOffers={unsoldOffers} reclinedOffers={reclinedOffers} />
+          </div>
+          <Card title={<FormInput id="tips" value={tips} unit="€" onChange={handleTipsChange} />} description="Trinkgeld" info="Das Trinkgeld musst du manuell eintragen" />
+          <Card title={`${tipsAverage} %`} description="Ø Trinkgeld" />
         </div>
       </div>
     </>
