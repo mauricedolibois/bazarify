@@ -26,12 +26,21 @@ offerRouter.get("/allOffers", (req, res) => {
 
 offerRouter.post("/offer", async (req, res) => {
     try {
+        console.log(req.body)
         const p = req.body.product;
         const s = req.body.seller;
-        const prod = await dbConnection.insertProduct(p.product_name,p.product_price,p.product_category)
         const sell = await dbConnection.insertSeller(s.seller_name,s.seller_firstname,s.seller_email,s.seller_phone)
-        const offer = await dbConnection.insertOffer(prod.product_id, sell.seller_id);
+
+        let offer = [];
+        await p.map(async (product) => {
+        const prod = await dbConnection.insertProduct(product.product.product_name,product.product.product_price,product.product.product_category)
+        const off = await dbConnection.insertOffer(prod.product_id, sell.seller_id)
+        console.log(off)
+        offer.push({off});
+        })
+        //TODO: hier den offer-array zum printen nehmen 
         res.json(offer);  
+        //TODO: es wird immer null gesendet nie fehlermeldung
     } catch (error) {
         res.json(error.message); 
     }

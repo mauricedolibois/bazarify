@@ -13,7 +13,7 @@ export default function () {
     const [bazarDescription, setBazarDescription] = useState(' ');
     const [bazar, setBazar] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    let { step, setStep, currentBazar } = useContext(BazarContext)
+    let {setStep, setCurrentBazar } = useContext(BazarContext)
 
     const handleAddBazar = () => {
         const bazar = {
