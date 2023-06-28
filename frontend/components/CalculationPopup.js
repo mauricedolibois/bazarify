@@ -3,28 +3,19 @@ import { UilMultiply, UilCalculator, UilArrowRight } from '@iconscout/react-unic
 import FormInput from './formInput';
 import ButtonSmallJustIcon from './buttons/ButtonSmallJustIcon';
 
-const CalculationPopup = ({ popupOpen, closePopup, getFinalTotalPrice }) => {
-    const [isOpen, setIsOpen] = useState(popupOpen);
+const CalculationPopup = ({ totalPrice }) => {
+    const [isOpen, setIsOpen] = useState(false);
     const popupRef = useRef(null);
     const [cashReceived, setCashReceived] = useState('');
-    const [finalTotalPrice, setFinalTotalPrice] = useState(getFinalTotalPrice());
+    const totalAmount = totalPrice;
 
     const openPopup = () => {
         setIsOpen(true);
     };
 
-    const closeThePopup = () => {
+    const closePopup = () => {
         setIsOpen(false);
-        closePopup()
     };
-
-    useEffect(() => {
-        setIsOpen(popupOpen); // Update isOpen state when popupOpen prop changes
-    }, [popupOpen]);
-
-    useEffect(() => {
-        setFinalTotalPrice(getFinalTotalPrice());
-    }, [isOpen])
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -41,8 +32,7 @@ const CalculationPopup = ({ popupOpen, closePopup, getFinalTotalPrice }) => {
     }, []);
 
     const calculateChange = () => {
-        if (finalTotalPrice == 0) return 0;
-        const change = parseFloat(cashReceived.replace(',', '.')) - finalTotalPrice;
+        const change = parseFloat(cashReceived.replace(',', '.')) - totalAmount;
         return change > 0 ? change : 0;
     };
 
@@ -57,19 +47,21 @@ const CalculationPopup = ({ popupOpen, closePopup, getFinalTotalPrice }) => {
 
     return (
         <div>
+            <div
+                onClick={openPopup}
+                className="inline-flex items-center justify-center align-start px-4 py-2 border text-ourDarkGray border-ourGray cursor-pointer hover:text-black hover:border-black rounded-lg"
+            >
+                <span>
+                    <UilCalculator />
+                </span>
+                <p className="whitespace-nowrap ml-1 text-sm">Rückgeld berechnen</p>
+            </div>
             {isOpen && (
-                <div className="fixed w-screen h-screen top-0 left-0 bg-black/75 flex justify-center z-50 items-center">
+                <div className="fixed w-screen h-screen top-0 left-0 bg-black/75 flex justify-center items-center">
                     <div className="w-1/2 h-1/2 bg-white rounded-lg relative p-8" ref={popupRef}>
-                        {//<UilMultiply className="absolute top-4 right-4 cursor-pointer" onClick={closeThePopup} />
-                        }
+                        <UilMultiply className="absolute top-4 right-4 cursor-pointer" onClick={closePopup} />
                         <h2 className="mb-2">Wie viel Geld haben Sie erhalten?</h2>
-                        <FormInput
-                            name="Erhaltenes Geld"
-                            unit="€"
-                            onChange={(e) => {
-                                setCashReceived(e.target.value.replace(',', '.'));
-                            }}
-                        />
+                        <FormInput name="Erhaltenes Geld" unit="€" onChange={(e) => setCashReceived(e.target.value.replace(',', '.'))} />
                         <div className="mt-4">
                             {cashReceived && (
                                 <>
@@ -84,13 +76,10 @@ const CalculationPopup = ({ popupOpen, closePopup, getFinalTotalPrice }) => {
                                 </>
                             )}
                         </div>
-
                         <div className="absolute bottom-4 right-4 cursor-pointer">
                             <ButtonSmallJustIcon onClick={closePopup} icon={<UilArrowRight />} />
-
                         </div>
                     </div>
-
                 </div>
             )}
         </div>
