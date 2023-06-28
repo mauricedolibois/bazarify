@@ -1,11 +1,10 @@
 import ButtonSmallJustIcon from '../buttons/ButtonSmallJustIcon';
-import { UilCheck, UilInfoCircle } from '@iconscout/react-unicons';
+import { UilCheck, UilInfoCircle, UilEnter } from '@iconscout/react-unicons';
 import CalculationPopup from '../CalculationPopup';
 import { useState, useEffect, useRef } from 'react';
 import Step3TableRow from '../Step3TableRow';
 import ButtonYellowBorder from '../buttons/ButtonYellowBorder';
 import ProductTable from '../productTable';
-
 
 
 //TODO: check if input is a number
@@ -183,10 +182,35 @@ export default function () {
                 Scanne dafür einfach die Codes der Produkte ein, welche ein Kunde kaufen möchte. Wenn du alle Verkäufe
                 eingescannt hast, kannst du weiter zum nächsten Schritt.
             </p>
+            <div className='border-ourLightGray border bg-white rounded mb-8'>
+                <div className="flex flex-row justify-between px-8 py-4 gap-8">
+                    <input
+                        className="w-full truncate border-b border-ourLightGray text-ourDarkGray focus:border-ourPrimaryColor focus:outline-none"
+                        name="name"
+                        id="Barcode des Produkts"
+                        type="text"
+                        ref={inputRef}
+                        placeholder="Barcode des Produkts"
+                    />
+                    <ButtonSmallJustIcon icon={<UilEnter></UilEnter>} onClick={() => handleScan()}></ButtonSmallJustIcon>
+                    <ButtonSmallJustIcon icon={<UilInfoCircle></UilInfoCircle>} onClick={() => handleScan()}></ButtonSmallJustIcon>
+
+                </div>
+                <div className="border-t border-ourLightGray p-4">
+                    <div className="flex flex-row items-center">
+                        <div className="mr-4 text-ourDarkGray text-2xl">
+                            <UilInfoCircle />
+                        </div>
+                        <p className="mr-2 text-sm">
+                            Klicke das Eingabefeld an und scanne den Barcode des Produkts ein. Alternativ kannst du ihn auch eintippen.
+                        </p>
+                    </div>
+                </div>
+            </div >
             {//TODO: Tabelle als Komponente auslagern
             }
             {scannedProducts.length > 0 && (
-                <div className="rounded border border-ourLightGrey bg-white mb-4" style={{ maxHeight: "270px", overflowY: "auto" }}>
+                <div className="rounded border border-ourLightGrey bg-white mb-8" style={{ maxHeight: "216px", overflowY: "auto" }}>
                     <div className="overflow-hidden">
                         <table className="min-w-full text-left text-sm font-light rounded">
                             <thead className="font-medium">
@@ -225,25 +249,7 @@ export default function () {
                     </div>
                 </div>
             )}
-            <div>
-                <div className="flex flex-row justify-between px-8 py-4 mb-8 gap-32 border-ourLightGray border bg-white rounded ">
-                    <input
-                        className="w-full truncate border-b border-ourLightGray text-ourDarkGray focus:border-ourPrimaryColor focus:outline-none"
-                        name="name"
-                        id="Barcode des Produkts"
-                        type="text"
-                        ref={inputRef}
-                        placeholder="Barcode des Produkts"
-                    />
-                    <div className="flex flex-row items-center">
-                        <UilInfoCircle className="mr-4 text-ourDarkGray"></UilInfoCircle>
-                        <p className="mr-2 text-sm">
-                            Klicke das Eingabefeld an und scanne den Barcode des Produkts ein. Alternativ kannst du ihn
-                            auch eintippen.
-                        </p>
-                    </div>
-                </div>
-            </div>
+
             <h2>Gesamt: {totalPrice}€</h2>
             <hr className="border-ourLightGray"></hr>
             <div className="mt-4 gap-4 flex">
