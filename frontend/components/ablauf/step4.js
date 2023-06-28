@@ -10,15 +10,11 @@ export default function AbholungPage() {
     const [allSellers, setAllSellers] = useState([]);
     const [searchedSeller, setSearchedSeller] = useState([]);
     const [allProductsFromSeller, setAllProductsFromSeller] = useState([]);
-    const [soldProductsFromSeller, setSoldProductsFromSeller] = useState([]);
-    const [unsoldProductsFromSeller, setUnsoldProductsFromSeller] = useState([]);
     const [clickedSellerID, setClickedSellerID] = useState(0);
     const [sellerPayback, setSellerPayback] = useState(0);
     const [name, setName] = useState('Kein Verkäufer ausgewählt');
     const [unsoldProductsCount, setUnsoldProductsCount] = useState(0);
     const [provision, setProvision] = useState(0);
-    const [productReclinedID, setProductReclinedID] = useState(0);
-    const [searchString, setSearchString] = useState('');
 
 
 
@@ -46,7 +42,7 @@ export default function AbholungPage() {
     // search seller
     const searchSeller = () => {
         const searchBar = document.getElementById("sellerSearchBar");
-        setSearchString(searchBar.value.toLowerCase());
+        const searchString = searchBar.value.toLowerCase();
         let tmpSearchedSeller = [];
 
         console.log("search string: ", searchString);
@@ -81,64 +77,34 @@ export default function AbholungPage() {
                 .then(data => {
                     console.log("products from seller: ", data);
                     setAllProductsFromSeller(data);
-                    data.map(product => {
-                        if (product.offer_status === "sold") {
-                            setSoldProductsFromSeller((soldProductsFromSeller) => [...soldProductsFromSeller, product]);
-                        } else if (product.offer_status === "open") {
-                            setUnsoldProductsFromSeller((unsoldProductsFromSeller) => [...unsoldProductsFromSeller, product]);
-                        }
-                    });
+                    calculateSellerPayback(data);
                 })
                 .catch(error => console.log(error));
         }
     }, [clickedSellerID]);
 
-    // calculate seller payback
-    useEffect(() => {
-        console.log("sold products: ", soldProductsFromSeller);
+    const calculateSellerPayback = (products) => {
         let tmpSellerPayback = 0;
-        soldProductsFromSeller.map(product => {
-            tmpSellerPayback += product.product_price;
+        products.map(product => {
+            if (product.offer_status === "sold") {
+                tmpSellerPayback += product.product_price;
+            }
         });
         tmpSellerPayback = tmpSellerPayback - (tmpSellerPayback * provision / 100); // subtract provision
         setSellerPayback(tmpSellerPayback.toFixed(2));
-    }, [soldProductsFromSeller]);
+    };
 
     const getUnsoldProductsText = () => {
-        console.log("unsold products: ", unsoldProductsFromSeller);
-        if (unsoldProductsFromSeller.length === 0) {
-            return 'Es wurden alle Produkte verkauft';
-        } else if (unsoldProductsFromSeller.length === 1) {
-            return `1 nicht verkauftes Produkt vorhanden`;
+        if (unsoldProductsCount === 0) {
+            return 'Keine nicht verkaufte Produkte vorhanden';
         } else {
-            return `${unsoldProductsFromSeller.length} nicht verkaufte Produkte vorhanden`;
+            return `${unsoldProductsCount} nicht verkaufte Produkte vorhanden`;
         }
     };
 
-    const handleReclineProduct = (productID) => {
-        console.log("product reclined: ", productID);
-        setProductReclinedID(productID);
-        //remove product from unsold products
-        let tmpUnsoldProducts = [];
-        unsoldProductsFromSeller.map(product => {
-            if (product.product_id !== productID) {
-                tmpUnsoldProducts.push(product);
-            }
-        });
-        setUnsoldProductsFromSeller(tmpUnsoldProducts);
-    };
-
-    useEffect(() => {
-        if (productReclinedID !== 0) {
-            console.log("productReclinedID: ", productReclinedID);
-            fetch('http://localhost:8080/api/product-recline?id='+productReclinedID, {method: 'PUT'})
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data)
-                })
-                .catch(error => console.log(error))
-        }
-    }, [productReclinedID])
+    function setStatusToPickedUp(product_id) {
+        console.log("Status ändern");
+    }
 
     return (
         <>
@@ -202,7 +168,7 @@ export default function AbholungPage() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {unsoldProductsFromSeller.map((product) => (
+                                    {allProductsFromSeller.map((product) => (
                                         <tr key={product.id} className="bg-white dark:border-ourDarkGray dark:bg-ourSuperDarkGray">
                                             <td></td>
                                             {
@@ -210,8 +176,8 @@ export default function AbholungPage() {
                                             }                                       
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_name}</td>
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_category}</td>
-                                            <td className="whitespace-nowrap px-8 py-4">{product.product_price}</td>
-                                            <td className="whitespace-nowrap px-8 py-4"><button className='hover:text-ourPrimaryColorHover' onClick={() => handleReclineProduct(product.product_id)}><UilCheck size="17" /></button></td>
+                                            <td className="whitespace-nowrap px-8 py-4">{product.product_price}€</td>
+                                            <td className="whitespace-nowrap px-8 py-4"><button className='hover:text-ourPrimaryColorHover' onClick={() => setStatusToPickedUp(product.product_id)}><UilSquareFull size="17" /></button></td>
                                         </tr>
                                     ))}
                                 </tbody>
