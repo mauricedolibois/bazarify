@@ -74,7 +74,9 @@ export default function () {
  
 
   const handleAddOffer = async () => {
-    console.log('add offer');
+
+//TODO: Man kann nur ganze euros angeben, keine cent
+
     const sellerData = {
       seller_name: sellerLastName,
       seller_firstname: sellerFirstName,
