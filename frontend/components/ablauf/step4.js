@@ -62,6 +62,7 @@ export default function AbholungPage() {
 
     // set clicked seller id
     const handleSellerClick = (seller) => {
+        setUnsoldProductsFromSeller([]);
         console.log("seller clicked: ", seller);
         setClickedSellerID(seller.seller_id);
         let firstName = seller.seller_name;
@@ -178,7 +179,7 @@ export default function AbholungPage() {
                     </div>
                 }
                 {unsoldProductsFromSeller.length !== 0 &&
-                    <div className="rounded border border-ourLightGrey mt-4 bg-white mb-4" style={{ maxHeight: "100px", overflowY: "auto" }}>
+                    <div className="rounded border border-ourLightGrey mt-4 bg-white mb-4" style={{ maxHeight: "250px", overflowY: "auto" }}>
                         <div className="overflow-hidden">
                             <table className="min-w-full text-left text-sm font-light rounded">
                                 <thead className="font-medium">
