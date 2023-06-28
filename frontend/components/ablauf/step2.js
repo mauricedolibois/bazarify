@@ -25,6 +25,7 @@ export default function () {
 
   const [pendingProducts, setPendingProducts] = useState([]);
   const [pendingOffers, setPendingOffers] = useState([]);
+  const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
 
   const handleAddPendingProduct = () => {
     console.log('add pending product');
@@ -36,36 +37,39 @@ export default function () {
     };
 
     setProduct(productData);
+    setPendingProducts((pendingProducts) => [...pendingProducts, { product: productData }])
     setProductName('');
     setProductCategory('');
     setProductPrice('');
   };
+  
 
-  useEffect(() => {
-    if (product !== '') {
-      fetch('http://localhost:8080/api/addPendingProduct', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          product: product,
-        }),
-      })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error('Failed to add pending product');
-          }
-          return res.json();
-        })
-        .then(() => {
-          setPendingProducts((pendingProducts) => [...pendingProducts, { product: product }]);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [product]);
+  //TODO: beim router im backend array abgreifen und dann printen
+  // useEffect(() => {
+  //   if (product !== '') {
+  //     fetch('http://localhost:8080/api/addPendingProduct', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         product: product,
+  //       }),
+  //     })
+  //       .then((res) => {
+  //         if (!res.ok) {
+  //           throw new Error('Failed to add pending product');
+  //         }
+  //         return res.json();
+  //       })
+  //       .then(() => {
+  //         setPendingProducts((pendingProducts) => [...pendingProducts, { product: product }]);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // }, [product]);
 
 
   const handleRemoveProduct = (index) => {
@@ -74,16 +78,17 @@ export default function () {
 
 
   const handleAddOffer = async () => {
-    console.log('add offer');
+
     const sellerData = {
       seller_name: sellerLastName,
       seller_firstname: sellerFirstName,
       seller_email: sellerEmail,
       seller_phone: sellerPhoneNumber,
     };
-
-    setSeller(sellerData);
-
+  
+    console.log(sellerData)
+    setSeller(sellerData)
+  
     setSellerFirstName('');
     setSellerLastName('');
     setSellerEmail('');
@@ -91,54 +96,86 @@ export default function () {
     setProductName('');
     setProductCategory('');
     setProductPrice('');
+  }
 
-    if (pendingProducts.length > 0) {
-      try {
-        const offerPromises = pendingProducts.map(async (pendingProduct) => {
-          const response = await fetch('http://localhost:8080/api/offer', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              product: pendingProduct.product,
-              seller: sellerData,
-            }),
-          });
-
-          const data = await response.json();
-
-          return data;
-        });
-
-        const offers = await Promise.all(offerPromises);
-
-        const printResponse = await fetch('http://localhost:8080/api/PrintAllOffers', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            offers: offers,
-          }),
-        });
-
-        // Handle the response if needed
-      } catch (error) {
+useEffect(() => {
+  if (seller !== '') {
+  fetch('http://localhost:8080/api/offer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product: pendingProducts,
+          seller: seller,
+        }),
+      })
+      .then(res => res.json())
+      .then(data => {
+          console.log(data)
+      })
+      .catch((error) => {
         console.log(error);
-      }
-
+      });
       setPendingProducts([]);
-    }
-  };
+  }
+
+}, [seller]);
+
+
+
+
+  // async function sendPendingOffers(){
+  //   if (pendingProducts.length > 0) {
+  //     try {
+  //       const offerPromises = pendingProducts.map(async (pendingProduct) => {
+  //         console.log(pendingProduct.product)
+  //         console.log(seller)
+  //         const response = await fetch('http://localhost:8080/api/offer', {
+  //           method: 'POST',
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //           },
+  //           body: JSON.stringify({
+  //             product: pendingProduct.product,
+  //             seller: seller,
+  //           }),
+  //         });
+  
+  //         const data = await response.json();
+  
+  //         return data;
+  //       });
+  
+  //       //const offers = await Promise.all(offerPromises);
+  
+  //       // const printResponse = await fetch('http://localhost:8080/api/PrintAllOffers', {
+  //       //   method: 'PUT',
+  //       //   headers: {
+  //       //     'Content-Type': 'application/json',
+  //       //   },
+  //       //   body: JSON.stringify({
+  //       //     offers: offers,
+  //       //   }),
+  //       // });
+  
+  //       // Handle the response if needed
+  //     } catch (error) {
+  //        console.log(error);
+  //    }
+  
+  //    setPendingProducts([]);
+  //   }
+  // }
 
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    if (scrollRef.current) {
+    if (shouldScrollToBottom && scrollRef.current) { // Überprüfe den Trigger-Wert
       scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      setShouldScrollToBottom(false); // Setze den Trigger zurück, um erneutes Scrollen zu verhindern
     }
-  }, [pendingProducts]);
+  }, [shouldScrollToBottom]);
 
   return (
     <>
