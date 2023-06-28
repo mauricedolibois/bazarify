@@ -21,7 +21,7 @@ export default function () {
     const [scannedProducts, setScannedProducts] = useState([]);
     const [allOffers, setAllOffers] = useState([]);
     const [allUpdatedOffers, setAllUpdatedOffer] = useState('');
-    const [popupOpened, setPopupOpened] = useState(false);
+    const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
 
     let input;
     let tmpAllUpdatedOffers = [];
@@ -96,15 +96,16 @@ export default function () {
         if (offer !== '') {
             const productExists = scannedProducts.some((product) => product.product_id === offer.product_id);
             //if (!productExists) { // Nur hinzufügen, wenn das Produkt noch nicht vorhanden ist
-            fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
-                .then((res) => res.json())
-                .then((data) => {
-                    setScannedProducts((scannedProducts) => [...scannedProducts, data]);
-                    setAllOffers((allOffers) => [...allOffers, offer]);
-                    console.log(scannedProducts);
-                    console.log(data);
-                })
-                .catch((error) => console.log(error));
+                fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        setScannedProducts((scannedProducts) => [...scannedProducts, data]);
+                        setShouldScrollToBottom(true);
+                        setAllOffers((allOffers) => [...allOffers, offer]);
+                        console.log(scannedProducts);
+                        console.log(data);
+                    })
+                    .catch((error) => console.log(error));
             //}
         }
     }, [offer]);
@@ -151,10 +152,11 @@ export default function () {
     const scrollRef = useRef(null);
 
     useEffect(() => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        if (shouldScrollToBottom && scrollRef.current) { // Überprüfe den Trigger-Wert
+          scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+          setShouldScrollToBottom(false); // Setze den Trigger zurück, um erneutes Scrollen zu verhindern
         }
-    }, [scannedProducts]);
+      }, [shouldScrollToBottom]);
 
 
     const totalPrice = scannedProducts.reduce((total, product) => total + product.product_price, 0);
