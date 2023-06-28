@@ -61,6 +61,18 @@ export default function () {
         setScannedProducts((scannedProducts) => scannedProducts.filter((_, i) => i !== index));
     };
 
+    //const totalPrice = scannedProducts.reduce((total, product) => total + product.product_price, 0);
+    const [totalPrice, setTotalPrice] = useState(scannedProducts.reduce((total, product) => total + product.product_price, 0));
+
+
+    // Use Effect hook to always refresh the totalPrice whenever a new product is added to the scannedProducts array
+    useEffect(() => {
+        setTotalPrice(scannedProducts.reduce((total, product) => total + product.product_price, 0));
+    }, [scannedProducts, popupOpened]);
+
+    const getFinalTotalPrice = () => {
+        return totalPrice;
+    }
 
     //handle enter key
     useEffect(() => {
@@ -166,14 +178,6 @@ export default function () {
         }
     }, [scannedProducts]);
 
-    const totalPrice = scannedProducts.reduce((total, product) => total + product.product_price, 0);
-    const [totalPriceState, setTotalPriceState] = useState(totalPrice)
-
-    useEffect(() => {
-        setTotalPriceState(totalPrice)
-    }, [totalPrice])
-
-
     return (
         <>
             <h1>3. Verkauf</h1>
@@ -253,11 +257,13 @@ export default function () {
                 <ButtonYellowBorder icon={<UilCheck />} text="Verkauf abschließen" onClick={handleSubmit}></ButtonYellowBorder>
                 {popupOpened &&
                     <>
-                        <CalculationPopup popupOpen={popupOpened} closePopup={closePopup} totalPrice={totalPrice}></CalculationPopup>
+                        <CalculationPopup popupOpen={popupOpened} closePopup={closePopup} getFinalTotalPrice={getFinalTotalPrice}></CalculationPopup>
                     </>
                 }
             </div>
-            <button onClick={() => { console.log("TotalPrice" + totalPrice) }}>Test</button>
+            <button onClick={() => {
+                console.log("TotalPrice:" + totalPrice)
+            }}>Test</button>
         </>
     );
 }

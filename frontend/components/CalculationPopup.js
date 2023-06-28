@@ -3,11 +3,11 @@ import { UilMultiply, UilCalculator, UilArrowRight } from '@iconscout/react-unic
 import FormInput from './formInput';
 import ButtonSmallJustIcon from './buttons/ButtonSmallJustIcon';
 
-const CalculationPopup = ({ popupOpen, closePopup, totalPrice }) => {
+const CalculationPopup = ({ popupOpen, closePopup, getFinalTotalPrice }) => {
     const [isOpen, setIsOpen] = useState(popupOpen);
     const popupRef = useRef(null);
     const [cashReceived, setCashReceived] = useState('');
-    const [totalAmount, setTotalAmount] = useState(totalPrice);
+    const [finalTotalPrice, setFinalTotalPrice] = useState(getFinalTotalPrice());
 
     const openPopup = () => {
         setIsOpen(true);
@@ -23,8 +23,8 @@ const CalculationPopup = ({ popupOpen, closePopup, totalPrice }) => {
     }, [popupOpen]);
 
     useEffect(() => {
-        setTotalAmount(totalPrice);
-    }, [totalPrice]);
+        setFinalTotalPrice(getFinalTotalPrice());
+    }, [isOpen])
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -41,9 +41,9 @@ const CalculationPopup = ({ popupOpen, closePopup, totalPrice }) => {
     }, []);
 
     const calculateChange = () => {
-        console.log("In CalculationPopup totalPrice: " + totalPrice)
-        console.log("In CalculationPopup totalAmount: " + totalAmount)
-        const change = parseFloat(cashReceived.replace(',', '.')) - totalAmount;
+
+
+        const change = parseFloat(cashReceived.replace(',', '.')) - finalTotalPrice;
         return change > 0 ? change : 0;
     };
 
@@ -64,6 +64,9 @@ const CalculationPopup = ({ popupOpen, closePopup, totalPrice }) => {
                         {//<UilMultiply className="absolute top-4 right-4 cursor-pointer" onClick={closeThePopup} />
                         }
                         <h2 className="mb-2">Wie viel Geld haben Sie erhalten?</h2>
+                        <button onClick={() => {
+                            console.log(finalTotalPrice)
+                        }}>Test</button>
                         <FormInput
                             name="Erhaltenes Geld"
                             unit="€"
