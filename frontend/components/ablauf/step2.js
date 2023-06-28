@@ -42,7 +42,7 @@ export default function () {
     setProductCategory('');
     setProductPrice('');
   };
-  
+
 
   //TODO: beim router im backend array abgreifen und dann printen
   // useEffect(() => {
@@ -79,16 +79,18 @@ export default function () {
 
   const handleAddOffer = async () => {
 
+    handleAddPendingProduct();
+
     const sellerData = {
       seller_name: sellerLastName,
       seller_firstname: sellerFirstName,
       seller_email: sellerEmail,
       seller_phone: sellerPhoneNumber,
     };
-  
+
     console.log(sellerData)
     setSeller(sellerData)
-  
+
     setSellerFirstName('');
     setSellerLastName('');
     setSellerEmail('');
@@ -98,9 +100,9 @@ export default function () {
     setProductPrice('');
   }
 
-useEffect(() => {
-  if (seller !== '') {
-  fetch('http://localhost:8080/api/offer', {
+  useEffect(() => {
+    if (seller !== '') {
+      fetch('http://localhost:8080/api/offer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -110,17 +112,17 @@ useEffect(() => {
           seller: seller,
         }),
       })
-      .then(res => res.json())
-      .then(data => {
+        .then(res => res.json())
+        .then(data => {
           console.log(data)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       setPendingProducts([]);
-  }
+    }
 
-}, [seller]);
+  }, [seller]);
 
 
 
@@ -141,14 +143,14 @@ useEffect(() => {
   //             seller: seller,
   //           }),
   //         });
-  
+
   //         const data = await response.json();
-  
+
   //         return data;
   //       });
-  
+
   //       //const offers = await Promise.all(offerPromises);
-  
+
   //       // const printResponse = await fetch('http://localhost:8080/api/PrintAllOffers', {
   //       //   method: 'PUT',
   //       //   headers: {
@@ -158,12 +160,12 @@ useEffect(() => {
   //       //     offers: offers,
   //       //   }),
   //       // });
-  
+
   //       // Handle the response if needed
   //     } catch (error) {
   //        console.log(error);
   //    }
-  
+
   //    setPendingProducts([]);
   //   }
   // }
