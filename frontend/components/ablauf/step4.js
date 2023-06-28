@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { UilCheck, UilInfoCircle, UilEnvelopeUpload, UilSearch } from '@iconscout/react-unicons';
+import { UilSquareFull, UilInfoCircle, UilEnvelopeUpload, UilSearch } from '@iconscout/react-unicons';
 import SellerInformation from "../SellerInformation";
 import SendMailsButton from "../buttons/SendMailsButton";
 import ButtonBigColor from "../buttons/ButtonBigColor";
@@ -25,12 +25,12 @@ export default function AbholungPage() {
     //get provision
     useEffect(() => {
         fetch('http://localhost:8080/api/analytics', { method: 'GET' })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            setProvision(data.Provision);
-          });
-      }, []);
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setProvision(data.Provision);
+            });
+    }, []);
 
     // get all sellers
     useEffect(() => {
@@ -62,7 +62,6 @@ export default function AbholungPage() {
 
     // set clicked seller id
     const handleSellerClick = (seller) => {
-        setUnsoldProductsFromSeller([]);
         console.log("seller clicked: ", seller);
         setClickedSellerID(seller.seller_id);
         let firstName = seller.seller_name;
@@ -131,7 +130,7 @@ export default function AbholungPage() {
     useEffect(() => {
         if (productReclinedID !== 0) {
             console.log("productReclinedID: ", productReclinedID);
-            fetch('http://localhost:8080/api/product-recline?id='+productReclinedID, {method: 'PUT'})
+            fetch('http://localhost:8080/api/product-recline?id=' + productReclinedID, { method: 'PUT' })
                 .then(res => res.json())
                 .then(data => {
                     console.log(data)
@@ -147,23 +146,18 @@ export default function AbholungPage() {
                 <p className='mb-4'>Schön, dass du so viel verkaufen konntest. Du solltest jetzt die Verkäufer benachrichtigen, dass sie ihren Erlös und ggf. ihre liegengebliebene Artikel abholen kommen können.</p>
                 <SendMailsButton />
                 <h2 className="mt-8">Infos zum Verkäufer finden</h2>
-                <div className='flex gap-4'>
-                    <div className="">
-                        <div className="relative mt-2 rounded-md shadow-sm">
-                            <input type="text" onChange={searchSeller} className="w-full rounded py-2 px-4 text-ourSuperDarkGray placeholder:text-ourGray focus:outline-ourPrimaryColor" id="sellerSearchBar" placeholder="Verkäufer suchen..." />
-                            {searchString !== '' &&
-                            <div>
-                                {searchedSeller.map((seller) => (
-                                    <div key={seller.id} onClick={() => handleSellerClick(seller)} className="px-4 py-2 cursor-pointer bg-white border border-ourLightGray rounded hover:text-ourPrimaryColorHover">
-                                        <p className="text-sm">{seller.seller_name} {seller.seller_firstname}</p>
-                                    </div>
-                                ))}
-                            </div>
-                            }
+                <input type="text" onChange={searchSeller} className="w-2/3 rounded border border-ourLightGray py-2 px-4 text-ourSuperDarkGray placeholder:text-ourGray focus:outline-ourPrimaryColor" id="sellerSearchBar" placeholder="Verkäufer suchen..." />
+                <div>
+                    {searchedSeller.map((seller) => (
+                        <div key={seller.id} onClick={() => handleSellerClick(seller)} className="px-4 py-2 cursor-pointer bg-white border-b border-l border-r w-2/3 border-ourLightGray hover:text-ourPrimaryColorHover">
+                            <p className="text-sm">{seller.seller_name} {seller.seller_firstname}</p>
                         </div>
-                    </div>
-                    {/* <ButtonSmallJustIcon tooltip="Verkäufer finden" icon={<UilSearch />} /> */}
+
+                    ))}
                 </div>
+
+                {/* <ButtonSmallJustIcon tooltip="Verkäufer finden" icon={<UilSearch />} /> */}
+
                 {allProductsFromSeller.length !== 0 &&
                     <div className="grid grid-cols-3 mt-4 bg-white rounded border-ourLightGray border">
                         <div className="flex justify-center items-center py-4">
@@ -178,15 +172,13 @@ export default function AbholungPage() {
                         </div>
                     </div>
                 }
-                {unsoldProductsFromSeller.length !== 0 &&
-                    <div className="rounded border border-ourLightGrey mt-4 bg-white mb-4" style={{ maxHeight: "250px", overflowY: "auto" }}>
+                {allProductsFromSeller.length !== 0 &&
+                    <div className="rounded border border-ourLightGray mt-4 bg-white mb-4">
                         <div className="overflow-hidden">
                             <table className="min-w-full text-left text-sm font-light rounded">
                                 <thead className="font-medium">
                                     <tr>
-                                        <th scope="col" className="px-8 py-4">
-                                            #
-                                        </th>
+
                                         <th scope="col" className="px-8 py-4">
                                             Artikel
                                         </th>
@@ -197,21 +189,21 @@ export default function AbholungPage() {
                                             Preis
                                         </th>
                                         <th scope="col" className="px-8 py-4">
-                                            Wurde abgeholt
+                                            Wurde mittlerweile abgeholt?
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {unsoldProductsFromSeller.map((product) => (
                                         <tr key={product.id} className="bg-white dark:border-ourDarkGray dark:bg-ourSuperDarkGray">
-                                            <td></td>
+
                                             {
-                                            //TODO: component for each row}
-                                            }                                       
+                                                //TODO: component for each row}
+                                            }
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_name}</td>
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_category}</td>
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_price}</td>
-                                            <td className="whitespace-nowrap px-8 py-4"><button className='hover:text-ourPrimaryColorHover' onClick={() => handleReclineProduct(product.product_id)}><UilCheck size="17" /></button></td>
+                                            <td className="whitespace-nowrap px-8 py-4"><button className='hover:text-ourPrimaryColorHover' onClick={() => handleReclineProduct(product.product_id)}><UilSquareFull size="17" /></button></td>
                                         </tr>
                                     ))}
                                 </tbody>

@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import FormInput from '../formInput';
+import React, { PureComponent } from 'react';
+import { Cell, PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
+
 
 function Card({ title, description, info }) {
   return (
@@ -8,6 +11,41 @@ function Card({ title, description, info }) {
       <p>{description}</p>
       {info && <p className="text-sm text-ourGray">{info}</p>}
     </div>
+  );
+}
+
+
+function Graph() {
+  // Dummy data, TODO: Implement and use real data
+  const data = [
+    { name: 'Verkaufte Produkte', value: 80 },
+    { name: 'Offene Produkte', value: 20 },
+    { name: 'Liegengebliebene Produkte', value: 10 },
+  ];
+
+  const COLORS = ['#DEAE31', '#5E5E5E', '#A6A6A6'];
+
+  return (
+    <ResponsiveContainer width="100%" height={300}>
+
+      <PieChart>
+        <Pie
+          data={data}
+          cx="50%"
+          cy="50%"
+          outerRadius={80}
+          fill="#8884d8"
+          dataKey="value"
+          label
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Legend />
+        <Tooltip />
+      </PieChart>
+    </ResponsiveContainer>
   );
 }
 
@@ -33,16 +71,16 @@ export default function () {
   }, []);
 
 
-    // set tips when input changes
-    const handleTipsChange = (e) => {
-        const input = e.target.value;
-        const regex = /^([0-9]{0,7}([.,][0-9]{0,2})?)?$/;
-        if (regex.test(input)) {
-            setTips(input);
-        }
-    };
-  
-  
+  // set tips when input changes
+  const handleTipsChange = (e) => {
+    const input = e.target.value;
+    const regex = /^([0-9]{0,7}([.,][0-9]{0,2})?)?$/;
+    if (regex.test(input)) {
+      setTips(input);
+    }
+  };
+
+
 
   // update tips in db when input hasn't changed for 1 second (safe api calls)
   useEffect(() => {
@@ -78,8 +116,8 @@ export default function () {
   // update tips in frontend
   useEffect(() => {
     if (tips !== '0') {
-        setTipsAverage((parseFloat(tips.replace(',', '.')) / revenue * 100).toFixed(2));
-        console.log(tipsAverage);
+      setTipsAverage((parseFloat(tips.replace(',', '.')) / revenue * 100).toFixed(2));
+      console.log(tipsAverage);
     }
   }, [tips, totalSellerCount]);
 
@@ -94,10 +132,14 @@ export default function () {
         <div className="grid grid-cols-3 gap-6">
           <Card title={`${revenue}€`} description="Umsatz" />
           <Card title={`${(revenue * provision) / 100}€`} description={`Profit bei aktueller Provisionsrate (${provision}%)`} />
-          <Card title={<FormInput id="tips" value={tips} unit="€" onChange={handleTipsChange} />} description="Trinkgeld" info="Das Trinkgeld musst du manuell eintragen" />
-          <div className="col-span-2 row-span-2 rounded-md border border-ourLightGray bg-white p-4 shadow-md"></div>
-          <Card title={`${tipsAverage} %`} description="Ø Trinkgeld" />
           <Card title={totalSellerCount} description="Verkäufer" />
+
+          <div className="col-span-2 row-span-2 rounded-md border border-ourLightGray bg-white p-4 shadow-md">
+            <Graph />
+          </div>
+          <Card title={<FormInput id="tips" value={tips} unit="€" onChange={handleTipsChange} />} description="Trinkgeld" info="Das Trinkgeld musst du manuell eintragen" />
+          <Card title={`${tipsAverage} %`} description="Ø Trinkgeld" />
+
         </div>
       </div>
     </>
