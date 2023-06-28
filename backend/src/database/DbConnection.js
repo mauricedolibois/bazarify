@@ -120,8 +120,6 @@ export const dbConnection = {
     },
     async insertOffer(product_id, seller_id) {
         try {
-
-            //TODO: product und offer ids tauschen von der länge
             var id = DbIdHandler.generateOfferId()
             const validOffer = await InputValidation.validateOffer(id, product_id, seller_id)
             const offer = await Offer.create(validOffer)
