@@ -197,7 +197,7 @@ export const dbConnection = {
             var offer = offers[i]
             var product = products.find(product => product.product_id == offer.product_id)
             var offer = {
-                product_id: product.product_id,
+                offer_id: offer.offer_id,
                 offer_status: offer.state,
                 product_name: product.product_name,
                 product_price: product.product_price,
