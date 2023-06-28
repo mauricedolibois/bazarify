@@ -153,7 +153,7 @@ export default function () {
       </div>
       <div className="relative flex flex-col justify-center">
 
-        <div className="rounded border border-ourLightGrey bg-white">
+        <div className="rounded border border-ourLightGray bg-white">
           <div className="flex flex-row">
             <div className="w-[36%] border-r pb-8 border-ourLightGray py-4 px-8">
               <h3 className=''>Infos zum Verkäufer</h3>
@@ -234,7 +234,7 @@ export default function () {
         </div>
 
         {pendingProducts.length > 0 && (
-          <div className="rounded border border-ourLightGrey bg-white mb-4" style={{ maxHeight: "250px", overflowY: "auto" }}>
+          <div className="rounded border border-ourLightGray bg-white mb-4" style={{ maxHeight: "250px", overflowY: "auto" }}>
             <div className="overflow-hidden">
               <table className="min-w-full text-left text-sm font-light rounded">
                 <thead className="font-medium">

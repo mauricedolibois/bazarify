@@ -183,7 +183,7 @@ export default function () {
                 eingescannt hast, kannst du weiter zum nächsten Schritt.
             </p>
             <div className='border-ourLightGray border bg-white rounded mb-8'>
-                <div className="flex flex-row justify-between px-8 py-4 gap-8">
+                <div className="flex flex-row justify-between px-8 py-4 gap-16">
                     <input
                         className="w-full truncate border-b border-ourLightGray text-ourDarkGray focus:border-ourPrimaryColor focus:outline-none"
                         name="name"
@@ -192,25 +192,22 @@ export default function () {
                         ref={inputRef}
                         placeholder="Barcode des Produkts"
                     />
-                    <ButtonSmallJustIcon icon={<UilEnter></UilEnter>} onClick={() => handleScan()}></ButtonSmallJustIcon>
-                    <ButtonSmallJustIcon icon={<UilInfoCircle></UilInfoCircle>} onClick={() => handleScan()}></ButtonSmallJustIcon>
+                    <div className='flex flex-row gap-4'>
+                        <ButtonSmallJustIcon icon={<UilEnter></UilEnter>} onClick={() => handleScan()}></ButtonSmallJustIcon>
+
+
+                        <button title="Test" className="inline-flex flex-col justify-center px-4 py-2 border border-ourGray cursor-pointer hover:border-ourDarkGray hover:text-ourDarkGray  text-ourGray rounded-lg">
+                            <span><UilInfoCircle></UilInfoCircle></span>
+                        </button >
+                    </div>
 
                 </div>
-                <div className="border-t border-ourLightGray p-4">
-                    <div className="flex flex-row items-center">
-                        <div className="mr-4 text-ourDarkGray text-2xl">
-                            <UilInfoCircle />
-                        </div>
-                        <p className="mr-2 text-sm">
-                            Klicke das Eingabefeld an und scanne den Barcode des Produkts ein. Alternativ kannst du ihn auch eintippen.
-                        </p>
-                    </div>
-                </div>
+
             </div >
             {//TODO: Tabelle als Komponente auslagern
             }
             {scannedProducts.length > 0 && (
-                <div className="rounded border border-ourLightGrey bg-white mb-8" style={{ maxHeight: "216px", overflowY: "auto" }}>
+                <div className="rounded border border-ourLightGray bg-white mb-8" style={{ maxHeight: "216px", overflowY: "auto" }}>
                     <div className="overflow-hidden">
                         <table className="min-w-full text-left text-sm font-light rounded">
                             <thead className="font-medium">
