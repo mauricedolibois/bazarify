@@ -12,11 +12,45 @@ function Card({ title, description, info }) {
   );
 }
 
-function Graph({ soldOffers, unsoldOffers, reclinedOffers }) {
+
+function Graph() {
+
+  const [soldOffers, setSoldOffers] = useState([]);
+  const [unsoldOffers, setUnsoldOffers] = useState([]);
+  const [reclinedOffers, setReclinedOffers] = useState([]);
+  
+  //get all offers
+  useEffect(() => {
+    fetch('http://localhost:8080/api/allOffers', {method: 'GET'})
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        data.map((offer) => {
+             if (offer.state === "sold") {
+                 setSoldOffers(soldOffers => [...soldOffers, offer]);
+             }
+             else if (offer.state === "open") {
+                 setUnsoldOffers(unsoldOffers => [...unsoldOffers, offer]);
+             }
+             else {
+                 setReclinedOffers(reclinedOffers => [...reclinedOffers, offer]);
+             }
+         })
+        
+      })
+      .catch(error => console.log(error))
+  }, [])
+
+  console.log("soldOffers: ",soldOffers.length/2);
+  console.log("unsoldOffers: ",unsoldOffers.length/2);
+  console.log("reclinedOffers: ",reclinedOffers.length/2);
+
+  //durch 2 geteilt weil alles doppelt gerendert wird
+  //TODO: doppelt gerendertes entfernen
   const chartData = [
-    { name: 'Verkaufte Produkte', value: soldOffers.length },
-    { name: 'Offene Produkte', value: unsoldOffers.length },
-    { name: 'Liegengebliebene Produkte', value: reclinedOffers.length },
+    { name: 'Verkaufte Produkte', value: soldOffers.length/2 },
+    { name: 'Offene Produkte', value: unsoldOffers.length/2 },
+    { name: 'Liegengebliebene Produkte', value: reclinedOffers.length/2 },
   ];
 
   const COLORS = ['#DEAE31', '#5E5E5E', '#A6A6A6'];

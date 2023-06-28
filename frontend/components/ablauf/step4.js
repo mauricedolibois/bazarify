@@ -18,7 +18,6 @@ export default function AbholungPage() {
     const [unsoldProductsCount, setUnsoldProductsCount] = useState(0);
     const [provision, setProvision] = useState(0);
     const [productReclinedID, setProductReclinedID] = useState(0);
-    const [searchString, setSearchString] = useState('');
 
 
 
@@ -46,22 +45,26 @@ export default function AbholungPage() {
     // search seller
     const searchSeller = () => {
         const searchBar = document.getElementById("sellerSearchBar");
-        setSearchString(searchBar.value.toLowerCase());
+        const searchString = searchBar.value.toLowerCase();
         let tmpSearchedSeller = [];
 
         console.log("search string: ", searchString);
         console.log("all sellers: ", allSellers);
-        allSellers.map(seller => {
-            if (seller.seller_name.toLowerCase().includes(searchString) || seller.seller_firstname.toLowerCase().includes(searchString)) {
-                tmpSearchedSeller.push(seller);
-            }
-        });
+        if(searchString !== '') {
+            allSellers.map(seller => {
+                if (seller.seller_name.toLowerCase().includes(searchString) || seller.seller_firstname.toLowerCase().includes(searchString)) {
+                    tmpSearchedSeller.push(seller);
+                }
+            });
+        }   
 
         setSearchedSeller(tmpSearchedSeller.slice(0, 5));
     };
 
     // set clicked seller id
     const handleSellerClick = (seller) => {
+        setUnsoldProductsFromSeller([]);
+        setSoldProductsFromSeller([]);
         console.log("seller clicked: ", seller);
         setClickedSellerID(seller.seller_id);
         let firstName = seller.seller_name;
@@ -158,7 +161,7 @@ export default function AbholungPage() {
 
                 {/* <ButtonSmallJustIcon tooltip="Verkäufer finden" icon={<UilSearch />} /> */}
 
-                {allProductsFromSeller.length !== 0 &&
+                {unsoldProductsFromSeller.length !== 0 &&
                     <div className="grid grid-cols-3 mt-4 bg-white rounded border-ourLightGray border">
                         <div className="flex justify-center items-center py-4">
                             <p className='font-bold'>{name}</p>
@@ -172,7 +175,7 @@ export default function AbholungPage() {
                         </div>
                     </div>
                 }
-                {allProductsFromSeller.length !== 0 &&
+                {unsoldProductsFromSeller.length !== 0 &&
                     <div className="rounded border border-ourLightGray mt-4 bg-white mb-4">
                         <div className="overflow-hidden">
                             <table className="min-w-full text-left text-sm font-light rounded">
