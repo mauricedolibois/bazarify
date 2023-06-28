@@ -1,6 +1,6 @@
 import { UilPlay } from '@iconscout/react-unicons'
 import { UilPlus } from '@iconscout/react-unicons'
-import { UilAngleRight, UilTrashAlt } from '@iconscout/react-unicons'
+import { UilAngleRight, UilTrashAlt, UilNoEntry } from '@iconscout/react-unicons'
 import ButtonBigColor from './buttons/ButtonBigColor'
 import ButtonBigNoColor from './buttons/ButtonBigNoColor'
 import Link from 'next/link'
@@ -50,7 +50,7 @@ function BazarCard({ name }) {
             setBazar(name)
             setCurrentBazar(name)
         }} class="border bg-white border-ourLightGray hover:text-ourPrimaryColorHover items-center mt-2 px-4 py-2 cursor-pointer rounded-lg flex justify-between">
-            <p title="Basar wechseln" className='text-sm'>{name}</p>
+            <p title="Basar wechseln" className='text-sm'>{name.replaceAll("_", " ")}</p>
             <div class="flex justify-between">
                 <div title="Basar löschen">
                     <UilTrashAlt size="17" class="inline-block -ml-2 hover:text-red-400 text-ourGray" onClick={(event) => { deleteBazar(event) }} />
@@ -64,15 +64,15 @@ export default function () {
 
     function loadExampleData() {
         fetch('http://localhost:8080/api/loadExampleData', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then(res => res.json())
-        .then(data => {
-            window.location.reload()
-        })
-        .catch(error => console.log(error))
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then(res => res.json())
+            .then(data => {
+                window.location.reload()
+            })
+            .catch(error => console.log(error))
     }
 
     let { setStep } = useContext(BazarContext)
@@ -102,7 +102,7 @@ export default function () {
                         </ButtonBigNoColor>
                     </Link>
                     <Link href="/" onClick={() => loadExampleData()}>
-                        <ButtonBigNoColor text="Demonstration laden" icon={<UilPlay />}></ButtonBigNoColor>
+                        <ButtonBigNoColor text="Demoversion laden" icon={<UilNoEntry />}></ButtonBigNoColor>
                     </Link>
                 </div>
                 <h2 className="mt-16">Deine Basare</h2>

@@ -186,11 +186,11 @@ export default function () {
             <h1>3. Verkauf</h1>
             <p className='mb-4'>
                 Klasse! Du solltest jetzt alle Produkte eingetragen haben. Ab jetzt kannst du die Verkäufe abrechnen.
-                Scanne dafür einfach die Codes der Produkte ein, welche ein Kunde kaufen möchte. Wenn du alle Verkäufe
+                Scanne dafür einfach die Codes der Produkte ein, welche ein Kunde kaufen möchte. Alternativ kannst du sie auch eintippen. Wenn du alle Verkäufe
                 eingescannt hast, kannst du weiter zum nächsten Schritt.
             </p>
             <div className='border-ourLightGray border bg-white rounded mb-8'>
-                <div className="flex flex-row justify-between px-8 py-4 gap-16">
+                <div className="flex flex-row justify-between px-8 py-4 gap-8">
                     <input
                         className="w-full truncate border-b border-ourLightGray text-ourDarkGray focus:border-ourPrimaryColor focus:outline-none"
                         name="name"
@@ -203,9 +203,7 @@ export default function () {
                         <ButtonSmallJustIcon icon={<UilEnter></UilEnter>} onClick={() => handleScan()}></ButtonSmallJustIcon>
 
 
-                        <button title="Test" className="inline-flex flex-col justify-center px-4 py-2 border border-ourGray cursor-pointer hover:border-ourDarkGray hover:text-ourDarkGray  text-ourGray rounded-lg">
-                            <span><UilInfoCircle></UilInfoCircle></span>
-                        </button >
+
                     </div>
 
                 </div>
