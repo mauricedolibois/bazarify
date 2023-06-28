@@ -132,12 +132,14 @@ export default function () {
         <div className="grid grid-cols-3 gap-6">
           <Card title={`${revenue}€`} description="Umsatz" />
           <Card title={`${(revenue * provision) / 100}€`} description={`Profit bei aktueller Provisionsrate (${provision}%)`} />
-          <Card title={<FormInput id="tips" value={tips} unit="€" onChange={handleTipsChange} />} description="Trinkgeld" info="Das Trinkgeld musst du manuell eintragen" />
+          <Card title={totalSellerCount} description="Verkäufer" />
+
           <div className="col-span-2 row-span-2 rounded-md border border-ourLightGray bg-white p-4 shadow-md">
             <Graph />
           </div>
+          <Card title={<FormInput id="tips" value={tips} unit="€" onChange={handleTipsChange} />} description="Trinkgeld" info="Das Trinkgeld musst du manuell eintragen" />
           <Card title={`${tipsAverage} %`} description="Ø Trinkgeld" />
-          <Card title={totalSellerCount} description="Verkäufer" />
+
         </div>
       </div>
     </>
