@@ -7,7 +7,7 @@ const CalculationPopup = ({ popupOpen, closePopup, totalPrice }) => {
     const [isOpen, setIsOpen] = useState(popupOpen);
     const popupRef = useRef(null);
     const [cashReceived, setCashReceived] = useState('');
-    const totalAmount = totalPrice;
+    const [totalAmount, setTotalAmount] = useState(totalPrice);
 
     const openPopup = () => {
         setIsOpen(true);
@@ -21,6 +21,10 @@ const CalculationPopup = ({ popupOpen, closePopup, totalPrice }) => {
     useEffect(() => {
         setIsOpen(popupOpen); // Update isOpen state when popupOpen prop changes
     }, [popupOpen]);
+
+    useEffect(() => {
+        setTotalAmount(totalPrice);
+    }, [totalPrice]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {

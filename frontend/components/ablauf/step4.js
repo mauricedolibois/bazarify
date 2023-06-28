@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { UilCheck, UilInfoCircle, UilEnvelopeUpload, UilSearch } from '@iconscout/react-unicons';
+import { UilSquareFull, UilInfoCircle, UilEnvelopeUpload, UilSearch } from '@iconscout/react-unicons';
 import SellerInformation from "../SellerInformation";
 import SendMailsButton from "../buttons/SendMailsButton";
 import ButtonBigColor from "../buttons/ButtonBigColor";
@@ -144,9 +144,7 @@ export default function AbholungPage() {
                             <table className="min-w-full text-left text-sm font-light rounded">
                                 <thead className="font-medium">
                                     <tr>
-                                        <th scope="col" className="px-8 py-4">
-                                            #
-                                        </th>
+
                                         <th scope="col" className="px-8 py-4">
                                             Artikel
                                         </th>
@@ -157,21 +155,21 @@ export default function AbholungPage() {
                                             Preis
                                         </th>
                                         <th scope="col" className="px-8 py-4">
-                                            Wurde abgeholt
+                                            Wurde mittlerweile abgeholt?
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {allProductsFromSeller.map((product) => (
                                         <tr key={product.id} className="bg-white dark:border-ourDarkGray dark:bg-ourSuperDarkGray">
-                                            <td></td>
+
                                             {
                                                 //TODO: component for each row}
                                             }
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_name}</td>
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_category}</td>
-                                            <td className="whitespace-nowrap px-8 py-4">{product.product_price}</td>
-                                            <td className="whitespace-nowrap px-8 py-4"><button className='hover:text-ourPrimaryColorHover' onClick={() => setStatusToPickedUp(product.product_id)}><UilCheck size="17" /></button></td>
+                                            <td className="whitespace-nowrap px-8 py-4">{product.product_price}€</td>
+                                            <td className="whitespace-nowrap px-8 py-4"><button className='hover:text-ourPrimaryColorHover' onClick={() => setStatusToPickedUp(product.product_id)}><UilSquareFull size="17" /></button></td>
                                         </tr>
                                     ))}
                                 </tbody>

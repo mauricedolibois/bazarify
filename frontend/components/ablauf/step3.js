@@ -135,8 +135,8 @@ export default function () {
         setScannedProducts([]);
         setAllOffers([]);
 
-        console.log("TotalPrice")
-        console.log(totalPrice)
+        console.log("TotalPrice" + totalPrice)
+
     };
 
     //update offer status to sold in db
@@ -168,6 +168,12 @@ export default function () {
     }, [scannedProducts]);
 
     const totalPrice = scannedProducts.reduce((total, product) => total + product.product_price, 0);
+    const [totalPriceState, setTotalPriceState] = useState(totalPrice)
+
+    useEffect(() => {
+        setTotalPriceState(totalPrice)
+    }, [totalPrice])
+
 
     return (
         <>
@@ -248,6 +254,7 @@ export default function () {
                     </>
                 }
             </div>
+            <button onClick={() => { console.log("TotalPrice" + totalPrice) }}>Test</button>
         </>
     );
 }
