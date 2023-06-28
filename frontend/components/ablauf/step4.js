@@ -18,7 +18,6 @@ export default function AbholungPage() {
     const [unsoldProductsCount, setUnsoldProductsCount] = useState(0);
     const [provision, setProvision] = useState(0);
     const [productReclinedID, setProductReclinedID] = useState(0);
-    const [searchString, setSearchString] = useState('');
 
 
 
@@ -46,22 +45,26 @@ export default function AbholungPage() {
     // search seller
     const searchSeller = () => {
         const searchBar = document.getElementById("sellerSearchBar");
-        setSearchString(searchBar.value.toLowerCase());
+        const searchString = searchBar.value.toLowerCase();
         let tmpSearchedSeller = [];
 
         console.log("search string: ", searchString);
         console.log("all sellers: ", allSellers);
-        allSellers.map(seller => {
-            if (seller.seller_name.toLowerCase().includes(searchString) || seller.seller_firstname.toLowerCase().includes(searchString)) {
-                tmpSearchedSeller.push(seller);
-            }
-        });
+        if(searchString !== '') {
+            allSellers.map(seller => {
+                if (seller.seller_name.toLowerCase().includes(searchString) || seller.seller_firstname.toLowerCase().includes(searchString)) {
+                    tmpSearchedSeller.push(seller);
+                }
+            });
+        }   
 
         setSearchedSeller(tmpSearchedSeller.slice(0, 5));
     };
 
     // set clicked seller id
     const handleSellerClick = (seller) => {
+        setUnsoldProductsFromSeller([]);
+        setSoldProductsFromSeller([]);
         console.log("seller clicked: ", seller);
         setClickedSellerID(seller.seller_id);
         let firstName = seller.seller_name;
@@ -146,7 +149,7 @@ export default function AbholungPage() {
                 <p className='mb-4'>Schön, dass du so viel verkaufen konntest. Du solltest jetzt die Verkäufer benachrichtigen, dass sie ihren Erlös und ggf. ihre liegengebliebene Artikel abholen kommen können.</p>
                 <SendMailsButton />
                 <h2 className="mt-8">Infos zum Verkäufer finden</h2>
-                <input type="text" onChange={searchSeller} className="w-2/3 rounded border border-ourLightGray py-2 px-4 text-ourSuperDarkGray placeholder:text-ourGray focus:outline-ourPrimaryColor" id="sellerSearchBar" placeholder="Verkäufer suchen..." />
+                <input type="text" onChange={searchSeller} className="w-full mt-2 rounded border border-ourLightGray py-2 px-4 text-ourSuperDarkGray placeholder:text-ourGray focus:outline-ourPrimaryColor" id="sellerSearchBar" placeholder="Verkäufer suchen..." />
                 <div>
                     {searchedSeller.map((seller) => (
                         <div key={seller.id} onClick={() => handleSellerClick(seller)} className="px-4 py-2 cursor-pointer bg-white border-b border-l border-r w-2/3 border-ourLightGray hover:text-ourPrimaryColorHover">
@@ -158,10 +161,10 @@ export default function AbholungPage() {
 
                 {/* <ButtonSmallJustIcon tooltip="Verkäufer finden" icon={<UilSearch />} /> */}
 
-                {allProductsFromSeller.length !== 0 &&
+                {unsoldProductsFromSeller.length !== 0 &&
                     <div className="grid grid-cols-3 mt-4 bg-white rounded border-ourLightGray border">
                         <div className="flex justify-center items-center py-4">
-                            <p>{name}</p>
+                            <p className='font-bold'>{name}</p>
                         </div>
                         <div className="flex justify-center flex-col items-center border-l border-ourLightGray border-r py-4">
                             <p className='font-semibold'>{sellerPayback}€</p>
@@ -172,7 +175,7 @@ export default function AbholungPage() {
                         </div>
                     </div>
                 }
-                {allProductsFromSeller.length !== 0 &&
+                {unsoldProductsFromSeller.length !== 0 &&
                     <div className="rounded border border-ourLightGray mt-4 bg-white mb-4">
                         <div className="overflow-hidden">
                             <table className="min-w-full text-left text-sm font-light rounded">
