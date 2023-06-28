@@ -28,13 +28,13 @@ export default function () {
 
   const handleAddPendingProduct = () => {
     console.log('add pending product');
-
+  
     const productData = {
       product_name: productName,
       product_price: productPrice,
       product_category: productCategory,
     };
-
+  
     setProduct(productData);
     setProductName('');
     setProductCategory('');
@@ -70,8 +70,8 @@ export default function () {
 
   const handleRemoveProduct = (index) => {
     setPendingProducts((scannedProducts) => scannedProducts.filter((_, i) => i !== index));
-  };
-
+};
+ 
 
   const handleAddOffer = async () => {
     console.log('add offer');
@@ -153,7 +153,7 @@ export default function () {
       </div>
       <div className="relative flex flex-col justify-center">
 
-        <div className="rounded border border-ourLightGray bg-white">
+        <div className="rounded border border-ourLightGrey bg-white">
           <div className="flex flex-row">
             <div className="w-[36%] border-r pb-8 border-ourLightGray py-4 px-8">
               <h3 className=''>Infos zum Verkäufer</h3>
@@ -234,46 +234,46 @@ export default function () {
         </div>
 
         {pendingProducts.length > 0 && (
-          <div className="rounded border border-ourLightGray bg-white mb-4" style={{ maxHeight: "250px", overflowY: "auto" }}>
-            <div className="overflow-hidden">
-              <table className="min-w-full text-left text-sm font-light rounded">
-                <thead className="font-medium">
-                  <tr>
-                    <th scope="col" className="px-8 py-4">
-                      #
-                    </th>
-                    <th scope="col" className="px-8 py-4">
-                      Artikel
-                    </th>
-                    <th scope="col" className="px-8 py-4">
-                      Kategorie
-                    </th>
-                    <th scope="col" className="px-8 py-4">
-                      Preis
-                    </th>
-                    <th scope="col" className="px-8 py-4">
-                      Entfernen
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {pendingProducts.map((product, index) => (
-                    <Step3TableRow
-                      key={index}
-                      counter={index + 1}
-                      name={product.product.product_name}
-                      category={product.product.product_category}
-                      price={product.product.product_price}
-                      removeItem={() => handleRemoveProduct(index)}
-                    />
-                  ))}
-                  <tr ref={scrollRef}></tr> {/* Empty row for scrolling to the bottom */}
+                <div className="rounded border border-ourLightGrey bg-white mb-4" style={{ maxHeight: "250px", overflowY: "auto" }}>
+                <div className="overflow-hidden">
+                  <table className="min-w-full text-left text-sm font-light rounded">
+                    <thead className="font-medium">
+                      <tr>
+                        <th scope="col" className="px-8 py-4">
+                          #
+                        </th>
+                        <th scope="col" className="px-8 py-4">
+                          Artikel
+                        </th>
+                        <th scope="col" className="px-8 py-4">
+                          Kategorie
+                        </th>
+                        <th scope="col" className="px-8 py-4">
+                          Preis
+                        </th>
+                        <th scope="col" className="px-8 py-4">
+                          Entfernen
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {pendingProducts.map((product, index) => (
+                        <Step3TableRow
+                          key={index}
+                          counter={index + 1}
+                          name={product.product.product_name}
+                          category={product.product.product_category}
+                          price={product.product.product_price}
+                          removeItem={() => handleRemoveProduct(index)}
+                        />
+                      ))}
+                    <tr ref={scrollRef}></tr> {/* Empty row for scrolling to the bottom */}
 
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
 
       </div>
       {/*
