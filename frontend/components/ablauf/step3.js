@@ -261,9 +261,6 @@ export default function () {
                     </>
                 }
             </div>
-            <button onClick={() => {
-                console.log("TotalPrice:" + totalPrice)
-            }}>Test</button>
         </>
     );
 }

@@ -41,8 +41,7 @@ const CalculationPopup = ({ popupOpen, closePopup, getFinalTotalPrice }) => {
     }, []);
 
     const calculateChange = () => {
-
-
+        if (finalTotalPrice == 0) return 0;
         const change = parseFloat(cashReceived.replace(',', '.')) - finalTotalPrice;
         return change > 0 ? change : 0;
     };
@@ -64,9 +63,6 @@ const CalculationPopup = ({ popupOpen, closePopup, getFinalTotalPrice }) => {
                         {//<UilMultiply className="absolute top-4 right-4 cursor-pointer" onClick={closeThePopup} />
                         }
                         <h2 className="mb-2">Wie viel Geld haben Sie erhalten?</h2>
-                        <button onClick={() => {
-                            console.log(finalTotalPrice)
-                        }}>Test</button>
                         <FormInput
                             name="Erhaltenes Geld"
                             unit="€"
