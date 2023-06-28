@@ -130,7 +130,7 @@ export default function AbholungPage() {
     useEffect(() => {
         if (productReclinedID !== 0) {
             console.log("productReclinedID: ", productReclinedID);
-            fetch('http://localhost:8080/api/product-recline?id='+productReclinedID, {method: 'PUT'})
+            fetch('http://localhost:8080/api/product-recline?id=' + productReclinedID, { method: 'PUT' })
                 .then(res => res.json())
                 .then(data => {
                     console.log(data)
@@ -203,7 +203,7 @@ export default function AbholungPage() {
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_name}</td>
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_category}</td>
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_price}</td>
-                                            <td className="whitespace-nowrap px-8 py-4"><button className='hover:text-ourPrimaryColorHover' onClick={() => handleReclineProduct(product.product_id)}><UilCheck size="17" /></button></td>
+                                            <td className="whitespace-nowrap px-8 py-4"><button className='hover:text-ourPrimaryColorHover' onClick={() => handleReclineProduct(product.product_id)}><UilSquareFull size="17" /></button></td>
                                         </tr>
                                     ))}
                                 </tbody>
