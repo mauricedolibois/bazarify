@@ -211,46 +211,54 @@ export default function () {
             </div >
             {//TODO: Tabelle als Komponente auslagern
             }
-            {scannedProducts.length > 0 && (
-                <div className="rounded border border-ourLightGray bg-white mb-8" style={{ maxHeight: "216px", overflowY: "auto" }}>
-                    <div className="overflow-hidden">
-                        <table className="min-w-full text-left text-sm font-light rounded">
-                            <thead className="font-medium">
-                                <tr>
-                                    <th scope="col" className="px-8 py-4">
-                                        #
-                                    </th>
-                                    <th scope="col" className="px-8 py-4">
-                                        Artikel
-                                    </th>
-                                    <th scope="col" className="px-8 py-4">
-                                        Kategorie
-                                    </th>
-                                    <th scope="col" className="px-8 py-4">
-                                        Preis
-                                    </th>
-                                    <th scope="col" className="px-8 py-4">
-                                        Entfernen
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {scannedProducts.map((product, index) => (
-                                    <Step3TableRow
-                                        key={index}
-                                        counter={index + 1}
-                                        name={product.product_name}
-                                        category={product.product_category}
-                                        price={product.product_price}
-                                        removeItem={() => handleRemoveProduct(index)}
-                                    />
-                                ))}
-                                <tr ref={scrollRef}></tr> {/* Empty row for scrolling to the bottom */}
-                            </tbody>
-                        </table>
+            
+            <div className="rounded border border-ourLightGray bg-white mb-8" style={{height: "320px", overflowY: "auto" }}>
+                <div className="overflow-hidden">
+                    {scannedProducts.length === 0 ? (
+                    <div className="flex flex-col justify-center items-center mb-32 mt-32">
+                        <UilInfoCircle className="text-ourGray text-4xl mb-4"></UilInfoCircle>
+                        <p className="text-ourGray text-xl">Hier werden deine gescannten Produkte angezeigt!</p>
                     </div>
+                    ) : (
+                    <table className="min-w-full text-left text-sm font-light rounded">
+                        <thead className="font-medium">
+                        <tr>
+                            <th scope="col" className="px-8 py-4">
+                            #
+                            </th>
+                            <th scope="col" className="px-8 py-4">
+                            Artikel
+                            </th>
+                            <th scope="col" className="px-8 py-4">
+                            Kategorie
+                            </th>
+                            <th scope="col" className="px-8 py-4">
+                            Preis
+                            </th>
+                            <th scope="col" className="px-8 py-4">
+                            Entfernen
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {scannedProducts.map((product, index) => (
+                            <Step3TableRow
+                            key={index}
+                            counter={index + 1}
+                            name={product.product_name}
+                            category={product.product_category}
+                            price={product.product_price}
+                            removeItem={() => handleRemoveProduct(index)}
+                            />
+                        ))}
+                        <tr ref={scrollRef}></tr> {/* Empty row for scrolling to the bottom */}
+                        </tbody>
+                    </table>
+                    )}
                 </div>
-            )}
+            </div>
+
+            
 
             <h2>Gesamt: {totalPrice}€</h2>
             <hr className="border-ourLightGray"></hr>
