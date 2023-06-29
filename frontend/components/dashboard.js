@@ -97,21 +97,21 @@ export default function () {
                     <Link href="/" onClick={() => setStep(1)}>
                         <ButtonBigColor text="Neuen Basar erstellen" icon={<UilPlus />}></ButtonBigColor>
                     </Link>
-                    <Link href="https://www.youtube.com/watch?v=EngW7tLk6R8" target='_blank'>
+                    <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
                         <ButtonBigNoColor text="Tutorial anschauen" icon={<UilPlay />}>
                         </ButtonBigNoColor>
                     </Link>
                     <Link href="/" onClick={() => loadExampleData()}>
                         <ButtonBigNoColor text="Demoversion laden" icon={<UilNoEntry />}></ButtonBigNoColor>
                     </Link>
-                </div>
+                </div >
                 <h2 className="mt-16">Deine Basare</h2>
                 <div class="grid grid-cols-3 gap-4">
                     {(bazars === undefined) ? (<p>Keine Basare vorhanden</p>) : (bazars.map(bazar => {
                         return (bazar.hasOwnProperty('bazar_name')) ? <BazarCard name={bazar.bazar_name} /> : null;
                     }))}
                 </div>
-            </div>
+            </div >
         </>
     )
 }
