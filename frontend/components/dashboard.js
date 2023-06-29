@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useContext } from 'react'
 import { BazarContext } from '../pages/index.js'
 import { useState, useEffect } from 'react'
+import VideoPopup from './VideoPopup'
 
 function BazarCard({ name }) {
     let { setCurrentBazar, setStep } = useContext(BazarContext)
@@ -91,15 +92,15 @@ export default function () {
         <>
             <div>
                 <h1>Dashboard</h1>
+
                 <p className="mb-4">Willkommen bei Bazarify! Hier kannst du ganz einfach einen neuen Basar erstellen oder einen existierenden Basar auswählen. Keine Sorge, wir führen dich Schritt für Schritt durch den gesamten Prozess, damit dieser dein einfachster Basar bisher wird!</p>
                 <div class="flex flex-row gap-4">
                     {/* Sollen wir das hier lieber mit dem Stepper machen (so wie in der Sidebar, also onClick={showDashboard}) oder mit href? */}
                     <Link href="/" onClick={() => setStep(1)}>
                         <ButtonBigColor text="Neuen Basar erstellen" icon={<UilPlus />}></ButtonBigColor>
                     </Link>
-                    <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-                        <ButtonBigNoColor text="Tutorial anschauen" icon={<UilPlay />}>
-                        </ButtonBigNoColor>
+                    <Link href="/">
+                        <VideoPopup></VideoPopup>
                     </Link>
                     <Link href="/" onClick={() => loadExampleData()}>
                         <ButtonBigNoColor text="Demoversion laden" icon={<UilNoEntry />}></ButtonBigNoColor>
