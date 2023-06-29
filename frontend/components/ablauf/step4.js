@@ -161,7 +161,7 @@ export default function AbholungPage() {
 
                 {/* <ButtonSmallJustIcon tooltip="Verkäufer finden" icon={<UilSearch />} /> */}
 
-                {unsoldProductsFromSeller.length !== 0 &&
+                {clickedSellerID !== 0 &&
                     <div className="grid grid-cols-3 mt-4 bg-white rounded border-ourLightGray border">
                         <div className="flex justify-center items-center py-4">
                             <p className='font-bold'>{name}</p>
@@ -175,6 +175,7 @@ export default function AbholungPage() {
                         </div>
                     </div>
                 }
+                
                 {unsoldProductsFromSeller.length !== 0 &&
                     <div className="rounded border border-ourLightGray mt-4 bg-white mb-4">
                         <div className="overflow-hidden">
