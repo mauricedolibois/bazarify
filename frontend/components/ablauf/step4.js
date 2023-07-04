@@ -176,7 +176,7 @@ export default function AbholungPage() {
                     </div>
                 }
                 {unsoldProductsFromSeller.length !== 0 &&
-                    <div className="rounded border border-ourLightGray mt-4 bg-white mb-4">
+                    <div className="rounded border border-ourLightGray mt-4 bg-white mb-4 max-h-72 overflow-y-auto">
                         <div className="overflow-hidden">
                             <table className="min-w-full text-left text-sm font-light rounded">
                                 <thead className="font-medium">
