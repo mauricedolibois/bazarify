@@ -161,19 +161,20 @@ export default function AbholungPage() {
 
                 {/* <ButtonSmallJustIcon tooltip="Verkäufer finden" icon={<UilSearch />} /> */}
 
-                
-                <div className="grid grid-cols-3 mt-4 bg-white rounded border-ourLightGray border">
-                    <div className="flex justify-center items-center py-4">
-                        <p className='font-bold'>{name}</p>
+                {clickedSellerID !== 0 &&
+                    <div className="grid grid-cols-3 mt-4 bg-white rounded border-ourLightGray border">
+                        <div className="flex justify-center items-center py-4">
+                            <p className='font-bold'>{name}</p>
+                        </div>
+                        <div className="flex justify-center flex-col items-center border-l border-ourLightGray border-r py-4">
+                            <p className='font-semibold'>{sellerPayback}€</p>
+                            <p className='mt-4'>Erlös</p>
+                        </div>
+                        <div className="flex justify-between text-center items-center py-4 px-8">
+                            <p>{getUnsoldProductsText()}</p>
+                        </div>
                     </div>
-                    <div className="flex justify-center flex-col items-center border-l border-ourLightGray border-r py-4">
-                        <p className='font-semibold'>{sellerPayback}€</p>
-                        <p className='mt-4'>Erlös</p>
-                    </div>
-                    <div className="flex justify-between text-center items-center py-4 px-8">
-                        <p>{getUnsoldProductsText()}</p>
-                    </div>
-                </div>
+                }
                 
                 {unsoldProductsFromSeller.length !== 0 &&
                     <div className="rounded border border-ourLightGray mt-4 bg-white mb-4 max-h-72 overflow-y-auto">
