@@ -38,6 +38,7 @@ export default function () {
 
     setProduct(productData);
     setPendingProducts((pendingProducts) => [...pendingProducts, { product: productData }])
+    setShouldScrollToBottom(true);
     setProductName('');
     setProductCategory('');
     setProductPrice('');
@@ -308,7 +309,6 @@ export default function () {
                     />
                   ))}
                   <tr ref={scrollRef}></tr> {/* Empty row for scrolling to the bottom */}
-
                 </tbody>
               </table>
             </div>
