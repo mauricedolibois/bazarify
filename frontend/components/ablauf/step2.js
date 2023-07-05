@@ -274,7 +274,7 @@ export default function () {
         </div>
 
         {pendingProducts.length > 0 && (
-          <div className="rounded border mt-4 border-ourLightGray bg-white mb-4" style={{ maxHeight: "250px", overflowY: "auto" }}>
+          <div className="rounded border mt-4 border-ourLightGray bg-white mb-4 max-h-64 overflow-y-auto">
             <div className="overflow-hidden">
               <h3 className='px-8 pt-4'>Eingepflegte Produkte</h3>
               <table className="min-w-full text-left text-sm font-light rounded">
