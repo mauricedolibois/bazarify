@@ -21,7 +21,11 @@ module.exports = {
         ourGray: "#A6A6A6",             //text-gray-400
         ourBackgroundColor: "#f5f5f5",  //bg-gray-100
         ourSuperDarkGray: "#303030",    //text-gray-900
-        ourPrimaryColorHover: "#CC9E28" //bg-yellow-600
+        ourPrimaryColorHover: "#CC9E28", //bg-yellow-600
+        ourLightRed: "#FED7D7",             //text-red-300
+        ourDarkRed: "#E53E3E",              //text-red-600
+        ourLightGreen: "#C6F6D5",           //text-green-300
+        ourDarkGreen: "#38A169",            //text-green-600
       }
     },
   },
