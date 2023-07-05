@@ -23,7 +23,7 @@ export default function () {
     const [allUpdatedOffers, setAllUpdatedOffer] = useState('');
     const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
     const [popupOpened, setPopupOpened] = useState(false);
-    const [errorMsg, setErrorMsg] = useState('');
+    const [msg, setMsg] = useState({ type: '', text: '' });
 
     let input;
     let tmpAllUpdatedOffers = [];
@@ -52,12 +52,12 @@ export default function () {
                 input.value = '';
             } else {
                 console.log('Invalid input: not a number');
-                setErrorMsg('Gib eine gültige Zahl ein');
+                setMsg({type:'error', text:'Gib eine gültige Zahl ein'});
                 input.value = '';
             }
         } else {
             console.log('Input is empty');
-            setErrorMsg('Gib eine gültige Zahl ein');
+            setMsg({type:'error', text:'Gib eine gültige Zahl ein'});
         }
     };
 
@@ -108,7 +108,7 @@ export default function () {
                 })
                 .catch((error) => {
                     console.log(error)
-                    setErrorMsg('Produkt nicht gefunden');
+                    setMsg({type:'error', text:'Produkt nicht gefunden'});
                 });
 
         }
@@ -128,15 +128,15 @@ export default function () {
             switch (true) {
               case productExists: 
                 console.log('Product already scanned');
-                setErrorMsg('Produkt wurde bereits gescannt');
+                setMsg({type:'error', text:'Produkt wurde bereits gescannt'});
                 break;
               case productAllreadySold:
                 console.log('Product already sold');
-                setErrorMsg('Produkt wurde bereits verkauft');
+                setMsg({type:'error', text:'Produkt wurde bereits verkauft'});
                 break;
               case productAllreadyReclined:
                 console.log('Product already reclined');
-                setErrorMsg('Produkt wurde bereits abgeholt');
+                setMsg({type:'error', text:'Produkt wurde bereits abgeholt'});
                 break;
               default:
                 fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
@@ -157,13 +157,13 @@ export default function () {
 
     //reset error message after 3 seconds
     useEffect(() => {
-        if (errorMsg !== '') {
-            console.log('error message: ', errorMsg);
+        if (msg.text !== '' && msg.type !== '') {
+            console.log("Error: text: " + msg.text + " type: " + msg.type)
             setTimeout(() => {
-                setErrorMsg('');
+                setMsg({ type: '', text: '' });
             }, 3000);
         }
-    }, [errorMsg]);
+    }, [msg]);
 
     const handleSubmit = () => {
         console.log('submit');
@@ -221,9 +221,9 @@ export default function () {
 
     return (
         <>
-            {errorMsg !== '' && 
-            <Alert type="Fehler beim Hinzufügen!" message={errorMsg} />
-            }
+            {msg.type !== '' && msg.text !== '' && (
+            <Alert type={msg.type} text={msg.text} />
+            )}
             <h1>3. Verkauf</h1>
             <p className='mb-4'>
                 Klasse! Du solltest jetzt alle Produkte eingetragen haben. Ab jetzt kannst du die Verkäufe abrechnen.

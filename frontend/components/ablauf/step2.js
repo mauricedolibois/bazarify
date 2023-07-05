@@ -10,6 +10,7 @@ import { UilPrint } from '@iconscout/react-unicons'
 import { UilHistory } from '@iconscout/react-unicons'
 import ProductTable from '../productTable';
 import Step3TableRow from '../Step3TableRow';
+import Alert from '../alert';
 
 export default function () {
   const [sellerFirstName, setSellerFirstName] = useState('');
@@ -21,13 +22,14 @@ export default function () {
   const [productPrice, setProductPrice] = useState('');
   const [product, setProduct] = useState('');
   const [seller, setSeller] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [msg, setMsg] = useState({type: '', text: ''});
 
   const [pendingProducts, setPendingProducts] = useState([]);
   const [pendingOffers, setPendingOffers] = useState([]);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
 
   const handleAddPendingProduct = () => {
+    setMsg({type:"success",text: "Produkt wurde hinzugefügt"});
     console.log('add pending product');
 
     const productData = {
@@ -75,6 +77,7 @@ export default function () {
 
   const handleRemoveProduct = (index) => {
     setPendingProducts((scannedProducts) => scannedProducts.filter((_, i) => i !== index));
+    setMsg({type:"success",text: "Produkt wurde entfernt"});
   };
 
 
@@ -171,6 +174,16 @@ export default function () {
   //   }
   // }
 
+  useEffect(() => {
+    if (msg.text !== '') {
+      console.log("Errror: text: " + msg.text + " type: " + msg.type)
+      setTimeout(() => {
+        setMsg({type: '', text: ''});
+      }, 3000);
+    }
+  }, [msg]);
+
+
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -183,7 +196,9 @@ export default function () {
   return (
     <>
       <div>
-
+        {msg.text !== '' && msg.type!=='' &&(
+          <Alert type={msg.type} text={msg.text} />
+        )}
         <h1>2. Annahme</h1>
         <p className='mb-4'>
           Jetzt kannst du damit anfangen die Produkte verschiedener Verkäufer hinzuzufügen. Wenn du das erledigt hast,
@@ -259,11 +274,7 @@ export default function () {
               <div className="flex flex-row items-center">
                 <UilInfoCircle className="mr-4 text-ourDarkGray"></UilInfoCircle>
                 <p className="text-sm">
-                  {errorMessage ? (
-                    <span className="text-red-400">Fehler beim Hinzufügen des Angebots, bitte überprüfe deine Eingaben!</span>
-                  ) : (
-                    "Scanne einfach alle Produkte eines Verkäufers ein und drucke dann die Barcodes oben aus"
-                  )}
+                  "Scanne einfach alle Produkte eines Verkäufers ein und drucke dann die Barcodes oben aus"
                 </p>
 
               </div>
