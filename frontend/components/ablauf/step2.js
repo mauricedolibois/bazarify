@@ -29,7 +29,7 @@ export default function () {
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
 
   const handleAddPendingProduct = () => {
-    setMsg({type:"success",text: "Produkt wurde hinzugefügt"});
+    setMsg({type:"success",text: `Produkt "${productName}" wurde hinzugefügt`});
     console.log('add pending product');
 
     const productData = {
@@ -76,8 +76,10 @@ export default function () {
 
 
   const handleRemoveProduct = (index) => {
+    const productName = pendingProducts[index].product.product_name;
+    setMsg({type:"success",text: `Produkt "${productName}" wurde entfernt`});
     setPendingProducts((scannedProducts) => scannedProducts.filter((_, i) => i !== index));
-    setMsg({type:"success",text: "Produkt wurde entfernt"});
+    
   };
 
 
