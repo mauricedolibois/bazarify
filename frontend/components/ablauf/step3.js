@@ -111,21 +111,39 @@ export default function () {
     //fetch product from database
     useEffect(() => {
         if (offer !== '') {
+            // Check if product is already scanned
             const productExists = scannedProducts.some((product) => product.product_id === offer.product_id);
-            //if (!productExists) { // Nur hinzufügen, wenn das Produkt noch nicht vorhanden ist
-            fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
+            // Check if product is already sold
+            const productAllreadySold =  offer.state === 'sold';
+            // Check if product is already reclined
+            const productAllreadyReclined = offer.state === 'reclined';
+          
+            switch (true) {
+              case productExists: 
+                console.log('Product already scanned');
+                break;
+              case productAllreadySold:
+                console.log('Product already sold');
+                break;
+              case productAllreadyReclined:
+                console.log('Product already reclined');
+                break;
+              default:
+                fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
                 .then((res) => res.json())
                 .then((data) => {
-                    setScannedProducts((scannedProducts) => [...scannedProducts, data]);
-                    setShouldScrollToBottom(true);
-                    setAllOffers((allOffers) => [...allOffers, offer]);
-                    console.log(scannedProducts);
-                    console.log(data);
+                  setScannedProducts((scannedProducts) => [...scannedProducts, data]);
+                  setShouldScrollToBottom(true);
+                  setAllOffers((allOffers) => [...allOffers, offer]);
+                  console.log(scannedProducts);
+                  console.log(data);
                 })
                 .catch((error) => console.log(error));
-            //}
-        }
-    }, [offer]);
+                break;
+            }
+          }
+        }, [offer]);
+          
 
     const handleSubmit = () => {
         console.log('submit');
@@ -212,7 +230,7 @@ export default function () {
             {//TODO: Tabelle als Komponente auslagern
             }
             
-            <div className="rounded border border-ourLightGray bg-white mb-8" style={{height: "320px", overflowY: "auto" }}>
+            <div className="rounded border border-ourLightGray bg-white mb-8 h-80 overflow-y-auto">
                 <div className="overflow-hidden">
                     {scannedProducts.length === 0 ? (
                     <div className="flex flex-col justify-center items-center mb-32 mt-32">
