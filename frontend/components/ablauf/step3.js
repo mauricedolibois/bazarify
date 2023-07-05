@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import Step3TableRow from '../Step3TableRow';
 import ButtonYellowBorder from '../buttons/ButtonYellowBorder';
 import ProductTable from '../productTable';
+import Alert from '../alert';
 
 
 //TODO: check if input is a number
@@ -22,6 +23,7 @@ export default function () {
     const [allUpdatedOffers, setAllUpdatedOffer] = useState('');
     const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
     const [popupOpened, setPopupOpened] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('');
 
     let input;
     let tmpAllUpdatedOffers = [];
@@ -43,18 +45,19 @@ export default function () {
         const inputValue = input.value.trim();
 
         if (inputValue !== '') {
+            // Check if input is a number
             if (!isNaN(inputValue)) {
                 console.log('Enter pressed');
                 setBarcode(inputValue);
                 input.value = '';
             } else {
                 console.log('Invalid input: not a number');
-                // Display an error message or prevent scanning
+                setErrorMsg('Gib eine gültige Zahl ein');
                 input.value = '';
             }
         } else {
             console.log('Input is empty');
-            // Display an error message or prevent scanning
+            setErrorMsg('Gib eine gültige Zahl ein');
         }
     };
 
@@ -103,7 +106,11 @@ export default function () {
                     setBarcode('');
                     console.log(data);
                 })
-                .catch((error) => console.log(error));
+                .catch((error) => {
+                    console.log(error)
+                    setErrorMsg('Produkt nicht gefunden');
+                });
+
         }
     }, [barcode]); //barcode == offer_id
 
@@ -121,12 +128,15 @@ export default function () {
             switch (true) {
               case productExists: 
                 console.log('Product already scanned');
+                setErrorMsg('Produkt wurde bereits gescannt');
                 break;
               case productAllreadySold:
                 console.log('Product already sold');
+                setErrorMsg('Produkt wurde bereits verkauft');
                 break;
               case productAllreadyReclined:
                 console.log('Product already reclined');
+                setErrorMsg('Produkt wurde bereits abgeholt');
                 break;
               default:
                 fetch('http://localhost:8080/api/product?operator=product_id&parameter=' + offer.product_id, { method: 'GET' })
@@ -144,6 +154,16 @@ export default function () {
           }
         }, [offer]);
           
+
+    //reset error message after 3 seconds
+    useEffect(() => {
+        if (errorMsg !== '') {
+            console.log('error message: ', errorMsg);
+            setTimeout(() => {
+                setErrorMsg('');
+            }, 3000);
+        }
+    }, [errorMsg]);
 
     const handleSubmit = () => {
         console.log('submit');
@@ -201,6 +221,9 @@ export default function () {
 
     return (
         <>
+            {errorMsg !== '' && 
+            <Alert type="Fehler beim Hinzufügen!" message={errorMsg} />
+            }
             <h1>3. Verkauf</h1>
             <p className='mb-4'>
                 Klasse! Du solltest jetzt alle Produkte eingetragen haben. Ab jetzt kannst du die Verkäufe abrechnen.
