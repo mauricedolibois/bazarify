@@ -5,6 +5,7 @@ import SendMailsButton from "../buttons/SendMailsButton";
 import ButtonBigColor from "../buttons/ButtonBigColor";
 import ButtonSmallJustIcon from "../buttons/ButtonSmallJustIcon";
 import UnderlindedInput from "../underlinedInput";
+import Alert from "../alert";
 
 export default function AbholungPage() {
     const [allSellers, setAllSellers] = useState([]);
@@ -18,6 +19,7 @@ export default function AbholungPage() {
     const [unsoldProductsCount, setUnsoldProductsCount] = useState(0);
     const [provision, setProvision] = useState(0);
     const [productReclinedID, setProductReclinedID] = useState(0);
+    const [msg, setMsg] = useState({type : '', text : ''});
 
 
 
@@ -117,9 +119,12 @@ export default function AbholungPage() {
         }
     };
 
-    const handleReclineProduct = (productID) => {
+    const handleReclineProduct = (product) => {
+        const productID = product.product_id;
         console.log("product reclined: ", productID);
+
         setProductReclinedID(productID);
+        setMsg({type: 'success', text: `Produkt "${product.product_name}" wurde als abgeholt markiert`});
         //remove product from unsold products
         let tmpUnsoldProducts = [];
         unsoldProductsFromSeller.map(product => {
@@ -129,6 +134,16 @@ export default function AbholungPage() {
         });
         setUnsoldProductsFromSeller(tmpUnsoldProducts);
     };
+
+    useEffect(() => {
+        if (msg.text !== '' && msg.type !== '') {
+            console.log("Error: text: " + msg.text + " type: " + msg.type)
+            setTimeout(() => {
+                setMsg({ type: '', text: '' });
+            }, 3000);
+        }
+    }, [msg]);
+
 
     useEffect(() => {
         if (productReclinedID !== 0) {
@@ -145,6 +160,9 @@ export default function AbholungPage() {
     return (
         <>
             <div>
+                {msg.text !== '' && msg.type !== '' && 
+                    <Alert type={msg.type} text={msg.text} />
+                }
                 <h1>4. Abholung</h1>
                 <p className='mb-4'>Schön, dass du so viel verkaufen konntest. Du solltest jetzt die Verkäufer benachrichtigen, dass sie ihren Erlös und ggf. ihre liegengebliebene Artikel abholen kommen können.</p>
                 <SendMailsButton />
@@ -207,7 +225,7 @@ export default function AbholungPage() {
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_name}</td>
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_category}</td>
                                             <td className="whitespace-nowrap px-8 py-4">{product.product_price}</td>
-                                            <td className="whitespace-nowrap px-8 py-4"><button className='hover:text-ourPrimaryColorHover' onClick={() => handleReclineProduct(product.product_id)}><UilSquareFull size="17" /></button></td>
+                                            <td className="whitespace-nowrap px-8 py-4"><button className='hover:text-ourPrimaryColorHover' onClick={() => handleReclineProduct(product)}><UilSquareFull size="17" /></button></td>
                                         </tr>
                                     ))}
                                 </tbody>

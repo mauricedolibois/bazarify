@@ -62,6 +62,8 @@ export default function () {
     };
 
     const handleRemoveProduct = (index) => {
+        const productName = scannedProducts[index].product_name;
+        setMsg({type:"success",text: `Produkt "${productName}" wurde storniert`});
         setScannedProducts((scannedProducts) => scannedProducts.filter((_, i) => i !== index));
     };
 
