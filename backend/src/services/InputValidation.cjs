@@ -59,14 +59,14 @@ module.exports = {
             bazar_name: Joi.string().required().error(new Error('Überprüfe deinen Input bei Name')),
             bazar_year: Joi.number().integer().required().error(new Error('Überprüfe deinen Input bei Jahr')),
             bazar_commission: Joi.number().integer().required().min(0).max(100).error(new Error('Überprüfe deinen Input bei der Provision (nur Zahlen von 0-100)')),
-            bazar_description: Joi.string().error(new Error('Überprüfe deinen Input bei der Beschreibung'))
+            //bazar_description: Joi.string().error(new Error('Überprüfe deinen Input bei der Beschreibung'))
             });
 
             const validInfo = await schema.validateAsync({
                 bazar_name: name,
                 bazar_year: year,
                 bazar_commission: commission,
-                bazar_description: description
+                //bazar_description: description
               }).catch(err => {return err.message})
 
             return validInfo
