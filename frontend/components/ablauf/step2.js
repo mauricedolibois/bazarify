@@ -11,6 +11,8 @@ import { UilHistory } from '@iconscout/react-unicons'
 import ProductTable from '../productTable';
 import Step3TableRow from '../Step3TableRow';
 import Alert from '../alert';
+import { checkProductName, checkProductCategory, checkPrice, checkName, checkPhoneNumber, checkEmail} from '../utils/inputValidation.js';
+
 
 export default function () {
   const [sellerFirstName, setSellerFirstName] = useState('');
@@ -23,28 +25,101 @@ export default function () {
   const [product, setProduct] = useState('');
   const [seller, setSeller] = useState('');
   const [msg, setMsg] = useState({type: '', text: ''});
-
+  const [productSubmitted, setProductSubmitted] = useState(false)
+  const [sellerSubmitted, setSellerSubmitted] = useState(false)
   const [pendingProducts, setPendingProducts] = useState([]);
   const [pendingOffers, setPendingOffers] = useState([]);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
+  const [validProductName, setValidPoductName] = useState(false)
+  const [validProductCategory, setValidPoductCategory] = useState(false)
+  const [validProductPrice, setValidPoductPrice] = useState(false)
+  const [validSellerFirstName, setValidSellerFirstName] = useState(false)
+  const [validSellerLastName, setValidSellerLastName] = useState(false)
+  const [validSellerPhoneNumber, setValidSellerPhoneNumber] = useState(false)
+  const [validSellerEmail, setValidSellerEmail] = useState(false)
+  const [btnPrintClicked, setbtnPrintClicked] = useState(false)
+  const allProductInputsEmpty = productName === '' && productCategory==='' && productPrice === '' 
+  const validProductInput = validProductName && validProductCategory && validProductPrice
+  const validSellerInput = validSellerLastName && validSellerFirstName && validSellerEmail && validSellerPhoneNumber
+
+
+  
 
   const handleAddPendingProduct = () => {
-    setMsg({type:"success",text: `Produkt "${productName}" wurde hinzugefügt`});
-    console.log('add pending product');
+    setProductSubmitted(true)
+    checkProductInput()
+  }; 
 
-    const productData = {
-      product_name: productName,
-      product_price: productPrice,
-      product_category: productCategory,
-    };
+  const checkProductInput = () => {
+    //check product price
+    checkPrice(productPrice, setMsg, setValidPoductPrice);
+    //check product categorie
+    checkProductCategory(productCategory, setMsg, setValidPoductCategory);
+    //check product name
+    checkProductName(productName, setMsg, setValidPoductName);
 
-    setProduct(productData);
-    setPendingProducts((pendingProducts) => [...pendingProducts, { product: productData }])
-    setShouldScrollToBottom(true);
-    setProductName('');
-    setProductCategory('');
-    setProductPrice('');
-  };
+    if(sellerSubmitted && allProductInputsEmpty) {
+      console.log("print clicked and all empty")
+    }
+  }
+
+  useEffect(()=> {
+    if(validProductInput && !allProductInputsEmpty) {
+      setMsg({type:"success",text: `Produkt "${productName}" wurde hinzugefügt`});
+      console.log('add pending product');
+
+      const productData = {
+        product_name: productName,
+        product_price: productPrice,
+        product_category: productCategory,
+      };
+
+      setProduct(productData);
+      setPendingProducts((pendingProducts) => [...pendingProducts, { product: productData }])
+      setShouldScrollToBottom(true);
+      setProductName('');
+      setProductCategory('');
+      setProductPrice('');
+      }
+    if(sellerSubmitted && allProductInputsEmpty) {
+      setValidPoductCategory(true)
+      setValidPoductPrice(true)
+      setValidPoductName(true)
+    }
+  },[validProductName, validProductCategory, validProductPrice])
+
+  const checkSellerInput = () => {
+    //check seller first name
+    checkName(sellerFirstName, setMsg, setValidSellerFirstName, "Vorname");
+    //check seller last name
+    checkName(sellerLastName, setMsg, setValidSellerLastName, "Nachname");
+    //check seller email
+    checkEmail(sellerEmail, setMsg, setValidSellerEmail);
+    //check seller phone number
+    checkPhoneNumber(sellerPhoneNumber, setMsg, setValidSellerPhoneNumber);
+  }
+
+  useEffect(()=> {
+    if(validSellerInput && (validProductInput || allProductInputsEmpty)){
+      const sellerData = {
+        seller_name: sellerLastName,
+        seller_firstname: sellerFirstName,
+        seller_email: sellerEmail,
+        seller_phone: sellerPhoneNumber,
+      };
+  
+      console.log(sellerData)
+      setSeller(sellerData)
+  
+      setSellerFirstName('');
+      setSellerLastName('');
+      setSellerEmail('');
+      setSellerPhoneNumber('');
+      setProductName('');
+      setProductCategory('');
+      setProductPrice('');
+    }
+  },[validSellerFirstName, validSellerLastName, validSellerEmail, validSellerPhoneNumber])
 
 
   //TODO: beim router im backend array abgreifen und dann printen
@@ -75,6 +150,8 @@ export default function () {
   // }, [product]);
 
 
+
+
   const handleRemoveProduct = (index) => {
     const productName = pendingProducts[index].product.product_name;
     setMsg({type:"success",text: `Produkt "${productName}" wurde entfernt`});
@@ -84,26 +161,9 @@ export default function () {
 
 
   const handleAddOffer = async () => {
-
-    handleAddPendingProduct();
-
-    const sellerData = {
-      seller_name: sellerLastName,
-      seller_firstname: sellerFirstName,
-      seller_email: sellerEmail,
-      seller_phone: sellerPhoneNumber,
-    };
-
-    console.log(sellerData)
-    setSeller(sellerData)
-
-    setSellerFirstName('');
-    setSellerLastName('');
-    setSellerEmail('');
-    setSellerPhoneNumber('');
-    setProductName('');
-    setProductCategory('');
-    setProductPrice('');
+    setSellerSubmitted(true)
+    handleAddPendingProduct()
+    checkSellerInput()
   }
 
   useEffect(() => {
@@ -126,6 +186,7 @@ export default function () {
           console.log(error);
         });
       setPendingProducts([]);
+      setSellerSubmitted(false)
     }
 
   }, [seller]);
@@ -220,12 +281,16 @@ export default function () {
                 placeholder="Vorname"
                 value={sellerFirstName}
                 onChange={(e) => setSellerFirstName(e.target.value)}
+                validInput={validSellerFirstName}
+                submitted={sellerSubmitted}
               />
               <UnderlinedInput
                 id="sellerLastName"
                 placeholder="Nachname"
                 value={sellerLastName}
                 onChange={(e) => setSellerLastName(e.target.value)}
+                validInput={validSellerLastName}
+                submitted={sellerSubmitted}
               />
 
               <UnderlinedInput
@@ -233,12 +298,16 @@ export default function () {
                 placeholder="Email"
                 value={sellerEmail}
                 onChange={(e) => setSellerEmail(e.target.value)}
+                validInput={validSellerEmail}
+                submitted={sellerSubmitted}
               />
               <UnderlinedInput
                 id="sellerPhoneNumber"
                 placeholder="Telefonnummer"
                 value={sellerPhoneNumber}
                 onChange={(e) => setSellerPhoneNumber(e.target.value)}
+                validInput={validSellerPhoneNumber}
+                submitted={sellerSubmitted}
               />
             </div>
             <div className="w-[64%] py-4 px-8">
@@ -249,18 +318,24 @@ export default function () {
                   placeholder="Produktname"
                   value={productName}
                   onChange={(e) => setProductName(e.target.value)}
+                  validInput={validProductName}
+                  submitted={productSubmitted}
                 />
                 <UnderlinedInput
                   id="productCategory"
                   placeholder="Kategorie"
                   value={productCategory}
                   onChange={(e) => setProductCategory(e.target.value)}
+                  validInput={validProductCategory}
+                  submitted={productSubmitted}
                 />
                 <UnderlinedInput
                   id="productPrice"
                   placeholder="Preis in €"
                   value={productPrice}
                   onChange={(e) => setProductPrice(e.target.value)}
+                  validInput={validProductPrice}
+                  submitted={productSubmitted}
                 />
               </div>
 

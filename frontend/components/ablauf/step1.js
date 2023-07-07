@@ -5,7 +5,7 @@ import ButtonBigColor from '../buttons/ButtonBigColor';
 import { UilAngleRight } from '@iconscout/react-unicons';
 import { BazarContext } from '../../pages/index.js';
 import Alert from '../alert'
-import { checkName, checkYear, checkCommission, checkDescription } from '../utils/inputValidation.js';
+import { checkBazarName, checkYear, checkCommission, checkDescription } from '../utils/inputValidation.js';
 
 export default function Step1() {
     const [bazarName, setBazarName] = useState('');
@@ -21,14 +21,8 @@ export default function Step1() {
     const { setStep, setCurrentBazar } = useContext(BazarContext);
 
     const handleAddBazar = () => {
-        const bazar = {
-        bazar_name: bazarName,
-        bazar_year: bazarYear,
-        bazar_commission: bazarCommission,
-        bazar_description: bazarDescription
-        };
         setFormSubmitted(true);
-        checkInput(bazar);
+        checkInput();
     };
 
     useEffect(() => {
@@ -67,12 +61,20 @@ export default function Step1() {
         }
     }, [validName, validYear, validCommission, validDescription]);
 
-    const checkInput = (bazar) => {
-        checkCommission(bazar.bazar_commission, setErrorMessage, setValidCommission, bazarCommission);
-        checkYear(bazar.bazar_year, setErrorMessage, setValidYear, bazarYear);
-        checkName(bazar.bazar_name, setErrorMessage, setValidName, bazarName);
-        checkDescription(bazar.bazar_description, setErrorMessage, setValidDescription, bazarDescription);
+    const checkInput = () => {
+        checkCommission(bazarCommission, setErrorMessage, setValidCommission);
+        checkYear(bazarYear, setErrorMessage, setValidYear);
+        checkBazarName(bazarName, setErrorMessage, setValidName);
+        checkDescription(bazarDescription, setErrorMessage, setValidDescription);
     };
+
+    useEffect(() => {
+        if (errorMessage !== '') {
+          setTimeout(() => {
+            setErrorMessage('');
+          }, 3000);
+        }
+      }, [errorMessage]);
 
 
         return (
