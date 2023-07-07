@@ -11,6 +11,8 @@ import { UilHistory } from '@iconscout/react-unicons'
 import ProductTable from '../productTable';
 import Step3TableRow from '../Step3TableRow';
 import Alert from '../alert';
+import { checkProductName, checkProductCategory, checkPrice} from '../utils/inputValidation.js';
+
 
 export default function () {
   const [sellerFirstName, setSellerFirstName] = useState('');
@@ -23,30 +25,49 @@ export default function () {
   const [product, setProduct] = useState('');
   const [seller, setSeller] = useState('');
   const [msg, setMsg] = useState({type: '', text: ''});
-
+  const [productSubmitted, setProductSubmitted] = useState(false)
+  const [sellerSubmitted, setSellerSubmitted] = useState(false)
   const [pendingProducts, setPendingProducts] = useState([]);
   const [pendingOffers, setPendingOffers] = useState([]);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
+  const [validProductName, setValidPoductName] = useState(false)
+  const [validProductCategory, setValidPoductCategory] = useState(false)
+  const [validProductPrice, setValidPoductPrice] = useState(false)
 
   const handleAddPendingProduct = () => {
-    setMsg({type:"success",text: `Produkt "${productName}" wurde hinzugefügt`});
-    console.log('add pending product');
+    setProductSubmitted(true)
+    checkProductInput()
+  }; 
 
-    const productData = {
-      product_name: productName,
-      product_price: productPrice,
-      product_category: productCategory,
-    };
+  const checkProductInput = () => {
+    //check product price
+    checkPrice(productPrice, setMsg, setValidPoductPrice);
+    //check product categorie
+    checkProductCategory(productCategory, setMsg, setValidPoductCategory);
+    //check product name
+    checkProductName(productName, setMsg, setValidPoductName);
+  }
 
-    setProduct(productData);
-    setPendingProducts((pendingProducts) => [...pendingProducts, { product: productData }])
-    setShouldScrollToBottom(true);
-    setProductName('');
-    setProductCategory('');
-    setProductPrice('');
-  };
+  useEffect(()=> {
+    console.log("Preis: ", productPrice)
+    if(validProductName && validProductCategory && validProductPrice) {
+      setMsg({type:"success",text: `Produkt "${productName}" wurde hinzugefügt`});
+      console.log('add pending product');
 
+      const productData = {
+        product_name: productName,
+        product_price: productPrice,
+        product_category: productCategory,
+      };
 
+      setProduct(productData);
+      setPendingProducts((pendingProducts) => [...pendingProducts, { product: productData }])
+      setShouldScrollToBottom(true);
+      setProductName('');
+      setProductCategory('');
+      setProductPrice('');
+      }
+  },[validProductName, validProductCategory, validProductPrice])
   //TODO: beim router im backend array abgreifen und dann printen
   // useEffect(() => {
   //   if (product !== '') {
@@ -73,6 +94,8 @@ export default function () {
   //       });
   //   }
   // }, [product]);
+
+
 
 
   const handleRemoveProduct = (index) => {
