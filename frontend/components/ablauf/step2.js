@@ -272,18 +272,24 @@ export default function () {
                   placeholder="Produktname"
                   value={productName}
                   onChange={(e) => setProductName(e.target.value)}
+                  validInput={validProductName}
+                  submitted={productSubmitted}
                 />
                 <UnderlinedInput
                   id="productCategory"
                   placeholder="Kategorie"
                   value={productCategory}
                   onChange={(e) => setProductCategory(e.target.value)}
+                  validInput={validProductCategory}
+                  submitted={productSubmitted}
                 />
                 <UnderlinedInput
                   id="productPrice"
                   placeholder="Preis in €"
                   value={productPrice}
                   onChange={(e) => setProductPrice(e.target.value)}
+                  validInput={validProductPrice}
+                  submitted={productSubmitted}
                 />
               </div>
 
