@@ -143,4 +143,62 @@ export const checkPrice = (price, setErrorMessage, setValidPrice) => {
     }
 };
 
+//seller validation
+
+export const checkName = (name, setErrorMessage, setValidName, type) => {
+    //type ist entweder "Vorname" oder "Nachname"
+    setValidName(false);
+    const regex = /^[a-zA-ZäöüÄÖÜß]+[-]?[a-zA-ZäöüÄÖÜß]+$/;
+    switch (true) {
+        case name === '':
+            setErrorMessage({type: "error", text:`Bitte gib den ${type}n des Verkäufers ein!`});
+            break;
+        case name.length > 20:
+            setErrorMessage({type: "error", text:`Der ${type} des Verkäufers darf maximal 20 Zeichen lang sein!`});
+            break;
+        case !regex.test(name):
+            setErrorMessage({type: "error", text:`Bitte gib einen gültigen ${type}n des Verkäufers ein!`});
+            break;
+        default:
+            setValidName(true);
+            break;
+    }
+};
+
+export const checkEmail = (email, setErrorMessage, setValidEmail) => {
+    setValidEmail(false);
+    // Basic email validation regex
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    switch (true) {
+        case email === '':
+            setErrorMessage({type: "error", text:'Bitte gib deine E-Mail-Adresse ein!'});
+            break;
+        case !regex.test(email):
+            setErrorMessage({type: "error", text:'Bitte gib eine gültige E-Mail-Adresse ein!'});
+            break;
+        default:
+            setValidEmail(true);
+            break;
+    }
+};
+
+export const checkPhoneNumber = (phoneNumber, setErrorMessage, setValidPhoneNumber) => {
+    setValidPhoneNumber(false);
+    // Phone number validation regex
+    const regex = /^(\d+\/\d+|\d+)$/;
+
+    switch (true) {
+        case phoneNumber === '':
+            setErrorMessage({type: "error", text:'Bitte gib die Telefonnummer des Verkäufers ein!'});
+            break;
+        case !regex.test(phoneNumber):
+            setErrorMessage({type: "error", text:'Die Telefonnummer muss aus 10 Zahlen bestehen!'});
+            break;
+        default:
+            setValidPhoneNumber(true);
+            break;
+    }
+};
+
+
 

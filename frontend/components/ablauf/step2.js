@@ -11,7 +11,7 @@ import { UilHistory } from '@iconscout/react-unicons'
 import ProductTable from '../productTable';
 import Step3TableRow from '../Step3TableRow';
 import Alert from '../alert';
-import { checkProductName, checkProductCategory, checkPrice} from '../utils/inputValidation.js';
+import { checkProductName, checkProductCategory, checkPrice, checkName, checkPhoneNumber, checkEmail} from '../utils/inputValidation.js';
 
 
 export default function () {
@@ -33,6 +33,17 @@ export default function () {
   const [validProductName, setValidPoductName] = useState(false)
   const [validProductCategory, setValidPoductCategory] = useState(false)
   const [validProductPrice, setValidPoductPrice] = useState(false)
+  const [validSellerFirstName, setValidSellerFirstName] = useState(false)
+  const [validSellerLastName, setValidSellerLastName] = useState(false)
+  const [validSellerPhoneNumber, setValidSellerPhoneNumber] = useState(false)
+  const [validSellerEmail, setValidSellerEmail] = useState(false)
+  const [btnPrintClicked, setbtnPrintClicked] = useState(false)
+  const allProductInputsEmpty = productName === '' && productCategory==='' && productPrice === '' 
+  const validProductInput = validProductName && validProductCategory && validProductPrice
+  const validSellerInput = validSellerLastName && validSellerFirstName && validSellerEmail && validSellerPhoneNumber
+
+
+  
 
   const handleAddPendingProduct = () => {
     setProductSubmitted(true)
@@ -46,11 +57,14 @@ export default function () {
     checkProductCategory(productCategory, setMsg, setValidPoductCategory);
     //check product name
     checkProductName(productName, setMsg, setValidPoductName);
+
+    if(sellerSubmitted && allProductInputsEmpty) {
+      console.log("print clicked and all empty")
+    }
   }
 
   useEffect(()=> {
-    console.log("Preis: ", productPrice)
-    if(validProductName && validProductCategory && validProductPrice) {
+    if(validProductInput && !allProductInputsEmpty) {
       setMsg({type:"success",text: `Produkt "${productName}" wurde hinzugefügt`});
       console.log('add pending product');
 
@@ -67,7 +81,47 @@ export default function () {
       setProductCategory('');
       setProductPrice('');
       }
+    if(sellerSubmitted && allProductInputsEmpty) {
+      setValidPoductCategory(true)
+      setValidPoductPrice(true)
+      setValidPoductName(true)
+    }
   },[validProductName, validProductCategory, validProductPrice])
+
+  const checkSellerInput = () => {
+    //check seller first name
+    checkName(sellerFirstName, setMsg, setValidSellerFirstName, "Vorname");
+    //check seller last name
+    checkName(sellerLastName, setMsg, setValidSellerLastName, "Nachname");
+    //check seller email
+    checkEmail(sellerEmail, setMsg, setValidSellerEmail);
+    //check seller phone number
+    checkPhoneNumber(sellerPhoneNumber, setMsg, setValidSellerPhoneNumber);
+  }
+
+  useEffect(()=> {
+    if(validSellerInput && (validProductInput || allProductInputsEmpty)){
+      const sellerData = {
+        seller_name: sellerLastName,
+        seller_firstname: sellerFirstName,
+        seller_email: sellerEmail,
+        seller_phone: sellerPhoneNumber,
+      };
+  
+      console.log(sellerData)
+      setSeller(sellerData)
+  
+      setSellerFirstName('');
+      setSellerLastName('');
+      setSellerEmail('');
+      setSellerPhoneNumber('');
+      setProductName('');
+      setProductCategory('');
+      setProductPrice('');
+    }
+  },[validSellerFirstName, validSellerLastName, validSellerEmail, validSellerPhoneNumber])
+
+
   //TODO: beim router im backend array abgreifen und dann printen
   // useEffect(() => {
   //   if (product !== '') {
@@ -107,26 +161,9 @@ export default function () {
 
 
   const handleAddOffer = async () => {
-
-    handleAddPendingProduct();
-
-    const sellerData = {
-      seller_name: sellerLastName,
-      seller_firstname: sellerFirstName,
-      seller_email: sellerEmail,
-      seller_phone: sellerPhoneNumber,
-    };
-
-    console.log(sellerData)
-    setSeller(sellerData)
-
-    setSellerFirstName('');
-    setSellerLastName('');
-    setSellerEmail('');
-    setSellerPhoneNumber('');
-    setProductName('');
-    setProductCategory('');
-    setProductPrice('');
+    setSellerSubmitted(true)
+    handleAddPendingProduct()
+    checkSellerInput()
   }
 
   useEffect(() => {
@@ -149,6 +186,7 @@ export default function () {
           console.log(error);
         });
       setPendingProducts([]);
+      setSellerSubmitted(false)
     }
 
   }, [seller]);
@@ -243,12 +281,16 @@ export default function () {
                 placeholder="Vorname"
                 value={sellerFirstName}
                 onChange={(e) => setSellerFirstName(e.target.value)}
+                validInput={validSellerFirstName}
+                submitted={sellerSubmitted}
               />
               <UnderlinedInput
                 id="sellerLastName"
                 placeholder="Nachname"
                 value={sellerLastName}
                 onChange={(e) => setSellerLastName(e.target.value)}
+                validInput={validSellerLastName}
+                submitted={sellerSubmitted}
               />
 
               <UnderlinedInput
@@ -256,12 +298,16 @@ export default function () {
                 placeholder="Email"
                 value={sellerEmail}
                 onChange={(e) => setSellerEmail(e.target.value)}
+                validInput={validSellerEmail}
+                submitted={sellerSubmitted}
               />
               <UnderlinedInput
                 id="sellerPhoneNumber"
                 placeholder="Telefonnummer"
                 value={sellerPhoneNumber}
                 onChange={(e) => setSellerPhoneNumber(e.target.value)}
+                validInput={validSellerPhoneNumber}
+                submitted={sellerSubmitted}
               />
             </div>
             <div className="w-[64%] py-4 px-8">
