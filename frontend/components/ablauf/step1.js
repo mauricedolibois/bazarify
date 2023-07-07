@@ -74,6 +74,14 @@ export default function Step1() {
         checkDescription(bazar.bazar_description, setErrorMessage, setValidDescription, bazarDescription);
     };
 
+    useEffect(() => {
+        if (errorMessage !== '') {
+          setTimeout(() => {
+            setErrorMessage('');
+          }, 3000);
+        }
+      }, [errorMessage]);
+
 
         return (
             <>
