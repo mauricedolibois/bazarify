@@ -4,7 +4,8 @@ export default function useCountUp(targetValue, duration) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    const updateInterval = Math.ceil(duration / targetValue); 
+
+    const updateInterval = targetValue !== 0 ? Math.ceil(duration / targetValue) : 0; 
     const step = Math.ceil(targetValue / (duration / updateInterval));
 
     let currentCount = 0;
