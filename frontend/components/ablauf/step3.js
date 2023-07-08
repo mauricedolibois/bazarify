@@ -157,15 +157,7 @@ export default function () {
         }, [offer]);
           
 
-    //reset error message after 3 seconds
-    useEffect(() => {
-        if (msg.text !== '' && msg.type !== '') {
-            console.log("Error: text: " + msg.text + " type: " + msg.type)
-            setTimeout(() => {
-                setMsg({ type: '', text: '' });
-            }, 3000);
-        }
-    }, [msg]);
+
 
     const handleSubmit = () => {
         console.log('submit');
