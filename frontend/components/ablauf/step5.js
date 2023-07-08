@@ -1,82 +1,8 @@
 import { useState, useEffect } from 'react';
 import FormInput from '../formInput';
-import { Cell, PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
-
-function Card({ title, description, info }) {
-  return (
-    <div className="flex flex-col justify-between rounded-md border border-ourLightGray bg-white p-4 shadow-md">
-      <h3>{title}</h3>
-      <p>{description}</p>
-      {info && <p className="text-sm text-ourGray">{info}</p>}
-    </div>
-  );
-}
-
-
-function Graph() {
-
-  const [soldOffers, setSoldOffers] = useState([]);
-  const [unsoldOffers, setUnsoldOffers] = useState([]);
-  const [reclinedOffers, setReclinedOffers] = useState([]);
-  
-  //get all offers
-  useEffect(() => {
-    fetch('http://localhost:8080/api/allOffers', {method: 'GET'})
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        data.map((offer) => {
-             if (offer.state === "sold") {
-                 setSoldOffers(soldOffers => [...soldOffers, offer]);
-             }
-             else if (offer.state === "open") {
-                 setUnsoldOffers(unsoldOffers => [...unsoldOffers, offer]);
-             }
-             else {
-                 setReclinedOffers(reclinedOffers => [...reclinedOffers, offer]);
-             }
-         })
-        
-      })
-      .catch(error => console.log(error))
-  }, [])
-
-  console.log("soldOffers: ",soldOffers.length/2);
-  console.log("unsoldOffers: ",unsoldOffers.length/2);
-  console.log("reclinedOffers: ",reclinedOffers.length/2);
-
-  //durch 2 geteilt weil alles doppelt gerendert wird
-  //TODO: doppelt gerendertes entfernen
-  const chartData = [
-    { name: 'Verkaufte Produkte', value: soldOffers.length/2 },
-    { name: 'Offene Produkte', value: unsoldOffers.length/2 },
-    { name: 'Liegengebliebene Produkte', value: reclinedOffers.length/2 },
-  ];
-
-  const COLORS = ['#DEAE31', '#5E5E5E', '#A6A6A6'];
-
-  return (
-    <ResponsiveContainer width="100%" height={300}>
-      <PieChart>
-        <Pie
-          data={chartData}
-          cx="50%"
-          cy="50%"
-          outerRadius={80}
-          fill="#8884d8"
-          dataKey="value"
-          label
-        >
-          {chartData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Legend />
-        <Tooltip />
-      </PieChart>
-    </ResponsiveContainer>
-  );
-}
+import useCountUp from '../../hooks/useCountUp.js'
+import Card from '../Card.js'
+import Graph from '../PieChart.js';
 
 export default function Analytics() {
   const [revenue, setRevenue] = useState(0);
@@ -88,6 +14,11 @@ export default function Analytics() {
   const [soldOffers, setSoldOffers] = useState([]);
   const [unsoldOffers, setUnsoldOffers] = useState([]);
   const [reclinedOffers, setReclinedOffers] = useState([]);
+
+  const animatedRevenue = useCountUp(revenue, 1000);
+  const animatedProfit = useCountUp((revenue * provision) / 100, 1000); 
+  const animatedSellerCount = useCountUp(totalSellerCount, 1000); 
+
 
   useEffect(() => {
     fetch('http://localhost:8080/api/analytics', { method: 'GET' })
@@ -190,12 +121,12 @@ export default function Analytics() {
           du aus den Informationen fürs nächste Mal lernen.
         </p>
         <div className="grid grid-cols-3 gap-6">
-          <Card title={`${revenue}€`} description="Umsatz" />
-          <Card title={`${(revenue * provision) / 100}€`} description={`Profit bei aktueller Provisionsrate (${provision}%)`} />
-          <Card title={totalSellerCount} description="Verkäufer" />
+          <Card title={`${animatedRevenue}€`} description="Umsatz" />
+          <Card title={`${animatedProfit}€`} description={`Profit bei aktueller Provisionsrate (${provision}%)`} />
+          <Card title={animatedSellerCount} description="Verkäufer" />
 
           <div className="col-span-2 row-span-2 rounded-md border border-ourLightGray bg-white p-4 shadow-md">
-            <Graph soldOffers={soldOffers} unsoldOffers={unsoldOffers} reclinedOffers={reclinedOffers} />
+            <Graph soldOffers={soldOffers.length} unsoldOffers={unsoldOffers.length} reclinedOffers={reclinedOffers.length} />
           </div>
           <Card title={<FormInput id="tips" value={tips} unit="€" onChange={handleTipsChange} />} description="Trinkgeld" info="Das Trinkgeld musst du manuell eintragen" />
           <Card title={`${tipsAverage} %`} description="Ø Trinkgeld" />
