@@ -5,8 +5,9 @@ export default function useCountUp(targetValue, duration) {
 
   useEffect(() => {
 
+    let step;
     const updateInterval = targetValue !== 0 ? Math.ceil(duration / targetValue) : 0; 
-    const step = Math.ceil(targetValue / (duration / updateInterval));
+    step = Math.ceil(targetValue / (duration / updateInterval));    
 
     let currentCount = 0;
     const timer = setInterval(() => {

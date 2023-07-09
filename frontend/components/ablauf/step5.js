@@ -6,41 +6,39 @@ import Graph from '../PieChart.js';
 
 export default function Analytics() {
   const [revenue, setRevenue] = useState(0);
-  const [profit, setProfit] = useState(0);
   const [provision, setProvision] = useState(0);
+  const [profit, setProfit] = useState(0);
   const [tips, setTips] = useState('0');
   const [totalSellerCount, setTotalSellerCount] = useState(0);
   const [tipsAverage, setTipsAverage] = useState(0);
   const [soldOffers, setSoldOffers] = useState([]);
   const [unsoldOffers, setUnsoldOffers] = useState([]);
   const [reclinedOffers, setReclinedOffers] = useState([]);
+  const [shouldUpdateTips, setShouldUpdateTips] = useState([false])
 
   const animatedRevenue = useCountUp(revenue, 1000);
-  const animatedProfit = useCountUp((revenue * provision) / 100, 1000); 
+  const animatedProfit = useCountUp(profit, 1000); 
   const animatedSellerCount = useCountUp(totalSellerCount, 1000); 
+  const animatedTipsAverage = useCountUp(tipsAverage, 1000); 
 
 
   useEffect(() => {
     fetch('http://localhost:8080/api/analytics', { method: 'GET' })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setRevenue(data.Revenue);
         setProvision(data.Provision);
+        setProfit((data.Revenue * data.Provision) / 100)
         setTotalSellerCount(data.Sellers);
-
-        if (data.Tips) setTips(data.Tips.toString());
-        if (
-          data.Revenue > 0 &&
-          data.Tips !== 0 &&
-          data.Tips !== null &&
-          tips !== 0 &&
-          tips !== null
-        ) {
-          setTipsAverage((data.Revenue / data.Tips / 100).toFixed(2));
-        } else {
-          setTipsAverage(0);
-        }
+        if (data.Tips !== null){
+          setTips(data.Tips.toString())
+          if (data.Revenue !== 0) {
+            setTipsAverage((data.Tips / data.Revenue * 100).toFixed(2));
+          }
+          } else {
+            setTips('0')
+            setTipsAverage(0.00)
+          }
       });
   }, []);
 
@@ -48,7 +46,6 @@ export default function Analytics() {
     fetch('http://localhost:8080/api/allOffers', { method: 'GET' })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         const soldOffers = [];
         const unsoldOffers = [];
         const reclinedOffers = [];
@@ -69,9 +66,14 @@ export default function Analytics() {
   }, []);
 
   const handleTipsChange = (e) => {
-    const input = e.target.value;
+    let input = e.target.value;
     const regex = /^([0-9]{0,7}([.,][0-9]{0,2})?)?$/;
+    if(input === '') {
+      input = '0'
+      setShouldUpdateTips(true)
+    }
     if (regex.test(input)) {
+      setShouldUpdateTips(true)
       setTips(input);
     }
   };
@@ -80,7 +82,7 @@ export default function Analytics() {
     let timeoutId;
 
     const updateTips = () => {
-      if (tips !== '0') {
+      if (shouldUpdateTips) {
         const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -90,7 +92,8 @@ export default function Analytics() {
         fetch('http://localhost:8080/api/tip', requestOptions)
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
+            console.log("Tips updated: ", tips);
+            setShouldUpdateTips(false)
           })
           .catch((error) => console.log(error));
       }
@@ -98,7 +101,7 @@ export default function Analytics() {
 
     const delayUpdate = () => {
       clearTimeout(timeoutId);
-      timeoutId = setTimeout(updateTips, 1000);
+      timeoutId = setTimeout(updateTips, 500);
     };
 
     delayUpdate();
@@ -107,7 +110,8 @@ export default function Analytics() {
   }, [tips]);
 
   useEffect(() => {
-    if (tips !== 0) {
+    console.log("tipsAverage: ", (parseFloat(tips.replace(',', '.')) / revenue * 100).toFixed(2))
+    if (shouldUpdateTips) {
       setTipsAverage((parseFloat(tips.replace(',', '.')) / revenue * 100).toFixed(2));
     }
   }, [tips, revenue]);
