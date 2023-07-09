@@ -19,4 +19,24 @@ export const printing = {
             res.status(500).json({ error: 'Failed to generate offers' });
           }
     },
+
+    async generatePDF(offers) {
+      var products = []
+      try {
+          const pendingOffers = offers;
+          for (const offer of pendingOffers) {
+            const product = await dbConnection.findProduct('product_id', offer.product_id);
+            products.push(product);
+          }
+          var doc = PrintingService.createPDF(pendingOffers, products);
+          products = [];
+          return doc;
+        } catch (error) {
+          res.status(500).json({ error: 'Failed to generate offers' });
+        }
+    },
+
+    async getPrinterName(){
+      return PrintingService.getDefaultPrinterName();
+    }
 }
