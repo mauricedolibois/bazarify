@@ -70,9 +70,7 @@ createPDF: async function (offers, products) {
     labelsOnPage++;
   }
 
-  await this.printPDF(doc).catch((err) => {
-    console.log(err);
-  });
+  return doc;
 },
   
   generateBarcode: async function(barcodeOptions) {
