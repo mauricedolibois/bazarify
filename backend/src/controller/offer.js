@@ -39,7 +39,8 @@ offerRouter.post("/offer", async (req, res) => {
         offer.push({off});
         })
         //TODO: hier den offer-array zum printen nehmen 
-        res.json(offer);  
+        var doc = printing.generatePDF(offer);
+        res.json(doc);  
         //TODO: es wird immer null gesendet nie fehlermeldung
     } catch (error) {
         res.json(error.message); 
@@ -47,11 +48,15 @@ offerRouter.post("/offer", async (req, res) => {
 }
 )
 
-offerRouter.put("/PrintAllOffers", (req, res) => {
-        printing.printOffers(req.body.offers);
-        
+offerRouter.get("/getPrinterName", async (req, res) => {
+    try {
+        var printerName = await printing.getPrinterName();
+        res.send(printerName);
+    } catch (error) {
+        res.json(error.message);
     }
-)
+})
+
 
 offerRouter.delete("/offer", (req, res) => {
     dbConnection.deleteOffer(req.query.operator, req.query.parameter).then
