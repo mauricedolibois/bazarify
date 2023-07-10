@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, use } from 'react'
 import UnderlinedInput from '../underlinedInput'
 import ButtonSmallJustIcon from '../buttons/ButtonSmallJustIcon';
 import ButtonYellowBorder from '../buttons/ButtonYellowBorder';
@@ -12,6 +12,7 @@ import ProductTable from '../productTable';
 import Step3TableRow from '../Step3TableRow';
 import Alert from '../alert';
 import { checkProductName, checkProductCategory, checkPrice, checkName, checkPhoneNumber, checkEmail} from '../utils/inputValidation.js';
+import PDFView from '../pdfView'
 
 
 export default function () {
@@ -38,6 +39,8 @@ export default function () {
   const [validSellerPhoneNumber, setValidSellerPhoneNumber] = useState(false)
   const [validSellerEmail, setValidSellerEmail] = useState(false)
   const [btnPrintClicked, setbtnPrintClicked] = useState(false)
+  const [shouldDisplayPreview, setShouldDisplayPreview] = useState(false)
+
   const allProductInputsEmpty = productName === '' && productCategory==='' && productPrice === '' 
   const validProductInput = validProductName && validProductCategory && validProductPrice
   const validSellerInput = validSellerLastName && validSellerFirstName && validSellerEmail && validSellerPhoneNumber
@@ -164,6 +167,7 @@ export default function () {
     setSellerSubmitted(true)
     handleAddPendingProduct()
     checkSellerInput()
+    setShouldDisplayPreview(true)
   }
 
   useEffect(() => {
@@ -259,6 +263,9 @@ export default function () {
   return (
     <>
       <div>
+        {shouldDisplayPreview && (
+          <PDFView/>
+        )}
         {msg.text !== '' && msg.type!=='' &&(
           <Alert type={msg.type} text={msg.text} />
         )}
