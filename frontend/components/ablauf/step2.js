@@ -1,57 +1,63 @@
-import React, { useState, useEffect, useRef, use } from 'react'
-import UnderlinedInput from '../underlinedInput'
-import ButtonSmallJustIcon from '../buttons/ButtonSmallJustIcon';
-import ButtonYellowBorder from '../buttons/ButtonYellowBorder';
-import { UilCheck } from '@iconscout/react-unicons'
-import { UilPlus } from '@iconscout/react-unicons'
-import { UilInfoCircle } from '@iconscout/react-unicons'
-import ButtonGrayBorder from '../buttons/ButtonGrayBorder';
-import { UilPrint } from '@iconscout/react-unicons'
-import { UilHistory } from '@iconscout/react-unicons'
-import ProductTable from '../productTable';
-import Step3TableRow from '../Step3TableRow';
-import Alert from '../alert';
-import { checkProductName, checkProductCategory, checkPrice, checkName, checkPhoneNumber, checkEmail} from '../utils/inputValidation.js';
-import PDFView from '../pdfView'
-
+import React, { useState, useEffect, useRef } from "react";
+import UnderlinedInput from "../underlinedInput";
+import ButtonSmallJustIcon from "../buttons/ButtonSmallJustIcon";
+import ButtonYellowBorder from "../buttons/ButtonYellowBorder";
+import { UilCheck } from "@iconscout/react-unicons";
+import { UilPlus } from "@iconscout/react-unicons";
+import { UilInfoCircle } from "@iconscout/react-unicons";
+import ButtonGrayBorder from "../buttons/ButtonGrayBorder";
+import { UilPrint } from "@iconscout/react-unicons";
+import { UilHistory } from "@iconscout/react-unicons";
+import ProductTable from "../productTable";
+import Step3TableRow from "../Step3TableRow";
+import Alert from "../alert";
+import {
+  checkProductName,
+  checkProductCategory,
+  checkPrice,
+  checkName,
+  checkPhoneNumber,
+  checkEmail,
+} from "../utils/inputValidation.js";
 
 export default function () {
-  const [sellerFirstName, setSellerFirstName] = useState('');
-  const [sellerLastName, setSellerLastName] = useState('');
-  const [sellerEmail, setSellerEmail] = useState('');
-  const [sellerPhoneNumber, setSellerPhoneNumber] = useState('');
-  const [productName, setProductName] = useState('');
-  const [productCategory, setProductCategory] = useState('');
-  const [productPrice, setProductPrice] = useState('');
-  const [product, setProduct] = useState('');
-  const [seller, setSeller] = useState('');
-  const [msg, setMsg] = useState({type: '', text: ''});
-  const [productSubmitted, setProductSubmitted] = useState(false)
-  const [sellerSubmitted, setSellerSubmitted] = useState(false)
+  const [sellerFirstName, setSellerFirstName] = useState("");
+  const [sellerLastName, setSellerLastName] = useState("");
+  const [sellerEmail, setSellerEmail] = useState("");
+  const [sellerPhoneNumber, setSellerPhoneNumber] = useState("");
+  const [productName, setProductName] = useState("");
+  const [productCategory, setProductCategory] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [product, setProduct] = useState("");
+  const [seller, setSeller] = useState("");
+  const [msg, setMsg] = useState({ type: "", text: "" });
+  const [productSubmitted, setProductSubmitted] = useState(false);
+  const [sellerSubmitted, setSellerSubmitted] = useState(false);
   const [pendingProducts, setPendingProducts] = useState([]);
   const [pendingOffers, setPendingOffers] = useState([]);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
-  const [validProductName, setValidPoductName] = useState(false)
-  const [validProductCategory, setValidPoductCategory] = useState(false)
-  const [validProductPrice, setValidPoductPrice] = useState(false)
-  const [validSellerFirstName, setValidSellerFirstName] = useState(false)
-  const [validSellerLastName, setValidSellerLastName] = useState(false)
-  const [validSellerPhoneNumber, setValidSellerPhoneNumber] = useState(false)
-  const [validSellerEmail, setValidSellerEmail] = useState(false)
-  const [btnPrintClicked, setbtnPrintClicked] = useState(false)
-  const [shouldDisplayPreview, setShouldDisplayPreview] = useState(false)
-
-  const allProductInputsEmpty = productName === '' && productCategory==='' && productPrice === '' 
-  const validProductInput = validProductName && validProductCategory && validProductPrice
-  const validSellerInput = validSellerLastName && validSellerFirstName && validSellerEmail && validSellerPhoneNumber
-
-
-  
+  const [validProductName, setValidPoductName] = useState(false);
+  const [validProductCategory, setValidPoductCategory] = useState(false);
+  const [validProductPrice, setValidPoductPrice] = useState(false);
+  const [validSellerFirstName, setValidSellerFirstName] = useState(false);
+  const [validSellerLastName, setValidSellerLastName] = useState(false);
+  const [validSellerPhoneNumber, setValidSellerPhoneNumber] = useState(false);
+  const [validSellerEmail, setValidSellerEmail] = useState(false);
+  const [btnPrintClicked, setbtnPrintClicked] = useState(false);
+  const allProductInputsEmpty =
+    productName === "" && productCategory === "" && productPrice === "";
+  const validProductInput =
+    validProductName && validProductCategory && validProductPrice;
+  const validSellerInput =
+    validSellerLastName &&
+    validSellerFirstName &&
+    validSellerEmail &&
+    validSellerPhoneNumber;
 
   const handleAddPendingProduct = () => {
-    setProductSubmitted(true)
-    checkProductInput()
-  }; 
+    setProductSubmitted(true);
+    checkProductInput();
+  };
 
   const checkProductInput = () => {
     //check product price
@@ -60,16 +66,15 @@ export default function () {
     checkProductCategory(productCategory, setMsg, setValidPoductCategory);
     //check product name
     checkProductName(productName, setMsg, setValidPoductName);
+  };
 
-    if(sellerSubmitted && allProductInputsEmpty) {
-      console.log("print clicked and all empty")
-    }
-  }
-
-  useEffect(()=> {
-    if(validProductInput && !allProductInputsEmpty) {
-      setMsg({type:"success",text: `Produkt "${productName}" wurde hinzugefügt`});
-      console.log('add pending product');
+  useEffect(() => {
+    if (validProductInput) {
+      setMsg({
+        type: "success",
+        text: `Produkt "${productName}" wurde hinzugefügt`,
+      });
+      console.log("add pending product");
 
       const productData = {
         product_name: productName,
@@ -78,52 +83,19 @@ export default function () {
       };
 
       setProduct(productData);
-      setPendingProducts((pendingProducts) => [...pendingProducts, { product: productData }])
+      setPendingProducts((pendingProducts) => [
+        ...pendingProducts,
+        { product: productData },
+      ]);
       setShouldScrollToBottom(true);
-      setProductName('');
-      setProductCategory('');
-      setProductPrice('');
-      }
-    if(sellerSubmitted && allProductInputsEmpty) {
-      setValidPoductCategory(true)
-      setValidPoductPrice(true)
-      setValidPoductName(true)
+      setProductName("");
+      setProductCategory("");
+      setProductPrice("");
+      setSellerSubmitted(false);
+    } else {
+      console.log("invalid product input!");
     }
-  },[validProductName, validProductCategory, validProductPrice])
-
-  const checkSellerInput = () => {
-    //check seller first name
-    checkName(sellerFirstName, setMsg, setValidSellerFirstName, "Vorname");
-    //check seller last name
-    checkName(sellerLastName, setMsg, setValidSellerLastName, "Nachname");
-    //check seller email
-    checkEmail(sellerEmail, setMsg, setValidSellerEmail);
-    //check seller phone number
-    checkPhoneNumber(sellerPhoneNumber, setMsg, setValidSellerPhoneNumber);
-  }
-
-  useEffect(()=> {
-    if(validSellerInput && (validProductInput || allProductInputsEmpty)){
-      const sellerData = {
-        seller_name: sellerLastName,
-        seller_firstname: sellerFirstName,
-        seller_email: sellerEmail,
-        seller_phone: sellerPhoneNumber,
-      };
-  
-      console.log(sellerData)
-      setSeller(sellerData)
-  
-      setSellerFirstName('');
-      setSellerLastName('');
-      setSellerEmail('');
-      setSellerPhoneNumber('');
-      setProductName('');
-      setProductCategory('');
-      setProductPrice('');
-    }
-  },[validSellerFirstName, validSellerLastName, validSellerEmail, validSellerPhoneNumber])
-
+  }, [validProductName, validProductCategory, validProductPrice]);
 
   //TODO: beim router im backend array abgreifen und dann printen
   // useEffect(() => {
@@ -152,51 +124,101 @@ export default function () {
   //   }
   // }, [product]);
 
-
-
-
-  const handleRemoveProduct = (index) => {
-    const productName = pendingProducts[index].product.product_name;
-    setMsg({type:"success",text: `Produkt "${productName}" wurde entfernt`});
-    setPendingProducts((scannedProducts) => scannedProducts.filter((_, i) => i !== index));
-    
+  const handleAddOffer = async () => {
+    if (pendingProducts.length !== 0) {
+      setSellerSubmitted(true);
+      checkSellerInput();
+    } else {
+      setMsg({
+        type: "error",
+        text: "Füge erst Produkte den Verkäufers hinzu",
+      });
+    }
   };
 
-
-  const handleAddOffer = async () => {
-    setSellerSubmitted(true)
-    handleAddPendingProduct()
-    checkSellerInput()
-    setShouldDisplayPreview(true)
-  }
+  const checkSellerInput = () => {
+    //check seller first name
+    checkName(sellerFirstName, setMsg, setValidSellerFirstName, "Vorname");
+    //check seller last name
+    checkName(sellerLastName, setMsg, setValidSellerLastName, "Nachname");
+    //check seller email
+    checkEmail(sellerEmail, setMsg, setValidSellerEmail);
+    //check seller phone number
+    checkPhoneNumber(sellerPhoneNumber, setMsg, setValidSellerPhoneNumber);
+  };
 
   useEffect(() => {
-    if (seller !== '') {
-      fetch('http://localhost:8080/api/offer', {
-        method: 'POST',
+    if (validSellerInput) {
+      console.log("valid seller input!");
+      const sellerData = {
+        seller_name: sellerLastName,
+        seller_firstname: sellerFirstName,
+        seller_email: sellerEmail,
+        seller_phone: sellerPhoneNumber,
+      };
+
+      if (allProductInputsEmpty) {
+        console.log("valid product input!");
+        console.log(sellerData);
+        setSeller(sellerData);
+        setSellerFirstName("");
+        setSellerLastName("");
+        setSellerEmail("");
+        setSellerPhoneNumber("");
+        setSellerSubmitted(false);
+      } else {
+        console.log(sellerData);
+        setSeller(sellerData);
+        setMsg({
+          type: "error",
+          text: "Füge das einegebene Produkt über das + hinzu oder leere die Eingabe für das Produkt",
+        });
+        setSellerSubmitted(false);
+      }
+    } else {
+      console.log("invalid seller input!");
+    }
+  }, [
+    validSellerFirstName,
+    validSellerLastName,
+    validSellerEmail,
+    validSellerPhoneNumber,
+  ]);
+
+  useEffect(() => {
+    if (seller !== "" && allProductInputsEmpty) {
+      fetch("http://localhost:8080/api/offer", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           product: pendingProducts,
           seller: seller,
         }),
       })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
         })
         .catch((error) => {
           console.log(error);
         });
       setPendingProducts([]);
-      setSellerSubmitted(false)
+      setSellerSubmitted(false);
     }
-
   }, [seller]);
 
-
-
+  const handleRemoveProduct = (index) => {
+    const productName = pendingProducts[index].product.product_name;
+    setMsg({
+      type: "success",
+      text: `Produkt "${productName}" wurde entfernt`,
+    });
+    setPendingProducts((scannedProducts) =>
+      scannedProducts.filter((_, i) => i !== index)
+    );
+  };
 
   // async function sendPendingOffers(){
   //   if (pendingProducts.length > 0) {
@@ -241,21 +263,12 @@ export default function () {
   //   }
   // }
 
-  useEffect(() => {
-    if (msg.text !== '') {
-      console.log("Errror: text: " + msg.text + " type: " + msg.type)
-      setTimeout(() => {
-        setMsg({type: '', text: ''});
-      }, 3000);
-    }
-  }, [msg]);
-
-
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    if (shouldScrollToBottom && scrollRef.current) { // Überprüfe den Trigger-Wert
-      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    if (shouldScrollToBottom && scrollRef.current) {
+      // Überprüfe den Trigger-Wert
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
       setShouldScrollToBottom(false); // Setze den Trigger zurück, um erneutes Scrollen zu verhindern
     }
   }, [shouldScrollToBottom]);
@@ -263,25 +276,22 @@ export default function () {
   return (
     <>
       <div>
-        {shouldDisplayPreview && (
-          <PDFView/>
-        )}
-        {msg.text !== '' && msg.type!=='' &&(
-          <Alert type={msg.type} text={msg.text} />
+        {msg.text !== "" && msg.type !== "" && (
+          <Alert type={msg.type} text={msg.text} setMsg={setMsg} />
         )}
         <h1>2. Annahme</h1>
-        <p className='mb-4'>
-          Jetzt kannst du damit anfangen die Produkte verschiedener Verkäufer hinzuzufügen. Wenn du das erledigt hast,
-          kannst du im nächsten Schritt die Verkäufe einscannen. Das solltest du aber erst machen, wenn alle Produkte
-          eingepflegt sind.
+        <p className="mb-4">
+          Jetzt kannst du damit anfangen die Produkte verschiedener Verkäufer
+          hinzuzufügen. Wenn du das erledigt hast, kannst du im nächsten Schritt
+          die Verkäufe einscannen. Das solltest du aber erst machen, wenn alle
+          Produkte eingepflegt sind.
         </p>
       </div>
       <div className="relative flex flex-col justify-center">
-
         <div className="rounded border border-ourLightGray bg-white">
           <div className="flex flex-row">
             <div className="w-[36%] border-r pb-8 border-ourLightGray py-4 px-8">
-              <h3 className=''>Infos zum Verkäufer</h3>
+              <h3 className="">Infos zum Verkäufer</h3>
 
               <UnderlinedInput
                 id="sellerFirstName"
@@ -318,7 +328,7 @@ export default function () {
               />
             </div>
             <div className="w-[64%] py-4 px-8">
-              <h3 className=''>Produkte des Verkäufers</h3>
+              <h3 className="">Produkte des Verkäufers</h3>
               <div className="flex flex-row gap-4">
                 <UnderlinedInput
                   id="productName"
@@ -347,31 +357,36 @@ export default function () {
               </div>
 
               <div className="mt-4 gap-4 flex">
-                <ButtonSmallJustIcon onClick={() => handleAddPendingProduct()} tooltip="Weitere Produkte dieses Verkäufers hinzufügen" icon={<UilPlus />}></ButtonSmallJustIcon>
-                <ButtonYellowBorder onClick={() => handleAddOffer()} icon={<UilPrint />} text="Barcodes ausdrucken"></ButtonYellowBorder>
+                <ButtonSmallJustIcon
+                  onClick={() => handleAddPendingProduct()}
+                  tooltip="Weitere Produkte dieses Verkäufers hinzufügen"
+                  icon={<UilPlus />}
+                ></ButtonSmallJustIcon>
+                <ButtonYellowBorder
+                  onClick={() => handleAddOffer()}
+                  icon={<UilPrint />}
+                  text="Barcodes ausdrucken"
+                ></ButtonYellowBorder>
               </div>
             </div>
           </div>
           <div className="border-t border-ourLightGray p-4">
             <div className="flex flex-row justify-between">
-
               <div className="flex flex-row items-center">
                 <UilInfoCircle className="mr-4 text-ourDarkGray"></UilInfoCircle>
                 <p className="text-sm">
-                  "Scanne einfach alle Produkte eines Verkäufers ein und drucke dann die Barcodes oben aus"
+                  "Scanne einfach alle Produkte eines Verkäufers ein und drucke
+                  dann die Barcodes oben aus"
                 </p>
-
               </div>
             </div>
-
           </div>
-
         </div>
 
         {pendingProducts.length > 0 && (
           <div className="rounded border mt-4 border-ourLightGray bg-white mb-4 max-h-64 overflow-y-auto">
             <div className="overflow-hidden">
-              <h3 className='px-8 pt-4'>Eingepflegte Produkte</h3>
+              <h3 className="px-8 pt-4">Eingepflegte Produkte</h3>
               <table className="min-w-full text-left text-sm font-light rounded">
                 <thead className="font-medium">
                   <tr>
@@ -403,13 +418,13 @@ export default function () {
                       removeItem={() => handleRemoveProduct(index)}
                     />
                   ))}
-                  <tr ref={scrollRef}></tr> {/* Empty row for scrolling to the bottom */}
+                  <tr ref={scrollRef}></tr>{" "}
+                  {/* Empty row for scrolling to the bottom */}
                 </tbody>
               </table>
             </div>
           </div>
         )}
-
       </div>
       {/*
       <div className='mt-4 flex gap-4'>
@@ -417,7 +432,6 @@ export default function () {
         <ButtonGrayBorder icon={<UilHistory />} text="Eingetragene Produkte sehen"></ButtonGrayBorder>
       </div>
       */}
-
     </>
-  )
+  );
 }
