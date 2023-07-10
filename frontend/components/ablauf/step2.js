@@ -125,8 +125,15 @@ export default function () {
   // }, [product]);
 
   const handleAddOffer = async () => {
-    setSellerSubmitted(true);
-    checkSellerInput();
+    if (pendingProducts.length !== 0) {
+      setSellerSubmitted(true);
+      checkSellerInput();
+    } else {
+      setMsg({
+        type: "error",
+        text: "Füge erst Produkte den Verkäufers hinzu",
+      });
+    }
   };
 
   const checkSellerInput = () => {
@@ -256,15 +263,6 @@ export default function () {
   //   }
   // }
 
-  useEffect(() => {
-    if (msg.text !== "") {
-      console.log("Errror: text: " + msg.text + " type: " + msg.type);
-      setTimeout(() => {
-        setMsg({ type: "", text: "" });
-      }, 3000);
-    }
-  }, [msg]);
-
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -279,7 +277,7 @@ export default function () {
     <>
       <div>
         {msg.text !== "" && msg.type !== "" && (
-          <Alert type={msg.type} text={msg.text} />
+          <Alert type={msg.type} text={msg.text} setMsg={setMsg} />
         )}
         <h1>2. Annahme</h1>
         <p className="mb-4">
