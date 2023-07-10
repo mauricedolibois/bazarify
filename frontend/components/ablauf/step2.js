@@ -11,6 +11,7 @@ import { UilHistory } from "@iconscout/react-unicons";
 import ProductTable from "../productTable";
 import Step3TableRow from "../Step3TableRow";
 import Alert from "../alert";
+import printPDF from "../utils/printPDF";
 import {
   checkProductName,
   checkProductCategory,
@@ -44,6 +45,8 @@ export default function () {
   const [validSellerPhoneNumber, setValidSellerPhoneNumber] = useState(false);
   const [validSellerEmail, setValidSellerEmail] = useState(false);
   const [btnPrintClicked, setbtnPrintClicked] = useState(false);
+  const [url, setUrl] = useState("http://localhost:3000/sample.pdf");
+
   const allProductInputsEmpty =
     productName === "" && productCategory === "" && productPrice === "";
   const validProductInput =
@@ -166,6 +169,7 @@ export default function () {
         setSellerEmail("");
         setSellerPhoneNumber("");
         setSellerSubmitted(false);
+        printPDF(url);
       } else {
         console.log(sellerData);
         setSeller(sellerData);
