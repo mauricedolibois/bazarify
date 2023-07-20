@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { UilSquareFull } from "@iconscout/react-unicons";
 import SendMailsButton from "../buttons/SendMailsButton";
+import ProductTable from "../table/productTable";
 
 import Alert from "../alert/alert";
 
@@ -126,40 +127,6 @@ export default function AbholungPage() {
     }
   };
 
-  const handleReclineProduct = (product) => {
-    const productID = product.product_id;
-    console.log("product reclined: ", productID);
-
-    setProductReclinedID(productID);
-    setMsg({
-      type: "success",
-      text: `Produkt "${product.product_name}" wurde als abgeholt markiert`,
-    });
-    //remove product from unsold products
-    let tmpUnsoldProducts = [];
-    unsoldProductsFromSeller.map((product) => {
-      if (product.product_id !== productID) {
-        tmpUnsoldProducts.push(product);
-      }
-    });
-    setUnsoldProductsFromSeller(tmpUnsoldProducts);
-  };
-
-  useEffect(() => {
-    if (productReclinedID !== 0) {
-      console.log("productReclinedID: ", productReclinedID);
-      fetch(
-        "http://localhost:8080/api/product-recline?id=" + productReclinedID,
-        { method: "PUT" }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((error) => console.log(error));
-    }
-  }, [productReclinedID]);
-
   return (
     <>
       <div>
@@ -213,57 +180,12 @@ export default function AbholungPage() {
         )}
 
         {unsoldProductsFromSeller.length !== 0 && (
-          <div className="rounded border border-ourLightGray mt-4 bg-white mb-4 max-h-72 overflow-y-auto">
-            <div className="overflow-hidden">
-              <table className="min-w-full text-left text-sm font-light rounded">
-                <thead className="font-medium">
-                  <tr>
-                    <th scope="col" className="px-8 py-4">
-                      Artikel
-                    </th>
-                    <th scope="col" className="px-8 py-4">
-                      Kategorie
-                    </th>
-                    <th scope="col" className="px-8 py-4">
-                      Preis
-                    </th>
-                    <th scope="col" className="px-8 py-4">
-                      Wurde mittlerweile abgeholt?
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {unsoldProductsFromSeller.map((product) => (
-                    <tr
-                      key={product.id}
-                      className="bg-white dark:border-ourDarkGray dark:bg-ourSuperDarkGray"
-                    >
-                      {
-                        //TODO: component for each row}
-                      }
-                      <td className="whitespace-nowrap px-8 py-4">
-                        {product.product_name}
-                      </td>
-                      <td className="whitespace-nowrap px-8 py-4">
-                        {product.product_category}
-                      </td>
-                      <td className="whitespace-nowrap px-8 py-4">
-                        {product.product_price}
-                      </td>
-                      <td className="whitespace-nowrap px-8 py-4">
-                        <button
-                          className="hover:text-ourPrimaryColorHover"
-                          onClick={() => handleReclineProduct(product)}
-                        >
-                          <UilSquareFull size="17" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <ProductTable
+            data={unsoldProductsFromSeller}
+            setData={setUnsoldProductsFromSeller}
+            setMsg={setMsg}
+            type="recline"
+          />
         )}
       </div>
     </>
