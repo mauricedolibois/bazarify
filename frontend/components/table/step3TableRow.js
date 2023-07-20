@@ -1,8 +1,15 @@
 import React from "react";
-import { UilTrash } from "@iconscout/react-unicons";
+import { UilTrash, UilSquareFull } from "@iconscout/react-unicons";
 import ButtonSmallJustIcon from "../buttons/ButtonSmallJustIcon";
 
-const step3TableRow = ({ counter, name, category, price, removeItem }) => {
+const step3TableRow = ({
+  counter,
+  name,
+  category,
+  price,
+  removeItem,
+  type,
+}) => {
   return (
     <tr>
       <td class="whitespace-nowrap px-8 py-4">{counter}</td>
@@ -11,7 +18,11 @@ const step3TableRow = ({ counter, name, category, price, removeItem }) => {
       <td class="whitespace-nowrap px-8 py-4">{price}€</td>
       <td class="whitespace-nowrap px-8 py-4">
         <button className="hover:text-red-400" onClick={removeItem}>
-          <UilTrash size="17"></UilTrash>
+          {type === "recline" ? (
+            <UilSquareFull size="17"></UilSquareFull>
+          ) : (
+            <UilTrash size="17"></UilTrash>
+          )}
         </button>
       </td>
     </tr>

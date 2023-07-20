@@ -6,6 +6,7 @@ import { UilPlus, UilInfoCircle, UilPrint } from "@iconscout/react-unicons";
 import Step3TableRow from "../table/step3TableRow";
 import Alert from "../alert/alert";
 import printPDF from "../utils/printPDF";
+import ProductTable from "../table/productTable";
 import {
   checkProductName,
   checkProductCategory,
@@ -82,7 +83,7 @@ export default function () {
       setProduct(productData);
       setPendingProducts((pendingProducts) => [
         ...pendingProducts,
-        { product: productData },
+        productData,
       ]);
       setShouldScrollToBottom(true);
       setProductName("");
@@ -123,6 +124,7 @@ export default function () {
 
   const handleAddOffer = async () => {
     if (pendingProducts.length !== 0) {
+      console.log("pendingProducts .... :", pendingOffers);
       setSellerSubmitted(true);
       checkSellerInput();
     } else {
@@ -207,17 +209,6 @@ export default function () {
     }
   }, [seller]);
 
-  const handleRemoveProduct = (index) => {
-    const productName = pendingProducts[index].product.product_name;
-    setMsg({
-      type: "success",
-      text: `Produkt "${productName}" wurde entfernt`,
-    });
-    setPendingProducts((scannedProducts) =>
-      scannedProducts.filter((_, i) => i !== index)
-    );
-  };
-
   // async function sendPendingOffers(){
   //   if (pendingProducts.length > 0) {
   //     try {
@@ -260,16 +251,6 @@ export default function () {
   //    setPendingProducts([]);
   //   }
   // }
-
-  const scrollRef = useRef(null);
-
-  useEffect(() => {
-    if (shouldScrollToBottom && scrollRef.current) {
-      // Überprüfe den Trigger-Wert
-      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
-      setShouldScrollToBottom(false); // Setze den Trigger zurück, um erneutes Scrollen zu verhindern
-    }
-  }, [shouldScrollToBottom]);
 
   return (
     <>
@@ -382,46 +363,14 @@ export default function () {
         </div>
 
         {pendingProducts.length > 0 && (
-          <div className="rounded border mt-4 border-ourLightGray bg-white mb-4 max-h-64 overflow-y-auto">
-            <div className="overflow-hidden">
-              <h3 className="px-8 pt-4">Eingepflegte Produkte</h3>
-              <table className="min-w-full text-left text-sm font-light rounded">
-                <thead className="font-medium">
-                  <tr>
-                    <th scope="col" className="px-8 py-4">
-                      #
-                    </th>
-                    <th scope="col" className="px-8 py-4">
-                      Artikel
-                    </th>
-                    <th scope="col" className="px-8 py-4">
-                      Kategorie
-                    </th>
-                    <th scope="col" className="px-8 py-4">
-                      Preis
-                    </th>
-                    <th scope="col" className="px-8 py-4">
-                      Entfernen
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {pendingProducts.map((product, index) => (
-                    <Step3TableRow
-                      key={index}
-                      counter={index + 1}
-                      name={product.product.product_name}
-                      category={product.product.product_category}
-                      price={product.product.product_price}
-                      removeItem={() => handleRemoveProduct(index)}
-                    />
-                  ))}
-                  <tr ref={scrollRef}></tr>{" "}
-                  {/* Empty row for scrolling to the bottom */}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <ProductTable
+            data={pendingProducts}
+            setData={setPendingProducts}
+            setMsg={setMsg}
+            shouldScrollToBottom={shouldScrollToBottom}
+            setShouldScrollToBottom={setShouldScrollToBottom}
+            type="penned"
+          />
         )}
       </div>
       {/*
