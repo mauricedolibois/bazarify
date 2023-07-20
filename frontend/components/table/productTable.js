@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import Step3TableRow from './Step3TableRow';
-import step2 from './ablauf/step2';
+import React, { useState } from "react";
+import Step3TableRow from "./step3TableRow";
+import step2 from "../pages/step2";
 
 const ProductTable = ({ data, removeProduct }) => {
   const [products, setProducts] = useState(data);

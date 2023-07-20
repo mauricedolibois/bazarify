@@ -1,16 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import UnderlinedInput from "../underlinedInput";
+import UnderlinedInput from "../input/underlinedInput/underlinedInput";
 import ButtonSmallJustIcon from "../buttons/ButtonSmallJustIcon";
 import ButtonYellowBorder from "../buttons/ButtonYellowBorder";
-import { UilCheck } from "@iconscout/react-unicons";
-import { UilPlus } from "@iconscout/react-unicons";
-import { UilInfoCircle } from "@iconscout/react-unicons";
-import ButtonGrayBorder from "../buttons/ButtonGrayBorder";
-import { UilPrint } from "@iconscout/react-unicons";
-import { UilHistory } from "@iconscout/react-unicons";
-import ProductTable from "../productTable";
-import Step3TableRow from "../Step3TableRow";
-import Alert from "../alert";
+import { UilPlus, UilInfoCircle, UilPrint } from "@iconscout/react-unicons";
+import Step3TableRow from "../table/step3TableRow";
+import Alert from "../alert/alert";
 import printPDF from "../utils/printPDF";
 import {
   checkProductName,
