@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  UilSquareFull,
-  UilInfoCircle,
-  UilEnvelopeUpload,
-  UilSearch,
-} from "@iconscout/react-unicons";
-import SellerInformation from "../SellerInformation";
+import { UilSquareFull } from "@iconscout/react-unicons";
 import SendMailsButton from "../buttons/SendMailsButton";
-import ButtonBigColor from "../buttons/ButtonBigColor";
-import ButtonSmallJustIcon from "../buttons/ButtonSmallJustIcon";
-import UnderlindedInput from "../underlinedInput";
-import Alert from "../alert";
+
+import Alert from "../alert/alert";
 
 export default function AbholungPage() {
   const [allSellers, setAllSellers] = useState([]);

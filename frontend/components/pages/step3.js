@@ -1,11 +1,11 @@
 import ButtonSmallJustIcon from "../buttons/ButtonSmallJustIcon";
 import { UilCheck, UilInfoCircle, UilEnter } from "@iconscout/react-unicons";
-import CalculationPopup from "../CalculationPopup";
+import CalculationPopup from "../popups/CalculationPopup/CalculationPopup";
 import { useState, useEffect, useRef } from "react";
-import Step3TableRow from "../Step3TableRow";
+import Step3TableRow from "../table/step3TableRow";
 import ButtonYellowBorder from "../buttons/ButtonYellowBorder";
-import ProductTable from "../productTable";
-import Alert from "../alert";
+import ProductTable from "../table/productTable";
+import Alert from "../alert/alert";
 
 //TODO: check if input is a number
 //TODO: check if offer exists in database
