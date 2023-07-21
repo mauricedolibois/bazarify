@@ -1,11 +1,10 @@
-import ButtonSmallJustIcon from "../buttons/ButtonSmallJustIcon";
 import { UilCheck, UilInfoCircle, UilEnter } from "@iconscout/react-unicons";
 import CalculationPopup from "../popups/CalculationPopup/CalculationPopup";
 import { useState, useEffect, useRef } from "react";
-import Step3TableRow from "../table/step3TableRow";
 import ButtonYellowBorder from "../buttons/ButtonYellowBorder";
 import ProductTable from "../table/productTable";
 import Alert from "../alert/alert";
+import BarcodeScanner from "../input/BarcodeScanner/BarcodeScanner";
 
 //TODO: check if input is a number
 //TODO: check if offer exists in database
@@ -26,13 +25,6 @@ export default function () {
 
   let input;
   let tmpAllUpdatedOffers = [];
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
 
   const closePopup = () => {
     setPopupOpened(false);
@@ -58,17 +50,6 @@ export default function () {
       console.log("Input is empty");
       setMsg({ type: "error", text: "Gib eine gültige Zahl ein" });
     }
-  };
-
-  const handleRemoveProduct = (index) => {
-    const productName = scannedProducts[index].product_name;
-    setMsg({
-      type: "success",
-      text: `Produkt "${productName}" wurde storniert`,
-    });
-    setScannedProducts((scannedProducts) =>
-      scannedProducts.filter((_, i) => i !== index)
-    );
   };
 
   //const totalPrice = scannedProducts.reduce((total, product) => total + product.product_price, 0);
@@ -129,7 +110,6 @@ export default function () {
     }
   }, [barcode]); //barcode == offer_id
 
-  //fetch product from database
   //fetch product from database
   useEffect(() => {
     if (offer !== "") {
@@ -248,24 +228,7 @@ export default function () {
         auch eintippen. Wenn du alle Verkäufe eingescannt hast, kannst du weiter
         zum nächsten Schritt.
       </p>
-      <div className="border-ourLightGray border bg-white rounded mb-8">
-        <div className="flex flex-row justify-between px-8 py-4 gap-8">
-          <input
-            className="w-full truncate border-b border-ourLightGray text-ourDarkGray focus:border-ourPrimaryColor focus:outline-none"
-            name="name"
-            id="Barcode des Produkts"
-            type="text"
-            ref={inputRef}
-            placeholder="Barcode des Produkts"
-          />
-          <div className="flex flex-row gap-4">
-            <ButtonSmallJustIcon
-              icon={<UilEnter></UilEnter>}
-              onClick={() => handleScan()}
-            ></ButtonSmallJustIcon>
-          </div>
-        </div>
-      </div>
+      <BarcodeScanner onClick={handleScan} />
 
       {scannedProducts.length === 0 ? (
         <div className="rounded border border-ourLightGray bg-white mb-8 h-80 overflow-y-auto">
