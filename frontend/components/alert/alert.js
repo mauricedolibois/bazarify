@@ -19,7 +19,6 @@ const Alert = ({ type, text, setMsg }) => {
 
   useEffect(() => {
     if (text !== "") {
-      console.log("Errror: text: " + text + " type: " + type);
       setTimeout(() => {
         setMsg({ type: "", text: "" });
       }, 3000);
