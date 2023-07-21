@@ -89,26 +89,32 @@ export default function Step1() {
         <div>
           <div className="flex justify-between gap-4">
             <FormInput
-              name="Name des Basars"
+              id="Name des Basars"
+              label="Name des Basars"
               value={bazarName}
               onChange={(e) => setBazarName(e.target.value)}
               validInput={validName}
               submitted={formSubmitted}
+              placeholder="Skibasar"
             />
             <FormInput
-              name="Jahr"
+              id="Jahr"
+              label="Jahr"
               value={bazarYear}
               onChange={(e) => setBazarYear(e.target.value)}
               validInput={validYear}
               submitted={formSubmitted}
+              placeholder={new Date().getFullYear()}
             />
             <FormInput
-              name="Provision"
+              id="Provision"
+              label="Provision"
               unit="%"
               value={bazarCommission}
               onChange={(e) => setBazarCommission(e.target.value)}
               validInput={validCommission}
               submitted={formSubmitted}
+              placeholder="5"
             />
           </div>
           <div class="col-span-full">
@@ -116,15 +122,15 @@ export default function Step1() {
               for="about"
               class="block text-sm font-medium leading-6 text-ourSuperDarkGray mt-4"
             >
-              Beschreibung
+              Beschreibung (optional)
             </label>
             <div class="mt-2">
               <textarea
                 placeholder="Eine kurze optionale Beschreibung des geplanten Basars"
                 id="about"
                 name="about"
-                rows="3"
-                class="block focus:outline-ourPrimaryColor w-full rounded-md border-0 px-2 py-1.5 text-ourSuperDarkGray shadow-sm ring-1 ring-inset ring-ourLightGray placeholder:text-ourGray focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+                rows="6"
+                class="block focus:outline-ourPrimaryColor w-full rounded-md border-0 px-4 py-2 text-ourSuperDarkGray shadow-sm ring-1 ring-inset ring-ourLightGray placeholder:text-ourGray focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
                 onChange={(e) => setBazarDescription(e.target.value)}
               ></textarea>
             </div>

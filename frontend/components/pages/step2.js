@@ -354,8 +354,8 @@ export default function () {
               <div className="flex flex-row items-center">
                 <UilInfoCircle className="mr-4 text-ourDarkGray"></UilInfoCircle>
                 <p className="text-sm">
-                  "Scanne einfach alle Produkte eines Verkäufers ein und drucke
-                  dann die Barcodes oben aus"
+                  Scanne einfach alle Produkte eines Verkäufers ein und drucke
+                  dann die Barcodes oben aus
                 </p>
               </div>
             </div>
