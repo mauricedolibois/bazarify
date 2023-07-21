@@ -1,26 +1,31 @@
 //bazar validation
-
 export const checkBazarName = (name, setErrorMessage, setValidName) => {
   setValidName(false);
   const regex = /^[a-zA-Z0-9äöüÄÖÜß ]+$/;
   switch (true) {
     case name === "":
-      setErrorMessage("Bitte gib einen Namen für deinen Basar ein!");
+      setErrorMessage({
+        type: "error",
+        text: "Bitte gib einen Namen für deinen Basar ein!",
+      });
       break;
     case name.length < 3:
-      setErrorMessage(
-        "Der Name deines Basars muss mindestens 3 Zeichen lang sein!"
-      );
+      setErrorMessage({
+        type: "error",
+        text: "Der Name deines Basars muss mindestens 3 Zeichen lang sein!",
+      });
       break;
     case name.length > 30:
-      setErrorMessage(
-        "Der Name deines Basars darf maximal 30 Zeichen lang sein!"
-      );
+      setErrorMessage({
+        type: "error",
+        text: "Der Name deines Basars darf maximal 30 Zeichen lang sein!",
+      });
       break;
     case !regex.test(name):
-      setErrorMessage(
-        "Der Name deines Basars darf nur Buchstaben und Zahlen enthalten!"
-      );
+      setErrorMessage({
+        type: "error",
+        text: "Der Name deines Basars darf nur Buchstaben und Zahlen enthalten!",
+      });
       break;
     default:
       setValidName(true);
@@ -34,18 +39,28 @@ export const checkYear = (year, setErrorMessage, setValidYear) => {
   const currentYear = new Date().getFullYear();
   switch (true) {
     case year === "":
-      setErrorMessage("Bitte gib ein Jahr für deinen Basar ein!");
+      setErrorMessage({
+        type: "error",
+        text: "Bitte gib ein Jahr für deinen Basar ein!",
+      });
       break;
     case year.length !== 4:
-      setErrorMessage("Das Jahr deines Basars muss 4 Zeichen lang sein!");
+      setErrorMessage({
+        type: "error",
+        text: "Das Jahr deines Basars muss 4 Zeichen lang sein!",
+      });
       break;
     case !regex.test(year):
-      setErrorMessage("Das Jahr deines Basars darf nur Zahlen enthalten!");
+      setErrorMessage({
+        type: "error",
+        text: "Das Jahr deines Basars darf nur Zahlen enthalten!",
+      });
       break;
     case year < currentYear || year > currentYear + 2:
-      setErrorMessage(
-        "Dein Basar muss im aktuellen oder in den nächsten 2 Jahren stattfinden!"
-      );
+      setErrorMessage({
+        type: "error",
+        text: "Dein Basar muss im aktuellen oder in den nächsten 2 Jahren stattfinden!",
+      });
       break;
     default:
       setValidYear(true);
@@ -65,13 +80,22 @@ export const checkCommission = (
   const regex = /^[0-9]+$/;
   switch (true) {
     case commission === "":
-      setErrorMessage("Bitte gib eine Provision für deinen Basar ein!");
+      setErrorMessage({
+        type: "error",
+        text: "Bitte gib eine Provision für deinen Basar ein!",
+      });
       break;
     case !regex.test(commission):
-      setErrorMessage("Die Provision muss eine Zahl zwischen 0 und 100 sein!");
+      setErrorMessage({
+        type: "error",
+        text: "Die Provision muss eine Zahl zwischen 0 und 100 sein!",
+      });
       break;
     case commission < 0 || commission > 100:
-      setErrorMessage("Die Provision muss eine Zahl zwischen 0 und 100 sein!");
+      setErrorMessage({
+        type: "error",
+        text: "Die Provision muss eine Zahl zwischen 0 und 100 sein!",
+      });
       break;
     default:
       setValidCommission(true);
@@ -86,7 +110,10 @@ export const checkDescription = (
 ) => {
   setValidDescription(false);
   if (description.length > 100) {
-    setErrorMessage("Die Beschreibung darf maximal 100 Zeichen lang sein!");
+    setErrorMessage({
+      type: "error",
+      text: "Die Beschreibung darf maximal 100 Zeichen lang sein!",
+    });
   } else {
     setValidDescription(true);
   }

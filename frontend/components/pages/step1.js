@@ -15,7 +15,7 @@ export default function Step1() {
   const [bazarYear, setBazarYear] = useState("");
   const [bazarCommission, setBazarCommission] = useState("");
   const [bazarDescription, setBazarDescription] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [msg, setMsg] = useState({ type: "", text: "" });
   const [validName, setValidName] = useState(false);
   const [validYear, setValidYear] = useState(false);
   const [validDescription, setValidDescription] = useState(false);
@@ -52,7 +52,7 @@ export default function Step1() {
           }
         })
         .catch((error) => {
-          setErrorMessage(
+          setMsg(
             "Ups, da ist etwas schief gelaufen. Bitte versuche es später noch einmal."
           );
           console.log(error);
@@ -67,23 +67,17 @@ export default function Step1() {
   }, [validName, validYear, validCommission, validDescription]);
 
   const checkInput = () => {
-    checkCommission(bazarCommission, setErrorMessage, setValidCommission);
-    checkYear(bazarYear, setErrorMessage, setValidYear);
-    checkBazarName(bazarName, setErrorMessage, setValidName);
-    checkDescription(bazarDescription, setErrorMessage, setValidDescription);
+    checkCommission(bazarCommission, setMsg, setValidCommission);
+    checkYear(bazarYear, setMsg, setValidYear);
+    checkBazarName(bazarName, setMsg, setValidName);
+    checkDescription(bazarDescription, setMsg, setValidDescription);
   };
-
-  useEffect(() => {
-    if (errorMessage !== "") {
-      setTimeout(() => {
-        setErrorMessage("");
-      }, 3000);
-    }
-  }, [errorMessage]);
 
   return (
     <>
-      {errorMessage !== "" && <Alert type="error" text={errorMessage} />}
+      {msg.type !== "" && msg.text !== "" && (
+        <Alert type={msg.type} text={msg.text} setMsg={setMsg} />
+      )}
       <div>
         <h1>1. Basar erstellen</h1>
         <p>
