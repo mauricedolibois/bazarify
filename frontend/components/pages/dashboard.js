@@ -1,82 +1,13 @@
-import { UilPlay } from "@iconscout/react-unicons";
-import { UilPlus } from "@iconscout/react-unicons";
-import {
-  UilAngleRight,
-  UilTrashAlt,
-  UilNoEntry,
-} from "@iconscout/react-unicons";
+import { UilTrashAlt, UilNoEntry, UilPlus } from "@iconscout/react-unicons";
 import ButtonBigColor from "../buttons/ButtonBigColor";
 import ButtonBigNoColor from "../buttons/ButtonBigNoColor";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { BazarContext } from "../../pages/index.js";
-import { useState, useEffect } from "react";
 import VideoPopup from "../popups/VideoPopup/VideoPopup";
+import BazarCard from "../BazarCard/BazarCard";
 
-function BazarCard({ name }) {
-  let { setCurrentBazar, setStep } = useContext(BazarContext);
-  const [bazar, setBazar] = useState(undefined);
-  const [bazarToDelete, setBazarToDelete] = useState(undefined);
-
-  useEffect(() => {
-    if (bazar !== undefined) {
-      fetch("http://localhost:8080/api/changeBazar?operator=" + name)
-        .then((res) => res.json())
-        .then((data) => {
-          setBazar(undefined);
-          setStep(2);
-        });
-    }
-  }, [bazar]);
-
-  const deleteBazar = (event) => {
-    event.stopPropagation(); // Prevent event propagation
-    console.log("clicked");
-    setBazarToDelete(name);
-  };
-
-  useEffect(() => {
-    if (bazarToDelete !== undefined) {
-      fetch(
-        "http://localhost:8080/api//deleteBazar?operator=" + bazarToDelete,
-        { method: "DELETE" }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          setBazarToDelete(undefined);
-          //TODO: reload page und maybe bazar ausklappen können
-          window.location.reload();
-        });
-    }
-  }, [bazarToDelete]);
-
-  return (
-    <div
-      onClick={() => {
-        setBazar(name);
-        setCurrentBazar(name);
-      }}
-      class="border bg-white border-ourLightGray hover:text-ourPrimaryColorHover items-center mt-2 px-4 py-2 cursor-pointer rounded-lg flex justify-between"
-    >
-      <p title="Basar wechseln" className="text-sm">
-        {name.replaceAll("_", " ")}
-      </p>
-      <div class="flex justify-between">
-        <div title="Basar löschen">
-          <UilTrashAlt
-            size="17"
-            class="inline-block -ml-2 hover:text-red-400 text-ourGray"
-            onClick={(event) => {
-              deleteBazar(event);
-            }}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function () {
+export default function dashboard() {
   function loadExampleData() {
     fetch("http://localhost:8080/api/loadExampleData", {
       method: "PUT",

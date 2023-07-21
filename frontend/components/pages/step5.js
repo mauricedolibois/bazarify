@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import FormInput from "../input/formInput/formInput";
 import useCountUp from "../../hooks/useCountUp.js";
-import Card from "../AnalyticsCard/Card.js";
+import Card from "../AnalyticsCard/AnalyticsCard.js";
 import Graph from "../PieChart/PieChart.js";
 
 export default function Analytics() {
