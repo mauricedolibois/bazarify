@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from'cors'
-import { dbConnection } from '../database/DbConnection.js';
+import { productDAO } from '../database/ProductDAO.js';
+import { offerDAO } from '../database/OfferDAO.js';
 export const productRouter = express.Router()
 var pendingProducts = []
 
@@ -22,7 +23,7 @@ productRouter.use(cors({
 //      .catch(error => console.log(error))
 //  }, [id])//id hier rein (dependency array) damit useEffect bei jeder änderung von id triggert
 productRouter.get("/product", (req, res) => {
-    dbConnection.findProduct(req.query.operator, req.query.parameter).then(product => {
+    productDAO.findProduct(req.query.operator, req.query.parameter).then(product => {
         res.send(product)
     })
 }
@@ -39,7 +40,7 @@ productRouter.get("/product", (req, res) => {
 //       .catch(error => console.log(error))
 //   }, [])
 productRouter.get("/allProducts", (req, res) => {
-    dbConnection.findAllProducts().then(product => {
+    productDAO.findAllProducts().then(product => {
         res.send(product)
     })
 }
@@ -61,7 +62,7 @@ productRouter.get("/allProducts", (req, res) => {
 //      .catch(error => console.log(error))
 //  }, [])
 productRouter.post("/product", (req, res) => {
-    dbConnection.insertProduct(req.body.product_name, req.body.product_price, req.body.product_category).then
+    productDAO.insertProduct(req.body.product_name, req.body.product_price, req.body.product_category).then
     (product => { res.send(product) })  
     })
 
@@ -92,7 +93,7 @@ productRouter.put("/DeletePendingProduct", (req, res) => {
 //     .catch(error => console.log(error))
 // }, [])    
 productRouter.delete("/product", (req, res) => {
-    dbConnection.deleteProduct(req.query.operator, req.query.parameter).then
+    productDAO.deleteProduct(req.query.operator, req.query.parameter).then
     (product => { res.send(product) })  
     })
 
@@ -115,7 +116,7 @@ productRouter.delete("/product", (req, res) => {
 //     .catch(error => console.log(error))
 // }, [])
 productRouter.put("/product", (req, res) => {
-    dbConnection.updateProduct(req.query.operator, req.query.parameter, req.body).then
+    productDAO.updateProduct(req.query.operator, req.query.parameter, req.body).then
     (product => { res.send(product) })
     })
 
@@ -123,7 +124,7 @@ productRouter.put("/product", (req, res) => {
 
 productRouter.put("/product-recline", (req, res) => {
     console.log("recline")
-    dbConnection.updateOffer('product_id', req.query.id, {state: 'reclined'}).then
+    offerDAO.updateOffer('product_id', req.query.id, {state: 'reclined'}).then
     (product => { res.send(product) })
     })
 
