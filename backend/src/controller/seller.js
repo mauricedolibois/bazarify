@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from'cors'
-import { sellerDAO } from '../database/SellerDAO.js';
+import { sellerDAO } from '../database/operations/SellerDAO.js';
 export const sellerRouter = express.Router()
 
 sellerRouter.use(express.json())
@@ -15,15 +15,6 @@ sellerRouter.get("/seller", (req, res) => {
 }
 )
 
-
-// useEffect(() => {
-//     fetch('http://localhost:8080/api/sellerProducts?seller_id='+idVariable, {method: 'GET'})
-//     .then(res => res.json())
-//     .then(data => {
-//       console.log(data)
-//     })
-//     .catch(error => console.log(error));
-//     }, []);
 
 sellerRouter.get("/sellerProducts", (req, res) => {
     sellerDAO.getSellersProducts(req.query.seller_id).then(products => {

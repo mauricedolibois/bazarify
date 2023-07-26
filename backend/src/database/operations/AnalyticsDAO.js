@@ -1,9 +1,9 @@
 import { createRequire } from "module"
 const require = createRequire(import.meta.url)
-const Product = require('./schemas/ProductSchema.cjs')
-const Seller = require('./schemas/SellerSchema.cjs')
-const Offer = require('./schemas/OfferSchema.cjs')
-const Info = require('./schemas/InfoSchema.cjs')
+const Product = require('../schemas/ProductSchema.cjs')
+const Seller = require('../schemas/SellerSchema.cjs')
+const Offer = require('../schemas/OfferSchema.cjs')
+const Info = require('../schemas/InfoSchema.cjs')
 
 export const analyticsDAO = {
     async analytics() {

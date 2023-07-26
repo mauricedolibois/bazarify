@@ -2,8 +2,8 @@ import express from 'express'
 import cors from'cors'
 import { dbConnection } from '../database/DbConnection.js';
 import { exampleData } from '../exampleData.js';
-import { analyticsDAO } from '../database/AnalyticsDAO.js';
-import { infoDAO } from '../database/InfoDAO.js';
+import { analyticsDAO } from '../database/operations/AnalyticsDAO.js';
+import { infoDAO } from '../database/operations/InfoDAO.js';
 export const bazarRouter = express.Router()
 
 bazarRouter.use(express.json())

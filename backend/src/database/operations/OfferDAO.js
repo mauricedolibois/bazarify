@@ -1,8 +1,8 @@
 import { createRequire } from "module"
 const require = createRequire(import.meta.url)
-const Offer = require('./schemas/OfferSchema.cjs')
-const DbIdHandler = require('../services/UniqueIDs.cjs')
-const InputValidation = require('../services/InputValidation.cjs')
+const Offer = require('../schemas/OfferSchema.cjs')
+const DbIdHandler = require('../../services/UniqueIDs.cjs')
+const InputValidation = require('../../services/InputValidation.cjs')
 
 export const offerDAO = {
     async insertOffer(product_id, seller_id) {

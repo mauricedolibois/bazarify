@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
-import { offerDAO } from "../database/OfferDAO.js";
-import { sellerDAO } from "../database/SellerDAO.js";
-import { productDAO } from "../database/ProductDAO.js";
+import { offerDAO } from "../database/operations/OfferDAO.js";
+import { sellerDAO } from "../database/operations/SellerDAO.js";
+import { productDAO } from "../database/operations/ProductDAO.js";
 import { printing } from "../services/Printing.js";
 export const offerRouter = express.Router();
 
@@ -80,7 +80,3 @@ offerRouter.put("/offer", (req, res) => {
       res.send(offer);
     });
 });
-// let prod=dbConnection.insertProduct(req.body.product)
-//     let sell=dbConnection.insertSeller(req.body.seller)
-//     dbConnection.insertOffer(prod.product_id, sell.seller_id).then
-//     (offer => { res.send(offer) })
