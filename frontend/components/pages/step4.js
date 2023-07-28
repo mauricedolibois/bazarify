@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { UilSquareFull } from "@iconscout/react-unicons";
 import SendMailsButton from "../buttons/SendMailsButton";
 import ProductTable from "../table/productTable";
 import SellerSearchBar from "../input/SellerSearchBar";
-import sellerDisplay from "../SellerDisplay/sellerDisplay";
-
 import Alert from "../alert/alert";
 import SellerDisplay from "../SellerDisplay/sellerDisplay";
 
