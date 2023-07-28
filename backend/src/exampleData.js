@@ -1,4 +1,7 @@
 import {dbConnection} from './database/DbConnection.js'
+import {sellerDAO} from './database/operations/SellerDAO.js'
+import {productDAO} from './database/operations/ProductDAO.js'
+import {offerDAO} from './database/operations/OfferDAO.js'
 
 
 export const exampleData = {
@@ -75,12 +78,12 @@ export const exampleData = {
         console.log("Haaaallloooooooo")
 
         for (let i = 0; i < sellers.length; i++) {
-            var seller = await dbConnection.insertSeller(sellers[i].seller_name, sellers[i].seller_firstname, sellers[i].seller_email, sellers[i].seller_phone)
+            var seller = await sellerDAO.insertSeller(sellers[i].seller_name, sellers[i].seller_firstname, sellers[i].seller_email, sellers[i].seller_phone)
             console.log(seller)
-            var product1 = await dbConnection.insertProduct(porducts[k].product_name, porducts[k].product_price, porducts[k].product_category)
-            var product2 = await dbConnection.insertProduct(porducts[k+1].product_name, porducts[k+1].product_price, porducts[k+1].product_category)
-            var offer1 = await dbConnection.insertOffer(product1.product_id, seller.seller_id)
-            var offer2 = await dbConnection.insertOffer(product2.product_id, seller.seller_id)
+            var product1 = await productDAO.insertProduct(porducts[k].product_name, porducts[k].product_price, porducts[k].product_category)
+            var product2 = await productDAO.insertProduct(porducts[k+1].product_name, porducts[k+1].product_price, porducts[k+1].product_category)
+            var offer1 = await offerDAO.insertOffer(product1.product_id, seller.seller_id)
+            var offer2 = await offerDAO.insertOffer(product2.product_id, seller.seller_id)
             exampleOffers.push(offer1)
             exampleOffers.push(offer2)
             k += 2
