@@ -9,16 +9,10 @@ import Alert from "../alert/alert";
 import SellerDisplay from "../SellerDisplay/sellerDisplay";
 
 export default function AbholungPage() {
-  const [allSellers, setAllSellers] = useState([]);
-  const [searchedSeller, setSearchedSeller] = useState([]);
-  const [allProductsFromSeller, setAllProductsFromSeller] = useState([]);
   const [soldProductsFromSeller, setSoldProductsFromSeller] = useState([]);
   const [unsoldProductsFromSeller, setUnsoldProductsFromSeller] = useState([]);
   const [clickedSellerID, setClickedSellerID] = useState(0);
-  const [sellerPayback, setSellerPayback] = useState(0);
   const [name, setName] = useState("Kein Verkäufer ausgewählt");
-  const [unsoldProductsCount, setUnsoldProductsCount] = useState(0);
-  const [provision, setProvision] = useState(0);
   const [productReclinedID, setProductReclinedID] = useState(0);
   const [msg, setMsg] = useState({ type: "", text: "" });
 
