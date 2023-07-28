@@ -22,7 +22,7 @@ const CreatePage = () => {
     location: "test",
   });
 
-  function createBazar() {}
+  function createBazar() { }
 
   return (
     <>
@@ -54,11 +54,9 @@ const CreatePage = () => {
 
         <div
           id="scrollManager"
-          className={`fixed bottom-8 right-16 flex items-center justify-end gap-x-6 ${
-            step === 0 ? "hidden" : ""
-          }`}
-        >
-          <ButtonLastStep></ButtonLastStep>
+          className={`fixed bottom-8 right-16 flex items-center justify-end gap-x-6 ${step === 0 ? "hidden" : ""
+            }`}>
+          {step != 2 && <ButtonLastStep></ButtonLastStep>}
           <ButtonNextStep></ButtonNextStep>
         </div>
       </BazarContext.Provider>
