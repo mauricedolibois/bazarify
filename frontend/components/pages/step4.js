@@ -22,16 +22,6 @@ export default function AbholungPage() {
   const [productReclinedID, setProductReclinedID] = useState(0);
   const [msg, setMsg] = useState({ type: "", text: "" });
 
-  //get provision
-  useEffect(() => {
-    fetch("http://localhost:8080/api/analytics", { method: "GET" })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setProvision(data.Provision);
-      });
-  }, []);
-
   // get all products from seller
   useEffect(() => {
     if (clickedSellerID !== 0) {
@@ -80,28 +70,6 @@ export default function AbholungPage() {
     }
   }, [productReclinedID]);
 
-  // calculate seller payback
-  useEffect(() => {
-    console.log("sold products: ", soldProductsFromSeller);
-    let tmpSellerPayback = 0;
-    soldProductsFromSeller.map((product) => {
-      tmpSellerPayback += product.product_price;
-    });
-    tmpSellerPayback = tmpSellerPayback - (tmpSellerPayback * provision) / 100; // subtract provision
-    setSellerPayback(tmpSellerPayback.toFixed(2));
-  }, [soldProductsFromSeller]);
-
-  const getUnsoldProductsText = () => {
-    console.log("unsold products: ", unsoldProductsFromSeller);
-    if (unsoldProductsFromSeller.length === 0) {
-      return "Es wurden alle Produkte verkauft";
-    } else if (unsoldProductsFromSeller.length === 1) {
-      return `1 nicht verkauftes Produkt vorhanden`;
-    } else {
-      return `${unsoldProductsFromSeller.length} nicht verkaufte Produkte vorhanden`;
-    }
-  };
-
   return (
     <>
       <div>
@@ -126,8 +94,8 @@ export default function AbholungPage() {
         {clickedSellerID !== 0 && (
           <SellerDisplay
             name={name}
-            sellerPayback={sellerPayback}
-            text={getUnsoldProductsText}
+            soldProducts={soldProductsFromSeller}
+            unsoldProducts={unsoldProductsFromSeller}
           />
         )}
 
