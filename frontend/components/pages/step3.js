@@ -94,7 +94,7 @@ export default function () {
     if (barcode !== "") {
       fetch(
         "http://localhost:8080/api/offer?operator=offer_id&parameter=" +
-          barcode,
+        barcode,
         { method: "GET" }
       )
         .then((res) => res.json())
@@ -138,7 +138,7 @@ export default function () {
         default:
           fetch(
             "http://localhost:8080/api/product?operator=product_id&parameter=" +
-              offer.product_id,
+            offer.product_id,
             { method: "GET" }
           )
             .then((res) => res.json())
@@ -193,7 +193,7 @@ export default function () {
         };
         fetch(
           "http://localhost:8080/api/offer?operator=offer_id&parameter=" +
-            offer.offer_id,
+          offer.offer_id,
           requestOptions
         )
           .then((res) => res.json())
@@ -235,8 +235,8 @@ export default function () {
           <div className="overflow-hidden">
             <div className="flex flex-col justify-center items-center mb-32 mt-32">
               <UilInfoCircle className="text-ourGray text-4xl mb-4"></UilInfoCircle>
-              <p className="text-ourGray text-xl">
-                Hier werden deine gescannten Produkte angezeigt!
+              <p className="text-ourGray text-sm">
+                Hier werden dann deine gescannten Produkte angezeigt.
               </p>
             </div>
           </div>
