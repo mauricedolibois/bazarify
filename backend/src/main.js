@@ -7,6 +7,7 @@ import {productRouter}  from './controller/products.js';
 import {sellerRouter}  from './controller/seller.js';
 import {offerRouter}  from './controller/offer.js';
 import { bazarRouter } from './controller/bazar.js';
+import { MailService } from './services/MailService.js';
 
 app.use(express.json())
 app.use(urlencoded({extended:true}))
@@ -31,7 +32,8 @@ exec(command, (error) => {
 });
 
 
-dbConnection.connectToDB()
+await dbConnection.connectToDB()
+await dbConnection.changeDB('testbazar').then(() => { MailService.sendEmails() })
 app.listen(8080, () => { console.log("Server started on port 8080") })
 
 

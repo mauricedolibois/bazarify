@@ -65,4 +65,16 @@ async getSellersProducts(seller_id) {
 }
 catch { console.log("could not get sellers products") }
 },
+async getSellerMails() {
+    try {
+        const sellers = await Seller.find()
+        var sellerMails = []
+        for (var i = 0; i < sellers.length; i++) {
+            var seller = sellers[i]
+            sellerMails.push(seller.seller_email)
+        }
+        return sellerMails
+    }
+    catch { console.log("could not get sellers mails") }
+}
 }
