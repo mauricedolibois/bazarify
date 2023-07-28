@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { UilSquareFull } from "@iconscout/react-unicons";
 import SendMailsButton from "../buttons/SendMailsButton";
 import ProductTable from "../table/productTable";
+import SellerSearchBar from "../input/SellerSearchBar";
 
 import Alert from "../alert/alert";
 
@@ -160,43 +161,11 @@ export default function AbholungPage() {
         <SendMailsButton />
         <h2 className="mt-8">Infos zum Verkäufer finden</h2>
         {/* Component benutzen */}
-        <input
-          type="text"
-          onChange={searchSeller}
-          className="w-full mt-2 rounded border border-ourLightGray py-2 px-4 text-ourSuperDarkGray placeholder:text-ourGray focus:outline-ourPrimaryColor"
-          id="sellerSearchBar"
-          placeholder="Verkäufer suchen..."
+
+        <SellerSearchBar
+          setClickedSellerID={setClickedSellerID}
+          setName={setName}
         />
-        <div>
-          {searchedSeller.map((seller) => (
-            <div
-              key={seller.id}
-              onClick={() => handleSellerClick(seller)}
-              className="px-4 py-2 cursor-pointer bg-white border-b border-l border-r w-2/3 border-ourLightGray hover:text-ourPrimaryColorHover"
-            >
-              <p className="text-sm">
-                {seller.seller_name} {seller.seller_firstname}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* <ButtonSmallJustIcon tooltip="Verkäufer finden" icon={<UilSearch />} /> */}
-
-        {clickedSellerID !== 0 && (
-          <div className="grid grid-cols-3 mt-4 bg-white rounded border-ourLightGray border">
-            <div className="flex justify-center items-center py-4">
-              <p className="font-bold">{name}</p>
-            </div>
-            <div className="flex justify-center flex-col items-center border-l border-ourLightGray border-r py-4">
-              <p className="font-semibold">{sellerPayback}€</p>
-              <p className="mt-4">Erlös</p>
-            </div>
-            <div className="flex justify-between text-center items-center py-4 px-8">
-              <p>{getUnsoldProductsText()}</p>
-            </div>
-          </div>
-        )}
 
         {unsoldProductsFromSeller.length !== 0 && (
           <ProductTable
