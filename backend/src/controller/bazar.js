@@ -2,6 +2,8 @@ import express from 'express'
 import cors from'cors'
 import { dbConnection } from '../database/DbConnection.js';
 import { exampleData } from '../exampleData.js';
+import { analyticsDAO } from '../database/operations/AnalyticsDAO.js';
+import { infoDAO } from '../database/operations/InfoDAO.js';
 export const bazarRouter = express.Router()
 
 bazarRouter.use(express.json())
@@ -17,14 +19,6 @@ bazarRouter.post("/newBazar", (req, res) => {
     })
 })
 
-//  const operator = "newBazarName"
-//  useEffect(() => {
-//    fetch('http://localhost:8085/api/newBazar?operator='+[operator]+'&parameter=', {method: 'GET'})
-//      .then(res => res.json())
-//      .then(data => {
-//        console.log(data)
-//      })
-//      .catch(error => console.log(error))
 
 bazarRouter.get("/changeBazar", (req, res) => {
     console.log("Now changing Bazar")
@@ -53,7 +47,7 @@ bazarRouter.get("/currentBazar", (req, res) => {
 })
 
 bazarRouter.get("/analytics", (req, res) => {
-    dbConnection.analytics().then(ana => {
+    analyticsDAO.analytics().then(ana => {
         res.json(ana)
     })
 })
@@ -61,7 +55,7 @@ bazarRouter.get("/analytics", (req, res) => {
 
 //set tips
 bazarRouter.post("/tip", (req, res) => {
-    dbConnection.addTip(req.body.tip).then(tip => {
+    infoDAO.addTip(req.body.tip).then(tip => {
         res.json(tip)
     }
     )

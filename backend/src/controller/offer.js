@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
-import { dbConnection } from "../database/DbConnection.js";
+import { offerDAO } from "../database/operations/OfferDAO.js";
+import { sellerDAO } from "../database/operations/SellerDAO.js";
+import { productDAO } from "../database/operations/ProductDAO.js";
 import { printing } from "../services/Printing.js";
 export const offerRouter = express.Router();
 
@@ -12,7 +14,7 @@ offerRouter.use(
 );
 
 offerRouter.get("/offer", (req, res) => {
-  dbConnection
+  offerDAO
     .findOffer(req.query.operator, req.query.parameter)
     .then((offer) => {
       res.send(offer);
@@ -20,7 +22,7 @@ offerRouter.get("/offer", (req, res) => {
 });
 
 offerRouter.get("/allOffers", (req, res) => {
-  dbConnection.findAllOffers().then((offer) => {
+  offerDAO.findAllOffers().then((offer) => {
     res.send(offer);
   });
 });
@@ -30,7 +32,7 @@ offerRouter.post("/offer", async (req, res) => {
     console.log(req.body);
     const p = req.body.product;
     const s = req.body.seller;
-    const sell = await dbConnection.insertSeller(
+    const sell = await sellerDAO.insertSeller(
       s.seller_name,
       s.seller_firstname,
       s.seller_email,
@@ -39,12 +41,12 @@ offerRouter.post("/offer", async (req, res) => {
 
     let offer = [];
     await p.map(async (product) => {
-      const prod = await dbConnection.insertProduct(
+      const prod = await productDAO.insertProduct(
         product.product_name,
         product.product_price,
         product.product_category
       );
-      const off = await dbConnection.insertOffer(
+      const off = await offerDAO.insertOffer(
         prod.product_id,
         sell.seller_id
       );
@@ -64,7 +66,7 @@ offerRouter.put("/PrintAllOffers", (req, res) => {
 });
 
 offerRouter.delete("/offer", (req, res) => {
-  dbConnection
+  offerDAO
     .deleteOffer(req.query.operator, req.query.parameter)
     .then((offer) => {
       res.send(offer);
@@ -72,13 +74,9 @@ offerRouter.delete("/offer", (req, res) => {
 });
 
 offerRouter.put("/offer", (req, res) => {
-  dbConnection
+  offerDAO
     .updateOffer(req.query.operator, req.query.parameter, req.body)
     .then((offer) => {
       res.send(offer);
     });
 });
-// let prod=dbConnection.insertProduct(req.body.product)
-//     let sell=dbConnection.insertSeller(req.body.seller)
-//     dbConnection.insertOffer(prod.product_id, sell.seller_id).then
-//     (offer => { res.send(offer) })

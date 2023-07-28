@@ -105,6 +105,24 @@ export default function AbholungPage() {
     }
   }, [clickedSellerID]);
 
+  //update offer in db as reclined
+  useEffect(() => {
+    console.log("useEffect recline ausgeführt!");
+    console.log("ProductID im useEffect: ", productReclinedID);
+    if (productReclinedID !== 0) {
+      fetch(
+        "http://localhost:8080/api/product-recline?id=" + productReclinedID,
+        { method: "PUT" }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          console.log("reclined product: ", productReclinedID);
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [productReclinedID]);
+
   // calculate seller payback
   useEffect(() => {
     console.log("sold products: ", soldProductsFromSeller);
@@ -141,6 +159,7 @@ export default function AbholungPage() {
         </p>
         <SendMailsButton />
         <h2 className="mt-8">Infos zum Verkäufer finden</h2>
+        {/* Component benutzen */}
         <input
           type="text"
           onChange={searchSeller}
@@ -185,6 +204,7 @@ export default function AbholungPage() {
             setData={setUnsoldProductsFromSeller}
             setMsg={setMsg}
             type="recline"
+            setProductReclinedID={setProductReclinedID}
           />
         )}
       </div>
