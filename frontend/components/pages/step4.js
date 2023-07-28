@@ -3,8 +3,10 @@ import { UilSquareFull } from "@iconscout/react-unicons";
 import SendMailsButton from "../buttons/SendMailsButton";
 import ProductTable from "../table/productTable";
 import SellerSearchBar from "../input/SellerSearchBar";
+import sellerDisplay from "../SellerDisplay/sellerDisplay";
 
 import Alert from "../alert/alert";
+import SellerDisplay from "../SellerDisplay/sellerDisplay";
 
 export default function AbholungPage() {
   const [allSellers, setAllSellers] = useState([]);
@@ -29,52 +31,6 @@ export default function AbholungPage() {
         setProvision(data.Provision);
       });
   }, []);
-
-  // get all sellers
-  useEffect(() => {
-    fetch("http://localhost:8080/api/allSellers", { method: "GET" })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setAllSellers(data);
-      })
-      .catch((error) => console.log(error));
-  }, []);
-
-  // search seller
-  const searchSeller = () => {
-    const searchBar = document.getElementById("sellerSearchBar");
-    const searchString = searchBar.value.toLowerCase();
-    let tmpSearchedSeller = [];
-
-    console.log("search string: ", searchString);
-    console.log("all sellers: ", allSellers);
-    if (searchString !== "") {
-      allSellers.map((seller) => {
-        if (
-          seller.seller_name.toLowerCase().includes(searchString) ||
-          seller.seller_firstname.toLowerCase().includes(searchString)
-        ) {
-          tmpSearchedSeller.push(seller);
-        }
-      });
-    }
-
-    setSearchedSeller(tmpSearchedSeller.slice(0, 5));
-  };
-
-  // set clicked seller id
-  const handleSellerClick = (seller) => {
-    setUnsoldProductsFromSeller([]);
-    setSoldProductsFromSeller([]);
-    console.log("seller clicked: ", seller);
-    setClickedSellerID(seller.seller_id);
-    let firstName = seller.seller_name;
-    let lastName = seller.seller_firstname;
-    let wholeName = firstName + " " + lastName;
-    setName(wholeName);
-    setSearchedSeller([]);
-  };
 
   // get all products from seller
   useEffect(() => {
@@ -166,6 +122,14 @@ export default function AbholungPage() {
           setClickedSellerID={setClickedSellerID}
           setName={setName}
         />
+
+        {clickedSellerID !== 0 && (
+          <SellerDisplay
+            name={name}
+            sellerPayback={sellerPayback}
+            text={getUnsoldProductsText}
+          />
+        )}
 
         {unsoldProductsFromSeller.length !== 0 && (
           <ProductTable
