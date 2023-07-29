@@ -64,7 +64,7 @@ const SellerSearchBar = ({ setClickedSellerID, setName }) => {
           <div
             key={seller.id}
             onClick={() => handleSellerClick(seller)}
-            className="px-4 py-2 cursor-pointer bg-white border-b border-l border-r w-2/3 border-ourLightGray hover:text-ourPrimaryColorHover"
+            className="px-4 py-2 rounded cursor-pointer bg-white border-b border-l border-r w-full border-ourLightGray hover:text-ourPrimaryColorHover"
           >
             <p className="text-sm">
               {seller.seller_name} {seller.seller_firstname}
