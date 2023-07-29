@@ -3,7 +3,7 @@ import SendMailsButton from "../buttons/SendMailsButton";
 import ProductTable from "../table/productTable";
 import SellerSearchBar from "../input/SellerSearchBar";
 import Alert from "../alert/alert";
-import SellerDisplay from "../SellerDisplay/sellerDisplay";
+import FormInput from "../input/formInput/formInput";
 
 export default function AbholungPage() {
   const [soldProductsFromSeller, setSoldProductsFromSeller] = useState([]);
@@ -75,12 +75,20 @@ export default function AbholungPage() {
         </p>
         <SendMailsButton />
         <h2 className="mt-8">Infos zum Verkäufer finden</h2>
-        {/* Component benutzen */}
-
-        <SellerSearchBar
-          setClickedSellerID={setClickedSellerID}
-          setName={setName}
-        />
+        <FormInput id="sellerSearchBar" placeholder="Verkäufer suchen" onChange={searchSeller}></FormInput>
+        <div>
+          {searchedSeller.map((seller) => (
+            <div
+              key={seller.id}
+              onClick={() => handleSellerClick(seller)}
+              className="px-4 py-2 cursor-pointer bg-white border-b border-l border-r rounded border-ourLightGray hover:text-ourPrimaryColorHover"
+            >
+              <p className="text-sm">
+                {seller.seller_name} {seller.seller_firstname}
+              </p>
+            </div>
+          ))}
+        </div>
 
         {clickedSellerID !== 0 && (
           <SellerDisplay
