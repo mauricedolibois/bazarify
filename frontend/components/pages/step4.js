@@ -12,6 +12,18 @@ export default function AbholungPage() {
   const [name, setName] = useState("Kein Verkäufer ausgewählt");
   const [productReclinedID, setProductReclinedID] = useState(0);
   const [msg, setMsg] = useState({ type: "", text: "" });
+  const [allSellers, setAllSellers] = useState([]);
+
+  // get all sellers
+  useEffect(() => {
+    fetch("http://localhost:8080/api/allSellers", { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setAllSellers(data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   // get all products from seller
   useEffect(() => {
@@ -78,6 +90,7 @@ export default function AbholungPage() {
         {/* Component benutzen */}
 
         <SellerSearchBar
+          allSellers={allSellers}
           setClickedSellerID={setClickedSellerID}
           setName={setName}
         />

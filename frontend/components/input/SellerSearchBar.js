@@ -1,6 +1,4 @@
 import { useRef, useEffect, useState } from "react";
-import { UilEnter } from "@iconscout/react-unicons";
-import ButtonSmallJustIcon from "@/components/buttons/ButtonSmallJustIcon";
 
 const SellerSearchBar = ({ setClickedSellerID, setName }) => {
   const [allSellers, setAllSellers] = useState([]);
