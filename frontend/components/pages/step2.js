@@ -20,6 +20,7 @@ export default function () {
   const [sellerLastName, setSellerLastName] = useState("");
   const [sellerEmail, setSellerEmail] = useState("");
   const [sellerPhoneNumber, setSellerPhoneNumber] = useState("");
+  const [product, setProduct] = useState("");
   const [productName, setProductName] = useState("");
   const [productCategory, setProductCategory] = useState("");
   const [productPrice, setProductPrice] = useState("");

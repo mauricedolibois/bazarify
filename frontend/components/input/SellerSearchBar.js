@@ -2,20 +2,8 @@ import { useRef, useEffect, useState } from "react";
 import { UilEnter } from "@iconscout/react-unicons";
 import ButtonSmallJustIcon from "@/components/buttons/ButtonSmallJustIcon";
 
-const SellerSearchBar = ({ setClickedSellerID, setName }) => {
-  const [allSellers, setAllSellers] = useState([]);
+const SellerSearchBar = ({ allSellers, setClickedSellerID, setName }) => {
   const [searchedSeller, setSearchedSeller] = useState([]);
-
-  // get all sellers
-  useEffect(() => {
-    fetch("http://localhost:8080/api/allSellers", { method: "GET" })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setAllSellers(data);
-      })
-      .catch((error) => console.log(error));
-  }, []);
 
   // search seller
   const searchSeller = () => {
