@@ -1,19 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 
-const SellerSearchBar = ({ setClickedSellerID, setName }) => {
-  const [allSellers, setAllSellers] = useState([]);
+const SellerSearchBar = ({ allSellers, setClickedSellerID, setName }) => {
   const [searchedSeller, setSearchedSeller] = useState([]);
-
-  // get all sellers
-  useEffect(() => {
-    fetch("http://localhost:8080/api/allSellers", { method: "GET" })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setAllSellers(data);
-      })
-      .catch((error) => console.log(error));
-  }, []);
 
   // search seller
   const searchSeller = () => {
