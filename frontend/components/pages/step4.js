@@ -3,7 +3,7 @@ import SendMailsButton from "../buttons/SendMailsButton";
 import ProductTable from "../table/productTable";
 import SellerSearchBar from "../input/SellerSearchBar";
 import Alert from "../alert/alert";
-import FormInput from "../input/formInput/formInput";
+import SellerDisplay from "../SellerDisplay/sellerDisplay";
 
 export default function AbholungPage() {
   const [soldProductsFromSeller, setSoldProductsFromSeller] = useState([]);
@@ -12,6 +12,18 @@ export default function AbholungPage() {
   const [name, setName] = useState("Kein Verkäufer ausgewählt");
   const [productReclinedID, setProductReclinedID] = useState(0);
   const [msg, setMsg] = useState({ type: "", text: "" });
+  const [allSellers, setAllSellers] = useState([]);
+
+  // get all sellers
+  useEffect(() => {
+    fetch("http://localhost:8080/api/allSellers", { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setAllSellers(data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   // get all products from seller
   useEffect(() => {
@@ -75,20 +87,13 @@ export default function AbholungPage() {
         </p>
         <SendMailsButton />
         <h2 className="mt-8">Infos zum Verkäufer finden</h2>
-        <FormInput id="sellerSearchBar" placeholder="Verkäufer suchen" onChange={searchSeller}></FormInput>
-        <div>
-          {searchedSeller.map((seller) => (
-            <div
-              key={seller.id}
-              onClick={() => handleSellerClick(seller)}
-              className="px-4 py-2 cursor-pointer bg-white border-b border-l border-r rounded border-ourLightGray hover:text-ourPrimaryColorHover"
-            >
-              <p className="text-sm">
-                {seller.seller_name} {seller.seller_firstname}
-              </p>
-            </div>
-          ))}
-        </div>
+        {/* Component benutzen */}
+
+        <SellerSearchBar
+          allSellers={allSellers}
+          setClickedSellerID={setClickedSellerID}
+          setName={setName}
+        />
 
         {clickedSellerID !== 0 && (
           <SellerDisplay
