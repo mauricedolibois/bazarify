@@ -7,6 +7,7 @@ export default function BazarCard({ name }) {
   const [bazar, setBazar] = useState(undefined);
   const [bazarToDelete, setBazarToDelete] = useState(undefined);
 
+  //switch bazar
   useEffect(() => {
     if (bazar !== undefined) {
       fetch("http://localhost:8080/api/changeBazar?operator=" + name)
@@ -18,6 +19,7 @@ export default function BazarCard({ name }) {
     }
   }, [bazar]);
 
+  //delete bazar
   const deleteBazar = (event) => {
     event.stopPropagation(); // Prevent event propagation
     console.log("clicked");

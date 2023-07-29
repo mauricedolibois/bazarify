@@ -27,8 +27,8 @@ export default function AbholungPage() {
 
   // get all products from seller
   useEffect(() => {
+    console.log("clicked Seller ID: ", clickedSellerID);
     if (clickedSellerID !== 0) {
-      console.log("clicked seller id: ", clickedSellerID);
       fetch(
         "http://localhost:8080/api/sellerProducts?seller_id=" + clickedSellerID,
         { method: "GET" }
@@ -36,14 +36,15 @@ export default function AbholungPage() {
         .then((res) => res.json())
         .then((data) => {
           console.log("products from seller: ", data);
-          setAllProductsFromSeller(data);
           data.map((product) => {
+            console.log("product status step 4: ", product.offer_status);
             if (product.offer_status === "sold") {
               setSoldProductsFromSeller((soldProductsFromSeller) => [
                 ...soldProductsFromSeller,
                 product,
               ]);
             } else if (product.offer_status === "open") {
+              console.log("unsold product step 4: ", unsoldProductsFromSeller);
               setUnsoldProductsFromSeller((unsoldProductsFromSeller) => [
                 ...unsoldProductsFromSeller,
                 product,
@@ -51,7 +52,7 @@ export default function AbholungPage() {
             }
           });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log("hier ist der fehler ", error));
     }
   }, [clickedSellerID]);
 

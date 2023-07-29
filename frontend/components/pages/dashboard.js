@@ -1,4 +1,4 @@
-import { UilTrashAlt, UilNoEntry, UilPlus } from "@iconscout/react-unicons";
+import { UilNoEntry, UilPlus } from "@iconscout/react-unicons";
 import ButtonBigColor from "../buttons/ButtonBigColor";
 import ButtonBigNoColor from "../buttons/ButtonBigNoColor";
 import Link from "next/link";

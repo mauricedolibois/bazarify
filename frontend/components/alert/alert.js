@@ -6,7 +6,7 @@ const Alert = ({ type, text, setMsg }) => {
   let ourBackgroundColor = "";
   let icon = "";
 
-  // Conditionally set color and icon based on the type prop
+  // set color and icon based on the type prop
   if (type === "error") {
     textColor = "text-ourDarkRed";
     ourBackgroundColor = "bg-ourLightRed";
@@ -17,6 +17,7 @@ const Alert = ({ type, text, setMsg }) => {
     icon = <UilCheck size="20" className="mr-2" />;
   }
 
+  // remove alert after 3 seconds
   useEffect(() => {
     if (text !== "") {
       setTimeout(() => {

@@ -28,6 +28,14 @@ export default function Step1() {
     checkInput();
   };
 
+  const checkInput = () => {
+    checkCommission(bazarCommission, setMsg, setValidCommission);
+    checkYear(bazarYear, setMsg, setValidYear);
+    checkBazarName(bazarName, setMsg, setValidName);
+    checkDescription(bazarDescription, setMsg, setValidDescription);
+  };
+
+  //create new Bazar when all inputs are correct
   useEffect(() => {
     const bazar = {
       bazar_name: bazarName,
@@ -52,9 +60,10 @@ export default function Step1() {
           }
         })
         .catch((error) => {
-          setMsg(
-            "Ups, da ist etwas schief gelaufen. Bitte versuche es später noch einmal."
-          );
+          setMsg({
+            type: "error",
+            text: "Ups, da ist etwas schief gelaufen. Bitte versuche es später noch einmal.",
+          });
           console.log(error);
         });
 
@@ -65,13 +74,6 @@ export default function Step1() {
       setBazarDescription("");
     }
   }, [validName, validYear, validCommission, validDescription]);
-
-  const checkInput = () => {
-    checkCommission(bazarCommission, setMsg, setValidCommission);
-    checkYear(bazarYear, setMsg, setValidYear);
-    checkBazarName(bazarName, setMsg, setValidName);
-    checkDescription(bazarDescription, setMsg, setValidDescription);
-  };
 
   return (
     <>
@@ -100,7 +102,6 @@ export default function Step1() {
             <FormInput
               id="Jahr"
               label="DAS MUSS NOCH RAUS"
-
               value={bazarYear}
               onChange={(e) => setBazarYear(e.target.value)}
               validInput={validYear}
@@ -135,7 +136,7 @@ export default function Step1() {
             </span>
           </button>
         </div>
-      </div >
+      </div>
     </>
   );
 }
