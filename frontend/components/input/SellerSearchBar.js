@@ -35,7 +35,7 @@ const SellerSearchBar = ({ setClickedSellerID, setName }) => {
         }
       });
     }
-
+    //only show 5 sellers max
     setSearchedSeller(tmpSearchedSeller.slice(0, 5));
   };
 

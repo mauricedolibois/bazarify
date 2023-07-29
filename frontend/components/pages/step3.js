@@ -6,13 +6,6 @@ import ProductTable from "../table/productTable";
 import Alert from "../alert/alert";
 import BarcodeScanner from "../input/BarcodeScanner/BarcodeScanner";
 
-//TODO: check if input is a number
-//TODO: check if offer exists in database
-//TODO: autofocus on input field
-//TODO: increase width of input field
-//TODO: add error message for invalid input
-//TODO: display info when there's no product scanned yet
-
 export default function () {
   const [barcode, setBarcode] = useState("");
   const [offer, setOffer] = useState("");
@@ -22,6 +15,7 @@ export default function () {
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [popupOpened, setPopupOpened] = useState(false);
   const [msg, setMsg] = useState({ type: "", text: "" });
+  const [totalPrice, setTotalPrice] = useState(0);
 
   let input;
   let tmpAllUpdatedOffers = [];
@@ -51,11 +45,6 @@ export default function () {
       setMsg({ type: "error", text: "Gib eine gültige Zahl ein" });
     }
   };
-
-  //const totalPrice = scannedProducts.reduce((total, product) => total + product.product_price, 0);
-  const [totalPrice, setTotalPrice] = useState(
-    scannedProducts.reduce((total, product) => total + product.product_price, 0)
-  );
 
   // Use Effect hook to always refresh the totalPrice whenever a new product is added to the scannedProducts array
   useEffect(() => {
@@ -94,7 +83,7 @@ export default function () {
     if (barcode !== "") {
       fetch(
         "http://localhost:8080/api/offer?operator=offer_id&parameter=" +
-        barcode,
+          barcode,
         { method: "GET" }
       )
         .then((res) => res.json())
@@ -138,7 +127,7 @@ export default function () {
         default:
           fetch(
             "http://localhost:8080/api/product?operator=product_id&parameter=" +
-            offer.product_id,
+              offer.product_id,
             { method: "GET" }
           )
             .then((res) => res.json())
@@ -193,7 +182,7 @@ export default function () {
         };
         fetch(
           "http://localhost:8080/api/offer?operator=offer_id&parameter=" +
-          offer.offer_id,
+            offer.offer_id,
           requestOptions
         )
           .then((res) => res.json())
@@ -205,13 +194,12 @@ export default function () {
     }
   }, [allUpdatedOffers]);
 
+  //auto scroll to bottom of the table
   const scrollRef = useRef(null);
 
   useEffect(() => {
     if (shouldScrollToBottom && scrollRef.current) {
-      // Überprüfe den Trigger-Wert
       scrollRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
-      setShouldScrollToBottom(false); // Setze den Trigger zurück, um erneutes Scrollen zu verhindern
     }
   }, [shouldScrollToBottom]);
 

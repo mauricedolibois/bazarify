@@ -1,16 +1,29 @@
-import React from 'react';
+import React from "react";
 
-const FormInput = ({ id, value, label, unit, onChange, validInput, submitted, placeholder }) => {
-  let borderStyle = !validInput && submitted ? 'border-ourDarkRed' : '';
+const FormInput = ({
+  id,
+  value,
+  label,
+  unit,
+  onChange,
+  validInput,
+  submitted,
+  placeholder,
+}) => {
+  //red border style when input isn't valid
+  let borderStyle = !validInput && submitted ? "border-ourDarkRed" : "";
 
   const handleChange = (e) => {
     onChange(e);
-    borderStyle = '';
+    borderStyle = "";
   };
 
   return (
     <div className="col-span-full mt-4">
-      <label htmlFor={label} className="block text-sm font-medium leading-6 text-ourSuperDarkGray">
+      <label
+        htmlFor={label}
+        className="block text-sm font-medium leading-6 text-ourSuperDarkGray"
+      >
         {label}
       </label>
       <div className="relative mt-2 rounded-md shadow-sm">
@@ -29,10 +42,8 @@ const FormInput = ({ id, value, label, unit, onChange, validInput, submitted, pl
           <span className="text-ourDarkGray sm:text-sm">{unit}</span>
         </div>
       </div>
-
     </div>
   );
 };
 
 export default FormInput;
-

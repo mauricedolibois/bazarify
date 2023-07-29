@@ -5,6 +5,7 @@ import ButtonSmallJustIcon from "@/components/buttons/ButtonSmallJustIcon";
 export default function BarcodeScanner(onClick) {
   const inputRef = useRef(null);
 
+  //autofocus on input field
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
