@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import Step3TableRow from "./step3TableRow";
-import step2 from "../pages/step2";
 
 const ProductTable = ({
   data,
@@ -14,7 +13,6 @@ const ProductTable = ({
   const scrollRef = useRef(null);
   let tableTitle;
   let tableSize;
-
   if (type === "penned") {
     tableTitle = "Eingepflegte Produkte";
     tableSize = "max-h-64";
