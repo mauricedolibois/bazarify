@@ -6,6 +6,7 @@ import { productDAO } from "../database/operations/ProductDAO.js";
 import { printing } from "../services/Printing.js";
 export const offerRouter = express.Router();
 
+//security stuff
 offerRouter.use(express.json());
 offerRouter.use(
   cors({
@@ -13,6 +14,7 @@ offerRouter.use(
   })
 );
 
+//route to get offer by an operator and a parameter
 offerRouter.get("/offer", (req, res) => {
   offerDAO
     .findOffer(req.query.operator, req.query.parameter)
@@ -21,17 +23,20 @@ offerRouter.get("/offer", (req, res) => {
     });
 });
 
+//route to get all offers
 offerRouter.get("/allOffers", (req, res) => {
   offerDAO.findAllOffers().then((offer) => {
     res.send(offer);
   });
 });
 
+//route to create a new offer entry and new product and seller entry to get the foreign keys
 offerRouter.post("/offer", async (req, res) => {
   try {
     console.log(req.body);
     const p = req.body.product;
     const s = req.body.seller;
+    //inserts seller in db
     const sell = await sellerDAO.insertSeller(
       s.seller_name,
       s.seller_firstname,
@@ -40,6 +45,8 @@ offerRouter.post("/offer", async (req, res) => {
     );
 
     let offer = [];
+    //maps over product array and inserts every product in db
+    //then inserts offer with the product_id and seller_id
     await p.map(async (product) => {
       const prod = await productDAO.insertProduct(
         product.product_name,
@@ -61,10 +68,12 @@ offerRouter.post("/offer", async (req, res) => {
   }
 });
 
+//route to print all offers
 offerRouter.put("/PrintAllOffers", (req, res) => {
   printing.printOffers(req.body.offers);
 });
 
+//route to delete offer by an operator and a parameter
 offerRouter.delete("/offer", (req, res) => {
   offerDAO
     .deleteOffer(req.query.operator, req.query.parameter)
@@ -73,6 +82,7 @@ offerRouter.delete("/offer", (req, res) => {
     });
 });
 
+//route to update offer by an operator and a parameter
 offerRouter.put("/offer", (req, res) => {
   offerDAO
     .updateOffer(req.query.operator, req.query.parameter, req.body)

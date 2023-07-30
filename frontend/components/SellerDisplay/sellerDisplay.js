@@ -27,6 +27,7 @@ export default function ({ name, soldProducts, unsoldProducts }) {
 
   // get the text for the unsold products
   useEffect(() => {
+    console.log("unsold products: ", unsoldProducts);
     if (unsoldProducts.length === 0) {
       setText("Es wurden alle Produkte verkauft");
     } else if (unsoldProducts.length === 1) {

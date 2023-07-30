@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import UnderlinedInput from "../input/underlinedInput/underlinedInput";
 import ButtonSmallJustIcon from "../buttons/ButtonSmallJustIcon";
 import ButtonYellowBorder from "../buttons/ButtonYellowBorder";
 import { UilPlus, UilInfoCircle, UilPrint } from "@iconscout/react-unicons";
-import Step3TableRow from "../table/step3TableRow";
 import Alert from "../alert/alert";
 import printPDF from "../utils/printPDF";
 import ProductTable from "../table/productTable";
@@ -21,10 +20,10 @@ export default function () {
   const [sellerLastName, setSellerLastName] = useState("");
   const [sellerEmail, setSellerEmail] = useState("");
   const [sellerPhoneNumber, setSellerPhoneNumber] = useState("");
+  const [product, setProduct] = useState("");
   const [productName, setProductName] = useState("");
   const [productCategory, setProductCategory] = useState("");
   const [productPrice, setProductPrice] = useState("");
-  const [product, setProduct] = useState("");
   const [seller, setSeller] = useState("");
   const [msg, setMsg] = useState({ type: "", text: "" });
   const [productSubmitted, setProductSubmitted] = useState(false);
@@ -39,7 +38,6 @@ export default function () {
   const [validSellerLastName, setValidSellerLastName] = useState(false);
   const [validSellerPhoneNumber, setValidSellerPhoneNumber] = useState(false);
   const [validSellerEmail, setValidSellerEmail] = useState(false);
-  const [btnPrintClicked, setbtnPrintClicked] = useState(false);
   const [url, setUrl] = useState("http://localhost:3000/sample.pdf");
 
   const allProductInputsEmpty =
@@ -66,6 +64,7 @@ export default function () {
     checkProductName(productName, setMsg, setValidPoductName);
   };
 
+  //add to pending product when input is correct
   useEffect(() => {
     if (validProductInput) {
       setMsg({
@@ -146,6 +145,7 @@ export default function () {
     checkPhoneNumber(sellerPhoneNumber, setMsg, setValidSellerPhoneNumber);
   };
 
+  //set seller when input is correct which triggers adding the pending products to db and open print preview
   useEffect(() => {
     if (validSellerInput) {
       console.log("valid seller input!");

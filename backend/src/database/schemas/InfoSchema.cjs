@@ -2,6 +2,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+// Info Schema for the database collection "info"
 const InfoSchema = new Schema({
     bazar_name: {type: String, require: true, unique: true},
     bazar_year: {type: Number, require: true},
