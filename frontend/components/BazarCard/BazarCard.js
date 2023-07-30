@@ -23,7 +23,6 @@ export default function BazarCard({ name }) {
   //delete bazar
   const deleteBazar = (event) => {
     event.stopPropagation(); // Prevent event propagation
-    console.log("clicked");
     setBazarToDelete(name);
   };
 
@@ -36,7 +35,6 @@ export default function BazarCard({ name }) {
         .then((res) => res.json())
         .then((data) => {
           setBazarToDelete(undefined);
-          //TODO: reload page und maybe bazar ausklappen können
           window.location.reload();
         });
     }

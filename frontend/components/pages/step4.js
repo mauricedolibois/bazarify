@@ -20,7 +20,6 @@ export default function AbholungPage() {
     fetch("http://localhost:8080/api/analytics", { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setProvision(data.Provision);
       });
   }, []);
@@ -30,7 +29,6 @@ export default function AbholungPage() {
     fetch("http://localhost:8080/api/allSellers", { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setAllSellers(data);
       })
       .catch((error) => console.log(error));
@@ -69,8 +67,6 @@ export default function AbholungPage() {
 
   //update offer in db as reclined
   useEffect(() => {
-    console.log("useEffect recline ausgeführt!");
-    console.log("ProductID im useEffect: ", productReclinedID);
     if (productReclinedID !== 0) {
       fetch(
         "http://localhost:8080/api/product-recline?id=" + productReclinedID,
@@ -78,7 +74,6 @@ export default function AbholungPage() {
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           console.log("reclined product: ", productReclinedID);
         })
         .catch((error) => console.log(error));

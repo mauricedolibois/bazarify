@@ -49,7 +49,6 @@ export default function Step1() {
       fetch("http://127.0.0.1:8080/api/newBazar", requestOptions)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           if (typeof data === "object" && data !== null) {
             setStep(2);
             setCurrentBazar(bazar.bazar_name);
