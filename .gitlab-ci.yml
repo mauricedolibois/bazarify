@@ -20,5 +20,5 @@ frontend_test:
     - npm install
     - npm test
   only:
-    - develop
+    - feature/pipeline
     - merge_requests
