@@ -3,6 +3,6 @@
 FROM node:18-alpine
 WORKDIR /app
 COPY . .
-RUN yarn install # Installiert sowohl Produktions- als auch Entwicklungspakete
+RUN yarn install
 CMD ["node", "pages/index.js"]
 EXPOSE 3001
