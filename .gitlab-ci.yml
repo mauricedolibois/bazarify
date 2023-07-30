@@ -1,47 +1,21 @@
 stages:
-  - setup
-  - testing
+  - test
 
-variables:
-  CLIENT_DIR: "frontend"
-  BACKEND_DIR: "tests/backend/"
-
-setup-backend:
-  stage: setup
-  image: node:18
+backend_test:
+  stage: test
   script:
-    - cd $BACKEND_DIR
+    - cd backend/
     - npm install
-  artifacts:
-    paths:
-      - $BACKEND_DIR/node_modules
-    when: on_success
-    expire_in: 1 hour
-
-setup-frontend:
-  stage: setup
-  image: node:alpine
-  script:
-    - cd $CLIENT_DIR
-    - npm install
-  artifacts:
-    paths:
-      - $CLIENT_DIR/node_modules
-    when: on_success
-    expire_in: 1 hour
-
-test_client:
-  stage: testing
-  image: node:alpine
-  before_script:
-    - cd $CLIENT_DIR
-  script:
     - npm test
 
-test_backend:
-  stage: testing
-  image: node:17
-  before_script:
-    - cd $BACKEND_DIR
+frontend_test:
+  stage: test
   script:
+    - cd frontend/
+    - npm install
     - npm test
+
+only_on_develop_and_merge_requests:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
