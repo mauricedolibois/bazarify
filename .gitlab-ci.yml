@@ -15,3 +15,8 @@ frontend_test:
   script:
     - cd frontend/
     - npm install
+
+only_on_develop_and_merge_requests:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
