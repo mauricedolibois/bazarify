@@ -8,17 +8,15 @@ import {
   checkYear,
   checkCommission,
   checkDescription,
-} from "../utils/inputValidation.js";
+} from "../../utils/inputValidation.js";
 
 export default function Step1() {
   const [bazarName, setBazarName] = useState("");
   const [bazarYear, setBazarYear] = useState("");
   const [bazarCommission, setBazarCommission] = useState("");
-  const [bazarDescription, setBazarDescription] = useState("");
   const [msg, setMsg] = useState({ type: "", text: "" });
   const [validName, setValidName] = useState(false);
   const [validYear, setValidYear] = useState(false);
-  const [validDescription, setValidDescription] = useState(false);
   const [validCommission, setValidCommission] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const { setStep, setCurrentBazar } = useContext(BazarContext);
@@ -32,7 +30,6 @@ export default function Step1() {
     checkCommission(bazarCommission, setMsg, setValidCommission);
     checkYear(bazarYear, setMsg, setValidYear);
     checkBazarName(bazarName, setMsg, setValidName);
-    checkDescription(bazarDescription, setMsg, setValidDescription);
   };
 
   //create new Bazar when all inputs are correct
@@ -41,7 +38,6 @@ export default function Step1() {
       bazar_name: bazarName,
       bazar_year: bazarYear,
       bazar_commission: bazarCommission,
-      bazar_description: bazarDescription,
     };
 
     if (validName && validYear && validCommission) {
@@ -71,9 +67,8 @@ export default function Step1() {
       setBazarName("");
       setBazarYear("");
       setBazarCommission("");
-      setBazarDescription("");
     }
-  }, [validName, validYear, validCommission, validDescription]);
+  }, [validName, validYear, validCommission]);
 
   return (
     <>
