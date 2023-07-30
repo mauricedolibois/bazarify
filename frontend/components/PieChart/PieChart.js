@@ -1,4 +1,3 @@
-/*
 import {
   Cell,
   PieChart,
@@ -40,4 +39,3 @@ export default function Graph({ soldOffers, unsoldOffers, reclinedOffers }) {
     </ResponsiveContainer>
   );
 }
-*/

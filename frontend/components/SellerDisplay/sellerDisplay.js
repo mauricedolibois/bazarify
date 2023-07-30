@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from "react";
-export default function ({ name, soldProducts, unsoldProducts }) {
-  const [provision, setProvision] = useState(0);
+export default function ({ name, soldProducts, unsoldProducts, provision }) {
   const [sellerPayback, setSellerPayback] = useState(0);
   const [text, setText] = useState("");
-
-  //get provision
-  useEffect(() => {
-    fetch("http://localhost:8080/api/analytics", { method: "GET" })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setProvision(data.Provision);
-      });
-  }, []);
 
   // calculate seller payback
   useEffect(() => {

@@ -1,3 +1,4 @@
+import React from 'react'
 export default function ({ icon, text, onClick }) {
     return (
         <div onClick={onClick} className="inline-flex items-center align-start px-4 py-2 border cursor-pointer hover:border-ourPrimaryColor hover:bg-ourPrimaryColorHover hover:text-white text-ourPrimaryColor border-ourPrimaryColor rounded-lg">

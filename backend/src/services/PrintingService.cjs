@@ -71,7 +71,7 @@ createPDF: async function (offers, products) {
     labelsOnPage++;
   }
   console.log("PDF created successfully.");
-  await this.saveAndOpenPDF(doc, "./barcode.pdf").catch((err) => {
+  await this.saveAndOpenPDF(doc, "./sample.pdf").catch((err) => {
     console.log(err);
   });
 },
@@ -130,8 +130,9 @@ createPDF: async function (offers, products) {
   },
   saveAndOpenPDF: function (doc, fileName) {
     return new Promise((resolve, reject) => {
-      const tempDirectory = os.tmpdir(); // Get the temporary directory path
-      const filePath = path.join(tempDirectory, fileName);
+      // Assuming you are using ExpressJS to serve the frontend
+      const frontendPublicDir = path.join('../frontend/public'); // Path to frontend/public directory
+      const filePath = path.join(frontendPublicDir, fileName); // File path inside frontend/public folder
   
       const stream = fs.createWriteStream(filePath);
       doc.pipe(stream);
@@ -140,7 +141,7 @@ createPDF: async function (offers, products) {
       stream.on('finish', () => {
         console.log('PDF saved successfully.');
   
-        // Open the PDF document using the default system application
+        // If you're running the server on Windows, you might use `start` instead of `open`
         exec(`open "${filePath}"`, (error) => {
           if (error) {
             console.error('Error opening PDF:', error);
