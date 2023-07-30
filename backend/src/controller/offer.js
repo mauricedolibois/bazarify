@@ -29,44 +29,42 @@ offerRouter.get("/allOffers", (req, res) => {
     res.send(offer);
   });
 });
-
-//route to create a new offer entry and new product and seller entry to get the foreign keys
 offerRouter.post("/offer", async (req, res) => {
-  try {
-    console.log(req.body);
-    const p = req.body.product;
-    const s = req.body.seller;
-    //inserts seller in db
-    const sell = await sellerDAO.insertSeller(
-      s.seller_name,
-      s.seller_firstname,
-      s.seller_email,
-      s.seller_phone
-    );
+    try {
+      const p = req.body.product;
+      const s = req.body.seller;
+      const sell = await sellerDAO.insertSeller(
+        s.seller_name,
+        s.seller_firstname,
+        s.seller_email,
+        s.seller_phone
+      );
+  
+  
+      let offer = [];
+  
+      for (const product of p) {
+        const prod = await productDAO.insertProduct(
+            product.product_name,
+            product.product_price,
+            product.product_category
+          );
+          const off = await offerDAO.insertOffer(
+            prod.product_id,
+            sell.seller_id
+          );
+    
+        offer.push({ off });
+      }
+      console.log(offer);
+      await printing.printOffers(offer);
+  
+      res.json(offer);
+    } catch (error) {
+      res.json(error.message);
+    }
+  });
 
-    let offer = [];
-    //maps over product array and inserts every product in db
-    //then inserts offer with the product_id and seller_id
-    await p.map(async (product) => {
-      const prod = await productDAO.insertProduct(
-        product.product_name,
-        product.product_price,
-        product.product_category
-      );
-      const off = await offerDAO.insertOffer(
-        prod.product_id,
-        sell.seller_id
-      );
-      console.log(off);
-      offer.push({ off });
-    });
-    //TODO: hier den offer-array zum printen nehmen
-    res.json(offer);
-    //TODO: es wird immer null gesendet nie fehlermeldung
-  } catch (error) {
-    res.json(error.message);
-  }
-});
 
 //route to print all offers
 offerRouter.put("/PrintAllOffers", (req, res) => {

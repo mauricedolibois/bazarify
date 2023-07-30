@@ -4,12 +4,13 @@ const tmp = require('tmp');
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const os = require('os');
+const path = require('path');
+
 
 
 module.exports = {
 createPDF: async function (offers, products) {
   const doc = new PDFDocument({ margin: -20 });
-
   const labelWidth = 70;
   const labelHeight = 36;
   const pageMarginX = 30;
@@ -42,7 +43,7 @@ createPDF: async function (offers, products) {
     // Generate barcode as base64-encoded image
     const barcodeOptions = {
       bcid: 'code128',
-      text: offer.offer_id.toString(),
+      text: offer.off.offer_id.toString(),
       includetext: true,
       scale: 2,
       height: 15,
@@ -50,7 +51,7 @@ createPDF: async function (offers, products) {
     };
 
     doc.image(await this.generateBarcode(barcodeOptions), posX, posY, { width: labelWidth, align: 'center' });
-
+    console.log("Barcode erstellt.")
     // Add pricing information below barcode
     const pricePosX = posX + labelWidth / 7 -10;
     const pricePosY = posY + labelHeight + 10;
@@ -69,8 +70,8 @@ createPDF: async function (offers, products) {
     });
     labelsOnPage++;
   }
-
-  await this.printPDF(doc).catch((err) => {
+  console.log("PDF created successfully.");
+  await this.saveAndOpenPDF(doc, "./barcode.pdf").catch((err) => {
     console.log(err);
   });
 },
@@ -127,15 +128,18 @@ createPDF: async function (offers, products) {
       });
     });
   },
-  saveAndOpenPDF: function(doc, filePath) {
+  saveAndOpenPDF: function (doc, fileName) {
     return new Promise((resolve, reject) => {
+      const tempDirectory = os.tmpdir(); // Get the temporary directory path
+      const filePath = path.join(tempDirectory, fileName);
+  
       const stream = fs.createWriteStream(filePath);
       doc.pipe(stream);
       doc.end();
-
+  
       stream.on('finish', () => {
         console.log('PDF saved successfully.');
-
+  
         // Open the PDF document using the default system application
         exec(`open "${filePath}"`, (error) => {
           if (error) {
@@ -146,7 +150,7 @@ createPDF: async function (offers, products) {
           }
         });
       });
-
+  
       stream.on('error', (error) => {
         console.error('Error saving PDF:', error);
         reject(error);
