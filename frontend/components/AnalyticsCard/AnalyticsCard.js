@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function AnalyticsCard({ title, description, info }) {
   return (
     <div className="flex flex-col justify-between rounded-md border border-ourLightGray bg-white p-4 shadow-md">
