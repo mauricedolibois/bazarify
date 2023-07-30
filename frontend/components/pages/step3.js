@@ -5,6 +5,7 @@ import ButtonYellowBorder from "../buttons/ButtonYellowBorder";
 import ProductTable from "../table/productTable";
 import Alert from "../alert/alert";
 import BarcodeScanner from "../input/BarcodeScanner/BarcodeScanner";
+import React from "react";
 
 export default function () {
   const [barcode, setBarcode] = useState("");
