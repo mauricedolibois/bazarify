@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import FormInput from "../input/formInput/formInput";
 import useCountUp from "../../hooks/useCountUp.js";
 import Card from "../AnalyticsCard/AnalyticsCard.js";

@@ -6,6 +6,7 @@ import { useContext, useState, useEffect } from "react";
 import { BazarContext } from "../../pages/index.js";
 import VideoPopup from "../popups/VideoPopup/VideoPopup";
 import BazarCard from "../BazarCard/BazarCard";
+import React from "react";
 
 export default function dashboard() {
   function loadExampleData() {
