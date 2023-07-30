@@ -33,30 +33,30 @@ offerRouter.post("/offer", async (req, res) => {
     try {
       const p = req.body.product;
       const s = req.body.seller;
-      const sell = await dbConnection.insertSeller(
+      const sell = await sellerDAO.insertSeller(
         s.seller_name,
         s.seller_firstname,
         s.seller_email,
         s.seller_phone
       );
   
+  
       let offer = [];
   
       for (const product of p) {
-        const prod = await dbConnection.insertProduct(
-          product.product_name,
-          product.product_price,
-          product.product_category
-        );
-  
-        const off = await dbConnection.insertOffer(
-          prod.product_id,
-          sell.seller_id
-        );
-  
+        const prod = await productDAO.insertProduct(
+            product.product_name,
+            product.product_price,
+            product.product_category
+          );
+          const off = await offerDAO.insertOffer(
+            prod.product_id,
+            sell.seller_id
+          );
+    
         offer.push({ off });
       }
-  
+      console.log(offer);
       await printing.printOffers(offer);
   
       res.json(offer);
@@ -64,6 +64,7 @@ offerRouter.post("/offer", async (req, res) => {
       res.json(error.message);
     }
   });
+
 
 //route to print all offers
 offerRouter.put("/PrintAllOffers", (req, res) => {

@@ -1,15 +1,14 @@
-
 import { createRequire } from "module"
 const require = createRequire(import.meta.url)
 const PrintingService = require('./PrintingService.cjs')
-import {dbConnection} from '../database/DbConnection.js'
+import { productDAO } from "../database/operations/ProductDAO.js";
 
 export const printing = {
     async printOffers(offers) {
       var products = []
         try {
             for (const offer of offers) {
-                const product = await dbConnection.findProduct('product_id', offer.off.product_id);
+                const product = await productDAO.findProduct('product_id', offer.off.product_id);
                 products.push(product);
             }
             await PrintingService.createPDF(offers, products);
