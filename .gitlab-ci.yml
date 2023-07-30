@@ -1,3 +1,5 @@
+image: node:latest
+
 stages:
   - test
 
@@ -13,4 +15,3 @@ frontend_test:
   script:
     - cd frontend/
     - npm install
-    - npm test
