@@ -91,17 +91,17 @@ export default function Step1() {
         <div>
           <div className="flex flex-col gap-2">
             <FormInput
-              id="Name und Jahr des Basars"
-              label="Name und Jahr des Basars"
+              id="Name des Basars"
+              label="Name des Basars"
               value={bazarName}
               onChange={(e) => setBazarName(e.target.value)}
               validInput={validName}
               submitted={formSubmitted}
-              placeholder={`Skibasar ${new Date().getFullYear()}`}
+              placeholder="Skibasar"
             />
             <FormInput
               id="Jahr"
-              label="DAS MUSS NOCH RAUS"
+              label="Jahr"
               value={bazarYear}
               onChange={(e) => setBazarYear(e.target.value)}
               validInput={validYear}
