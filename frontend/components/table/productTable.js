@@ -9,8 +9,8 @@ const ProductTable = ({
   shouldScrollToBottom,
   setShouldScrollToBottom,
   type,
+  setProductReclinedID,
 }) => {
-  const [productReclinedID, setProductReclinedID] = useState(0);
   const scrollRef = useRef(null);
   let tableTitle;
   let tableSize;
@@ -36,10 +36,11 @@ const ProductTable = ({
   };
 
   const handleReclineProduct = (index) => {
-    const productID = data[index].product_id;
+    const productID = data[index].product_id.toString();
     const productName = data[index].product_name;
     setProductReclinedID(productID);
-    console.log("productName in component: ", productName);
+    console.log("ProductID: ", productID);
+
     setMsg({
       type: "success",
       text: `Produkt "${productName}" wurde als abgeholt markiert`,
@@ -47,21 +48,6 @@ const ProductTable = ({
     //remove product from unsold products
     setData((data) => data.filter((_, i) => i !== index));
   };
-
-  useEffect(() => {
-    if (productReclinedID !== 0) {
-      console.log("productReclinedID: ", productReclinedID);
-      fetch(
-        "http://localhost:8080/api/product-recline?id=" + productReclinedID,
-        { method: "PUT" }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((error) => console.log(error));
-    }
-  }, [productReclinedID]);
 
   useEffect(() => {
     if (shouldScrollToBottom && scrollRef.current) {

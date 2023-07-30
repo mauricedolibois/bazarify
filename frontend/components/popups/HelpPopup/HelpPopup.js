@@ -38,7 +38,7 @@ const PopupTemplate = () => {
                         <div className='w-1/2 h-1/2 bg-white rounded-lg relative p-8' ref={popupRef}>
                             <UilMultiply className='absolute top-4 right-4 cursor-pointer' onClick={closePopup} />
                             <h1>Hilfe</h1>
-                            <p>Wenn Sie Hilfe benötigen melden Sie sich bitte an sr185@hdm-stuttgart.de.</p>
+                            <p>Wenn Sie Hilfe benötigen melden Sie sich bitte bei Maik Bucher unter mb389@hdm-stuttgart.de. Ansonsten können Sie auch das Tutorial auf dem Dashboard anschauen, in welchem bereits einige Fragen geklärt werden könnten.</p>
                         </div>
                     </div>
                 )

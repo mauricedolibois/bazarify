@@ -1,129 +1,54 @@
 import express from 'express'
 import cors from'cors'
-import { dbConnection } from '../database/DbConnection.js';
+import { productDAO } from '../database/operations/ProductDAO.js';
+import { offerDAO } from '../database/operations/OfferDAO.js';
 export const productRouter = express.Router()
-var pendingProducts = []
 
+//security stuff
 productRouter.use(express.json())
 productRouter.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:3001']
 }));
 
-
-//  //Getproduct
-//  const operator = "product_id"
-//  useEffect(() => {
-//    fetch('http://localhost:8085/api/product?operator='+[operator]+'&parameter='+id, {method: 'GET'})
-//      .then(res => res.json())
-//      .then(data => {
-//        console.log(data)
-//        setProduct(JSON.stringify(data))
-//      })
-//      .catch(error => console.log(error))
-//  }, [id])//id hier rein (dependency array) damit useEffect bei jeder änderung von id triggert
+//route to get product by an operator and a parameter
 productRouter.get("/product", (req, res) => {
-    dbConnection.findProduct(req.query.operator, req.query.parameter).then(product => {
+    productDAO.findProduct(req.query.operator, req.query.parameter).then(product => {
         res.send(product)
     })
 }
 )
 
-// //GetAllProducts
-// useEffect(() => {
-//     fetch('http://localhost:8085/api/allProducts', {method: 'GET'})
-//       .then(res => res.json())
-//       .then(data => {
-//         console.log(data)^
-//         setAllProducts(JSON.stringify(data))
-//       })
-//       .catch(error => console.log(error))
-//   }, [])
+//route to get all products
 productRouter.get("/allProducts", (req, res) => {
-    dbConnection.findAllProducts().then(product => {
+    productDAO.findAllProducts().then(product => {
         res.send(product)
     })
 }
 )
 
- // //PostProduct
-// const product = {product_name: "skirt", product_price: 1, product_category: "short"}
-//  useEffect(() => {
-//    const requestOptions = {
-//      method: 'POST',
-//      headers: { 'Content-Type': 'application/json' },
-//      body: JSON.stringify(product)
-//  };
-//    fetch('http://localhost:8085/api/product', requestOptions)
-//      .then(res => res.json())
-//      .then(data => {
-//        console.log(data)
-//      })
-//      .catch(error => console.log(error))
-//  }, [])
+//route to create a new product entry; needs name, price and category
 productRouter.post("/product", (req, res) => {
-    dbConnection.insertProduct(req.body.product_name, req.body.product_price, req.body.product_category).then
+    productDAO.insertProduct(req.body.product_name, req.body.product_price, req.body.product_category).then
     (product => { res.send(product) })  
-    })
+    })  
 
-productRouter.post('/addPendingProduct', (req, res) => {
-    const product = req.body;
-          
-    pendingProducts.push(product);
-          
-    res.send(pendingProducts);
-})
-
-productRouter.put("/DeletePendingProduct", (req, res) => {
-    pendingProducts = [];
-    res.send(pendingProducts);
-})    
-    
-
-
-//deleteProduct
-// const operator = "product_id"
-// const id=25250
-// useEffect(() => {
-//   fetch('http://localhost:8085/api/product?operator='+[operator]+'&parameter='+id, {method: 'DELETE'})
-//     .then(res => res.json())
-//     .then(data => {
-//       console.log(data)
-//     })
-//     .catch(error => console.log(error))
-// }, [])    
+//route to delete a product entry; needs an operator and a parameter
 productRouter.delete("/product", (req, res) => {
-    dbConnection.deleteProduct(req.query.operator, req.query.parameter).then
+    productDAO.deleteProduct(req.query.operator, req.query.parameter).then
     (product => { res.send(product) })  
     })
 
-
-//updateProduct
-// const newProduct={product_name: "skir", product_price: 1, product_category: "sort"}
-// const operator = "product_id"
-// const id=950966
-// useEffect(() => {
-//   const requestOptions = {
-//     method: 'PUT',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify(newProduct)
-// };
-//   fetch('http://localhost:8085/api/product?operator='+[operator]+'&parameter='+id, requestOptions)
-//     .then(res => res.json())
-//     .then(data => {
-//       console.log(data)
-//     })
-//     .catch(error => console.log(error))
-// }, [])
+//route to update a product entry; needs an operator and a parameter and the new values
 productRouter.put("/product", (req, res) => {
-    dbConnection.updateProduct(req.query.operator, req.query.parameter, req.body).then
+    productDAO.updateProduct(req.query.operator, req.query.parameter, req.body).then
     (product => { res.send(product) })
     })
 
 
-
+//route to set specific offer stete to reclined (is in offerDAO but is called from product page)
 productRouter.put("/product-recline", (req, res) => {
     console.log("recline")
-    dbConnection.updateOffer('product_id', req.query.id, {state: 'reclined'}).then
+    offerDAO.updateOffer('product_id', req.query.id, {state: 'reclined'}).then
     (product => { res.send(product) })
     })
 

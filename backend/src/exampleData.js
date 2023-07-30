@@ -1,18 +1,23 @@
 import {dbConnection} from './database/DbConnection.js'
+import {sellerDAO} from './database/operations/SellerDAO.js'
+import {productDAO} from './database/operations/ProductDAO.js'
+import {offerDAO} from './database/operations/OfferDAO.js'
 
-
+// create Example DB "Demo Ski Bazar" filled with Demo data
 export const exampleData = {
+    // main method which has to be called
     async createExampleData() {
         await this.createExampleBazar()
         await this.createExampleOffers()
-        
     },
 
+    //creates new "Demo Ski Bazar"
     async createExampleBazar() {
         var exampleBazar = {bazar_name: "Demo_Ski_Bazar", bazar_year: 2023, bazar_commission: 4, bazar_description: "Unser alljährlicher SkI Bazar in Laichingen. Hier finden Sie alles rund ums Skifahren."}
         await dbConnection.newDB(exampleBazar.bazar_name, exampleBazar.bazar_year, exampleBazar.bazar_commission, exampleBazar.bazar_description)
     },
 
+    //creates demo Products
     async createExampleProducts() {
         const exampleProductsSki = [
             { product_name: "Nordica Dobermann GSR 180cm", product_price: 600,  product_category: "Ski"},
@@ -29,6 +34,7 @@ export const exampleData = {
           return exampleProductsSki
     },
 
+    //creates demo Sellers
     async createExampleSellers() {
         const exampleSellers = [
             {
@@ -65,22 +71,24 @@ export const exampleData = {
           return exampleSellers
     },
     
+    // creates Demo Offers using the demo Seller and Products -> every seller gets 2 products
     async createExampleOffers() {
       await dbConnection.connectToDB()
+      // changes DB to Demo Ski Bazar
         var db = await dbConnection.changeDB("Demo_Ski_Bazar").then({})
         var porducts = await this.createExampleProducts()
         var sellers = await this.createExampleSellers()
         var exampleOffers = []
         var k = 0
-        console.log("Haaaallloooooooo")
 
+        // Inserts all Demo Data in DB
         for (let i = 0; i < sellers.length; i++) {
-            var seller = await dbConnection.insertSeller(sellers[i].seller_name, sellers[i].seller_firstname, sellers[i].seller_email, sellers[i].seller_phone)
+            var seller = await sellerDAO.insertSeller(sellers[i].seller_name, sellers[i].seller_firstname, sellers[i].seller_email, sellers[i].seller_phone)
             console.log(seller)
-            var product1 = await dbConnection.insertProduct(porducts[k].product_name, porducts[k].product_price, porducts[k].product_category)
-            var product2 = await dbConnection.insertProduct(porducts[k+1].product_name, porducts[k+1].product_price, porducts[k+1].product_category)
-            var offer1 = await dbConnection.insertOffer(product1.product_id, seller.seller_id)
-            var offer2 = await dbConnection.insertOffer(product2.product_id, seller.seller_id)
+            var product1 = await productDAO.insertProduct(porducts[k].product_name, porducts[k].product_price, porducts[k].product_category)
+            var product2 = await productDAO.insertProduct(porducts[k+1].product_name, porducts[k+1].product_price, porducts[k+1].product_category)
+            var offer1 = await offerDAO.insertOffer(product1.product_id, seller.seller_id)
+            var offer2 = await offerDAO.insertOffer(product2.product_id, seller.seller_id)
             exampleOffers.push(offer1)
             exampleOffers.push(offer2)
             k += 2

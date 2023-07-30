@@ -19,8 +19,8 @@ export default function Analytics() {
   const animatedRevenue = useCountUp(revenue, 1000);
   const animatedProfit = useCountUp(profit, 1000);
   const animatedSellerCount = useCountUp(totalSellerCount, 1000);
-  const animatedTipsAverage = useCountUp(tipsAverage, 1000);
 
+  //get analytics data from db
   useEffect(() => {
     fetch("http://localhost:8080/api/analytics", { method: "GET" })
       .then((res) => res.json())
@@ -41,6 +41,7 @@ export default function Analytics() {
       });
   }, []);
 
+  //get all offers and categorize them in sold, unsold and reclined
   useEffect(() => {
     fetch("http://localhost:8080/api/allOffers", { method: "GET" })
       .then((res) => res.json())
@@ -77,6 +78,7 @@ export default function Analytics() {
     }
   };
 
+  //update tips in db
   useEffect(() => {
     let timeoutId;
 
@@ -98,6 +100,7 @@ export default function Analytics() {
       }
     };
 
+    //wait 0,5s after input update to save fetches
     const delayUpdate = () => {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(updateTips, 500);
@@ -108,6 +111,7 @@ export default function Analytics() {
     return () => clearTimeout(timeoutId);
   }, [tips]);
 
+  //calculate tips averange when tips or revenue change
   useEffect(() => {
     console.log(
       "tipsAverage: ",
