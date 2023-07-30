@@ -10,10 +10,22 @@ var BazarName = "Bazarify"
 export const dbConnection = {
     // connect to the database with global Variable Value BazarName (default: Bazarify) 
     async connectToDB() {
-        const username = encodeURIComponent("maik");
-        const password = encodeURIComponent("abc123");
-        const clusterUrl = `mongo:27017/${BazarName}`;
-        const uri = `mongodb://${username}:${password}@${clusterUrl}?authSource=admin`;
+        let uri;
+        if (process.env.NODE_ENV === 'production') {
+            // Docker environment
+            const username = encodeURIComponent("maik");
+            const password = encodeURIComponent("abc123");
+            const clusterUrl = "mongo:27017/Bazarify";
+            uri = `mongodb://${username}:${password}@${clusterUrl}?authSource=admin`;
+          } else {
+            // Local development environment
+            const username = encodeURIComponent("maik");
+            const password = encodeURIComponent("abc123");
+            const host = "127.0.0.1";
+            const port = "27017";
+            const dbName = "Bazarify";
+            uri = `mongodb://${username}:${password}@${host}:${port}/${dbName}?authSource=admin`;
+          }
         await mongoose.connect(uri).then(console.log(`Connected to Database: ${BazarName}`)).catch(err => console.log(err))
     },
     // change the current database to the given new name
