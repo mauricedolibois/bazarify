@@ -4,8 +4,8 @@ stages:
   - testing
 
 variables:
-  CLIENT_DIR: "frontend"
-  BACKEND_DIR: "backend"
+  CLIENT_DIR: "tests/frontend"
+  BACKEND_DIR: "tests/backend"
 
 setup-backend:
   stage: setup
@@ -37,7 +37,7 @@ test_client:
   before_script:
     - cd $CLIENT_DIR
   script:
-    - npm run test
+    - npm test
 
 test_backend:
   stage: testing
@@ -45,4 +45,4 @@ test_backend:
   before_script:
     - cd $BACKEND_DIR
   script:
-    - npm run test
+    - npm test
