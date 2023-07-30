@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SendMailsButton from "../buttons/SendMailsButton";
 import ProductTable from "../table/productTable";
-import SellerSearchBar from "../input/SellerSearchBar";
+import SellerSearchBar from "../SellerSearchBar/SellerSearchBar";
 import Alert from "../alert/alert";
 import SellerDisplay from "../SellerDisplay/sellerDisplay";
 
