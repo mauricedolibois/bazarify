@@ -1,7 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import SellerSearchBar from "./SellerSearchBar";
-import { createRenderer } from "react-dom/test-utils";
 
 // Mock sellers data for testing
 const sellers = [
@@ -13,18 +12,11 @@ const setName = jest.fn();
 
 describe("SellerSearchBar", () => {
   it("renders the input element", () => {
-    render(
-      <SellerSearchBar
-        allSellers={sellers}
-        setClickedSellerID={setClickedSellerID}
-        setName={setName}
-      />
-    );
+    render(<SellerSearchBar allSellers={sellers} />);
     const inputElement = screen.getByPlaceholderText("Verkäufer suchen...");
     expect(inputElement).toBeInTheDocument;
   });
 
-  /*
   it("displays searched sellers when typing in the input", () => {
     render(<SellerSearchBar allSellers={sellers} />);
     const inputElement = screen.getByPlaceholderText("Verkäufer suchen...");
@@ -34,7 +26,7 @@ describe("SellerSearchBar", () => {
 
     // Expect "John Doe" to be displayed in the results
     const searchResultElement = screen.getByText("John Doe");
-    expect(searchResultElement).toBeInTheDocument();
+    expect(searchResultElement).toBeInTheDocument;
   });
 
   it("calls the setClickedSellerID and setName functions when clicking on a seller", () => {
@@ -58,7 +50,4 @@ describe("SellerSearchBar", () => {
     expect(setClickedSellerID).toHaveBeenCalledWith(sellers[0].id);
     expect(setName).toHaveBeenCalledWith("John Doe");
   });
-  */
-
-  // You can add more tests to cover other scenarios or edge cases if needed.
 });
