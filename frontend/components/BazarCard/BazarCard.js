@@ -1,6 +1,7 @@
 import { UilTrashAlt } from "@iconscout/react-unicons";
 import { useContext, useState, useEffect } from "react";
 import { BazarContext } from "../../pages/index.js";
+import React from "react";
 
 export default function BazarCard({ name }) {
   let { setCurrentBazar, setStep } = useContext(BazarContext);

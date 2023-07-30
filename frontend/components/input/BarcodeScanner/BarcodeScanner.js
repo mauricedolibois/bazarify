@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import { UilEnter } from "@iconscout/react-unicons";
 import ButtonSmallJustIcon from "@/components/buttons/ButtonSmallJustIcon";
+import React from "react";
 
 export default function BarcodeScanner(onClick) {
   const inputRef = useRef(null);
