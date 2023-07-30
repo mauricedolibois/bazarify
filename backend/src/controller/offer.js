@@ -24,40 +24,41 @@ offerRouter.get("/allOffers", (req, res) => {
     res.send(offer);
   });
 });
-
 offerRouter.post("/offer", async (req, res) => {
-  try {
-    console.log(req.body);
-    const p = req.body.product;
-    const s = req.body.seller;
-    const sell = await dbConnection.insertSeller(
-      s.seller_name,
-      s.seller_firstname,
-      s.seller_email,
-      s.seller_phone
-    );
-
-    let offer = [];
-    await p.map(async (product) => {
-      const prod = await dbConnection.insertProduct(
-        product.product_name,
-        product.product_price,
-        product.product_category
+    try {
+      const p = req.body.product;
+      const s = req.body.seller;
+      const sell = await dbConnection.insertSeller(
+        s.seller_name,
+        s.seller_firstname,
+        s.seller_email,
+        s.seller_phone
       );
-      const off = await dbConnection.insertOffer(
-        prod.product_id,
-        sell.seller_id
-      );
-      console.log(off);
-      offer.push({ off });
-    });
-    //TODO: hier den offer-array zum printen nehmen
-    res.json(offer);
-    //TODO: es wird immer null gesendet nie fehlermeldung
-  } catch (error) {
-    res.json(error.message);
-  }
-});
+  
+      let offer = [];
+  
+      for (const product of p) {
+        const prod = await dbConnection.insertProduct(
+          product.product_name,
+          product.product_price,
+          product.product_category
+        );
+  
+        const off = await dbConnection.insertOffer(
+          prod.product_id,
+          sell.seller_id
+        );
+  
+        offer.push({ off });
+      }
+  
+      await printing.printOffers(offer);
+  
+      res.json(offer);
+    } catch (error) {
+      res.json(error.message);
+    }
+  });
 
 offerRouter.put("/PrintAllOffers", (req, res) => {
   printing.printOffers(req.body.offers);
