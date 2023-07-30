@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+#pdf
+/public/barcode.pdf
+
 # next.js
 /.next/
 /out/

@@ -56,7 +56,7 @@ offerRouter.post("/offer", async (req, res) => {
     }
     console.log(offer);
     await printing.printOffers(offer);
-    res.json("http://localhost:3000/sample.pdf");
+    res.json("http://localhost:3000/barcode.pdf");
   } catch (error) {
     res.json(error.message);
   }
