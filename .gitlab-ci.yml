@@ -9,13 +9,16 @@ backend_test:
     - cd backend/
     - npm install
     - npm test
+  only:
+    - develop
+    - merge_requests
 
 frontend_test:
   stage: test
   script:
     - cd frontend/
     - npm install
-
-only_on_develop_and_merge_requests:
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "develop"'
+    - npm test
+  only:
+    - develop
+    - merge_requests
