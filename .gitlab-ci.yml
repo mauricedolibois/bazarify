@@ -12,7 +12,7 @@ setup-backend:
   image: node:18
   script:
     - cd $BACKEND_DIR
-    - npm ci
+    - npm install
   artifacts:
     paths:
       - $BACKEND_DIR/node_modules
@@ -24,7 +24,7 @@ setup-frontend:
   image: node:alpine
   script:
     - cd $CLIENT_DIR
-    - npm ci
+    - npm install
   artifacts:
     paths:
       - $CLIENT_DIR/node_modules
