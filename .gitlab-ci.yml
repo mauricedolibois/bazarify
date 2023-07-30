@@ -3,7 +3,7 @@ stages:
   - testing
 
 variables:
-  CLIENT_DIR: "tests/frontend/"
+  CLIENT_DIR: "frontend"
   BACKEND_DIR: "tests/backend/"
 
 setup-backend:
