@@ -1,6 +1,5 @@
 stages:
   - setup
-  - code_formating
   - testing
 
 variables:
