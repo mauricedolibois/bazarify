@@ -13,6 +13,17 @@ export default function AbholungPage() {
   const [productReclinedID, setProductReclinedID] = useState(0);
   const [msg, setMsg] = useState({ type: "", text: "" });
   const [allSellers, setAllSellers] = useState([]);
+  const [provision, setProvision] = useState();
+
+  //get provision
+  useEffect(() => {
+    fetch("http://localhost:8080/api/analytics", { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setProvision(data.Provision);
+      });
+  }, []);
 
   // get all sellers
   useEffect(() => {
@@ -101,6 +112,7 @@ export default function AbholungPage() {
             name={name}
             soldProducts={soldProductsFromSeller}
             unsoldProducts={unsoldProductsFromSeller}
+            provision={provision}
           />
         )}
 
