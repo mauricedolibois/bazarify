@@ -38,7 +38,7 @@ export default function () {
   const [validSellerLastName, setValidSellerLastName] = useState(false);
   const [validSellerPhoneNumber, setValidSellerPhoneNumber] = useState(false);
   const [validSellerEmail, setValidSellerEmail] = useState(false);
-  const [url, setUrl] = useState("http://localhost:3000/sample.pdf");
+  const [url, setUrl] = useState("");
 
   const allProductInputsEmpty =
     productName === "" && productCategory === "" && productPrice === "";
@@ -165,7 +165,7 @@ export default function () {
         setSellerEmail("");
         setSellerPhoneNumber("");
         setSellerSubmitted(false);
-        printPDF(url);
+        
       } else {
         console.log(sellerData);
         setSeller(sellerData);
@@ -186,6 +186,12 @@ export default function () {
   ]);
 
   useEffect(() => {
+    if(url !== ""){
+      printPDF(url);
+      setUrl("");
+    }}, [url]);
+
+  useEffect(() => {
     if (seller !== "" && allProductInputsEmpty) {
       fetch("http://localhost:8080/api/offer", {
         method: "POST",
@@ -197,7 +203,7 @@ export default function () {
           seller: seller,
         }),
       })
-        .then((res) => res.json())
+        .then((res) => setUrl(res.url))
         .then((data) => {
           console.log(data);
         })
