@@ -4,7 +4,7 @@ import ButtonSmallJustIcon from "../buttons/ButtonSmallJustIcon";
 import ButtonYellowBorder from "../buttons/ButtonYellowBorder";
 import { UilPlus, UilInfoCircle, UilPrint } from "@iconscout/react-unicons";
 import Alert from "../alert/alert";
-import printPDF from "../utils/printPDF";
+import printPDF from "../../utils/printPDF";
 import ProductTable from "../table/productTable";
 import {
   checkProductName,
@@ -13,7 +13,7 @@ import {
   checkName,
   checkPhoneNumber,
   checkEmail,
-} from "../utils/inputValidation.js";
+} from "../../utils/inputValidation.js";
 
 export default function () {
   const [sellerFirstName, setSellerFirstName] = useState("");
