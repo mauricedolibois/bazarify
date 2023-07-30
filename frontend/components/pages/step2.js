@@ -38,7 +38,7 @@ export default function () {
   const [validSellerLastName, setValidSellerLastName] = useState(false);
   const [validSellerPhoneNumber, setValidSellerPhoneNumber] = useState(false);
   const [validSellerEmail, setValidSellerEmail] = useState(false);
-  const [url, setUrl] = useState("");
+  const [printUrl, setPrintUrl] = useState("");
 
   const allProductInputsEmpty =
     productName === "" && productCategory === "" && productPrice === "";
@@ -165,7 +165,6 @@ export default function () {
         setSellerEmail("");
         setSellerPhoneNumber("");
         setSellerSubmitted(false);
-        
       } else {
         console.log(sellerData);
         setSeller(sellerData);
@@ -186,10 +185,12 @@ export default function () {
   ]);
 
   useEffect(() => {
-    if(url !== ""){
-      printPDF(url);
-      setUrl("");
-    }}, [url]);
+    if (printUrl !== "") {
+      console.log("URL: ", printUrl);
+      printPDF(printUrl);
+      setPrintUrl("");
+    }
+  }, [printUrl]);
 
   useEffect(() => {
     if (seller !== "" && allProductInputsEmpty) {
@@ -203,10 +204,8 @@ export default function () {
           seller: seller,
         }),
       })
-        .then((res) => setUrl(res.url))
-        .then((data) => {
-          console.log(data);
-        })
+        .then((res) => res.json())
+        .then((data) => setPrintUrl(data))
         .catch((error) => {
           console.log(error);
         });
