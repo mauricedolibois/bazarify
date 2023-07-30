@@ -28,9 +28,11 @@ const Alert = ({ type, text, setMsg }) => {
 
   return (
     <div
-      className={`fixed z-50 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center p-4 mt-4 text-sm ${textColor} rounded-lg ${ourBackgroundColor}`}
+
+      className={`fixed z-40 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center p-4 bottom-16 text-sm ${textColor} rounded-lg ${ourBackgroundColor}`}
       role="alert"
     >
+
       {icon}
       <span className="font-medium">{text}</span>
     </div>
