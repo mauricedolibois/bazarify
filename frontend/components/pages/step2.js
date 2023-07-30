@@ -38,7 +38,7 @@ export default function () {
   const [validSellerLastName, setValidSellerLastName] = useState(false);
   const [validSellerPhoneNumber, setValidSellerPhoneNumber] = useState(false);
   const [validSellerEmail, setValidSellerEmail] = useState(false);
-  const [url, setUrl] = useState("http://localhost:3000/sample.pdf");
+  const [printUrl, setPrintUrl] = useState("");
 
   const allProductInputsEmpty =
     productName === "" && productCategory === "" && productPrice === "";
@@ -94,33 +94,6 @@ export default function () {
     }
   }, [validProductName, validProductCategory, validProductPrice]);
 
-  //TODO: beim router im backend array abgreifen und dann printen
-  // useEffect(() => {
-  //   if (product !== '') {
-  //     fetch('http://localhost:8080/api/addPendingProduct', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         product: product,
-  //       }),
-  //     })
-  //       .then((res) => {
-  //         if (!res.ok) {
-  //           throw new Error('Failed to add pending product');
-  //         }
-  //         return res.json();
-  //       })
-  //       .then(() => {
-  //         setPendingProducts((pendingProducts) => [...pendingProducts, { product: product }]);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // }, [product]);
-
   const handleAddOffer = async () => {
     if (pendingProducts.length !== 0) {
       console.log("pendingProducts .... :", pendingOffers);
@@ -165,7 +138,6 @@ export default function () {
         setSellerEmail("");
         setSellerPhoneNumber("");
         setSellerSubmitted(false);
-        printPDF(url);
       } else {
         console.log(sellerData);
         setSeller(sellerData);
@@ -186,6 +158,14 @@ export default function () {
   ]);
 
   useEffect(() => {
+    if (printUrl !== "") {
+      console.log("URL: ", printUrl);
+      printPDF(printUrl);
+      setPrintUrl("");
+    }
+  }, [printUrl]);
+
+  useEffect(() => {
     if (seller !== "" && allProductInputsEmpty) {
       fetch("http://localhost:8080/api/offer", {
         method: "POST",
@@ -198,9 +178,7 @@ export default function () {
         }),
       })
         .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-        })
+        .then((data) => setPrintUrl(data))
         .catch((error) => {
           console.log(error);
         });
@@ -208,49 +186,6 @@ export default function () {
       setSellerSubmitted(false);
     }
   }, [seller]);
-
-  // async function sendPendingOffers(){
-  //   if (pendingProducts.length > 0) {
-  //     try {
-  //       const offerPromises = pendingProducts.map(async (pendingProduct) => {
-  //         console.log(pendingProduct.product)
-  //         console.log(seller)
-  //         const response = await fetch('http://localhost:8080/api/offer', {
-  //           method: 'POST',
-  //           headers: {
-  //             'Content-Type': 'application/json',
-  //           },
-  //           body: JSON.stringify({
-  //             product: pendingProduct.product,
-  //             seller: seller,
-  //           }),
-  //         });
-
-  //         const data = await response.json();
-
-  //         return data;
-  //       });
-
-  //       //const offers = await Promise.all(offerPromises);
-
-  //       // const printResponse = await fetch('http://localhost:8080/api/PrintAllOffers', {
-  //       //   method: 'PUT',
-  //       //   headers: {
-  //       //     'Content-Type': 'application/json',
-  //       //   },
-  //       //   body: JSON.stringify({
-  //       //     offers: offers,
-  //       //   }),
-  //       // });
-
-  //       // Handle the response if needed
-  //     } catch (error) {
-  //        console.log(error);
-  //    }
-
-  //    setPendingProducts([]);
-  //   }
-  // }
 
   return (
     <>
