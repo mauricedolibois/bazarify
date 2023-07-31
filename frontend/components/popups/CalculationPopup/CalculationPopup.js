@@ -13,15 +13,6 @@ const CalculationPopup = ({ popupOpen, closePopup, getFinalTotalPrice }) => {
   const [cashReceived, setCashReceived] = useState("");
   const [finalTotalPrice, setFinalTotalPrice] = useState(getFinalTotalPrice());
 
-  const openPopup = () => {
-    setIsOpen(true);
-  };
-
-  const closeThePopup = () => {
-    setIsOpen(false);
-    closePopup();
-  };
-
   useEffect(() => {
     setIsOpen(popupOpen); // Update isOpen state when popupOpen prop changes
   }, [popupOpen]);

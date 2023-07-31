@@ -2,7 +2,7 @@ import { UilAngleLeft } from '@iconscout/react-unicons'
 import React, { useContext } from 'react'; // Importiere useContext aus dem 'react'-Modul
 import { BazarContext } from '../../pages/index.js'
 
-export default function ({ onClick }) {
+export default function () {
     let { step, setStep, currentBazar } = useContext(BazarContext)
     function goToLastStep() {
         if (step == 0) { return }

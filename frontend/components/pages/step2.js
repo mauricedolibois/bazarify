@@ -20,7 +20,6 @@ export default function () {
   const [sellerLastName, setSellerLastName] = useState("");
   const [sellerEmail, setSellerEmail] = useState("");
   const [sellerPhoneNumber, setSellerPhoneNumber] = useState("");
-  const [product, setProduct] = useState("");
   const [productName, setProductName] = useState("");
   const [productCategory, setProductCategory] = useState("");
   const [productPrice, setProductPrice] = useState("");
@@ -29,7 +28,6 @@ export default function () {
   const [productSubmitted, setProductSubmitted] = useState(false);
   const [sellerSubmitted, setSellerSubmitted] = useState(false);
   const [pendingProducts, setPendingProducts] = useState([]);
-  const [pendingOffers, setPendingOffers] = useState([]);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [validProductName, setValidPoductName] = useState(false);
   const [validProductCategory, setValidPoductCategory] = useState(false);
@@ -56,11 +54,8 @@ export default function () {
   };
 
   const checkProductInput = () => {
-    //check product price
     checkPrice(productPrice, setMsg, setValidPoductPrice);
-    //check product categorie
     checkProductCategory(productCategory, setMsg, setValidPoductCategory);
-    //check product name
     checkProductName(productName, setMsg, setValidPoductName);
   };
 
@@ -78,7 +73,6 @@ export default function () {
         product_category: productCategory,
       };
 
-      setProduct(productData);
       setPendingProducts((pendingProducts) => [
         ...pendingProducts,
         productData,
@@ -95,7 +89,6 @@ export default function () {
 
   const handleAddOffer = async () => {
     if (pendingProducts.length !== 0) {
-      console.log("pendingProducts .... :", pendingOffers);
       setSellerSubmitted(true);
       checkSellerInput();
     } else {
@@ -107,13 +100,9 @@ export default function () {
   };
 
   const checkSellerInput = () => {
-    //check seller first name
     checkName(sellerFirstName, setMsg, setValidSellerFirstName, "Vorname");
-    //check seller last name
     checkName(sellerLastName, setMsg, setValidSellerLastName, "Nachname");
-    //check seller email
     checkEmail(sellerEmail, setMsg, setValidSellerEmail);
-    //check seller phone number
     checkPhoneNumber(sellerPhoneNumber, setMsg, setValidSellerPhoneNumber);
   };
 
@@ -302,12 +291,6 @@ export default function () {
           />
         )}
       </div>
-      {/*
-      <div className='mt-4 flex gap-4'>
-        <ButtonGrayBorder icon={<UilLabel />} text="Kategorien verwalten"></ButtonGrayBorder>
-        <ButtonGrayBorder icon={<UilHistory />} text="Eingetragene Produkte sehen"></ButtonGrayBorder>
-      </div>
-      */}
     </>
   );
 }

@@ -46,7 +46,6 @@ export default function dashboard() {
           dieser dein einfachster Basar bisher wird!
         </p>
         <div class="flex flex-row gap-4">
-          {/* Sollen wir das hier lieber mit dem Stepper machen (so wie in der Sidebar, also onClick={showDashboard}) oder mit href? */}
           <Link href="/" onClick={() => setStep(1)}>
             <ButtonBigColor
               text="Neuen Basar erstellen"

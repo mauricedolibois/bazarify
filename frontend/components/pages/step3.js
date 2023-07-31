@@ -77,14 +77,14 @@ export default function () {
     return () => {
       input.removeEventListener("keydown", handleKeyDown);
     };
-  }, []); // Empty dependency array ensures the effect runs only once
+  }, []);
 
   //fetch offer from database
   useEffect(() => {
     if (barcode !== "") {
       fetch(
         "http://localhost:8080/api/offer?operator=offer_id&parameter=" +
-          barcode,
+        barcode,
         { method: "GET" }
       )
         .then((res) => res.json())
@@ -127,7 +127,7 @@ export default function () {
         default:
           fetch(
             "http://localhost:8080/api/product?operator=product_id&parameter=" +
-              offer.product_id,
+            offer.product_id,
             { method: "GET" }
           )
             .then((res) => res.json())
@@ -180,7 +180,7 @@ export default function () {
         };
         fetch(
           "http://localhost:8080/api/offer?operator=offer_id&parameter=" +
-            offer.offer_id,
+          offer.offer_id,
           requestOptions
         )
           .then((res) => res.json())
