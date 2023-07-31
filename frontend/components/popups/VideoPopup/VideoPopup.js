@@ -60,7 +60,7 @@ export default function VideoPopup(onClick) {
                   width: "100%",
                   height: "100%",
                 }}
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+                src="https://www.youtube.com/embed/EFNBC9zwGO0?autoplay=1"
                 allow="autoplay"
               />
             </div>
