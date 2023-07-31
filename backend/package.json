@@ -6,6 +6,7 @@
   "main": "src/main.js",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles",
+    "ci-test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --testRegex '^(?!.*offerapi\\.test\\.js$).*\\.test\\.js$'  --detectOpenHandles",
     "start": "node server",
     "dev": "nodemon server"
   },

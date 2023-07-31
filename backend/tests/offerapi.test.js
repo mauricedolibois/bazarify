@@ -4,6 +4,10 @@ const request = require('supertest');
 import {app} from '../src/main.js';
 import {dbConnection} from '../src/database/DbConnection.js';
 
+//Diese Tests können nur ausgeführt werden, wenn die Datenbank läuft
+//Da die Datenbank lokal läuft, muss der Test lokal ausgeführt werden und kann nicht in GitLab Actions ausgeführt werden
+//deshalb steht der Test nicht in der GitLab CI/CD Pipeline
+
 beforeAll(async () => {
   await dbConnection.newDB("Test", 2023, 5, "This is a test Bazar");
 }, 10000);

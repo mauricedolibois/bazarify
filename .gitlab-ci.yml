@@ -8,7 +8,7 @@ backend_test:
   script:
     - cd backend/
     - npm install
-    - npm test
+    - npm run ci-test
   only:
     - develop
     - main
