@@ -45,9 +45,9 @@ productRouter.put("/product", (req, res) => {
     })
 
 
-//route to set specific offer stete to reclined (is in offerDAO but is called from product page)
+//route to set specific offer state to reclined (is in offerDAO but is called from product page)
 productRouter.put("/product-recline", (req, res) => {
-    console.log("recline")
+    console.log("Product set to recline")
     offerDAO.updateOffer('product_id', req.query.id, {state: 'reclined'}).then
     (product => { res.send(product) })
     })

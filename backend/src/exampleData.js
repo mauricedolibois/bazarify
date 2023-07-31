@@ -84,7 +84,6 @@ export const exampleData = {
         // Inserts all Demo Data in DB
         for (let i = 0; i < sellers.length; i++) {
             var seller = await sellerDAO.insertSeller(sellers[i].seller_name, sellers[i].seller_firstname, sellers[i].seller_email, sellers[i].seller_phone)
-            console.log(seller)
             var product1 = await productDAO.insertProduct(porducts[k].product_name, porducts[k].product_price, porducts[k].product_category)
             var product2 = await productDAO.insertProduct(porducts[k+1].product_name, porducts[k+1].product_price, porducts[k+1].product_category)
             var offer1 = await offerDAO.insertOffer(product1.product_id, seller.seller_id)

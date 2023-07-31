@@ -4,7 +4,7 @@ import ButtonSmallJustIcon from "../buttons/ButtonSmallJustIcon";
 import ButtonYellowBorder from "../buttons/ButtonYellowBorder";
 import { UilPlus, UilInfoCircle, UilPrint } from "@iconscout/react-unicons";
 import Alert from "../alert/alert";
-import printPDF from "../utils/printPDF";
+import printPDF from "../../utils/printPDF";
 import ProductTable from "../table/productTable";
 import {
   checkProductName,
@@ -13,7 +13,7 @@ import {
   checkName,
   checkPhoneNumber,
   checkEmail,
-} from "../utils/inputValidation.js";
+} from "../../utils/inputValidation.js";
 
 export default function () {
   const [sellerFirstName, setSellerFirstName] = useState("");
@@ -71,7 +71,6 @@ export default function () {
         type: "success",
         text: `Produkt "${productName}" wurde hinzugefügt`,
       });
-      console.log("add pending product");
 
       const productData = {
         product_name: productName,
@@ -121,7 +120,6 @@ export default function () {
   //set seller when input is correct which triggers adding the pending products to db and open print preview
   useEffect(() => {
     if (validSellerInput) {
-      console.log("valid seller input!");
       const sellerData = {
         seller_name: sellerLastName,
         seller_firstname: sellerFirstName,
@@ -130,8 +128,6 @@ export default function () {
       };
 
       if (allProductInputsEmpty) {
-        console.log("valid product input!");
-        console.log(sellerData);
         setSeller(sellerData);
         setSellerFirstName("");
         setSellerLastName("");
@@ -139,7 +135,6 @@ export default function () {
         setSellerPhoneNumber("");
         setSellerSubmitted(false);
       } else {
-        console.log(sellerData);
         setSeller(sellerData);
         setMsg({
           type: "error",
@@ -159,7 +154,6 @@ export default function () {
 
   useEffect(() => {
     if (printUrl !== "") {
-      console.log("URL: ", printUrl);
       printPDF(printUrl);
       setPrintUrl("");
     }

@@ -9,7 +9,7 @@ export default function ({ onClick }) {
         setStep(step - 1)
     }
     return (
-        <button onClick={goToLastStep} title="Zurück zum letzten Schritt" className="flex items-center justify-center w-10 h-10 z-30 cursor-pointer hover:text-ourPrimaryColorHover border border-ourLightGray hover:border-ourPrimaryColorHover text-ourDarkGray rounded-full">
+        <button onClick={goToLastStep} title="Zurück zum letzten Schritt" className="flex items-center justify-center bg-ourBackgroundColor w-10 h-10 z-30 cursor-pointer hover:text-ourPrimaryColorHover border border-ourLightGray hover:border-ourPrimaryColorHover text-ourDarkGray rounded-full">
             <span className="flex items-center justify-center">
                 <UilAngleLeft />
             </span>

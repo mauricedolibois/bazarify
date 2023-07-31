@@ -103,22 +103,6 @@ export const checkCommission = (
   }
 };
 
-export const checkDescription = (
-  description,
-  setErrorMessage,
-  setValidDescription
-) => {
-  setValidDescription(false);
-  if (description.length > 100) {
-    setErrorMessage({
-      type: "error",
-      text: "Die Beschreibung darf maximal 100 Zeichen lang sein!",
-    });
-  } else {
-    setValidDescription(true);
-  }
-};
-
 export const checkProductName = async (name, setErrorMessage, setValidName) => {
   await setValidName(false);
   const regex = /^[a-zA-Z0-9äöüÄÖÜß ]+$/;
@@ -135,10 +119,10 @@ export const checkProductName = async (name, setErrorMessage, setValidName) => {
         text: "Der Produktname muss mindestens 3 Zeichen lang sein!",
       });
       break;
-    case name.length > 15:
+    case name.length > 24:
       setErrorMessage({
         type: "error",
-        text: "Der Produktname darf maximal 15 Zeichen lang sein!",
+        text: "Der Produktname darf maximal 24 Zeichen lang sein!",
       });
       break;
     case !regex.test(name):
