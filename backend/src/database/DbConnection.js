@@ -28,7 +28,17 @@ export const dbConnection = {
             //const dbName = "Bazarify";
             //uri = `mongodb://${username}:${password}@${host}:${port}/${dbName}?authSource=admin`;
 
-            uri = `mongodb+srv://BazarifyDB:NhFgkpJgwGQZIPiO@cluster0.ovvbqb4.mongodb.net?authSource=admin`;
+            // --> uri = `mongodb+srv://BazarifyDB:NhFgkpJgwGQZIPiO@cluster0.ovvbqb4.mongodb.net?authSource=admin`;
+
+
+            const username = encodeURIComponent("maik");
+            const password = encodeURIComponent("abc123");
+            const clusterUrl = "mongo:27017/Bazarify";
+
+
+            uri = `mongodb://${username}:${password}@${clusterUrl}?authSource=admin`;
+
+
           }
         await mongoose.connect(uri).then(console.log(`Connected to Database: ${BazarName}`)).catch(err => console.log(err))
     },
