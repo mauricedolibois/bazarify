@@ -7,7 +7,6 @@ import {
   checkBazarName,
   checkYear,
   checkCommission,
-  checkDescription,
 } from "../../utils/inputValidation.js";
 
 export default function Step1() {
