@@ -9,8 +9,8 @@ const SellerSearchBar = ({ allSellers, setClickedSellerID, setName }) => {
     const searchString = searchBar.value.toLowerCase();
     let tmpSearchedSeller = [];
 
-    console.log("search string: ", searchString);
-    console.log("all sellers: ", allSellers);
+    // console.log("search string: ", searchString);
+    // console.log("all sellers: ", allSellers);
     if (searchString !== "") {
       allSellers.map((seller) => {
         if (
@@ -27,11 +27,12 @@ const SellerSearchBar = ({ allSellers, setClickedSellerID, setName }) => {
 
   // set clicked seller id
   const handleSellerClick = (seller) => {
-    console.log("seller clicked: ", seller);
+    console.log("clicked seller: " + seller.seller_id);
     setClickedSellerID(seller.seller_id);
     let firstName = seller.seller_name;
     let lastName = seller.seller_firstname;
     let wholeName = firstName + " " + lastName;
+    console.log("wholeName: " + wholeName);
     setName(wholeName);
     setSearchedSeller([]);
   };
