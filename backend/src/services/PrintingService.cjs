@@ -7,16 +7,16 @@ const os = require('os');
 const path = require('path');
 
 
-
+// This module exports a function that creates a PDF document with labels with barcodes and pricing information and saves it to a file.
 module.exports = {
 createPDF: async function (offers, products) {
-  const doc = new PDFDocument({ margin: -20 });
+  const doc = new PDFDocument({ margin: 0 });
   const labelWidth = 70;
   const labelHeight = 36;
   const pageMarginX = 30;
   const pageMarginY = 0;
   const labelSpacingX = 150;
-  const labelSpacingY = 72;
+  const labelSpacingY = 64;
   const labelsPerRow = 3;
   const rowsPerPage = 8;
   var labelsOnPage = 0;
@@ -40,7 +40,7 @@ createPDF: async function (offers, products) {
     const offer = offers[i];
     const product = products[i];
 
-    // Generate barcode as base64-encoded image
+    // Sets the barcode settings for generating the barcode as an image
     const barcodeOptions = {
       bcid: 'code128',
       text: offer.off.offer_id.toString(),
@@ -51,37 +51,26 @@ createPDF: async function (offers, products) {
     };
 
     doc.image(await this.generateBarcode(barcodeOptions), posX, posY, { width: labelWidth, align: 'center' });
-    console.log("Barcode erstellt.")
     // Add pricing information below barcode
     const pricePosX = posX + labelWidth / 7 -10;
     const pricePosY = posY + labelHeight + 10;
     doc.font('Helvetica').fontSize(8).text("Preis: " + product.product_price.toString() + "€", pricePosX, pricePosY, {
       align: 'center',
       width: labelWidth,
-      lineBreak: false,
-      ellipsis: true,
-      underline: false,
       characterSpacing: 0,
       wordSpacing: 0,
       indent: 0,
       underlineThickness: 0.5,
-      link: null,
-      continued: false,
     });
     labelsOnPage++;
   }
-  console.log("PDF created successfully.");
-  await this.saveAndOpenPDF(doc, "./sample.pdf").catch((err) => {
+  await this.saveAndOpenPDF(doc, "./barcode.pdf").catch((err) => {
     console.log(err);
   });
 },
-  
-  generateBarcode: async function(barcodeOptions) {
-    // Use your preferred method or library to generate the barcode image
-    // and return the file path or buffer of the barcode image
-    // For example, you can use 'bwip-js' library as shown below:
-    const bwipjs = require('bwip-js');
 
+  // This function generates a barcode as a PNG image and returns it as a Buffer
+  generateBarcode: async function(barcodeOptions) {
     return new Promise((resolve, reject) => {
       bwipjs.toBuffer(barcodeOptions, (err, pngBuffer) => {
         if (err) {
@@ -93,41 +82,6 @@ createPDF: async function (offers, products) {
     });
   },
 
-  printPDF: async function (doc) {
-
-      
-      return new Promise(async (resolve, reject) => {
-
-        const printerName = await this.getDefaultPrinterName();
-      const printCommand = `lp -d "${printerName}" "${"./barcode.pdf"}"`;
-      exec(printCommand, (error, stdout, stderr) => {
-        if (error) {
-          console.error('Error printing PDF:', error);
-          reject(error);
-        } else if (stderr) {
-          console.error('Error printing PDF:', stderr);
-          reject(stderr);
-        } else {
-          console.log('PDF printed successfully.');
-          resolve();
-        }
-      });
-  });
-  },
-
-  openPDF: function (pdfPath) {
-    return new Promise((resolve, reject) => {
-      const command = `open "${pdfPath}"`;
-      exec(command, (error, stdout, stderr) => {
-        if (error) {
-          console.error('Error opening PDF:', error);
-          reject(error);
-        } else {
-          resolve();
-        }
-      });
-    });
-  },
   saveAndOpenPDF: function (doc, fileName) {
     return new Promise((resolve, reject) => {
       // Assuming you are using ExpressJS to serve the frontend
@@ -140,16 +94,7 @@ createPDF: async function (offers, products) {
   
       stream.on('finish', () => {
         console.log('PDF saved successfully.');
-  
-        // If you're running the server on Windows, you might use `start` instead of `open`
-        exec(`open "${filePath}"`, (error) => {
-          if (error) {
-            console.error('Error opening PDF:', error);
-            reject(error);
-          } else {
-            resolve();
-          }
-        });
+        resolve(filePath); // Resolve the path to the saved PDF
       });
   
       stream.on('error', (error) => {
@@ -158,49 +103,4 @@ createPDF: async function (offers, products) {
       });
     });
   },
-
-  getDefaultPrinterName: function () {
-    return new Promise((resolve, reject) => {
-      const { exec } = require('child_process');
-      if (process.platform === 'win32') {
-        exec('wmic printer get name,default', (error, stdout, stderr) => {
-          if (error) {
-            console.error('Error retrieving default printer:', error);
-            reject(error);
-          } else if (stderr) {
-            console.error('Error retrieving default printer:', stderr);
-            reject(stderr);
-          } else {
-            const printerNames = stdout.split('\r\r\n').map((line) => line.trim()).filter(Boolean);
-            if (printerNames.length > 0) {
-              const defaultPrinter = printerNames[0];
-              resolve(defaultPrinter);
-            } else {
-              resolve('No printers found');
-            }
-          }
-        });
-      } else if (process.platform === 'darwin' || process.platform === 'linux') {
-        exec('lpstat -d', (error, stdout, stderr) => {
-          if (error) {
-            console.error('Error retrieving default printer:', error);
-            reject(error);
-          } else if (stderr) {
-            console.error('Error retrieving default printer:', stderr);
-            reject(stderr);
-          } else {
-            const match = stdout.match(/^System-Standardzielort:\s(.+)$/m);
-            if (match && match[1]) {
-              const defaultPrinter = match[1];
-              resolve(defaultPrinter);
-            } else {
-              resolve('No default printer found');
-            }
-          }
-        });
-      } else {
-        resolve('Unsupported platform');
-      }
-    });
-  }
 };

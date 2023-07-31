@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+#pdf
+/public/barcode.pdf
+
 # next.js
 /.next/
 /out/
@@ -33,3 +36,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+#samplepdf
+frontend/public/sample.pdf

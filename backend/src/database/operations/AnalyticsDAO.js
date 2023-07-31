@@ -48,7 +48,6 @@ export const analyticsDAO = {
                 SoldProducts: soldProducts,
                 UnsoldProducts: unsoldProducts
             }
-            console.log(analytics)
             return analytics
         }
         catch(err) { console.log(err) }

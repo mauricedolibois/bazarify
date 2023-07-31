@@ -91,7 +91,6 @@ export default function () {
         .then((data) => {
           setOffer(data);
           setBarcode("");
-          console.log(data);
         })
         .catch((error) => {
           console.log(error);
@@ -139,8 +138,6 @@ export default function () {
               ]);
               setShouldScrollToBottom(true);
               setAllOffers((allOffers) => [...allOffers, offer]);
-              console.log(scannedProducts);
-              console.log(data);
             })
             .catch((error) => console.log(error));
           break;
@@ -187,9 +184,6 @@ export default function () {
           requestOptions
         )
           .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-          })
           .catch((error) => console.log(error));
       });
     }
