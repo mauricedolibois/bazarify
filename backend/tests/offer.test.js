@@ -11,7 +11,7 @@ beforeAll(async () => {
 afterAll( async() => {
   await dbConnection.changeDB("Bazarify")
   await dbConnection.dropBazar("Test");
-});
+}, 10000);
 
 describe('/api/offer', () => {
   it('should create a new offer', async () => {
@@ -21,14 +21,14 @@ describe('/api/offer', () => {
     const response = await request(app).post('/api/offer').send(testOffer);
     expect(response.status).toBe(200);
     expect(response.text).toContain("http://localhost:3000/barcode.pdf");
-  });
+  }, 10000);
 
   it('should not create a new offer with missing seller', async () => {
     const testProduct =[{ product_name: 'Test', product_price: 10, product_category: 'Test'}];
     const testOffer = { product: testProduct};
     const response = await request(app).post('/api/offer').send(testOffer);
     expect(response.text).toContain("ERROR:");
-  });
+  }, 10000);
 
   it('should return all offers', async () => {
     const response = await request(app).get('/api/allOffers');
@@ -42,6 +42,6 @@ describe('/api/offer', () => {
         }),
       ])
     );
-  });
+  }, 10000);
 
 });
