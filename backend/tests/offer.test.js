@@ -21,7 +21,7 @@ describe('/api/offer', () => {
     const testOffer = { product: testProduct, seller: testSeller};
     const response = await request(app).post('/api/offer').send(testOffer);
     expect(response.status).toBe(200);
-    expect(response.text).toContain("http://localhost:3000/sample.pdf");
+    expect(response.text).toContain("http://localhost:3000/barcode.pdf");
   });
 
   it('should not create a new offer with missing seller', async () => {
