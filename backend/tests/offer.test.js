@@ -6,7 +6,7 @@ import {dbConnection} from '../src/database/DbConnection.js';
 
 beforeAll(async () => {
   await dbConnection.newDB("Test", 2023, 5, "This is a test Bazar");
-});
+}, 10000);
 
 afterAll( async() => {
   await dbConnection.changeDB("Bazarify")
