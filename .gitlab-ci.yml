@@ -1,0 +1,26 @@
+image: node:latest
+
+stages:
+  - test
+
+backend_test:
+  stage: test
+  script:
+    - cd backend/
+    - npm install
+    - npm run ci-test
+  only:
+    - develop
+    - main
+    - merge_requests
+
+frontend_test:
+  stage: test
+  script:
+    - cd frontend/
+    - npm install
+    - npm test
+  only:
+    - develop
+    - main
+    - merge_requests
