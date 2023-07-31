@@ -1,4 +1,3 @@
-// change to require
 import { createRequire } from "module"
 const require = createRequire(import.meta.url)
 const request = require('supertest');
@@ -9,9 +8,9 @@ beforeAll(async () => {
   await dbConnection.newDB("Test", 2023, 5, "This is a test Bazar");
 });
 
-afterAll( () => {
-  return dbConnection.changeDB("Bazarify")
-  .then(() => dbConnection.dropBazar("Test"));
+afterAll( async() => {
+  await dbConnection.changeDB("Bazarify")
+  await dbConnection.dropBazar("Test");
 });
 
 describe('/api/offer', () => {
