@@ -9,6 +9,10 @@ beforeAll(async () => {
   await dbConnection.newDB("Test", 2023, 5, "This is a test Bazar");
 });
 
+afterAll( () => {
+  return dbConnection.changeDB("Bazarify")
+  .then(() => dbConnection.dropBazar("Test"));
+});
 
 describe('/api/offer', () => {
   it('should create a new offer', async () => {
@@ -40,7 +44,5 @@ describe('/api/offer', () => {
       ])
     );
   });
-  return dbConnection.changeDB("Bazarify")
-  .then(() => dbConnection.dropBazar("Test"));
 
 });
