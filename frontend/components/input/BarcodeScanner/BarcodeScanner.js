@@ -3,7 +3,7 @@ import { UilEnter } from "@iconscout/react-unicons";
 import ButtonSmallJustIcon from "@/components/buttons/ButtonSmallJustIcon";
 import React from "react";
 
-export default function BarcodeScanner(onClick) {
+export default function BarcodeScanner({ onClick }) {
   const inputRef = useRef(null);
 
   //autofocus on input field
@@ -26,7 +26,7 @@ export default function BarcodeScanner(onClick) {
         <div className="flex flex-row gap-4">
           <ButtonSmallJustIcon
             icon={<UilEnter></UilEnter>}
-            onClick={{ onClick }}
+            onClick={onClick}
           ></ButtonSmallJustIcon>
         </div>
       </div>
