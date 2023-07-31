@@ -3,16 +3,16 @@ image: node:latest
 stages:
   - test
 
-# backend_test:
-#   stage: test
-#   script:
-#     - cd backend/
-#     - npm install
-#     - npm test
-#   only:
-#     - develop
-#     - main
-#     - merge_requests
+backend_test:
+  stage: test
+  script:
+    - cd backend/
+    - npm install
+    - npm test
+  only:
+    - develop
+    - main
+    - merge_requests
 
 frontend_test:
   stage: test

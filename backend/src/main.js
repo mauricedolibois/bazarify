@@ -1,7 +1,7 @@
 import express, { urlencoded } from "express";
 import cors from "cors";
 import { exec } from "child_process";
-const app = express();
+export const app = express();
 import { dbConnection } from "./database/DbConnection.js";
 import { productRouter } from "./controller/products.js";
 import { sellerRouter } from "./controller/seller.js";
